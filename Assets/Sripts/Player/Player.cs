@@ -42,13 +42,13 @@ public class Player : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        Debug.Log(context.phase);
-        if (context.performed) { Debug.Log("Shoot!"); }
+        //Debug.Log(context.phase);
+        //if (context.performed) { Debug.Log("Shoot!"); }
     }
 
     public void Movement(InputAction.CallbackContext context)
     {
-        Debug.Log(context);
+        //Debug.Log(context);
         //Debug.Log(context.phase);
         CachedMoveInput = context.ReadValue<Vector2>();
     }
