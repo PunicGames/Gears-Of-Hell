@@ -30,7 +30,7 @@ public class WG_Manager : MonoBehaviour
         cells.Add(pos, new bool[] { false, false, false, false });
 
         // while instead of for because of probably want to increase or decrease lifeTime
-        while (lifeTime > 0)
+        while (lifeTime > 1)
         {
             int moveIndex = Random.Range(0, moves.Length);
 
@@ -49,9 +49,9 @@ public class WG_Manager : MonoBehaviour
                 arr = new bool[] { false, false, false, false };
                 arr[InvertMovement(moveIndex)] = true;
                 cells.TryAdd(pos, arr);
+                lifeTime--;
             }
            
-            lifeTime--;
         }
 
         return cells;
