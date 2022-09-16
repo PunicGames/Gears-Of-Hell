@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ public class WG_Manager : MonoBehaviour
     #region Generation Algorithm
 
     //  Algorithm params
-    [SerializeField] private uint lifeTime = 7;
+    [SerializeField] private readonly uint nCells = 100;
     [SerializeField] private Vector2 cellScale;
 
     public GameObject[] door_1;
@@ -20,6 +21,8 @@ public class WG_Manager : MonoBehaviour
     // 0 = Right, 1 = Up, 2 = Left, 3 = Down
     private readonly Vector2Int[] moves = { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
 
+    private LinkedList<GameObject> generated = new LinkedList<GameObject>();
+
     private Dictionary<Vector2Int, bool[]> GenerateBlueprint()
     {
         var pos = Vector2Int.zero;
@@ -29,6 +32,7 @@ public class WG_Manager : MonoBehaviour
 
         cells.Add(pos, new bool[] { false, false, false, false });
 
+        var lifeTime = nCells;
         // while instead of for because of probably want to increase or decrease lifeTime
         while (lifeTime > 1)
         {
@@ -51,7 +55,7 @@ public class WG_Manager : MonoBehaviour
                 cells.TryAdd(pos, arr);
                 lifeTime--;
             }
-           
+
         }
 
         return cells;
@@ -91,7 +95,7 @@ public class WG_Manager : MonoBehaviour
     {
         bool finded = false;
         int it = -1;
-        GameObject cell;
+        GameObject cell = null;
         switch (doors)
         {
             case 1:
@@ -108,11 +112,11 @@ public class WG_Manager : MonoBehaviour
                 {
                     if (doorDistribution[1])
                     {
-                        Instantiate(door_2_1[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_1[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                     }
                     else if (doorDistribution[2])
                     {
-                        Instantiate(door_2_2[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_2[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                     }
                     else
                     {
@@ -153,20 +157,25 @@ public class WG_Manager : MonoBehaviour
                 cell.GetComponent<Transform>().Rotate(Vector3.up, -90 * it);
                 break;
             case 4:
-                Instantiate(door_4[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                cell = Instantiate(door_4[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                 break;
         }
+
+        generated.AddLast(cell);
     }
-    #endregion
 
-    #region MonoBehavior
-
-    public void Start()
+    private void GenerateWorld()
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
         Dictionary<Vector2Int, bool[]> cells = GenerateBlueprint();
         GenerateCells(cells);
-        //debug
 
+        sw.Stop();
+        print(sw.Elapsed.ToString());
+
+        /*
         foreach (var cell in cells)
         {
             string dbgStr = "";
@@ -178,9 +187,34 @@ public class WG_Manager : MonoBehaviour
 
             print(cell.Key + " " + dbgStr);
         }
-
+        */
     }
 
+    private void DeleteWorld()
+    {
+        foreach (var cell in generated)
+        {
+            Destroy(cell);
+        }
+    }
+
+    #endregion
+
+    #region MonoBehavior
+
+    public void Start()
+    {
+        GenerateWorld();
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DeleteWorld();
+            GenerateWorld();
+        }
+    }
 
     #endregion
 }
