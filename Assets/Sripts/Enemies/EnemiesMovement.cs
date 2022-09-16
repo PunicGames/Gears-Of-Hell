@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemiesMovement : MonoBehaviour
 {
 
-    public float sightRange = 10f;
+    public float sightRange;
 
     Transform player;
     NavMeshAgent agent;
@@ -21,11 +21,17 @@ public class EnemiesMovement : MonoBehaviour
     private void Update()
     {
         float distance = Vector3.Distance(player.position, transform.position);
+        transform.LookAt(player.position);
 
         if (distance <= sightRange)
         {
-            agent.SetDestination(player.position);
+            Chase();
         }
+    }
+
+    private void Chase()
+    {
+        agent.SetDestination(player.position);
     }
 
     private void OnDrawGizmosSelected()

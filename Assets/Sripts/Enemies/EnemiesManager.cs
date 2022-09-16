@@ -21,7 +21,7 @@ public class EnemiesManager : MonoBehaviour
 
     private void instantiateEnemy()
     {
-        Debug.Log("Spawned");
+        //Debug.Log("Spawned");
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         int enemyIndex = Random.Range(0, enemies.Length);
 
