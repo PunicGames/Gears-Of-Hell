@@ -27,7 +27,7 @@ public class Shooting : MonoBehaviour
         gunLight = GetComponent<Light>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         timer += Time.deltaTime;
 
@@ -56,7 +56,10 @@ public class Shooting : MonoBehaviour
             if (Physics.Raycast(shootRay, out shootHit, range, shootableMask)) 
             {
                 // Quitamos vida al enemigo
-                // ...
+                EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+                if (enemyHealth != null) {
+                    enemyHealth.TakeDamage(damagePerShot, shootHit.point);
+                }
 
                 gunLine.SetPosition(1, shootHit.point);
                 
