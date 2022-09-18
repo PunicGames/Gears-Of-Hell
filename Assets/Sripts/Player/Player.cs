@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
 
-    private float speed = 6f;
-
     Vector3 movement;
-    private Rigidbody rb;
     int floorMask;
+    private float speed = 6f;
     float camRayLength = 100f;
 
+    private Rigidbody rb;
+    private Shooting shootingSystem;
     private Vector2 CachedMoveInput { get; set; }
     private Vector2 CachedAimInput { get; set; }
 
@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     {
         // Init components
         rb = GetComponent<Rigidbody>();
+        shootingSystem = GetComponentInChildren<Shooting>();
 
         // Create Input System
         PlayerInputActions playerInputActions = new PlayerInputActions();
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(context.phase);
         //if (context.performed) { Debug.Log("Shoot!"); }
+        shootingSystem.Shoot();
     }
 
     public void Movement(InputAction.CallbackContext context)
