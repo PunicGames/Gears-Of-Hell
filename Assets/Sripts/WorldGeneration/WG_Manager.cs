@@ -2,11 +2,52 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
+public class WG_Gate { 
+    public Vector2Int position;
+    public int orientation;
+
+    // true = open, false = closed
+    public bool state;
+    private GameObject gameObject;
+
+    public WG_Gate(Vector2Int position, int orientation, Dictionary<Vector2Int, bool[]> blueprint)
+    {
+        this.position = position;
+        this.orientation = orientation;
+        this.state = Random.Range(0, 2) == 0;
+
+        SetStateOnBlueprint(blueprint);
+    }
+
+    public void ChangeState(Dictionary<Vector2Int, bool[]> blueprint)
+    {
+        state = !state;
+
+        SetStateOnBlueprint(blueprint);
+    }
+
+    public void SetGameObject(GameObject gameObject)
+    {
+        this.gameObject = gameObject;
+        UpdateGameObject();
+    }
+    private void UpdateGameObject()
+    {
+        gameObject.GetComponent<WG_GateManager>().UpdateColor(state);
+    }
+
+    private void SetStateOnBlueprint(Dictionary<Vector2Int, bool[]> blueprint)
+    {
+        blueprint[this.position][orientation] = state;
+        blueprint[position + WG_Manager.moves[orientation]][WG_Manager.InvertMovement(orientation)] = state;
+    }
+}
 
 public class WG_Manager : MonoBehaviour
 {
     #region Generation Algorithm
 
+    #region Variables
     //  Algorithm params
     [SerializeField] private uint nCells = 100;
     [SerializeField] private uint nGates = 5;
@@ -21,10 +62,19 @@ public class WG_Manager : MonoBehaviour
     public GameObject[] gates;
 
     // 0 = Right, 1 = Up, 2 = Left, 3 = Down
-    private readonly Vector2Int[] moves = { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
+    public static readonly Vector2Int[] moves = { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
 
+    // Needed for delete 
     private LinkedList<GameObject> spawnedCells = new LinkedList<GameObject>();
 
+    public Dictionary<Vector2Int, bool[]> blueprint;
+
+    private List<WG_Gate> gateList = new List<WG_Gate>();
+
+    #endregion
+
+    #region Methods
+    
     private Dictionary<Vector2Int, bool[]> GenerateBlueprint()
     {
         var pos = Vector2Int.zero;
@@ -62,7 +112,7 @@ public class WG_Manager : MonoBehaviour
         return cells;
     }
 
-    private int InvertMovement(int move)
+    public static int InvertMovement(int move)
     {
         switch (move)
         {
@@ -79,9 +129,9 @@ public class WG_Manager : MonoBehaviour
         }
     }
 
-    private void GenerateCells(Dictionary<Vector2Int, bool[]> blueprint)
+    private void GenerateCells()
     {
-        var gateCandidates = new List<KeyValuePair<Vector2Int, bool[]>>();
+        var gateCandidates = new Dictionary<Vector2Int, bool[]>();
 
         // Paralelizable
         foreach (var cell in blueprint)
@@ -92,46 +142,13 @@ public class WG_Manager : MonoBehaviour
 
             // Gates
             if (doors == 2)
-                gateCandidates.Add(cell);
+                gateCandidates.Add(cell.Key, cell.Value);
 
 
             SpawnCell(cell.Key, doors, cell.Value);
         }
 
         GenerateGates(gateCandidates);
-    }
-
-    private void GenerateGates(List<KeyValuePair<Vector2Int, bool[]>> candidates)
-    {
-        var candidatesArr = candidates.ToArray();
-        for (int i = 0; i < nGates; i++)
-        {
-            var n = Random.Range(0, candidatesArr.Length);
-            var pos = candidatesArr[n].Key;
-            var holes = candidatesArr[n].Value;
-
-            var holePos = new int[2];
-            var it = 0;
-            for (int j = 0; j < holes.Length; j++)
-            {
-                if (holes[j])
-                {
-                    holePos[it] = j;
-                    it++;
-                }
-            }
-
-            SpawnGate(pos, holePos[Random.Range(0, holePos.Length)]);
-        }
-    }
-
-
-    private void SpawnGate(Vector2Int position, int holePos)
-    {
-        GameObject gate = Instantiate(gates[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
-        gate.GetComponent<Transform>().Rotate(Vector3.up, holePos * -90);
-
-        spawnedCells.AddLast(gate);
     }
 
     private void SpawnCell(Vector2Int position, int doors, bool[] doorDistribution)
@@ -207,19 +224,62 @@ public class WG_Manager : MonoBehaviour
         spawnedCells.AddLast(cell);
     }
 
+    private void GenerateGates(Dictionary<Vector2Int, bool[]> candidates)
+    {
+        var i = 0;
+        while(candidates.Count > 0 && i < nGates)
+        {
+            var candidatesArr = new List<Vector2Int>(candidates.Keys);
+
+            var n = Random.Range(0, candidatesArr.Count);
+
+
+            var pos = candidatesArr[n];
+            var holes = candidates[candidatesArr[n]];
+
+            var holePos = new int[2];
+            var it = 0;
+            for (int j = 0; j < holes.Length; j++)
+            {
+                if (holes[j])
+                {
+                    holePos[it] = j;
+                    it++;
+                }
+            }
+            var gate = new WG_Gate(pos, holePos[Random.Range(0, holePos.Length)], blueprint);
+            var newPos = gate.position + moves[gate.orientation];
+
+            candidates.Remove(pos);
+            candidates.Remove(newPos);
+
+            SpawnGate(gate);
+            gateList.Add(gate);
+            
+            i++;
+        }
+    }
+    private void SpawnGate(WG_Gate gate)
+    {
+        GameObject obj = Instantiate(gates[0], new Vector3(gate.position.x * cellScale.x, 0, gate.position.y * cellScale.y), Quaternion.identity);
+        obj.GetComponent<Transform>().Rotate(Vector3.up, gate.orientation * -90);
+        gate.SetGameObject(obj);
+
+        spawnedCells.AddLast(obj);
+    }
     private void GenerateWorld()
     {
         Stopwatch sw = new Stopwatch();
         sw.Start();
 
-        Dictionary<Vector2Int, bool[]> cells = GenerateBlueprint();
-        GenerateCells(cells);
+        blueprint = GenerateBlueprint();
+        GenerateCells();
 
         sw.Stop();
         print("Mapa generado en: " + sw.Elapsed.ToString());
 
-        /*
-        foreach (var cell in cells)
+        
+        foreach (var cell in blueprint)
         {
             string dbgStr = "";
             for (int i = 0; i < cell.Value.Length; i++)
@@ -230,7 +290,7 @@ public class WG_Manager : MonoBehaviour
 
             print(cell.Key + " " + dbgStr);
         }
-        */
+        
     }
 
     private void DeleteWorld()
@@ -240,6 +300,7 @@ public class WG_Manager : MonoBehaviour
             Destroy(cell);
         }
     }
+    #endregion
 
     #endregion
 
