@@ -8,20 +8,22 @@ public class WG_Manager : MonoBehaviour
     #region Generation Algorithm
 
     //  Algorithm params
-    [SerializeField] private readonly uint nCells = 100;
+    [SerializeField] private uint nCells = 100;
+    [SerializeField] private uint nGates = 5;
     [SerializeField] private Vector2 cellScale;
-
+    [Space]
     public GameObject[] door_1;
     public GameObject[] door_2_1;
     public GameObject[] door_2_2;
     public GameObject[] door_3;
     public GameObject[] door_4;
     public GameObject[] door_Base;
+    public GameObject[] gates;
 
     // 0 = Right, 1 = Up, 2 = Left, 3 = Down
     private readonly Vector2Int[] moves = { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
 
-    private LinkedList<GameObject> generated = new LinkedList<GameObject>();
+    private LinkedList<GameObject> spawnedCells = new LinkedList<GameObject>();
 
     private Dictionary<Vector2Int, bool[]> GenerateBlueprint()
     {
@@ -43,16 +45,15 @@ public class WG_Manager : MonoBehaviour
 
             pos += moves[moveIndex];
 
-            bool[] arr;
             if (cells.ContainsKey(pos))
             {
                 cells[pos][InvertMovement(moveIndex)] = true;
             }
             else
             {
-                arr = new bool[] { false, false, false, false };
+                var arr = new bool[] { false, false, false, false };
                 arr[InvertMovement(moveIndex)] = true;
-                cells.TryAdd(pos, arr);
+                cells.Add(pos, arr);
                 lifeTime--;
             }
 
@@ -80,6 +81,8 @@ public class WG_Manager : MonoBehaviour
 
     private void GenerateCells(Dictionary<Vector2Int, bool[]> blueprint)
     {
+        var gateCandidates = new List<KeyValuePair<Vector2Int, bool[]>>();
+
         // Paralelizable
         foreach (var cell in blueprint)
         {
@@ -87,8 +90,48 @@ public class WG_Manager : MonoBehaviour
             foreach (var door in cell.Value)
                 if (door) doors++;
 
+            // Gates
+            if (doors == 2)
+                gateCandidates.Add(cell);
+
+
             SpawnCell(cell.Key, doors, cell.Value);
         }
+
+        GenerateGates(gateCandidates);
+    }
+
+    private void GenerateGates(List<KeyValuePair<Vector2Int, bool[]>> candidates)
+    {
+        var candidatesArr = candidates.ToArray();
+        for (int i = 0; i < nGates; i++)
+        {
+            var n = Random.Range(0, candidatesArr.Length);
+            var pos = candidatesArr[n].Key;
+            var holes = candidatesArr[n].Value;
+
+            var holePos = new int[2];
+            var it = 0;
+            for (int j = 0; j < holes.Length; j++)
+            {
+                if (holes[j])
+                {
+                    holePos[it] = j;
+                    it++;
+                }
+            }
+
+            SpawnGate(pos, holePos[Random.Range(0, holePos.Length)]);
+        }
+    }
+
+
+    private void SpawnGate(Vector2Int position, int holePos)
+    {
+        GameObject gate = Instantiate(gates[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+        gate.GetComponent<Transform>().Rotate(Vector3.up, holePos * -90);
+
+        spawnedCells.AddLast(gate);
     }
 
     private void SpawnCell(Vector2Int position, int doors, bool[] doorDistribution)
@@ -161,7 +204,7 @@ public class WG_Manager : MonoBehaviour
                 break;
         }
 
-        generated.AddLast(cell);
+        spawnedCells.AddLast(cell);
     }
 
     private void GenerateWorld()
@@ -173,7 +216,7 @@ public class WG_Manager : MonoBehaviour
         GenerateCells(cells);
 
         sw.Stop();
-        print(sw.Elapsed.ToString());
+        print("Mapa generado en: " + sw.Elapsed.ToString());
 
         /*
         foreach (var cell in cells)
@@ -192,7 +235,7 @@ public class WG_Manager : MonoBehaviour
 
     private void DeleteWorld()
     {
-        foreach (var cell in generated)
+        foreach (var cell in spawnedCells)
         {
             Destroy(cell);
         }
@@ -202,7 +245,7 @@ public class WG_Manager : MonoBehaviour
 
     #region MonoBehavior
 
-    public void Start()
+    public void Awake()
     {
         GenerateWorld();
     }
