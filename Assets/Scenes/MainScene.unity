@@ -6029,7 +6029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2140532941445721648, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2140532941445721648, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6066,6 +6066,18 @@ PrefabInstance:
     - target: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
       propertyPath: m_Name
       value: BasicEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4751650273199184845, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+      propertyPath: m_Radius
+      value: 0.9176244
+      objectReference: {fileID: 0}
+    - target: {fileID: 4751650273199184845, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+      propertyPath: m_Center.y
+      value: 0.3511911
+      objectReference: {fileID: 0}
+    - target: {fileID: 4751650273199184845, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}

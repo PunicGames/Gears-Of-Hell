@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
     {
         collider = GetComponent<CapsuleCollider>();
         currentHealth = startingHealth;
+        Debug.Log("Health: " + currentHealth);
     }
 
     public void TakeDamage(int amount, Vector3 hitPoint) { // hitPoint es el punto exacto del impacto (preparado para spawnear un efecto de particulas de impacto si así se quisiera)

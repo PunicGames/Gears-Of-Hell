@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2140532941445721660}
   - component: {fileID: 2140532941445721661}
   - component: {fileID: 2140532941445721655}
+  - component: {fileID: 4751650273199184845}
   m_Layer: 8
   m_Name: BasicEnemy
   m_TagString: Untagged
@@ -150,8 +151,21 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!135 &4751650273199184845
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140532941445721662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.92012715
+  m_Center: {x: 0.015622258, y: 0.043287933, z: 0}
 --- !u!1 &2140532943306335215
 GameObject:
   m_ObjectHideFlags: 0
