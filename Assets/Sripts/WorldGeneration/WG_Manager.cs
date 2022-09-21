@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WG_Gate { 
     public Vector2Int position;
@@ -9,6 +10,7 @@ public class WG_Gate {
     // true = open, false = closed
     public bool state;
     private GameObject gameObject;
+   
 
     public WG_Gate(Vector2Int position, int orientation, Dictionary<Vector2Int, bool[]> blueprint)
     {
@@ -60,6 +62,7 @@ public class WG_Manager : MonoBehaviour
     public GameObject[] door_4;
     public GameObject[] door_Base;
     public GameObject[] gates;
+    public NavMeshSurface surface;
 
     // 0 = Right, 1 = Up, 2 = Left, 3 = Down
     public static readonly Vector2Int[] moves = { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
@@ -309,6 +312,7 @@ public class WG_Manager : MonoBehaviour
     public void Awake()
     {
         GenerateWorld();
+        surface.BuildNavMesh();
     }
 
     public void Update()

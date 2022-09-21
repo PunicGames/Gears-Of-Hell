@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+
     private void FixedUpdate()
     {
         if (damaged)
