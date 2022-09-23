@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7912361067319672372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7912361067319672374}
+  - component: {fileID: 7912361067319672375}
+  - component: {fileID: 7912361067319672377}
+  m_Layer: 0
+  m_Name: WorldGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7912361067319672374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912361067319672372}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7912361067319672375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912361067319672372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47839f688879beb4e885192687cc8c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nCells: 20
+  nGates: 0
+  cellScale: {x: 10, y: 10}
+  door_1:
+  - {fileID: 6505218325808694531, guid: 8b16467e230b91144bd1209816f3b9cb, type: 3}
+  door_2_1:
+  - {fileID: 6505218325808694531, guid: 1f4230fd4f6f5a44a91e0a28ebac2cf8, type: 3}
+  door_2_2:
+  - {fileID: 6505218325808694531, guid: 1bf38d02da652f44dbec4246c9b07739, type: 3}
+  door_3:
+  - {fileID: 6505218325808694531, guid: cc705afd286370b46b5bf6bb76185bb0, type: 3}
+  door_4:
+  - {fileID: 6505218325808694531, guid: 12b438619a1164044ba40866440b1ee2, type: 3}
+  door_Base:
+  - {fileID: 6505218325808694531, guid: cda170fdc4c74b742aa3e3e065fd57a8, type: 3}
+  gates:
+  - {fileID: 6505218325808694531, guid: 3c2f11cba0ca20042a2b8749e215f816, type: 3}
+  surface: {fileID: 0}
+--- !u!114 &7912361067319672377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912361067319672372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd42c9d2fc54592438bc3432fa33e312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.21666665
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 0}

@@ -223,7 +223,7 @@ public class WG_Manager : MonoBehaviour
                 cell = Instantiate(door_4[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                 break;
         }
-
+        cell.transform.parent = transform;
         spawnedCells.AddLast(cell);
     }
 
@@ -281,7 +281,9 @@ public class WG_Manager : MonoBehaviour
         sw.Stop();
         print("Mapa generado en: " + sw.Elapsed.ToString());
 
-        
+        surface.BuildNavMesh();
+
+        /* Debug
         foreach (var cell in blueprint)
         {
             string dbgStr = "";
@@ -293,7 +295,8 @@ public class WG_Manager : MonoBehaviour
 
             print(cell.Key + " " + dbgStr);
         }
-        
+        */
+
     }
 
     private void DeleteWorld()
@@ -311,8 +314,9 @@ public class WG_Manager : MonoBehaviour
 
     public void Awake()
     {
+        surface = gameObject.GetComponent<NavMeshSurface>();
+
         GenerateWorld();
-        surface.BuildNavMesh();
     }
 
     public void Update()
