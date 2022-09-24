@@ -16,11 +16,14 @@ public class Player : MonoBehaviour
     private Vector2 CachedMoveInput { get; set; }
     private Vector2 CachedAimInput { get; set; }
 
+    private Animator playerAnimator;
+
     private void Awake()
     {
         // Init components
         rb = GetComponent<Rigidbody>();
         shootingSystem = GetComponentInChildren<Shooting>();
+        playerAnimator = GetComponent<Animator>();
 
         // Create Input System
         PlayerInputActions playerInputActions = new PlayerInputActions();
@@ -52,10 +55,12 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(context);
         //Debug.Log(context.phase);
+        playerAnimator.SetBool("isMoving", true);
         CachedMoveInput = context.ReadValue<Vector2>();
     }
     public void ResetMovement(InputAction.CallbackContext context)
     {
+        playerAnimator.SetBool("isMoving", false);
         CachedMoveInput = new Vector2(0.0f, 0.0f);
     }
     public void MousePosition(InputAction.CallbackContext context)
@@ -67,6 +72,7 @@ public class Player : MonoBehaviour
     {
         movement.Set(CachedMoveInput.x, 0.0f, CachedMoveInput.y);
         movement = movement * speed * Time.deltaTime;
+
         rb.MovePosition(transform.position + movement);
     }
 
