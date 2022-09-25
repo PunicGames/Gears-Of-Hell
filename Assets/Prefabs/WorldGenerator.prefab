@@ -48,6 +48,8 @@ MonoBehaviour:
   nCells: 20
   nGates: 0
   cellScale: {x: 10, y: 10}
+  wallSize: {x: 1.5, y: 1.5}
+  obstacleRatio: 80
   door_1:
   - {fileID: 6505218325808694531, guid: 8b16467e230b91144bd1209816f3b9cb, type: 3}
   door_2_1:
@@ -62,7 +64,8 @@ MonoBehaviour:
   - {fileID: 6505218325808694531, guid: cda170fdc4c74b742aa3e3e065fd57a8, type: 3}
   gates:
   - {fileID: 6505218325808694531, guid: 3c2f11cba0ca20042a2b8749e215f816, type: 3}
-  surface: {fileID: 0}
+  obstacles:
+  - {fileID: 2819038164688161236, guid: 07e934d8358882f46a1abae560b889c5, type: 3}
 --- !u!114 &7912361067319672377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
-  m_CollectObjects: 0
+  m_CollectObjects: 2
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:

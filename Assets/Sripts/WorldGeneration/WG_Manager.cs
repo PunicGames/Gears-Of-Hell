@@ -299,6 +299,7 @@ public class WG_Manager : MonoBehaviour
         Vector2 rndOffset = new Vector2(Random.Range((-cellScale.x / 2) + wallSize.x, (cellScale.x / 2) - wallSize.y), Random.Range((-cellScale.y / 2) + wallSize.x, (cellScale.y / 2) - wallSize.y));
         GameObject obs = Instantiate(obstacles[0], new Vector3(pos.x + rndOffset.x, 0.0f, pos.y + rndOffset.y), Quaternion.identity);
         obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
+        obs.transform.parent = transform;
         spawnedCells.AddLast(obs);
 
     }
