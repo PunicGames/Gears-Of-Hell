@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     float camRayLength = 100f;
 
     private Rigidbody rb;
-    private Shooting shootingSystem;
+    private ShootSystem shootingSystem;
     private Vector2 CachedMoveInput { get; set; }
     private Vector2 CachedAimInput { get; set; }
 
@@ -22,13 +22,14 @@ public class Player : MonoBehaviour
     {
         // Init components
         rb = GetComponent<Rigidbody>();
-        shootingSystem = GetComponentInChildren<Shooting>();
+        shootingSystem = GetComponentInChildren<ShootSystem>();
         playerAnimator = GetComponent<Animator>();
 
         // Create Input System
         PlayerInputActions playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         playerInputActions.Player.Shoot.performed += Shoot;
+        playerInputActions.Player.Shoot.canceled += ResetShoot;
         playerInputActions.Player.Movement.performed += Movement;
         playerInputActions.Player.Movement.canceled += ResetMovement;
         playerInputActions.Player.Aim.performed += MousePosition;
@@ -49,7 +50,13 @@ public class Player : MonoBehaviour
         //Debug.Log(context.phase);
         //if (context.performed) { Debug.Log("Shoot!"); }
         playerAnimator.SetTrigger("shoot");
-        shootingSystem.Shoot();
+        shootingSystem.shooting = true;
+        shootingSystem.Shooting();
+    }
+
+    public void ResetShoot(InputAction.CallbackContext context)
+    {
+        shootingSystem.shooting = false;
     }
 
     public void Movement(InputAction.CallbackContext context)
