@@ -54,6 +54,8 @@ public class WG_Manager : MonoBehaviour
     [SerializeField] private uint nCells = 100;
     [SerializeField] private uint nGates = 5;
     [SerializeField] private Vector2 cellScale;
+    [SerializeField] private Vector2 wallSize;
+    [SerializeField] private float obstacleRatio;
     [Space]
     public GameObject[] door_1;
     public GameObject[] door_2_1;
@@ -62,7 +64,9 @@ public class WG_Manager : MonoBehaviour
     public GameObject[] door_4;
     public GameObject[] door_Base;
     public GameObject[] gates;
-    public NavMeshSurface surface;
+    public GameObject[] obstacles;
+
+    private NavMeshSurface surface;
 
     // 0 = Right, 1 = Up, 2 = Left, 3 = Down
     public static readonly Vector2Int[] moves = { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
@@ -70,7 +74,10 @@ public class WG_Manager : MonoBehaviour
     // Needed for delete 
     private LinkedList<GameObject> spawnedCells = new LinkedList<GameObject>();
 
-    public Dictionary<Vector2Int, bool[]> blueprint;
+    // Property that returns copy
+    public static Dictionary<Vector2Int, bool[]> GetBlueprint => new Dictionary<Vector2Int, bool[]>(blueprint);
+
+    private static Dictionary<Vector2Int, bool[]> blueprint;
 
     private List<WG_Gate> gateList = new List<WG_Gate>();
 
@@ -132,7 +139,7 @@ public class WG_Manager : MonoBehaviour
         }
     }
 
-    private void GenerateCells()
+    private void GenerateCells(Dictionary<Vector2Int, bool[]> blueprint)
     {
         var gateCandidates = new Dictionary<Vector2Int, bool[]>();
 
@@ -149,16 +156,28 @@ public class WG_Manager : MonoBehaviour
 
 
             SpawnCell(cell.Key, doors, cell.Value);
+
+            if (flipCoin())
+                SpawnObstacle(cell.Key);
+            
         }
 
         GenerateGates(gateCandidates);
     }
 
+    private bool flipCoin()
+    {
+        var n = Random.Range(0.0f, 100.0f);
+        return n <= obstacleRatio;
+    }
+
     private void SpawnCell(Vector2Int position, int doors, bool[] doorDistribution)
     {
+        // method variables
         bool finded = false;
         int it = -1;
         GameObject cell = null;
+
         switch (doors)
         {
             case 1:
@@ -223,6 +242,7 @@ public class WG_Manager : MonoBehaviour
                 cell = Instantiate(door_4[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                 break;
         }
+
         cell.transform.parent = transform;
         spawnedCells.AddLast(cell);
     }
@@ -262,6 +282,7 @@ public class WG_Manager : MonoBehaviour
             i++;
         }
     }
+     
     private void SpawnGate(WG_Gate gate)
     {
         GameObject obj = Instantiate(gates[0], new Vector3(gate.position.x * cellScale.x, 0, gate.position.y * cellScale.y), Quaternion.identity);
@@ -270,13 +291,24 @@ public class WG_Manager : MonoBehaviour
 
         spawnedCells.AddLast(obj);
     }
+
+    private void SpawnObstacle(Vector2Int position)
+    {
+        Vector2 pos = new Vector2(position.x * cellScale.x, position.y * cellScale.y);
+        Vector2 rndOffset = new Vector2(Random.Range((-cellScale.x/2) + wallSize.x, (cellScale.x/2) - wallSize.y), Random.Range((-cellScale.y / 2) + wallSize.x, (cellScale.y / 2) - wallSize.y));
+        GameObject obs = Instantiate(obstacles[0], new Vector3(pos.x + rndOffset.x, 0.0f, pos.y + rndOffset.y), Quaternion.identity);
+        obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
+        spawnedCells.AddLast(obs);
+
+    }
+
     private void GenerateWorld()
     {
         Stopwatch sw = new Stopwatch();
         sw.Start();
 
         blueprint = GenerateBlueprint();
-        GenerateCells();
+        GenerateCells(blueprint);
 
         sw.Stop();
         print("Mapa generado en: " + sw.Elapsed.ToString());
