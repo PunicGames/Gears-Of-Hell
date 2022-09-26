@@ -2551,8 +2551,8 @@ MonoBehaviour:
   enableBodyRotation: 1
   enableMovementRotation: 1
   rigidBodyController: 1
-  moveDistance: 0.5
-  stepHeight: 0.5
+  moveDistance: 1
+  stepHeight: 0.6
   spiderJitterCutOff: 0
   waitTimeBetweenEveryStep: 0
   LegSmoothness: 8
@@ -2795,6 +2795,8 @@ GameObject:
   - component: {fileID: 7724889248031397015}
   - component: {fileID: 7724889248031397012}
   - component: {fileID: 7724889248031397014}
+  - component: {fileID: 1468547008}
+  - component: {fileID: 1468547009}
   m_Layer: 6
   m_Name: Spider
   m_TagString: Untagged
@@ -2811,7 +2813,7 @@ Transform:
   m_GameObject: {fileID: 7724889248031397008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 307.25, y: 0.987, z: -1.43}
-  m_LocalScale: {x: 0.056853205, y: 0.056853205, z: 0.056853205}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5286433687611034878}
@@ -2930,7 +2932,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -2946,7 +2948,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 6.9840117
-  m_Center: {x: 2.278154, y: 12.78598, z: 0}
+  m_Center: {x: 2.278154, y: 14.03, z: 0}
 --- !u!114 &7724889248031397014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2954,12 +2956,47 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7724889248031397008}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8376058c7aa4c0448cff58f980c2ec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 0.5
+--- !u!114 &1468547008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7724889248031397008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2048a17784f594b80cf5d70fb00b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightRange: 100
+--- !u!195 &1468547009
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7724889248031397008}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 20
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7885399023129500917
 GameObject:
   m_ObjectHideFlags: 0
