@@ -313,7 +313,7 @@ public class WG_Manager : MonoBehaviour
         GenerateCells(blueprint);
 
         sw.Stop();
-        print("Mapa generado en: " + sw.Elapsed.ToString());
+        Debug_UI.Print("Mapa generado en: " + sw.Elapsed.ToString());
 
         surface.BuildNavMesh();
 
