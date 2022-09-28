@@ -18,11 +18,11 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("Health: " + currentHealth);
     }
 
-    public void TakeDamage(int amount, Vector3 hitPoint) { // hitPoint es el punto exacto del impacto (preparado para spawnear un efecto de particulas de impacto si así se quisiera)
+    public void TakeDamage(int amount) {
         if (isDead) return;
 
-        Debug.Log("Vida enemigo: " + currentHealth);
         currentHealth -= amount;
+        Debug.Log("Vida enemigo: " + currentHealth);
 
         if (currentHealth <= 0) {
             Death();
