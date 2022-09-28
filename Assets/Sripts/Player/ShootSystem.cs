@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShootSystem : MonoBehaviour
 {
@@ -19,12 +20,16 @@ public class ShootSystem : MonoBehaviour
     // Action control
     public bool shooting;
     bool readyToShoot, reloading;
+    public bool automaticGun;
 
     // Bug fixing
     public bool allowInvoke = true;
 
     // Audio
     AudioSource gunAudio;
+
+    // Display
+    public Text ammunitionDisplay;
 
     private void Awake()
     {
@@ -38,6 +43,9 @@ public class ShootSystem : MonoBehaviour
     {
         // Recarga automáticamente si no quedan balas
         if (readyToShoot && shooting && !reloading && bulletsLeft <= 0) Reload();
+
+        if (ammunitionDisplay != null)
+            ammunitionDisplay.text = (bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
     }
 
     public void Shooting() 
@@ -81,6 +89,11 @@ public class ShootSystem : MonoBehaviour
         if (bulletsShot < bulletsPerTap && (bulletsLeft > 0)) {
             Invoke("Shoot", timeBetweenShots);
         }
+        if ((automaticGun && shooting && (bulletsLeft > 0)))
+        { // Si es un arma automática, sigue disparando
+            Debug.Log("Magazine Size: " + magazineSize + ". BulletsLeft: " + bulletsLeft + ". BulletsShot: " + bulletsShot);
+            Invoke("Shoot", timeBetweenShots);
+        }
     }
 
     private void ResetShot() {
@@ -98,5 +111,6 @@ public class ShootSystem : MonoBehaviour
     private void ReloadFinished() {
         bulletsLeft = magazineSize;
         reloading = false;
+        Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
     }
 }
