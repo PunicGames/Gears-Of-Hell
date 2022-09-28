@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &317522104 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8607388108730264677, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+  m_PrefabInstance: {fileID: 8607388109986248834}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &339486727
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +438,8 @@ GameObject:
   - component: {fileID: 1872047785}
   - component: {fileID: 1872047784}
   - component: {fileID: 1872047788}
+  - component: {fileID: 1872047789}
+  - component: {fileID: 1872047790}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -527,6 +540,33 @@ MonoBehaviour:
   startingHealth: 100
   currentHealth: 0
   scoreValue: 10
+--- !u!114 &1872047789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872047783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beea883880f7a1b4fba245b950953459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenAttacks: 0.5
+  attackDamage: 20
+--- !u!135 &1872047790
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872047783}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &75883382795063165
 Transform:
   m_ObjectHideFlags: 0
@@ -2342,6 +2382,7 @@ GameObject:
   - component: {fileID: 7311551714909158242}
   - component: {fileID: 7311551714909158243}
   - component: {fileID: 7617469722215902195}
+  - component: {fileID: 7617469722215902196}
   m_Layer: 0
   m_Name: Player_Character
   m_TagString: Player
@@ -2369,6 +2410,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7617469722215902196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7617469722215902192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4135c722bdb0d4891a358134ba40cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  damageImage: {fileID: 317522104}
+  flashSpeed: 5
+  damageColor: {r: 1, g: 0, b: 0, a: 0.1}
 --- !u!4 &7736355888692817724
 Transform:
   m_ObjectHideFlags: 0
@@ -2595,7 +2653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8607388110424686180, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8607388110424686181, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_RootOrder

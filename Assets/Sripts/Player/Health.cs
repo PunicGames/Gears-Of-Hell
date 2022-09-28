@@ -49,5 +49,7 @@ public class Health : MonoBehaviour
         isDead = true;
         playerMovement.enabled = false;
         // Faltaría poner sistema de animaciones o audios, etc. Por eso está esto en un método a parte
+
+        Destroy(gameObject, 3);
     }
 }
