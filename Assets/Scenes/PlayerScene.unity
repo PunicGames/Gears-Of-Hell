@@ -2323,11 +2323,13 @@ MonoBehaviour:
   timeBetweenShooting: 0.2
   spread: 0.1
   reloadTime: 2
-  timeBetweenShots: 0.1
+  timeBetweenShots: 0.5
   magazineSize: 5
   bulletsPerTap: 1
   shooting: 0
+  automaticGun: 1
   allowInvoke: 1
+  ammunitionDisplay: {fileID: 8607388109986248835}
 --- !u!4 &7548470674204276466
 Transform:
   m_ObjectHideFlags: 0
@@ -2667,8 +2669,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9011216072167589897, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_Text
+      value: "MUNICI\xD3N\n"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+--- !u!114 &8607388109986248835 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9011216072167589897, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+  m_PrefabInstance: {fileID: 8607388109986248834}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8640717198351175350
 GameObject:
   m_ObjectHideFlags: 0

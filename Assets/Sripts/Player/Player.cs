@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
         Aim();
     }
 
-
     public void Shoot(InputAction.CallbackContext context)
     {
         //Debug.Log(context.phase);
