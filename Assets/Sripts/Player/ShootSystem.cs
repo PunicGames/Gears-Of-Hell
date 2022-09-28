@@ -11,6 +11,7 @@ public class ShootSystem : MonoBehaviour
 
     // Bullet Force
     public float shootForce;
+    public int bulletDamage = 20;
 
     // Gun Stats
     public float timeBetweenShooting, spread, reloadTime, timeBetweenShots;
@@ -76,6 +77,7 @@ public class ShootSystem : MonoBehaviour
         GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
         currentBullet.transform.forward = directionWithSpread.normalized;
         currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
+        currentBullet.gameObject.GetComponent<Bullet>().damage = bulletDamage;
 
         bulletsLeft--;
         bulletsShot++;
