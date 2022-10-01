@@ -42,6 +42,12 @@ public class Player : MonoBehaviour
     {
         Move();
         Aim();
+        //playerAnimator.SetFloat("VelX", CachedMoveInput.x * Mathf.Cos(Vector3.Angle(movement.normalized, transform.forward)));
+        //playerAnimator.SetFloat("VelZ", CachedMoveInput.y * Mathf.Cos(Vector3.Angle(movement.normalized, transform.forward)));
+        //if(Vector3.Angle(movement, transform.forward)>0)
+
+        playerAnimator.SetFloat("VelX", CachedMoveInput.x);
+        playerAnimator.SetFloat("VelZ", CachedMoveInput.y);
     }
 
 
@@ -80,6 +86,10 @@ public class Player : MonoBehaviour
     {
         movement.Set(CachedMoveInput.x, 0.0f, CachedMoveInput.y);
         movement = movement * speed * Time.deltaTime;
+       
+
+        //Debug.Log("x "+ localCachedMoveInput.x);
+        //Debug.Log("Y "+ localCachedMoveInput.y);
 
         rb.MovePosition(transform.position + movement);
     }
