@@ -40,11 +40,12 @@ public class ShootSystem : MonoBehaviour
         if (readyToShoot && shooting && !reloading && bulletsLeft <= 0) Reload();
     }
 
-    public void Shooting() 
+    public void Shooting(Animator anim) 
     {
         // Comprueba si se puede disparar
         if (readyToShoot && shooting && !reloading && (bulletsLeft) > 0) {
             bulletsShot = 0;
+            anim.SetTrigger("shoot");
             Shoot();
         }
     }
