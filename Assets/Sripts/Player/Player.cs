@@ -49,9 +49,9 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(context.phase);
         //if (context.performed) { Debug.Log("Shoot!"); }
-        playerAnimator.SetTrigger("shoot");
+        //playerAnimator.SetTrigger("shoot");
         shootingSystem.shooting = true;
-        shootingSystem.Shooting();
+        shootingSystem.Shooting(playerAnimator);
     }
 
     public void ResetShoot(InputAction.CallbackContext context)
