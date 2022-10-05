@@ -37,25 +37,31 @@ public class Player : MonoBehaviour
         // Others
         floorMask = LayerMask.GetMask("Floor");
     }
+    private void Update()
+    {
+        float angle = Vector3.Angle(transform.forward, movement);
+
+        if (angle > 60)
+            //if (angle < 120) playerAnimator.SetFloat("VelX", 1.5f);
+            //else
+                //Activa animación hacia atras
+                playerAnimator.SetFloat("VelX", 1);
+        else
+            //Activa animación hacia delante
+            playerAnimator.SetFloat("VelX", 0);
+    }
 
     private void FixedUpdate()
     {
         Move();
         Aim();
-        //playerAnimator.SetFloat("VelX", CachedMoveInput.x * Mathf.Cos(Vector3.Angle(movement.normalized, transform.forward)));
-        //playerAnimator.SetFloat("VelZ", CachedMoveInput.y * Mathf.Cos(Vector3.Angle(movement.normalized, transform.forward)));
-        //if(Vector3.Angle(movement, transform.forward)>0)
 
-        playerAnimator.SetFloat("VelX", CachedMoveInput.x);
-        playerAnimator.SetFloat("VelZ", CachedMoveInput.y);
     }
 
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        //Debug.Log(context.phase);
-        //if (context.performed) { Debug.Log("Shoot!"); }
-        //playerAnimator.SetTrigger("shoot");
+
         shootingSystem.shooting = true;
         shootingSystem.Shooting(playerAnimator);
     }
@@ -86,10 +92,6 @@ public class Player : MonoBehaviour
     {
         movement.Set(CachedMoveInput.x, 0.0f, CachedMoveInput.y);
         movement = movement * speed * Time.deltaTime;
-       
-
-        //Debug.Log("x "+ localCachedMoveInput.x);
-        //Debug.Log("Y "+ localCachedMoveInput.y);
 
         rb.MovePosition(transform.position + movement);
     }
