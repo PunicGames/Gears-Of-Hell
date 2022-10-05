@@ -88,11 +88,13 @@ public class Player : MonoBehaviour
         //Debug.Log(context);
         //Debug.Log(context.phase);
         playerAnimator.SetBool("isMoving", true);
+        //playerAnimator.SetBool("isRifle", true);
         CachedMoveInput = context.ReadValue<Vector2>();
     }
     public void ResetMovement(InputAction.CallbackContext context)
     {
         playerAnimator.SetBool("isMoving", false);
+        //playerAnimator.SetBool("isRifle", false);
         CachedMoveInput = new Vector2(0.0f, 0.0f);
     }
     public void MousePosition(InputAction.CallbackContext context)
