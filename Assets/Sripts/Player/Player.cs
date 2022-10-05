@@ -41,26 +41,14 @@ public class Player : MonoBehaviour
     {
         float angle = Vector3.Angle(transform.forward, movement);
 
-        if (angle > 40)
-        {
-            float signedAngle = Vector3.SignedAngle(transform.forward, movement, transform.up);
-            if (signedAngle < 140 && signedAngle > 0)
-                playerAnimator.SetFloat("VelX", Mathf.Lerp(playerAnimator.GetFloat("VelX"), 1.5f, Time.deltaTime * 10));
-            else if (signedAngle < 0 && signedAngle > -140)
-                playerAnimator.SetFloat("VelX", Mathf.Lerp(playerAnimator.GetFloat("VelX"), 2f, Time.deltaTime * 10));
-
-            //if (angle < 140) //playerAnimator.SetFloat("VelX", 1.5f); 
-            //    playerAnimator.SetFloat("VelX", Mathf.Lerp(playerAnimator.GetFloat("VelX"), 1.5f, Time.deltaTime * 15));
-            else
-                playerAnimator.SetFloat("VelX", Mathf.Lerp(playerAnimator.GetFloat("VelX"), 1, Time.deltaTime * 10));
-            //Activa animación hacia atras
-            //playerAnimator.GetFloat("VelX");
-            //playerAnimator.SetFloat("VelX", 1);
-        }
+        if (angle > 60)
+            //if (angle < 120) playerAnimator.SetFloat("VelX", 1.5f);
+            //else
+                //Activa animación hacia atras
+                playerAnimator.SetFloat("VelX", 1);
         else
             //Activa animación hacia delante
-            //playerAnimator.SetFloat("VelX", 0);
-            playerAnimator.SetFloat("VelX", Mathf.Lerp(playerAnimator.GetFloat("VelX"), 0, Time.deltaTime * 10));
+            playerAnimator.SetFloat("VelX", 0);
     }
 
     private void FixedUpdate()
