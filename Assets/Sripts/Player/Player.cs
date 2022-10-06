@@ -37,6 +37,10 @@ public class Player : MonoBehaviour
         // Others
         floorMask = LayerMask.GetMask("Floor");
     }
+    private void Start()
+    {
+        playerAnimator.SetBool("isRifle", true);
+    }
     private void Update()
     {
         float angle = Vector3.Angle(transform.forward, movement);
