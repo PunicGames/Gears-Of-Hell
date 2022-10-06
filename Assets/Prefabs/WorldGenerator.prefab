@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7912361067319672374}
   - component: {fileID: 7912361067319672375}
   - component: {fileID: 7912361067319672377}
+  - component: {fileID: 639656745}
   m_Layer: 0
   m_Name: WorldGenerator
   m_TagString: Untagged
@@ -47,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nCells: 20
   nGates: 0
-  cellScale: {x: 10, y: 10}
   wallSize: {x: 1.5, y: 1.5}
   obstacleRatio: 80
   door_1:
@@ -95,3 +95,25 @@ MonoBehaviour:
   m_VoxelSize: 0.21666665
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &639656745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912361067319672372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a66c015a8d913d46ae2b405167c0a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  enemyList:
+  - {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+  - {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
+  spawnList: []
+  spawnCount: 0
+  minSpawnDelay: 1
+  maxSpawnDelay: 2
+  minSpawnSteps: 3
+  maxSpawnSteps: 4
