@@ -54,7 +54,7 @@ public class WG_Manager : MonoBehaviour
     //  Algorithm params
     [SerializeField] private uint nCells = 100;
     [SerializeField] private uint nGates = 5;
-    [SerializeField] private Vector2 cellScale;
+    [SerializeField] public static Vector2 cellScale = new Vector2( 10.0f, 10.0f);
     [SerializeField] private Vector2 wallSize;
     [SerializeField] private float obstacleRatio;
     [Space]

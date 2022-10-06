@@ -114,6 +114,6 @@ public class ShootSystem : MonoBehaviour
     private void ReloadFinished() {
         bulletsLeft = magazineSize;
         reloading = false;
-        Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
+        //Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
     }
 }
