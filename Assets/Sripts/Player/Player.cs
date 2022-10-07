@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
         playerInputActions.Player.Movement.performed += Movement;
         playerInputActions.Player.Movement.canceled += ResetMovement;
         playerInputActions.Player.Aim.performed += MousePosition;
+        playerInputActions.Player.Esc.performed += PauseMenuCall;
 
         // Others
         floorMask = LayerMask.GetMask("Floor");
@@ -77,9 +78,10 @@ public class Player : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-
-        shootingSystem.shooting = true;
-        shootingSystem.Shooting(playerAnimator);
+        if (!PauseMenu.GameIsPaused) { 
+            shootingSystem.shooting = true;
+            shootingSystem.Shooting(playerAnimator);
+        }
     }
 
     public void ResetShoot(InputAction.CallbackContext context)
@@ -104,6 +106,11 @@ public class Player : MonoBehaviour
     public void MousePosition(InputAction.CallbackContext context)
     {
         CachedAimInput = context.ReadValue<Vector2>();
+    }
+
+    public void PauseMenuCall(InputAction.CallbackContext context)
+    {
+        PauseMenu.TriggerPause = true;
     }
 
     private void Move()
