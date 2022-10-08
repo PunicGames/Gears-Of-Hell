@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // La posicion del jugador en un principio
+    private Transform target; // La posicion del jugador en un principio
     public float smoothing = 5f;
 
     Vector3 offset;
 
     private void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
         offset = transform.position - target.position;
     }
 
