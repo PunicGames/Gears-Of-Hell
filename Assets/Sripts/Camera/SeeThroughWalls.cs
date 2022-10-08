@@ -7,10 +7,16 @@ public class SeeThroughWalls : MonoBehaviour
     [Range(0, 1)]
     public float transparencyStrength;
 
-    public Transform targetPlayer;
     public LayerMask mask;
+    private Transform targetPlayer;
     private Renderer lastRenderer;
     private Color lastColor;
+
+
+    private void Start()
+    {
+        targetPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     // Update is called once per frame
     void Update()
