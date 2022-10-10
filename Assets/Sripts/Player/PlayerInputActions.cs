@@ -62,6 +62,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MobileMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""fb6a056d-b9e9-4124-9d2b-14295eab97aa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MobileAim"",
+                    ""type"": ""Value"",
+                    ""id"": ""f61ac04d-ba2d-4702-96ed-708400d7cfd9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +170,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Esc"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20489a8b-624c-48b9-9184-5c3f9d026a32"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MobileMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfcdef7d-bd2b-43ae-a3d7-9f3b4572ef28"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MobileAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +204,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
+        m_Player_MobileMovement = m_Player.FindAction("MobileMovement", throwIfNotFound: true);
+        m_Player_MobileAim = m_Player.FindAction("MobileAim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +269,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Esc;
+    private readonly InputAction m_Player_MobileMovement;
+    private readonly InputAction m_Player_MobileAim;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -235,6 +279,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Esc => m_Wrapper.m_Player_Esc;
+        public InputAction @MobileMovement => m_Wrapper.m_Player_MobileMovement;
+        public InputAction @MobileAim => m_Wrapper.m_Player_MobileAim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +302,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Esc.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
                 @Esc.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
                 @Esc.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                @MobileMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
+                @MobileMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
+                @MobileMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
+                @MobileAim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileAim;
+                @MobileAim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileAim;
+                @MobileAim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,6 +324,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Esc.started += instance.OnEsc;
                 @Esc.performed += instance.OnEsc;
                 @Esc.canceled += instance.OnEsc;
+                @MobileMovement.started += instance.OnMobileMovement;
+                @MobileMovement.performed += instance.OnMobileMovement;
+                @MobileMovement.canceled += instance.OnMobileMovement;
+                @MobileAim.started += instance.OnMobileAim;
+                @MobileAim.performed += instance.OnMobileAim;
+                @MobileAim.canceled += instance.OnMobileAim;
             }
         }
     }
@@ -282,5 +340,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnEsc(InputAction.CallbackContext context);
+        void OnMobileMovement(InputAction.CallbackContext context);
+        void OnMobileAim(InputAction.CallbackContext context);
     }
 }
