@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
 
     private Animator playerAnimator;
 
+
+    public GameObject mobileUI;
+    private bool desktop = true;
+
     private void Awake()
     {
         // Init components
@@ -25,23 +29,60 @@ public class Player : MonoBehaviour
         shootingSystem = GetComponentInChildren<ShootSystem>();
         playerAnimator = GetComponent<Animator>();
 
-        // Create Input System
-        PlayerInputActions playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
-        playerInputActions.Player.Shoot.performed += Shoot;
-        playerInputActions.Player.Shoot.canceled += ResetShoot;
-        playerInputActions.Player.Movement.performed += Movement;
-        playerInputActions.Player.Movement.canceled += ResetMovement;
-        playerInputActions.Player.Aim.performed += MousePosition;
-
         // Others
         floorMask = LayerMask.GetMask("Floor");
+
+        
+        if (Application.isMobilePlatform) 
+        {
+            desktop = false;
+        }
+        else if (SystemInfo.deviceType == DeviceType.Desktop)
+        {
+            desktop = true;
+        }
+
+        //desktop = false;
+
+        // Create Input System
+        PlayerInputActions playerInputActions = new PlayerInputActions();
+
+        playerInputActions.Player.Enable();
+
+        if (desktop)
+        {
+            //desktop = true;
+            playerInputActions.Player.Shoot.performed += Shoot;
+            playerInputActions.Player.Shoot.canceled += ResetShoot;
+            playerInputActions.Player.Movement.performed += Movement;
+            playerInputActions.Player.Movement.canceled += ResetMovement;
+            playerInputActions.Player.Aim.performed += MousePosition;
+        }
+        else
+        {
+            //desktop = false;
+            mobileUI.SetActive(true);
+
+            playerInputActions.Player.MobileMovement.performed += Movement;
+            playerInputActions.Player.MobileMovement.canceled += ResetMovement;
+            playerInputActions.Player.MobileAim.performed += MousePosition;
+            playerInputActions.Player.MobileAim.performed += Shoot;
+            playerInputActions.Player.MobileAim.canceled += ResetShoot;
+        }
     }
 
     private void FixedUpdate()
     {
         Move();
-        Aim();
+        if (desktop)
+        {
+            Aim();
+        }
+        else
+        {
+            MobileAim();
+        }
+        
     }
 
 
@@ -99,5 +140,12 @@ public class Player : MonoBehaviour
             rb.MoveRotation(newPlayerRotation);
         }
 
+    }
+
+    private void MobileAim()
+    {
+        Vector3 vec = new Vector3 (CachedAimInput.x, 0f, CachedAimInput.y);
+        Quaternion newPlayerRotation = Quaternion.LookRotation(vec);
+        rb.MoveRotation(newPlayerRotation);
     }
 }

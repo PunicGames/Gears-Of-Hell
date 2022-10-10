@@ -53,6 +53,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MobileMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""5a33c2af-070b-4062-9e56-7a3883df5a64"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MobileAim"",
+                    ""type"": ""Value"",
+                    ""id"": ""cc4fdddb-9708-4036-945b-6a6d23d61f3e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -132,6 +150,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f84d947-d4e1-4c42-a56c-97af4e053b1c"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MobileMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a524cca-88e9-4b9d-9118-5b45bb76d316"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MobileAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +183,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_MobileMovement = m_Player.FindAction("MobileMovement", throwIfNotFound: true);
+        m_Player_MobileAim = m_Player.FindAction("MobileAim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,6 +247,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_MobileMovement;
+    private readonly InputAction m_Player_MobileAim;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -212,6 +256,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @MobileMovement => m_Wrapper.m_Player_MobileMovement;
+        public InputAction @MobileAim => m_Wrapper.m_Player_MobileAim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -230,6 +276,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @MobileMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
+                @MobileMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
+                @MobileMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
+                @MobileAim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileAim;
+                @MobileAim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileAim;
+                @MobileAim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -243,6 +295,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @MobileMovement.started += instance.OnMobileMovement;
+                @MobileMovement.performed += instance.OnMobileMovement;
+                @MobileMovement.canceled += instance.OnMobileMovement;
+                @MobileAim.started += instance.OnMobileAim;
+                @MobileAim.performed += instance.OnMobileAim;
+                @MobileAim.canceled += instance.OnMobileAim;
             }
         }
     }
@@ -252,5 +310,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnMobileMovement(InputAction.CallbackContext context);
+        void OnMobileAim(InputAction.CallbackContext context);
     }
 }
