@@ -57,7 +57,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""MobileMovement"",
                     ""type"": ""Value"",
-                    ""id"": ""5a33c2af-070b-4062-9e56-7a3883df5a64"",
+                    ""id"": ""3b32bb14-e282-47c6-8e42-1f10fbe2bf94"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -66,7 +66,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""MobileAim"",
                     ""type"": ""Value"",
-                    ""id"": ""cc4fdddb-9708-4036-945b-6a6d23d61f3e"",
+                    ""id"": ""081ccb94-5801-4030-ba8c-7c818d10ca7c"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -153,7 +153,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2f84d947-d4e1-4c42-a56c-97af4e053b1c"",
+                    ""id"": ""b2591006-eeb8-4772-807e-df708941e38f"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -164,7 +164,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9a524cca-88e9-4b9d-9118-5b45bb76d316"",
+                    ""id"": ""250af4af-f359-45ee-af1f-24de5a58ff27"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
