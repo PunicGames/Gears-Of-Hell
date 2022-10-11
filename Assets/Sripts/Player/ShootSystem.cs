@@ -30,7 +30,7 @@ public class ShootSystem : MonoBehaviour
     AudioSource gunAudio;
 
     // Display
-    public Text ammunitionDisplay;
+    private Text ammunitionDisplay;
 
     private void Awake()
     {
@@ -38,6 +38,11 @@ public class ShootSystem : MonoBehaviour
         bulletsLeft = magazineSize;
         readyToShoot = true;
         gunAudio = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        ammunitionDisplay = GameObject.Find("Municion").GetComponent<Text>();
     }
 
     void Update()

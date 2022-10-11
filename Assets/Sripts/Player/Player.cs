@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public GameObject mobileUI;
     private bool desktop = true;
 
+    private PlayerInputActions playerInputActions;
+
     private void Awake()
     {
         // Init components
@@ -40,34 +42,11 @@ public class Player : MonoBehaviour
             desktop = true;
         }
 
-        desktop = false;
+        //desktop = false;
 
-        // Create Input System
-        PlayerInputActions playerInputActions = new PlayerInputActions();
+        // Input actions
+        playerInputActions = new PlayerInputActions();
 
-        playerInputActions.Player.Enable();
-
-        if (desktop)
-        {
-            //desktop = true;
-            playerInputActions.Player.Shoot.performed += Shoot;
-            playerInputActions.Player.Shoot.canceled += ResetShoot;
-            playerInputActions.Player.Movement.performed += Movement;
-            playerInputActions.Player.Movement.canceled += ResetMovement;
-            playerInputActions.Player.Aim.performed += MousePosition;
-            playerInputActions.Player.Esc.performed += PauseMenuCall;
-        }
-        else
-        {
-            //desktop = false;
-            mobileUI.SetActive(true);
-
-            playerInputActions.Player.MobileMovement.performed += Movement;
-            playerInputActions.Player.MobileMovement.canceled += ResetMovement;
-            playerInputActions.Player.MobileAim.performed += MousePosition;
-            playerInputActions.Player.MobileAim.performed += Shoot;
-            playerInputActions.Player.MobileAim.canceled += ResetShoot;
-        }
     }
     private void Start()
     {
@@ -101,6 +80,10 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        // En principio cuando está el menu de pausa timeScale es 0 y el FixedUpdate no se ejecuta. Aun así, comprobamos por si acaso.
+        if (PauseMenu.GameIsPaused) return;
+
         Move();
         if (desktop)
         {
@@ -124,26 +107,35 @@ public class Player : MonoBehaviour
 
     public void ResetShoot(InputAction.CallbackContext context)
     {
-        shootingSystem.shooting = false;
+        if (!PauseMenu.GameIsPaused)
+        {
+            shootingSystem.shooting = false;
+        }
     }
 
     public void Movement(InputAction.CallbackContext context)
     {
-        //Debug.Log(context);
-        //Debug.Log(context.phase);
-        playerAnimator.SetBool("isMoving", true);
-        //playerAnimator.SetBool("isRifle", true);
-        CachedMoveInput = context.ReadValue<Vector2>();
+        if (!PauseMenu.GameIsPaused)
+        {
+            playerAnimator.SetBool("isMoving", true);
+            CachedMoveInput = context.ReadValue<Vector2>();
+        }
     }
     public void ResetMovement(InputAction.CallbackContext context)
     {
-        playerAnimator.SetBool("isMoving", false);
-        //playerAnimator.SetBool("isRifle", false);
-        CachedMoveInput = new Vector2(0.0f, 0.0f);
+        if (!PauseMenu.GameIsPaused)
+        {
+            playerAnimator.SetBool("isMoving", false);
+            CachedMoveInput = new Vector2(0.0f, 0.0f);
+        }
+        
     }
     public void MousePosition(InputAction.CallbackContext context)
     {
-        CachedAimInput = context.ReadValue<Vector2>();
+        if (!PauseMenu.GameIsPaused)
+        {
+            CachedAimInput = context.ReadValue<Vector2>();
+        }
     }
 
     public void PauseMenuCall(InputAction.CallbackContext context)
@@ -181,5 +173,53 @@ public class Player : MonoBehaviour
         Vector3 vec = new Vector3(CachedAimInput.x, 0f, CachedAimInput.y);
         Quaternion newPlayerRotation = Quaternion.LookRotation(vec);
         rb.MoveRotation(newPlayerRotation);
+    }
+
+    private void OnEnable()
+    {
+
+        playerInputActions.Player.Enable();
+
+        if (desktop)
+        {
+            //desktop = true;
+            playerInputActions.Player.Shoot.performed += Shoot;
+            playerInputActions.Player.Shoot.canceled += ResetShoot;
+            playerInputActions.Player.Movement.performed += Movement;
+            playerInputActions.Player.Movement.canceled += ResetMovement;
+            playerInputActions.Player.Aim.performed += MousePosition;
+            playerInputActions.Player.Esc.performed += PauseMenuCall;
+        }
+        else
+        {
+            //desktop = false;
+            mobileUI.SetActive(true);
+
+            playerInputActions.Player.MobileMovement.performed += Movement;
+            playerInputActions.Player.MobileMovement.canceled += ResetMovement;
+            playerInputActions.Player.MobileAim.performed += MousePosition;
+            playerInputActions.Player.MobileAim.performed += Shoot;
+            playerInputActions.Player.MobileAim.canceled += ResetShoot;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (desktop)
+        {
+            playerInputActions.Player.Shoot.performed -= Shoot;
+            playerInputActions.Player.Shoot.canceled -= ResetShoot;
+            playerInputActions.Player.Movement.performed -= Movement;
+            playerInputActions.Player.Movement.canceled -= ResetMovement;
+            playerInputActions.Player.Aim.performed -= MousePosition;
+            playerInputActions.Player.Esc.performed -= PauseMenuCall;
+        }
+        else {
+            playerInputActions.Player.MobileMovement.performed -= Movement;
+            playerInputActions.Player.MobileMovement.canceled -= ResetMovement;
+            playerInputActions.Player.MobileAim.performed -= MousePosition;
+            playerInputActions.Player.MobileAim.performed -= Shoot;
+            playerInputActions.Player.MobileAim.canceled -= ResetShoot;
+        }
     }
 }
