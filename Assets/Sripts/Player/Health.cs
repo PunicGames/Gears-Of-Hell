@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
-    public Image damageImage;
+    private Image damageImage;
     public float flashSpeed = 5f;
     public Color damageColor = new Color(1.0f, 0.0f, 0.0f, 0.1f);
 
@@ -19,6 +19,11 @@ public class Health : MonoBehaviour
     {
         playerMovement = GetComponent<Player>();
         currentHealth = maxHealth;
+    }
+
+    private void Start()
+    {
+        damageImage = GameObject.Find("DamagedBlood").GetComponent<Image>();
     }
 
 

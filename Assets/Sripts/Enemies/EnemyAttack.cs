@@ -12,7 +12,7 @@ public class EnemyAttack : MonoBehaviour
     bool playerInRange;
     float timer;
 
-    private void Awake()
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
