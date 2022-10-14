@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 2140532941445721661}
   - component: {fileID: 2140532941445721655}
   - component: {fileID: 4751650273199184845}
+  - component: {fileID: 7330653623977720479}
+  - component: {fileID: 6014481276430231423}
   m_Layer: 7
   m_Name: BasicEnemy
   m_TagString: Enemy
@@ -98,7 +100,7 @@ BoxCollider:
   m_GameObject: {fileID: 2140532941445721662}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -162,10 +164,39 @@ SphereCollider:
   m_GameObject: {fileID: 2140532941445721662}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.92012715
   m_Center: {x: 0.015622258, y: 0.043287933, z: 0}
+--- !u!114 &7330653623977720479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140532941445721662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 100
+  scoreValue: 10
+--- !u!114 &6014481276430231423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140532941445721662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beea883880f7a1b4fba245b950953459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenAttacks: 0.5
+  attackDamage: 5
 --- !u!1 &2140532943306335215
 GameObject:
   m_ObjectHideFlags: 0

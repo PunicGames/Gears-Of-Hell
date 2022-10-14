@@ -9,6 +9,7 @@ public class RangedEnemy : MonoBehaviour
     public float attackRange;
     public float attackSpeed;
     public float bulletSpeed;
+    public float damage = 10;
 
     private bool alreadyAttacked = false;
 
@@ -47,7 +48,8 @@ public class RangedEnemy : MonoBehaviour
         {
             GameObject b = Instantiate(bullet, transform.position,Quaternion.identity);
             b.transform.LookAt(player.transform);
-            b.GetComponent<BulletBehaviour>().setForce(bulletSpeed);
+            b.GetComponent<BulletEnemy>().setForce(bulletSpeed);
+            b.GetComponent<BulletEnemy>().setDamage(damage);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), attackSpeed);

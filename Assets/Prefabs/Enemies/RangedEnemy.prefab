@@ -112,6 +112,8 @@ GameObject:
   - component: {fileID: 1362870519766169394}
   - component: {fileID: 1362870519766169393}
   - component: {fileID: 1362870519766169392}
+  - component: {fileID: 2100687500816879396}
+  - component: {fileID: 4999979129543916153}
   m_Layer: 7
   m_Name: RangedEnemy
   m_TagString: Enemy
@@ -251,5 +253,34 @@ MonoBehaviour:
   sightRange: 100
   attackRange: 10
   attackSpeed: 3
-  bulletSpeed: 500
+  bulletSpeed: 10
+  damage: 10
   bullet: {fileID: 8138357740357630760, guid: d1e3ce7f519589a499cd7757744e3d3d, type: 3}
+--- !u!114 &2100687500816879396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362870519766169385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
+  scoreValue: 10
+--- !u!114 &4999979129543916153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362870519766169385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2048a17784f594b80cf5d70fb00b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightRange: 100
