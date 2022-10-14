@@ -83,7 +83,7 @@ public class ShootSystem : MonoBehaviour
         GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
         currentBullet.transform.forward = directionWithSpread.normalized;
         currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.gameObject.GetComponent<Bullet>().damage = bulletDamage;
+        currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
 
         bulletsLeft--;
         bulletsShot++;

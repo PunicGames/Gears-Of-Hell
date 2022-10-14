@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
+    public float maxHealth = 100;
+    public float currentHealth;
     private Image damageImage;
     public float flashSpeed = 5f;
     public Color damageColor = new Color(1.0f, 0.0f, 0.0f, 0.1f);
@@ -39,7 +39,7 @@ public class Health : MonoBehaviour
         damaged = false;
     }
 
-    public void TakeDamage(int amount) {
+    public void TakeDamage(float amount) {
         damaged = true;
 
         currentHealth -= amount;

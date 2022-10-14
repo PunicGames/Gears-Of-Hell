@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -34,13 +35,19 @@ public class EnemyHealth : MonoBehaviour
         isDead = true;
         collider.enabled = false;
 
-        GetComponent<EnemyAttack>().enabled = false;
 
-        // CODIGO PROVISIONAL PARA EL ENEMIGO PERSEGUIDOR PARA DESACTIVAR SU SCRIPT DE MOVIMIENTO
+        NavMeshAgent navMov = GetComponent<NavMeshAgent>();
         EnemiesMovement eM = GetComponent<EnemiesMovement>();
-        if (eM != null) {
+        EnemyMeleeAttack mE = GetComponent<EnemyMeleeAttack>();
+        RangedEnemy rE = GetComponent<RangedEnemy>();
+        if (eM != null)
             eM.enabled = false;
-        }
+        if(rE != null)
+            rE.enabled = false;
+        if(mE != null)
+            mE.enabled = false;
+        if (navMov != null)
+            navMov.enabled = false;
 
         // Faltan sonidos y animaciones de muerte etc etc
 
