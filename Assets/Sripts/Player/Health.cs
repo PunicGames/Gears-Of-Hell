@@ -50,9 +50,7 @@ public class Health : MonoBehaviour
     {
         if (hpDisplay != null)
         {
-            print("yesssssssssssssssssss");
             hpDisplay.text = currentHealth.ToString();
-
         }
     }
 
