@@ -3,7 +3,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WG_Gate
+public class Gate
 {
     public Vector2Int position;
     public int orientation;
@@ -13,7 +13,7 @@ public class WG_Gate
     private GameObject gameObject;
 
 
-    public WG_Gate(Vector2Int position, int orientation, Dictionary<Vector2Int, bool[]> blueprint)
+    public Gate(Vector2Int position, int orientation, Dictionary<Vector2Int, bool[]> blueprint)
     {
         this.position = position;
         this.orientation = orientation;
@@ -42,22 +42,26 @@ public class WG_Gate
     private void SetStateOnBlueprint(Dictionary<Vector2Int, bool[]> blueprint)
     {
         blueprint[this.position][orientation] = state;
-        blueprint[position + WG_Manager.moves[orientation]][WG_Manager.InvertMovement(orientation)] = state;
+        blueprint[position + WorldGenerator.moves[orientation]][WorldGenerator.InvertMovement(orientation)] = state;
     }
 }
 
-public class WG_Manager : MonoBehaviour
+public class WorldGenerator : MonoBehaviour
 {
     #region Generation Algorithm
 
     #region Variables
+    // World's Blueprint
+    private static Dictionary<Vector2Int, bool[]> blueprint;
+
     //  Algorithm params
     [SerializeField] private uint nCells = 100;
     [SerializeField] private uint nGates = 5;
     [SerializeField] public static Vector2 cellScale = new Vector2( 10.0f, 10.0f);
     [SerializeField] private Vector2 wallSize;
     [SerializeField] private float obstacleRatio;
-    [Space]
+    
+    [Header("Chunks")]
     public GameObject[] door_1;
     public GameObject[] door_2_1;
     public GameObject[] door_2_2;
@@ -67,6 +71,7 @@ public class WG_Manager : MonoBehaviour
     public GameObject[] gates;
     public GameObject[] obstacles;
 
+    // Navmesh
     private NavMeshSurface surface;
 
     // 0 = Right, 1 = Up, 2 = Left, 3 = Down
@@ -78,9 +83,7 @@ public class WG_Manager : MonoBehaviour
     // Property that returns copy
     public static Dictionary<Vector2Int, bool[]> GetBlueprint => new Dictionary<Vector2Int, bool[]>(blueprint);
 
-    private static Dictionary<Vector2Int, bool[]> blueprint;
-
-    private List<WG_Gate> gateList = new List<WG_Gate>();
+    private List<Gate> gateList = new List<Gate>();
 
     #endregion
 
@@ -271,7 +274,7 @@ public class WG_Manager : MonoBehaviour
                     it++;
                 }
             }
-            var gate = new WG_Gate(pos, holePos[Random.Range(0, holePos.Length)], blueprint);
+            var gate = new Gate(pos, holePos[Random.Range(0, holePos.Length)], blueprint);
             var newPos = gate.position + moves[gate.orientation];
 
             candidates.Remove(pos);
@@ -284,7 +287,7 @@ public class WG_Manager : MonoBehaviour
         }
     }
 
-    private void SpawnGate(WG_Gate gate)
+    private void SpawnGate(Gate gate)
     {
         GameObject obj = Instantiate(gates[0], new Vector3(gate.position.x * cellScale.x, 0, gate.position.y * cellScale.y), Quaternion.identity);
         obj.GetComponent<Transform>().Rotate(Vector3.up, gate.orientation * -90);
