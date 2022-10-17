@@ -41,7 +41,7 @@ public class EnemySpawnController : MonoBehaviour
 
     private Vector3 GetSpawnPosition(Vector2Int key)
     {
-        var bp = WG_Manager.GetBlueprint;
+        var bp = WorldGenerator.GetBlueprint;
         var pos = key;
         var steps = Random.Range(minSpawnSteps, maxSpawnSteps + 1);
         
@@ -56,7 +56,7 @@ public class EnemySpawnController : MonoBehaviour
                     options.Add(i);
 
             // pick random option
-            pos += WG_Manager.moves[options[Random.Range(0, options.Count)]];
+            pos += WorldGenerator.moves[options[Random.Range(0, options.Count)]];
 
             steps--;
         }
@@ -70,7 +70,7 @@ public class EnemySpawnController : MonoBehaviour
     private void SpawnEnemy()
     {
         var pl_pos = player.transform.position;
-        var cellScale = WG_Manager.cellScale;
+        var cellScale = WorldGenerator.cellScale;
 
         Vector2Int index = new Vector2Int(Mathf.RoundToInt(pl_pos.x / cellScale.x), Mathf.RoundToInt(pl_pos.z / cellScale.y));
 
