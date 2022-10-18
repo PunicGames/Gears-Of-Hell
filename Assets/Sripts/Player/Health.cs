@@ -52,7 +52,7 @@ public class Health : MonoBehaviour
         {
             hpDisplay.text = currentHealth.ToString();
         }
-        Debug.Log("Vida actual: " + currentHealth);
+        //Debug.Log("Vida actual: " + currentHealth);
     }
 
     public void TakeDamage(float amount) {

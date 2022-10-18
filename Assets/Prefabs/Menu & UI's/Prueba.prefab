@@ -174,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 441659958780119776, guid: 6331b5f3ae9ff874cb7e2a69f698ac91, type: 3}
+  laserBullet: {fileID: 0}
   shootForce: 10
   bulletDamage: 20
   timeBetweenShooting: 0.2
@@ -185,7 +186,9 @@ MonoBehaviour:
   shooting: 0
   automaticGun: 0
   allowInvoke: 1
-  ammunitionDisplay: {fileID: 0}
+  laserShot: 0
+  bigShot: 0
+  scaleFactor: 1
 --- !u!1 &581063614235908743
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,6 +205,7 @@ GameObject:
   - component: {fileID: 581063614235908740}
   - component: {fileID: 581063614235908793}
   - component: {fileID: 581063614235908742}
+  - component: {fileID: -6055399352243626563}
   m_Layer: 0
   m_Name: Prueba
   m_TagString: Player
@@ -271,7 +275,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  damageImage: {fileID: 0}
   flashSpeed: 5
   damageColor: {r: 1, g: 0, b: 0, a: 0.1}
 --- !u!114 &347115368937523732
@@ -286,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b1045ed936381489ef3a10c06132f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mobileUI: {fileID: 0}
 --- !u!95 &581063614235908740
 Animator:
   serializedVersion: 4
@@ -391,6 +395,19 @@ MonoBehaviour:
   - {fileID: 2969789961647925547}
   - {fileID: 6339907625115750691}
   - {fileID: 966238280852344898}
+--- !u!114 &-6055399352243626563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581063614235908743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c14531033af09499daf8c77e76a09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalCoinsInGame: 0
 --- !u!1 &588709434453991130
 GameObject:
   m_ObjectHideFlags: 0
