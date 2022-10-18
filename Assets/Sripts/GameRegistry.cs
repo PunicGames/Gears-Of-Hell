@@ -30,12 +30,12 @@ public class GameRegistry : MonoBehaviour
         seconds = (int)(elapsedTime - (minutes * 60));
 
         // Minutos
-        if (minutes > 10)
+        if (minutes >= 10)
             timeDisplay.text = minutes.ToString();
         else
             timeDisplay.text = "0" + minutes.ToString();
         // Segundos
-        if (seconds > 10)
+        if (seconds >= 10)
             timeDisplay.text += " : " + seconds.ToString();
         else
             timeDisplay.text += " : 0" + seconds.ToString();

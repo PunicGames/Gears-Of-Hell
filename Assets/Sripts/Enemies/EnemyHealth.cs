@@ -9,6 +9,9 @@ public class EnemyHealth : MonoBehaviour
     public int currentHealth;
     public int scoreValue = 10;
 
+    [SerializeField]
+    private GameObject coin;
+
     BoxCollider collider;
     bool isDead;
 
@@ -50,6 +53,11 @@ public class EnemyHealth : MonoBehaviour
             navMov.enabled = false;
 
         // Faltan sonidos y animaciones de muerte etc etc
+
+        // Suelta moneda
+        GameObject moneda = Instantiate(coin, transform.position, Quaternion.identity);
+        moneda.gameObject.GetComponent<Moneda>().value = scoreValue;
+
 
         Destroy(gameObject, timeAnimationDead);
     }
