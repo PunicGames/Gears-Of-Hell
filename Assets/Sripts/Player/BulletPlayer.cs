@@ -37,7 +37,7 @@ public class BulletPlayer : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            Debug.Log("Colision con enemigo");
+            //Debug.Log("Colision con enemigo");
             // Quitamos vida al enemigo
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)

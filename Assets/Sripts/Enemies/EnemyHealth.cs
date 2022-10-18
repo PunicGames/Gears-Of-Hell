@@ -24,7 +24,7 @@ public class EnemyHealth : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
-        //Debug.Log("Vida enemigo: " + currentHealth);
+        Debug.Log("Vida enemigo: " + currentHealth);
 
         if (currentHealth <= 0) {
             Death();

@@ -35,6 +35,9 @@ public class ShootSystem : MonoBehaviour
 
     //Perks Modifies
     public bool laserShot;
+    public bool bigShot;
+
+    public float scaleFactor = 1f;
 
     private void Awake()
     {
@@ -93,6 +96,7 @@ public class ShootSystem : MonoBehaviour
             currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
             currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
             currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
+            currentBullet.transform.localScale *= scaleFactor;
         }
         else
         {
@@ -101,6 +105,7 @@ public class ShootSystem : MonoBehaviour
             currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
             currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
             currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
+            currentBullet.transform.localScale *= scaleFactor;
         }
         
 
