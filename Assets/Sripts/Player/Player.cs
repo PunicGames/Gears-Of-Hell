@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     Vector3 movement;
     int floorMask;
-    private float speed = 6f;
+    public float speed = 6f;
     float camRayLength = 100f;
 
     private Rigidbody rb;
