@@ -17,14 +17,14 @@ public class EnemyHealth : MonoBehaviour
     {
         collider = GetComponent<BoxCollider>();
         currentHealth = startingHealth;
-        Debug.Log("Health: " + currentHealth);
+        //Debug.Log("Health: " + currentHealth);
     }
 
     public void TakeDamage(int amount) {
         if (isDead) return;
 
         currentHealth -= amount;
-        Debug.Log("Vida enemigo: " + currentHealth);
+        //Debug.Log("Vida enemigo: " + currentHealth);
 
         if (currentHealth <= 0) {
             Death();

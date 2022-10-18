@@ -8,6 +8,7 @@ public class ShootSystem : MonoBehaviour
 
     // Bullet
     public GameObject bullet;
+    public GameObject laserBullet;
 
     // Bullet Force
     public float shootForce;
@@ -32,12 +33,17 @@ public class ShootSystem : MonoBehaviour
     // Display
     private Text ammunitionDisplay;
 
+    //Perks Modifies
+    public bool laserShot;
+
     private void Awake()
     {
         // Inicializacion del variables
         bulletsLeft = magazineSize;
         readyToShoot = true;
         gunAudio = GetComponent<AudioSource>();
+
+        laserShot = false;
     }
 
     private void Start()
@@ -79,11 +85,24 @@ public class ShootSystem : MonoBehaviour
         // Cálculo de la nueva dirección con spread
         Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
 
-        // Instanciación de la bala
-        GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
-        currentBullet.transform.forward = directionWithSpread.normalized;
-        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
+        // Instanciación de la bala en funcion de las perks
+        if (laserShot)
+        {
+            GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
+            currentBullet.transform.forward = directionWithSpread.normalized;
+            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
+            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
+            currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
+        }
+        else
+        {
+            GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
+            currentBullet.transform.forward = directionWithSpread.normalized;
+            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
+            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
+            currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
+        }
+        
 
         bulletsLeft--;
         bulletsShot++;
@@ -99,7 +118,7 @@ public class ShootSystem : MonoBehaviour
         }
         if ((automaticGun && shooting && (bulletsLeft > 0)))
         { // Si es un arma automática, sigue disparando
-            Debug.Log("Magazine Size: " + magazineSize + ". BulletsLeft: " + bulletsLeft + ". BulletsShot: " + bulletsShot);
+            //Debug.Log("Magazine Size: " + magazineSize + ". BulletsLeft: " + bulletsLeft + ". BulletsShot: " + bulletsShot);
             Invoke("Shoot", timeBetweenShots);
         }
     }
