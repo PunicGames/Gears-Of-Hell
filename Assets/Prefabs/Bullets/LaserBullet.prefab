@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8257990454626169503}
   - component: {fileID: 8269110777634079284}
   m_Layer: 0
-  m_Name: BasicBullet
+  m_Name: LaserBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 441659958780119776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.03948891, y: 1.073986, z: 0.9896}
-  m_LocalScale: {x: 0.18683, y: 0.18683, z: 0.18683}
+  m_LocalScale: {x: 0.18683, y: 0.18683, z: 0.4981043}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9f0aef036c975564cad1deb0d6d6a58e, type: 2}
+  - {fileID: 2100000, guid: fca211f9203c1b840887fd2f81378859, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
