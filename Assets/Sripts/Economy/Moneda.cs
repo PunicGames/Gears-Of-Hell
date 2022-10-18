@@ -9,7 +9,7 @@ public class Moneda : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(Vector3.up * 50 * Time.deltaTime, Space.Self);
+        transform.Rotate(Vector3.up * 150 * Time.deltaTime, Space.Self);
     }
 
     private void OnTriggerEnter(Collider other)

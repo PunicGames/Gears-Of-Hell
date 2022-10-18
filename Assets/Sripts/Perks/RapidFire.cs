@@ -13,7 +13,7 @@ public class RapidFire : MonoBehaviour
     private void Start()
     {
         shootScript = GameObject.Find("GunEnd").GetComponent<ShootSystem>();
-        defAttackSpeed = shootScript.timeBetweenShots;
+        defAttackSpeed = shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots;
         gameObject.SetActive(false);
     }
 
@@ -21,7 +21,7 @@ public class RapidFire : MonoBehaviour
     {
         if (shootScript != null)
         {
-            shootScript.timeBetweenShots = bufAttackSpeed;
+            shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots = bufAttackSpeed;
         }
         
     }
@@ -30,7 +30,7 @@ public class RapidFire : MonoBehaviour
     {
         if (shootScript != null)
         {
-            shootScript.timeBetweenShots = defAttackSpeed;
+            shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots = defAttackSpeed;
         }
             
     }

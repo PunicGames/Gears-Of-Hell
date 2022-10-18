@@ -5,26 +5,20 @@ using UnityEngine.UI;
 
 public class ShootSystem : MonoBehaviour
 {
+    // Guns
+    public PlayerGuns guns;
+    [Range(0, 1)]
+    public int selectedGun = 0;
 
     // Bullet
     public GameObject bullet;
     public GameObject laserBullet;
 
-    // Bullet Force
-    public float shootForce;
-    public int bulletDamage = 20;
-
-    // Gun Stats
-    public float timeBetweenShooting, spread, reloadTime, timeBetweenShots;
-    public int magazineSize, bulletsPerTap;
-    int bulletsLeft, bulletsShot;
-
     // Action control
     public bool shooting;
     bool readyToShoot, reloading;
-    public bool automaticGun;
 
-    // Bug fixing
+    // Shoot Controller
     public bool allowInvoke = true;
 
     // Audio
@@ -41,33 +35,37 @@ public class ShootSystem : MonoBehaviour
 
     private void Awake()
     {
-        // Inicializacion del variables
-        bulletsLeft = magazineSize;
-        readyToShoot = true;
-        gunAudio = GetComponent<AudioSource>();
-
-        laserShot = false;
+        // Guns initialization
+        guns = new PlayerGuns();
     }
 
     private void Start()
     {
+        // Inicializacion de variables
+        readyToShoot = true;
+        laserShot = false;
+
+        // Inicializacion de componentes
+        gunAudio = GetComponent<AudioSource>();
+
+        // Display initialization
         ammunitionDisplay = GameObject.Find("Municion").GetComponent<Text>();
     }
 
     void Update()
     {
         // Recarga automáticamente si no quedan balas
-        if (readyToShoot && shooting && !reloading && bulletsLeft <= 0) Reload();
+        if (readyToShoot && shooting && !reloading && guns.getGuns()[selectedGun].bulletsLeft <= 0) Reload();
 
         if (ammunitionDisplay != null)
-            ammunitionDisplay.text = (bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+            ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeft / guns.getGuns()[selectedGun].bulletsPerTap + " / " + guns.getGuns()[selectedGun].magazineSize / guns.getGuns()[selectedGun].bulletsPerTap);
     }
 
     public void Shooting(Animator anim) 
     {
         // Comprueba si se puede disparar
-        if (readyToShoot && shooting && !reloading && (bulletsLeft) > 0) {
-            bulletsShot = 0;
+        if (readyToShoot && shooting && !reloading && (guns.getGuns()[selectedGun].bulletsLeft) > 0) {
+            guns.getGuns()[selectedGun].bulletsShot = 0;
             anim.SetTrigger("shoot");
             Shoot();
         }
@@ -83,7 +81,7 @@ public class ShootSystem : MonoBehaviour
         Vector3 direction = transform.forward;
 
         // Cálculo de spread
-        float x = Random.Range(-spread, spread);
+        float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
 
         // Cálculo de la nueva dirección con spread
         Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
@@ -93,8 +91,8 @@ public class ShootSystem : MonoBehaviour
         {
             GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
             currentBullet.transform.forward = directionWithSpread.normalized;
-            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
+            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
+            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
             currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
             currentBullet.transform.localScale *= scaleFactor;
         }
@@ -102,29 +100,28 @@ public class ShootSystem : MonoBehaviour
         {
             GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
             currentBullet.transform.forward = directionWithSpread.normalized;
-            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = bulletDamage;
+            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
+            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
             currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
             currentBullet.transform.localScale *= scaleFactor;
         }
-        
 
-        bulletsLeft--;
-        bulletsShot++;
+
+        guns.getGuns()[selectedGun].bulletsLeft--;
+        guns.getGuns()[selectedGun].bulletsShot++;
 
         if (allowInvoke) {
-            Invoke("ResetShot", timeBetweenShooting); // Llama a la función después de timeBetweenShooting segundos
+            Invoke("ResetShot", guns.getGuns()[selectedGun].timeBetweenShooting); // Llama a la función después de timeBetweenShooting segundos
             allowInvoke = false;
         }
 
         // Repetimos la funcion de disparo dependiendo de bulletsPerTap
-        if (bulletsShot < bulletsPerTap && (bulletsLeft > 0)) {
-            Invoke("Shoot", timeBetweenShots);
+        if (guns.getGuns()[selectedGun].bulletsShot < guns.getGuns()[selectedGun].bulletsPerTap && (guns.getGuns()[selectedGun].bulletsLeft > 0)) {
+            Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
         }
-        if ((automaticGun && shooting && (bulletsLeft > 0)))
+        if ((guns.getGuns()[selectedGun].automaticGun && shooting && (guns.getGuns()[selectedGun].bulletsLeft > 0)))
         { // Si es un arma automática, sigue disparando
-            //Debug.Log("Magazine Size: " + magazineSize + ". BulletsLeft: " + bulletsLeft + ". BulletsShot: " + bulletsShot);
-            Invoke("Shoot", timeBetweenShots);
+            Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
         }
     }
 
@@ -134,14 +131,14 @@ public class ShootSystem : MonoBehaviour
     }
 
     private void Reload() { // Llamar función cuando jugador pulsa R
-        if ((bulletsLeft < magazineSize) && !reloading) { 
+        if ((guns.getGuns()[selectedGun].bulletsLeft < guns.getGuns()[selectedGun].magazineSize) && !reloading) { 
             reloading = true;
-            Invoke("ReloadFinished", reloadTime);
+            Invoke("ReloadFinished", guns.getGuns()[selectedGun].reloadTime);
         }
     }
 
     private void ReloadFinished() {
-        bulletsLeft = magazineSize;
+        guns.getGuns()[selectedGun].bulletsLeft = guns.getGuns()[selectedGun].magazineSize;
         reloading = false;
         //Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
     }
