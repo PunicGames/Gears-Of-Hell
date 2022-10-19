@@ -11,7 +11,7 @@ public class LaserShot : MonoBehaviour
 
     private void Start()
     {
-        shootScript = GameObject.Find("GunEnd").GetComponent<ShootSystem>();
+        shootScript = GameObject.Find("ShotOrigin").GetComponent<ShootSystem>();
         defBulletForce = shootScript.guns.getGuns()[shootScript.selectedGun].shootForce;
         gameObject.SetActive(false);
     }
@@ -21,7 +21,7 @@ public class LaserShot : MonoBehaviour
         if (shootScript != null)
         {
             shootScript.laserShot = true;
-            shootScript.guns.getGuns()[shootScript.selectedGun].shootForce = bufBulletForce;
+            shootScript.guns.getGuns()[shootScript.selectedGun].shootForce *= bufBulletForce;
         }
     }
 
