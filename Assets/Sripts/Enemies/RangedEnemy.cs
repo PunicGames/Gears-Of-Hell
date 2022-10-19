@@ -17,12 +17,14 @@ public class RangedEnemy : MonoBehaviour
 
     Transform player;
     NavMeshAgent agent;
+    Animator animator;
 
     private void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -33,10 +35,12 @@ public class RangedEnemy : MonoBehaviour
         if (distance <= attackRange)
         {
             Attack();
+            animator.SetBool("Moving", false);
         }
         else if (distance <= sightRange)
         {
             Chase();
+            animator.SetBool("Moving", true);
         }
     }
 
@@ -46,7 +50,7 @@ public class RangedEnemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            GameObject b = Instantiate(bullet, transform.position,Quaternion.identity);
+            GameObject b = Instantiate(bullet, transform.position, Quaternion.identity);
             b.transform.LookAt(player.transform);
             b.GetComponent<BulletEnemy>().setForce(bulletSpeed);
             b.GetComponent<BulletEnemy>().setDamage(damage);
