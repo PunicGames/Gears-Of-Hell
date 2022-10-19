@@ -34,7 +34,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void Death() {
+    public void Death() {
         isDead = true;
         collider.enabled = false;
 

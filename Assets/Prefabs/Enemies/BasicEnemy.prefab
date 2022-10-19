@@ -183,6 +183,7 @@ MonoBehaviour:
   startingHealth: 100
   currentHealth: 100
   scoreValue: 10
+  coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
 --- !u!114 &6014481276430231423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +198,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 0.5
   attackDamage: 5
+  ElectricBarrierReflect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2140532943306335215
 GameObject:
   m_ObjectHideFlags: 0

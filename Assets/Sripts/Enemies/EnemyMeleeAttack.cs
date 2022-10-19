@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
@@ -32,7 +33,17 @@ public class EnemyMeleeAttack : MonoBehaviour
         timer = 0f;
 
         if (playerHealth.currentHealth > 0) {
-            playerHealth.TakeDamage(attackDamage);
+
+            if (playerHealth.electricBarrier)
+            {
+                gameObject.GetComponent<EnemyHealth>().Death();
+                player.GetComponentInChildren<ElectricBarrier>().ConsumeBarrier();
+            }
+            else
+            {
+                playerHealth.TakeDamage(attackDamage);
+            }
+            
         }
     }
 
@@ -53,4 +64,5 @@ public class EnemyMeleeAttack : MonoBehaviour
             playerInRange = false;
         }
     }
+
 }

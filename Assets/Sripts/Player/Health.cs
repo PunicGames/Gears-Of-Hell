@@ -15,6 +15,10 @@ public class Health : MonoBehaviour
     bool isDead;
     bool damaged;
 
+    //Perks barriers
+    public bool electricBarrier;
+    
+
     // Display
     private Text hpDisplay;
 
@@ -22,6 +26,8 @@ public class Health : MonoBehaviour
     {
         playerMovement = GetComponent<Player>();
         currentHealth = maxHealth;
+
+        electricBarrier = false;
     }
 
     private void Start()
