@@ -10,12 +10,14 @@ public class EnemiesMovement : MonoBehaviour
 
     Transform player;
     NavMeshAgent agent;
+    Animator animator;
 
     private void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -26,12 +28,19 @@ public class EnemiesMovement : MonoBehaviour
         if (distance <= sightRange)
         {
             Chase();
+            //Debug.Log(GetComponent<Rigidbody>().velocity);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
+
         }
     }
 
     private void Chase()
     {
         agent.SetDestination(player.position);
+        animator.SetBool("Moving", true);
     }
 
     private void OnDrawGizmosSelected()
@@ -40,8 +49,8 @@ public class EnemiesMovement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
-    
 
-    
+
+
 
 }
