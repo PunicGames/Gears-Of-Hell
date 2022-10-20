@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6445305038589727597}
+  - component: {fileID: 4957435095280825231}
   m_Layer: 0
   m_Name: Container (ral-1005)
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4957435095280825231
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518265617077956317}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.14, y: 1.5707984, z: 2.6484718}
+  m_Center: {x: 0.1489892, y: 0.80709386, z: 0.048073113}
 --- !u!1001 &4931768221448039086
 PrefabInstance:
   m_ObjectHideFlags: 0
