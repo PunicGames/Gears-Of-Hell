@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6583480270599279330}
+  - component: {fileID: 5240838806926944084}
   m_Layer: 0
   m_Name: Barrel Holder (empty)
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5240838806926944084
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4951839689923246903}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0945511, y: 1.9750581, z: 3.4287803}
+  m_Center: {x: 0, y: 0.98983145, z: -0.0029548407}
 --- !u!1001 &1493591138776560944
 PrefabInstance:
   m_ObjectHideFlags: 0
