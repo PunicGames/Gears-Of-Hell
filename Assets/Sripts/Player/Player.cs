@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     private Animator playerAnimator;
 
+    private AudioSource footSteps;
+
     public GameObject mobileUI;
     private bool desktop = true;
 
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         shootingSystem = GetComponentInChildren<ShootSystem>();
         playerAnimator = GetComponent<Animator>();
+        footSteps = GetComponent<AudioSource>();
 
         // Others
         floorMask = LayerMask.GetMask("Floor");
@@ -119,6 +122,8 @@ public class Player : MonoBehaviour
         {
             playerAnimator.SetBool("isMoving", true);
             CachedMoveInput = context.ReadValue<Vector2>();
+            if (!footSteps.isPlaying)
+                footSteps.Play();
         }
     }
     public void ResetMovement(InputAction.CallbackContext context)
@@ -127,6 +132,9 @@ public class Player : MonoBehaviour
         {
             playerAnimator.SetBool("isMoving", false);
             CachedMoveInput = new Vector2(0.0f, 0.0f);
+            movement = movement * speed * Time.deltaTime;
+            if (footSteps.isPlaying)
+                footSteps.Pause();
         }
         
     }
@@ -147,8 +155,8 @@ public class Player : MonoBehaviour
     {
         movement.Set(CachedMoveInput.x, 0.0f, CachedMoveInput.y);
         movement = movement * speed * Time.deltaTime;
-
-        rb.MovePosition(transform.position + movement);
+        
+            rb.MovePosition(transform.position + movement);
     }
 
     private void Aim()
