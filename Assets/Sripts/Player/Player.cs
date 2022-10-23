@@ -183,6 +183,20 @@ public class Player : MonoBehaviour
         rb.MoveRotation(newPlayerRotation);
     }
 
+    private void ReloadGun(InputAction.CallbackContext context) {
+        if (!PauseMenu.GameIsPaused)
+        {
+            shootingSystem.Reload();
+        }
+    }
+
+    private void SwapGun(InputAction.CallbackContext context) {
+        if (!PauseMenu.GameIsPaused)
+        {
+            shootingSystem.SwapGun();
+        }
+    }
+
     private void OnEnable()
     {
 
@@ -197,6 +211,8 @@ public class Player : MonoBehaviour
             playerInputActions.Player.Movement.canceled += ResetMovement;
             playerInputActions.Player.Aim.performed += MousePosition;
             playerInputActions.Player.Esc.performed += PauseMenuCall;
+            playerInputActions.Player.Recharge.performed += ReloadGun;
+            playerInputActions.Player.SwapGun.performed += SwapGun;
         }
         else
         {
@@ -208,6 +224,8 @@ public class Player : MonoBehaviour
             playerInputActions.Player.MobileAim.performed += MousePosition;
             playerInputActions.Player.MobileAim.performed += Shoot;
             playerInputActions.Player.MobileAim.canceled += ResetShoot;
+            // PONER LA RECARGA CON EL MOVIL
+            // PONER CAMBIO DE ARMA CON EL MOVIL
         }
     }
 
@@ -221,6 +239,8 @@ public class Player : MonoBehaviour
             playerInputActions.Player.Movement.canceled -= ResetMovement;
             playerInputActions.Player.Aim.performed -= MousePosition;
             playerInputActions.Player.Esc.performed -= PauseMenuCall;
+            playerInputActions.Player.Recharge.performed -= ReloadGun;
+            playerInputActions.Player.SwapGun.performed -= SwapGun;
         }
         else {
             playerInputActions.Player.MobileMovement.performed -= Movement;
@@ -228,6 +248,9 @@ public class Player : MonoBehaviour
             playerInputActions.Player.MobileAim.performed -= MousePosition;
             playerInputActions.Player.MobileAim.performed -= Shoot;
             playerInputActions.Player.MobileAim.canceled -= ResetShoot;
+            // PONER LA RECARGA CON EL MOVIL
+            // PONER CAMBIO DE ARMA CON EL MOVIL
+
         }
     }
 }
