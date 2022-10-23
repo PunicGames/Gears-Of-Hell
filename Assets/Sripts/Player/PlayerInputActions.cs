@@ -46,6 +46,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Recharge"",
+                    ""type"": ""Button"",
+                    ""id"": ""48e60577-8ffc-41eb-8584-4032d4a9a7f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapGun"",
+                    ""type"": ""Button"",
+                    ""id"": ""8cbcec91-2843-4aae-b4a2-5f470023a825"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Aim"",
                     ""type"": ""Value"",
                     ""id"": ""354ac028-c481-41c1-b7c9-f600aa445b95"",
@@ -192,6 +210,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""MobileAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bca35c84-6be3-4a5c-8dce-1aff5fe1c7cd"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Recharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efc7efd5-ce8e-4543-a7d4-b820abf61e91"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapGun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -202,6 +242,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Recharge = m_Player.FindAction("Recharge", throwIfNotFound: true);
+        m_Player_SwapGun = m_Player.FindAction("SwapGun", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
         m_Player_MobileMovement = m_Player.FindAction("MobileMovement", throwIfNotFound: true);
@@ -267,6 +309,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Recharge;
+    private readonly InputAction m_Player_SwapGun;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Esc;
     private readonly InputAction m_Player_MobileMovement;
@@ -277,6 +321,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Recharge => m_Wrapper.m_Player_Recharge;
+        public InputAction @SwapGun => m_Wrapper.m_Player_SwapGun;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Esc => m_Wrapper.m_Player_Esc;
         public InputAction @MobileMovement => m_Wrapper.m_Player_MobileMovement;
@@ -296,6 +342,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Recharge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecharge;
+                @Recharge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecharge;
+                @Recharge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecharge;
+                @SwapGun.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapGun;
+                @SwapGun.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapGun;
+                @SwapGun.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapGun;
                 @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
@@ -318,6 +370,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Recharge.started += instance.OnRecharge;
+                @Recharge.performed += instance.OnRecharge;
+                @Recharge.canceled += instance.OnRecharge;
+                @SwapGun.started += instance.OnSwapGun;
+                @SwapGun.performed += instance.OnSwapGun;
+                @SwapGun.canceled += instance.OnSwapGun;
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
@@ -338,6 +396,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnShoot(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnRecharge(InputAction.CallbackContext context);
+        void OnSwapGun(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnEsc(InputAction.CallbackContext context);
         void OnMobileMovement(InputAction.CallbackContext context);

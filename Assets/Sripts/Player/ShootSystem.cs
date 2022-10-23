@@ -9,6 +9,7 @@ public class ShootSystem : MonoBehaviour
     public PlayerGuns guns;
     [Range(0, 1)]
     public int selectedGun = 0;
+    private bool[] availableGuns;
 
     // Bullet
     public GameObject bullet;
@@ -37,6 +38,11 @@ public class ShootSystem : MonoBehaviour
     {
         // Guns initialization
         guns = new PlayerGuns();
+        availableGuns = new bool[guns.getGuns().Length];
+        // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
+        availableGuns[0] = true;
+        availableGuns[1] = true;
+        availableGuns[2] = true;
     }
 
     private void Start()
@@ -55,16 +61,16 @@ public class ShootSystem : MonoBehaviour
     void Update()
     {
         // Recarga automáticamente si no quedan balas
-        if (readyToShoot && shooting && !reloading && guns.getGuns()[selectedGun].bulletsLeft <= 0) Reload();
+        if (readyToShoot && shooting && !reloading && guns.getGuns()[selectedGun].bulletsLeftInMagazine <= 0) Reload();
 
         if (ammunitionDisplay != null)
-            ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeft / guns.getGuns()[selectedGun].bulletsPerTap + " / " + guns.getGuns()[selectedGun].magazineSize / guns.getGuns()[selectedGun].bulletsPerTap);
+            ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / " + guns.getGuns()[selectedGun].totalBullets);
     }
 
     public void Shooting(Animator anim) 
     {
         // Comprueba si se puede disparar
-        if (readyToShoot && shooting && !reloading && (guns.getGuns()[selectedGun].bulletsLeft) > 0) {
+        if (readyToShoot && shooting && !reloading && (guns.getGuns()[selectedGun].bulletsLeftInMagazine) > 0) {
             guns.getGuns()[selectedGun].bulletsShot = 0;
             anim.SetTrigger("shoot");
             Shoot();
@@ -107,7 +113,7 @@ public class ShootSystem : MonoBehaviour
         }
 
 
-        guns.getGuns()[selectedGun].bulletsLeft--;
+        guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
         guns.getGuns()[selectedGun].bulletsShot++;
 
         if (allowInvoke) {
@@ -116,10 +122,10 @@ public class ShootSystem : MonoBehaviour
         }
 
         // Repetimos la funcion de disparo dependiendo de bulletsPerTap
-        if (guns.getGuns()[selectedGun].bulletsShot < guns.getGuns()[selectedGun].bulletsPerTap && (guns.getGuns()[selectedGun].bulletsLeft > 0)) {
+        if (guns.getGuns()[selectedGun].bulletsShot < guns.getGuns()[selectedGun].bulletsPerTap && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0)) {
             Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
         }
-        if ((guns.getGuns()[selectedGun].automaticGun && shooting && (guns.getGuns()[selectedGun].bulletsLeft > 0)))
+        if ((guns.getGuns()[selectedGun].automaticGun && shooting && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0)))
         { // Si es un arma automática, sigue disparando
             Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
         }
@@ -130,16 +136,55 @@ public class ShootSystem : MonoBehaviour
         allowInvoke = true;
     }
 
-    private void Reload() { // Llamar función cuando jugador pulsa R
-        if ((guns.getGuns()[selectedGun].bulletsLeft < guns.getGuns()[selectedGun].magazineSize) && !reloading) { 
+    public void Reload() { // Llamar función cuando jugador pulsa R
+        Debug.Log("Intenta recargar");
+        if ((guns.getGuns()[selectedGun].bulletsLeftInMagazine < guns.getGuns()[selectedGun].magazineSize) && !reloading && guns.getGuns()[selectedGun].totalBullets > 0) {
+            Debug.Log("Pasa");
             reloading = true;
             Invoke("ReloadFinished", guns.getGuns()[selectedGun].reloadTime);
         }
     }
 
     private void ReloadFinished() {
-        guns.getGuns()[selectedGun].bulletsLeft = guns.getGuns()[selectedGun].magazineSize;
+
+        int bulletsInMagazine = guns.getGuns()[selectedGun].bulletsLeftInMagazine;
+        if (bulletsInMagazine + guns.getGuns()[selectedGun].totalBullets >= guns.getGuns()[selectedGun].magazineSize)
+        {
+            guns.getGuns()[selectedGun].bulletsLeftInMagazine = guns.getGuns()[selectedGun].magazineSize;
+            guns.getGuns()[selectedGun].totalBullets -= (guns.getGuns()[selectedGun].magazineSize - bulletsInMagazine);
+        }
+        else {
+            guns.getGuns()[selectedGun].bulletsLeftInMagazine = guns.getGuns()[selectedGun].totalBullets + bulletsInMagazine;
+            guns.getGuns()[selectedGun].totalBullets = 0;
+        }
+
         reloading = false;
         //Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
+    }
+
+    public void SwapGun() {
+
+        // Explora las opciones de armas en orden. Hay dos bucles ya que podriamos estar posicionados en el arma número 1,
+        // por lo que explora primero hacia arriba y luego da la vuelta y explora las que jerárquicamente están por debajo
+
+        for (int i = selectedGun + 1; i < availableGuns.Length; i++) {
+            if (availableGuns[i]) { 
+                selectedGun = i;
+                // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque debería llamarse mejor al finalizar la animación)
+                ResetShot();
+                // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS MÁS ARRIBA)
+                return;
+            }
+        }
+
+        for (int i = 0; i < selectedGun; i++) {
+            if (availableGuns[i])
+            {
+                selectedGun = i;
+                ResetShot();
+                // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
+                return;
+            }
+        }
     }
 }

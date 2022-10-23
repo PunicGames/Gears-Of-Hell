@@ -24,6 +24,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Recharge",
+                    "type": "Button",
+                    "id": "48e60577-8ffc-41eb-8584-4032d4a9a7f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwapGun",
+                    "type": "Button",
+                    "id": "8cbcec91-2843-4aae-b4a2-5f470023a825",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Aim",
                     "type": "Value",
                     "id": "354ac028-c481-41c1-b7c9-f600aa445b95",
@@ -168,6 +186,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MobileAim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bca35c84-6be3-4a5c-8dce-1aff5fe1c7cd",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Recharge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efc7efd5-ce8e-4543-a7d4-b820abf61e91",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwapGun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,16 +1,17 @@
 public class Gun
 {
-    public int bulletsLeft;
+    public int bulletsLeftInMagazine;
     public int bulletsShot;
     public int bulletDamage;
     public int magazineSize;
+    public int totalBullets;
     public int bulletsPerTap;
 
     public float shootForce;
     public float spread;
     public float reloadTime;
-    public float timeBetweenShots;
-    public float timeBetweenShooting;
+    public float timeBetweenShots;    // Tiempo de espera al tener arma automática
+    public float timeBetweenShooting; // Tiempo de espera entre disparo y disparo
 
     public bool automaticGun;
 }
