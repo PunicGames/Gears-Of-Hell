@@ -29,9 +29,11 @@ public class ShootSystem : MonoBehaviour
     private Text ammunitionDisplay;
 
     //Perks Modifies
+    [HideInInspector]
     public bool laserShot;
+    [HideInInspector]
     public bool bigShot;
-
+    [HideInInspector]
     public float scaleFactor = 1f;
 
     private void Awake()
