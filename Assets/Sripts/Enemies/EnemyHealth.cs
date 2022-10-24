@@ -15,8 +15,9 @@ public class EnemyHealth : MonoBehaviour
     CapsuleCollider collider;
     bool isDead;
     private Animator animator;
+    private float timeUntilDestroy = 2f;
 
-    private int timeAnimationDead = 1;
+    //private int timeAnimationDead = 1;
     private void Awake()
     {
         collider = GetComponent<CapsuleCollider>();
@@ -86,6 +87,6 @@ public class EnemyHealth : MonoBehaviour
     //Autamitacally call when death animation ended
     public void DestroyCallback()
     {
-        Destroy(gameObject, 2);
+        Destroy(gameObject, timeUntilDestroy);
     }
 }
