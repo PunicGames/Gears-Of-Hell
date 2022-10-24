@@ -12,29 +12,34 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField]
     private GameObject coin;
 
-    BoxCollider collider;
+    CapsuleCollider collider;
     bool isDead;
+    private Animator animator;
 
     private int timeAnimationDead = 1;
     private void Awake()
     {
-        collider = GetComponent<BoxCollider>();
+        collider = GetComponent<CapsuleCollider>();
+        animator = GetComponent<Animator>();
         currentHealth = startingHealth;
         //Debug.Log("Health: " + currentHealth);
     }
 
-    public void TakeDamage(int amount) {
+    public void TakeDamage(int amount)
+    {
         if (isDead) return;
 
         currentHealth -= amount;
         Debug.Log("Vida enemigo: " + currentHealth);
 
-        if (currentHealth <= 0) {
+        if (currentHealth <= 0)
+        {
             Death();
         }
     }
 
-    public void Death() {
+    public void Death()
+    {
         isDead = true;
         collider.enabled = false;
 
@@ -45,20 +50,42 @@ public class EnemyHealth : MonoBehaviour
         RangedEnemy rE = GetComponent<RangedEnemy>();
         if (eM != null)
             eM.enabled = false;
-        if(rE != null)
+        if (rE != null)
             rE.enabled = false;
-        if(mE != null)
+        if (mE != null)
             mE.enabled = false;
         if (navMov != null)
             navMov.enabled = false;
 
         // Faltan sonidos y animaciones de muerte etc etc
 
+        int r = Random.Range(0, 2);
+        //Randomly choose death animation type
+        switch (r)
+        {
+            case 0:
+                animator.SetFloat("death_type", 0);
+                break;
+            case 1:
+                animator.SetFloat("death_type", .5f);
+                break;
+            case 2:
+                animator.SetFloat("death_type", 1);
+                break;
+
+        }
+        animator.SetTrigger("death");
+
+
         // Suelta moneda
         GameObject moneda = Instantiate(coin, transform.position, Quaternion.identity);
         moneda.gameObject.GetComponent<Moneda>().value = scoreValue;
 
 
-        Destroy(gameObject, timeAnimationDead);
+    }
+    //Autamitacally call when death animation ended
+    public void DestroyCallback()
+    {
+        Destroy(gameObject, 2);
     }
 }
