@@ -16,7 +16,8 @@ public class PlayerGuns
         pistol.bulletDamage = 10;
         pistol.magazineSize = 10;
         pistol.bulletsLeftInMagazine = pistol.magazineSize;
-        pistol.totalBullets = 120 - pistol.magazineSize;
+        pistol.maxTotalBullets = 120;
+        pistol.totalBullets = pistol.maxTotalBullets - pistol.magazineSize; 
         pistol.bulletsShot = 0;
         pistol.bulletsPerTap = 1;
         pistol.shootForce = 20;
@@ -34,7 +35,8 @@ public class PlayerGuns
         subfusil.bulletDamage = 5;
         subfusil.magazineSize = 30;
         subfusil.bulletsLeftInMagazine = subfusil.magazineSize;
-        subfusil.totalBullets = 210 - subfusil.magazineSize;
+        subfusil.maxTotalBullets = 210;
+        subfusil.totalBullets = subfusil.maxTotalBullets - subfusil.magazineSize;      
         subfusil.bulletsShot = 0;
         subfusil.bulletsPerTap = 1;
         subfusil.shootForce = 10;
@@ -52,7 +54,8 @@ public class PlayerGuns
         sniper.bulletDamage = 50;
         sniper.magazineSize = 5;
         sniper.bulletsLeftInMagazine = sniper.magazineSize;
-        sniper.totalBullets = 20 - sniper.magazineSize;
+        sniper.maxTotalBullets = 20;
+        sniper.totalBullets = sniper.maxTotalBullets - sniper.magazineSize;        
         sniper.bulletsShot = 0;
         sniper.bulletsPerTap = 1;
         sniper.shootForce = 40;

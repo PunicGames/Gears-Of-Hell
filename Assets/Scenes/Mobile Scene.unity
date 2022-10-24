@@ -212,6 +212,52 @@ Transform:
   m_Father: {fileID: 1941861019}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &171294333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171294334}
+  - component: {fileID: 171294335}
+  m_Layer: 0
+  m_Name: Gunsmith_GO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &171294334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171294333}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 440753795}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &171294335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171294333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac519ca06e8bdc54cb233e89709f460a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoRegenRate: 5
+  ammoRegenAmount: 1
 --- !u!1 &173701033
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +698,7 @@ Transform:
   - {fileID: 1588510868}
   - {fileID: 493567981}
   - {fileID: 275876240}
+  - {fileID: 171294334}
   m_Father: {fileID: 989921470}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1179,7 +1226,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -449, y: 0}
   m_SizeDelta: {x: 198.68, y: 59.4372}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &701999312
@@ -2797,7 +2844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 157.15265, y: -47.047974}
+  m_AnchoredPosition: {x: 465.7, y: -47.047974}
   m_SizeDelta: {x: 314.3054, y: 94.096}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1517466989
@@ -3521,7 +3568,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: maxSpawnDelay
@@ -3775,6 +3822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedGun: 1
+  availableGuns: 
   bullet: {fileID: 441659958780119776, guid: 6331b5f3ae9ff874cb7e2a69f698ac91, type: 3}
   laserBullet: {fileID: 441659958780119776, guid: d03a14b63de73eb448fd800ca229b0ef, type: 3}
   shooting: 0

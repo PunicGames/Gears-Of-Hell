@@ -9,7 +9,7 @@ public class ShootSystem : MonoBehaviour
     public PlayerGuns guns;
     [Range(0, 1)]
     public int selectedGun = 0;
-    private bool[] availableGuns;
+    public bool[] availableGuns;
 
     // Bullet
     public GameObject bullet;

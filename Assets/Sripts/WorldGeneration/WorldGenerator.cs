@@ -356,6 +356,7 @@ public class WorldGenerator : MonoBehaviour
         GenerateWorld();
     }
 
+    /*
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -364,6 +365,6 @@ public class WorldGenerator : MonoBehaviour
             GenerateWorld();
         }
     }
-
+    */
     #endregion
 }
