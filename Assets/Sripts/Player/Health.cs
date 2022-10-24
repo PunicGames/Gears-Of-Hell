@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
 
     //Perks barriers
     public bool electricBarrier;
-    
+
 
     // Display
     private Text hpDisplay;
@@ -43,13 +43,14 @@ public class Health : MonoBehaviour
         {
             damageImage.color = damageColor;
         }
-        else {
+        else
+        {
             damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
         damaged = false;
 
-        
-            
+
+
     }
 
     private void Update()
@@ -61,20 +62,42 @@ public class Health : MonoBehaviour
         //Debug.Log("Vida actual: " + currentHealth);
     }
 
-    public void TakeDamage(float amount) {
+    public void TakeDamage(float amount)
+    {
         damaged = true;
 
         currentHealth -= amount;
         Debug.Log("Vida actual: " + currentHealth);
 
-        if (currentHealth <= 0 && !isDead) {
+        if (currentHealth <= 0 && !isDead)
+        {
             Death();
         }
     }
 
-    private void Death() { 
+    private void Death()
+    {
         isDead = true;
+        int r = Random.Range(0, 2);
+        //Randomly choose death animation type
+        switch (r)
+        {
+            case 0:
+                playerMovement.playerAnimator.SetFloat("death_type",0);
+                break;
+            case 1:
+                playerMovement.playerAnimator.SetFloat("death_type", .5f);
+                break;
+            case 2:
+                playerMovement.playerAnimator.SetFloat("death_type", 1);
+                break;
+
+        }
+        playerMovement.playerAnimator.SetTrigger("death");
         playerMovement.enabled = false;
+
+
+
         // Faltaría poner sistema de animaciones o audios, etc. Por eso está esto en un método a parte
 
         Destroy(gameObject, 3);

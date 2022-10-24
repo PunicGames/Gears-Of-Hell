@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private Vector2 CachedMoveInput { get; set; }
     private Vector2 CachedAimInput { get; set; }
 
-    private Animator playerAnimator;
+    public Animator playerAnimator;
 
     private AudioSource footSteps;
 
