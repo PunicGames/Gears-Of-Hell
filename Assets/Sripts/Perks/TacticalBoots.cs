@@ -11,7 +11,7 @@ public class TacticalBoots : MonoBehaviour
 
     private void Start()
     {
-        playerScript = GameObject.Find("Player_Character").GetComponent<Player>();
+        playerScript = GameObject.Find("Player_Character_FINAL").GetComponent<Player>();
         defSpeed = playerScript.speed;
         gameObject.SetActive(false);
     }

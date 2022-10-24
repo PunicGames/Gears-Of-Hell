@@ -12,7 +12,7 @@ public class TacticVest : MonoBehaviour
 
     private void Start()
     {
-        healthScript = GameObject.Find("Player_Character").GetComponent<Health>();
+        healthScript = GameObject.Find("Player_Character_FINAL").GetComponent<Health>();
         defHealth = healthScript.maxHealth;
         gameObject.SetActive(false);
     }
