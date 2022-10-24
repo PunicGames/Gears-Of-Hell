@@ -27,7 +27,7 @@ public class Gunsmith : MonoBehaviour
 
     private void AmmunitionRegen()
     {
-        for(int i = 0; i < shootScript.guns.getGuns().Length - 1; i++)
+        for(int i = 0; i < shootScript.guns.getGuns().Length; i++)
         {
             var sg = shootScript.guns.getGuns()[i];
 
