@@ -5,6 +5,7 @@ public class Gun
     public int bulletDamage;
     public int magazineSize;
     public int totalBullets;
+    public int maxTotalBullets;
     public int bulletsPerTap;
 
     public float shootForce;
