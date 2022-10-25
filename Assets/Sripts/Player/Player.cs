@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     private AudioSource footSteps;
 
-    public GameObject mobileUI;
+    private GameObject mobileUI;
     private bool desktop = true;
 
     private PlayerInputActions playerInputActions;
@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
         shootingSystem = GetComponentInChildren<ShootSystem>();
         playerAnimator = GetComponent<Animator>();
         footSteps = GetComponent<AudioSource>();
+        mobileUI = GameObject.Find("MobileCanvas");
+        mobileUI.SetActive(false);
 
         // Others
         floorMask = LayerMask.GetMask("Floor");
@@ -205,6 +207,7 @@ public class Player : MonoBehaviour
         if (desktop)
         {
             //desktop = true;
+
             playerInputActions.Player.Shoot.performed += Shoot;
             playerInputActions.Player.Shoot.canceled += ResetShoot;
             playerInputActions.Player.Movement.performed += Movement;

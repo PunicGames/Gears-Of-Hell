@@ -21,7 +21,7 @@ public class TacticVest : MonoBehaviour
     {
         if (healthScript != null)
         {
-            healthScript.maxHealth = bufHealth;
+            healthScript.maxHealth *= bufHealth;
             healthScript.currentHealth = healthScript.maxHealth;
         }
     }

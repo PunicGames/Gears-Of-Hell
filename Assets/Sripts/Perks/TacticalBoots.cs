@@ -20,7 +20,7 @@ public class TacticalBoots : MonoBehaviour
     {
         if (playerScript != null)
         {
-            playerScript.speed = bufSpeed;
+            playerScript.speed *= bufSpeed;
         }
     }
 

@@ -21,7 +21,7 @@ public class BigShot : MonoBehaviour
         if (shootScript != null)
         {
             shootScript.bigShot = true;
-            shootScript.scaleFactor = bufScaleFactor;
+            shootScript.scaleFactor *= bufScaleFactor;
         }
     }
 
