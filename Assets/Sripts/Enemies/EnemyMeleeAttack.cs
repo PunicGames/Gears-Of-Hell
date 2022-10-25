@@ -16,6 +16,8 @@ public class EnemyMeleeAttack : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        // Si a alguien le da error esto de aqui haciendo pruebas en PlayerScene es normal, ya que los enemigos estan spawneados antes que el personaje principal
         playerHealth = player.GetComponent<Health>();
     }
 
