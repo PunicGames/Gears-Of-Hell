@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 8196185813520721972}
   - component: {fileID: 3885736916907314574}
   - component: {fileID: 7694331672861571719}
-  - component: {fileID: 5320532373226912050}
+  - component: {fileID: 3272059382054439423}
+  - component: {fileID: 7152752711612678661}
   m_Layer: 0
   m_Name: Tienda
-  m_TagString: Untagged
+  m_TagString: Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,12 +94,25 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5403548014249073235}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5320532373226912050
+  m_Size: {x: 1.0462996, y: 1, z: 1.0245924}
+  m_Center: {x: -0.004698336, y: 0, z: 0.015658855}
+--- !u!135 &3272059382054439423
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403548014249073235}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5806634
+  m_Center: {x: -0.021037221, y: 0, z: 0}
+--- !u!114 &7152752711612678661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,3 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737c77afb0efaf841b6aabcb27015673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 0

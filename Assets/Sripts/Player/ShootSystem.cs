@@ -133,7 +133,7 @@ public class ShootSystem : MonoBehaviour
         }
     }
 
-    private void ResetShot() {
+    public void ResetShot() {
         readyToShoot = true;
         allowInvoke = true;
     }

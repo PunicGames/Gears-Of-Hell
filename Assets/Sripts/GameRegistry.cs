@@ -13,6 +13,10 @@ public class GameRegistry : MonoBehaviour
     // Display time
     private Text timeDisplay;
 
+    // Shop
+    [SerializeField]
+    private GameObject shopManager;
+
     void Start()
     {
         elapsedTime = 0f;
@@ -39,6 +43,13 @@ public class GameRegistry : MonoBehaviour
             timeDisplay.text += " : " + seconds.ToString();
         else
             timeDisplay.text += " : 0" + seconds.ToString();
+
+
+
+        // HAY QUE HACER PARA QUE SOLO ACTUALICE LA TIENDA UNA ÚNICA VEZ
+        if (minutes == 1 && seconds == 0) {
+            shopManager.GetComponent<ManageShops>().RefreshShop();
+        }
 
     }
 }
