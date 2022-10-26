@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateShops : MonoBehaviour
+public class ManageShops : MonoBehaviour
 {
 
     [SerializeField]
@@ -11,17 +11,26 @@ public class CreateShops : MonoBehaviour
     [SerializeField]
     private Transform[] posicionesIniciales;
 
-    // Start is called before the first frame update
+    private GameObject player;
+
+    private float[] attackSpeedUpgrades;
     void Start()
     {
-        for (int i = 0; i < posicionesIniciales.Length; i++) { 
+        for (int i = 0; i < posicionesIniciales.Length; i++)
+        {
             GameObject t = Instantiate(tienda, posicionesIniciales[i].position, Quaternion.identity);
         }
+
+
+        // Inicializacion de ventajas
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RefreshShop()
     {
-        
+
     }
+
+
+
 }

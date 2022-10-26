@@ -24,6 +24,12 @@ public class Player : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
 
+    // Shop system
+    private bool shopInRange;
+    private bool shopActive;
+    private GestorUIinGame uiGestor;
+
+
     private void Awake()
     {
         // Init components
@@ -48,6 +54,9 @@ public class Player : MonoBehaviour
 
         // Input actions
         playerInputActions = new PlayerInputActions();
+
+        // Shop
+        uiGestor = GameObject.Find("InGameUI").GetComponent<GestorUIinGame>();
 
     }
     private void Start()
@@ -101,7 +110,7 @@ public class Player : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.GameIsPaused) { 
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping) { 
             shootingSystem.shooting = true;
             shootingSystem.Shooting(playerAnimator);
         }
@@ -109,7 +118,7 @@ public class Player : MonoBehaviour
 
     public void ResetShoot(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.GameIsPaused)
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             shootingSystem.shooting = false;
         }
@@ -117,7 +126,7 @@ public class Player : MonoBehaviour
 
     public void Movement(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.GameIsPaused)
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             playerAnimator.SetBool("isMoving", true);
             CachedMoveInput = context.ReadValue<Vector2>();
@@ -127,7 +136,7 @@ public class Player : MonoBehaviour
     }
     public void ResetMovement(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.GameIsPaused)
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             playerAnimator.SetBool("isMoving", false);
             CachedMoveInput = new Vector2(0.0f, 0.0f);
@@ -139,7 +148,7 @@ public class Player : MonoBehaviour
     }
     public void MousePosition(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.GameIsPaused)
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             CachedAimInput = context.ReadValue<Vector2>();
         }
@@ -147,52 +156,74 @@ public class Player : MonoBehaviour
 
     public void PauseMenuCall(InputAction.CallbackContext context)
     {
-        PauseMenu.TriggerPause = true;
+        // Solo se puede pausar el juego si el jugador no se encuantra disparando
+        if (!shootingSystem.shooting && !uiGestor.shooping) { 
+            PauseMenu.TriggerPause = true;
+        }
     }
 
     private void Move()
     {
-        movement.Set(CachedMoveInput.x, 0.0f, CachedMoveInput.y);
-        movement = movement * speed * Time.deltaTime;
-        
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
+        {
+            movement.Set(CachedMoveInput.x, 0.0f, CachedMoveInput.y);
+            movement = movement * speed * Time.deltaTime;
+
             rb.MovePosition(transform.position + movement);
+        }
     }
 
     private void Aim()
     {
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
+        {
+            Ray camRay = Camera.main.ScreenPointToRay(CachedAimInput);
 
-        Ray camRay = Camera.main.ScreenPointToRay(CachedAimInput);
+            RaycastHit floorHit;
+            if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask))
+            { // En caso de colisionar...
+                Vector3 playerToMouse = floorHit.point - transform.position;
+                playerToMouse.y = 0f;
 
-        RaycastHit floorHit;
-        if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask))
-        { // En caso de colisionar...
-            Vector3 playerToMouse = floorHit.point - transform.position;
-            playerToMouse.y = 0f;
-
-            Quaternion newPlayerRotation = Quaternion.LookRotation(playerToMouse);
-            rb.MoveRotation(newPlayerRotation);
+                Quaternion newPlayerRotation = Quaternion.LookRotation(playerToMouse);
+                rb.MoveRotation(newPlayerRotation);
+            }
         }
 
     }
 
     private void MobileAim()
     {
-        Vector3 vec = new Vector3(CachedAimInput.x, 0f, CachedAimInput.y);
-        Quaternion newPlayerRotation = Quaternion.LookRotation(vec);
-        rb.MoveRotation(newPlayerRotation);
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
+        {
+            Vector3 vec = new Vector3(CachedAimInput.x, 0f, CachedAimInput.y);
+            Quaternion newPlayerRotation = Quaternion.LookRotation(vec);
+            rb.MoveRotation(newPlayerRotation);
+        }
     }
 
     private void ReloadGun(InputAction.CallbackContext context) {
-        if (!PauseMenu.GameIsPaused)
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             shootingSystem.Reload();
         }
     }
 
     private void SwapGun(InputAction.CallbackContext context) {
-        if (!PauseMenu.GameIsPaused)
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             shootingSystem.SwapGun();
+        }
+    }
+
+    private void OpenShop(InputAction.CallbackContext context) {
+        // Se puede acceder a la tienda si el jugador no se encuentra disparando
+        if (!PauseMenu.GameIsPaused && shopInRange && !shootingSystem.shooting && shopActive)
+        {
+            // Abrir tienda
+            Debug.Log("Se abre la tienda");
+            CachedMoveInput = new Vector2(0.0f, 0.0f);
+            uiGestor.ShowShop();
         }
     }
 
@@ -213,6 +244,7 @@ public class Player : MonoBehaviour
             playerInputActions.Player.Esc.performed += PauseMenuCall;
             playerInputActions.Player.Recharge.performed += ReloadGun;
             playerInputActions.Player.SwapGun.performed += SwapGun;
+            playerInputActions.Player.Shop.performed += OpenShop;
         }
         else
         {
@@ -242,6 +274,7 @@ public class Player : MonoBehaviour
             playerInputActions.Player.Esc.performed -= PauseMenuCall;
             playerInputActions.Player.Recharge.performed -= ReloadGun;
             playerInputActions.Player.SwapGun.performed -= SwapGun;
+            playerInputActions.Player.Shop.performed -= OpenShop;
         }
         else {
             playerInputActions.Player.MobileMovement.performed -= Movement;
@@ -254,6 +287,29 @@ public class Player : MonoBehaviour
             // PONER LA RECARGA CON EL MOVIL
             // PONER CAMBIO DE ARMA CON EL MOVIL
 
+        }
+    }
+
+
+
+    // Sistema de tiendas
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Shop") {
+            shopInRange = true;
+            if (other.gameObject.GetComponent<Shop>().active) {
+                shopActive = true;
+                Debug.Log("Dentro de tienda");
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Shop")
+        {
+            shopInRange = false;
+            shopActive = false;
         }
     }
 }
