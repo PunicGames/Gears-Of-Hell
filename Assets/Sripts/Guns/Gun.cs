@@ -15,4 +15,8 @@ public class Gun
     public float timeBetweenShooting; // Tiempo de espera entre disparo y disparo
 
     public bool automaticGun;
+
+    public void AddAmmo(int ammo){
+        totalBullets += ammo;
+    }
 }
