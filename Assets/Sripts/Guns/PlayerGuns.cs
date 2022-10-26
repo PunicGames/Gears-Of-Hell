@@ -71,4 +71,9 @@ public class PlayerGuns
         return existingGuns;
     }
 
+    public void AddAmmo(int index, int ammo)
+    {
+        getGuns()[index].AddAmmo(ammo);
+    }
+
 }
