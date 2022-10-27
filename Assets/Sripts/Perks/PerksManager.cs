@@ -34,7 +34,7 @@ public class PerksManager : MonoBehaviour
     [HideInInspector] public bool[] availablePerks;
 
     ////////////////////////Array perk levels////////////////////////
-    //los valores van del 0 al 4, siendo 4 el nivel 1 y 4 el maximo nivel(5)
+    //los valores van del 0 al 4, siendo 0 el nivel 1 y 4 el maximo nivel(5)
     //las ventajas que no estan activas aparecen tambien como 0
     //[0] -> nivel 1
     //[1] -> nivel 2
