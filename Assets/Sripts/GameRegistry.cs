@@ -16,6 +16,7 @@ public class GameRegistry : MonoBehaviour
     // Shop
     [SerializeField]
     private GameObject shopManager;
+    private bool generated;
 
     void Start()
     {
@@ -47,8 +48,9 @@ public class GameRegistry : MonoBehaviour
 
 
         // HAY QUE HACER PARA QUE SOLO ACTUALICE LA TIENDA UNA ÚNICA VEZ
-        if (minutes == 1 && seconds == 0) {
+        if (minutes == 0 && seconds == 3 && !generated) {
             shopManager.GetComponent<ManageShops>().RefreshShop();
+            generated = true;
         }
 
     }
