@@ -1042,9 +1042,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyPerk1
+        m_MethodName: BuyNewOldPerk1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1409,7 +1409,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2100258292}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: LoadMenu
         m_Mode: 1
@@ -1833,7 +1833,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4520088414791286167}
         m_TargetAssemblyTypeName: GestorUIinGame, Assembly-CSharp
         m_MethodName: HideShop
         m_Mode: 1
@@ -2331,9 +2331,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyAmmo3
+        m_MethodName: BuyGunAmmo3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3131,9 +3131,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyAmmo1
+        m_MethodName: BuyGunAmmo1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3265,9 +3265,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyPerk3
+        m_MethodName: BuyNewOldPerk3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3598,7 +3598,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5888945414020333281}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
@@ -3875,9 +3875,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyAmmo2
+        m_MethodName: BuyGunAmmo2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4214,7 +4214,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2100258292}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
@@ -4795,9 +4795,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyPerk2
+        m_MethodName: BuyNewOldPerk2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4857,8 +4857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938bd73966e06cf498f03b95b8ca6467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobileUI: {fileID: 0}
-  shopUI: {fileID: 0}
+  mobileUI: {fileID: 708468633105597309}
+  shopUI: {fileID: 5888945414020333281}
   shooping: 0
 --- !u!114 &2100258292
 MonoBehaviour:
@@ -4872,7 +4872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c5d34f12cadf1d4fb48f386c842ab77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseMenuUI: {fileID: 0}
+  PauseMenuUI: {fileID: 3339265591684085194}
 --- !u!114 &8487460702918015519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4894,50 +4894,74 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
   - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
   - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
+  - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
   spritesPerks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  spritesGuns: []
+  - {fileID: 21300000, guid: dab24584ced4ffa498c2bf3388d79e0a, type: 3}
+  - {fileID: 21300000, guid: 6e36bbe8f4863c7459426ddd244e2b12, type: 3}
+  - {fileID: 21300000, guid: 8dc8501aa821eb548b8a858ef2ba79e2, type: 3}
+  - {fileID: 21300000, guid: 584f199c92127614986eb90b7766177d, type: 3}
+  - {fileID: 21300000, guid: 89db50af469f3254ebe107e1c9932efb, type: 3}
+  - {fileID: 21300000, guid: c2f82800e90c24241a3c58d27daa2385, type: 3}
+  - {fileID: 21300000, guid: cd2a829cc04e55647b57100708f97e1d, type: 3}
+  - {fileID: 21300000, guid: a242d0db1e55f6f49b4cf9eb2dcb36dd, type: 3}
+  spritesGuns:
+  - {fileID: 21300000, guid: 9515b9fa45bad854a8722c5c6bb7b50a, type: 3}
+  - {fileID: 21300000, guid: b7078958a56a9d441801a6179f841916, type: 3}
+  - {fileID: 21300000, guid: e32e7cc311a40014294cc435ff3ac693, type: 3}
+  - {fileID: 21300000, guid: eda78c3b5bb0e19418723770d6d4ddda, type: 3}
   titleText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  displaysAmmoAndGuns: []
+  - {fileID: 3800038499617008353}
+  - {fileID: 8550506219234238748}
+  - {fileID: 147258998275543183}
+  - {fileID: 6861625868704530842}
+  - {fileID: 6467033794616371254}
+  - {fileID: 4830584278589738197}
+  displaysAmmoAndGuns:
+  - {fileID: 3320305058662886161}
+  - {fileID: 6972991864008315404}
+  - {fileID: 2638668299767352124}
   displaysPerks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1887502923745248325}
+  - {fileID: 6227373162787502676}
+  - {fileID: 2207331933379982483}
   coinsText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  ammoPrices: 0a0000000a0000000a000000
-  gunPrices: 
-  ammoQuantity: 
-  perkInitPrices: 
-  rapidFirePrices: 
-  laserShotPrices: 
-  bigShotPrices: 
-  tacticVestPrices: 
-  tacticalBootsPrices: 
-  medicPrices: 
-  electricalBarrierPrices: 
-  gunsmithPrices: 
-  gunTexts: []
-  ammoTexts: []
-  perksTexts: []
+  - {fileID: 4076905273475913929}
+  - {fileID: 2666298096824097466}
+  - {fileID: 3051375662624190459}
+  - {fileID: 8591681866132019380}
+  - {fileID: 4928356170958940937}
+  - {fileID: 6472233516134690121}
+  ammoPrices: 0a0000000a0000000a0000000a000000
+  gunPrices: 0000000064000000c80000002c010000
+  ammoQuantity: e70300008c000000c80000003c000000
+  perkInitPrices: 0a000000140000001e00000028000000320000003c0000004600000050000000
+  rapidFirePrices: 050000000a0000000f00000014000000
+  laserShotPrices: 050000000b0000001100000018000000
+  bigShotPrices: 090000000f0000001800000022000000
+  tacticVestPrices: 080000000b0000001b00000021000000
+  tacticalBootsPrices: 0a000000140000001e00000028000000
+  medicPrices: 070000004d0000005000000063000000
+  electricalBarrierPrices: 0e00000019000000240000002f000000
+  gunsmithPrices: 500000005a000000640000006e000000
+  gunTexts:
+  - Pistola
+  - Subfusil
+  - Rifle
+  - Sniper
+  ammoTexts:
+  - Pist. Ammo
+  - Sub. Ammo
+  - Rifle Ammo
+  - Sniper Ammo
+  perksTexts:
+  - Rapid Fire
+  - Laser Shot
+  - Big Shot
+  - Vest
+  - Boots
+  - Medic
+  - Barrier
+  - Gunsmith
 --- !u!1 &8631539571064557336
 GameObject:
   m_ObjectHideFlags: 0

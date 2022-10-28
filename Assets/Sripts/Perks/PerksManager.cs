@@ -92,6 +92,7 @@ public class PerksManager : MonoBehaviour
             availablePerks[i] = false;
         }
 
+        perkLevels = new int[totalPerks];
         for (int i = 0; i < perkLevels.Length; i++)
         {
             perkLevels[i] = 0;

@@ -48,8 +48,20 @@ public class GameRegistry : MonoBehaviour
 
 
         // HAY QUE HACER PARA QUE SOLO ACTUALICE LA TIENDA UNA ÚNICA VEZ
-        if (minutes == 0 && seconds == 3 && !generated) {
-            //shopManager.GetComponent<ManageShops>().RefreshShop();
+        if (minutes == 0 && seconds == 5 && !generated)
+        {
+            Debug.Log("Nuevos objetos en tienda");
+            shopManager.GetComponent<ManageShops>().RefreshShop();
+            generated = true;
+        }
+        if (minutes == 0 && seconds == 6)
+        {
+            generated = false;
+        }
+        if (minutes == 0 && seconds == 10 && !generated)
+        {
+            Debug.Log("Nuevos objetos en tienda");
+            shopManager.GetComponent<ManageShops>().RefreshShop();
             generated = true;
         }
 
