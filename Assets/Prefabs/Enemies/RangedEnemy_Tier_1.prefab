@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 4597903607373781857}
   - component: {fileID: 805858125500327647}
   m_Layer: 7
-  m_Name: RangedEnemy
+  m_Name: RangedEnemy_Tier_1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightRange: 100
   attackRange: 10
-  attackSpeed: 3
+  attackSpeed: 2
   bulletSpeed: 10
   damage: 10
   bullet: {fileID: 8138357740357630760, guid: d1e3ce7f519589a499cd7757744e3d3d, type: 3}
@@ -369,8 +369,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 60
-  currentHealth: 60
+  startingHealth: 40
+  currentHealth: 40
   scoreValue: 10
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
 --- !u!114 &4999979129543916153

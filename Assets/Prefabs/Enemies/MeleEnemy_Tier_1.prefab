@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 6212409924883035094}
   - component: {fileID: 3699641362541068157}
   m_Layer: 7
-  m_Name: BasicEnemy
+  m_Name: MeleEnemy_Tier_1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 30
   currentHealth: 30
-  scoreValue: 10
+  scoreValue: 5
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
 --- !u!114 &6014481276430231423
 MonoBehaviour:
