@@ -11,7 +11,7 @@ public class Medic : MonoBehaviour
 
     private void Start()
     {
-        healthScript = GameObject.Find("Player_Character_FINAL").GetComponent<Health>();
+        healthScript = GetComponentInParent<Health>();
         gameObject.SetActive(false);
     }
 

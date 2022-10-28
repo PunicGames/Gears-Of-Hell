@@ -9,6 +9,7 @@ public class ShootSystem : MonoBehaviour
     public PlayerGuns guns;
     [Range(0, 1)]
     public int selectedGun = 0;
+    [HideInInspector]
     public bool[] availableGuns;
 
     // Bullet
@@ -43,8 +44,6 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-        availableGuns[1] = true;
-        availableGuns[2] = true;
     }
 
     private void Start()
@@ -65,8 +64,9 @@ public class ShootSystem : MonoBehaviour
         // Recarga automáticamente si no quedan balas
         if (readyToShoot && shooting && !reloading && guns.getGuns()[selectedGun].bulletsLeftInMagazine <= 0) Reload();
 
-        if (ammunitionDisplay != null)
+        if (ammunitionDisplay != null) {
             ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / " + guns.getGuns()[selectedGun].totalBullets);
+        }
     }
 
     public void Shooting(Animator anim) 
@@ -188,5 +188,13 @@ public class ShootSystem : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void ActivateGun(int idx) {
+        availableGuns[idx] = true;
+    }
+
+    public void DeactivateGun(int idx) {
+        availableGuns[idx] = false;
     }
 }

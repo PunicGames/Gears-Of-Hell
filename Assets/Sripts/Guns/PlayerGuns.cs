@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 public class PlayerGuns
 {
-    private Gun[] existingGuns = new Gun[3];
+    private Gun[] existingGuns = new Gun[4];
 
     public PlayerGuns() {
         InitializePistol();
         InitializeSubfusil();
+        InitializeRifle();
         InitializeSniper();
     }
 
@@ -48,6 +49,25 @@ public class PlayerGuns
         existingGuns[1] = subfusil;
     }
 
+    private void InitializeRifle()
+    {
+        Gun rifle = new Gun();
+        rifle.bulletDamage = 30;
+        rifle.magazineSize = 25;
+        rifle.bulletsLeftInMagazine = rifle.magazineSize;
+        rifle.maxTotalBullets = 250;
+        rifle.totalBullets = rifle.maxTotalBullets - rifle.magazineSize;
+        rifle.bulletsShot = 0;
+        rifle.bulletsPerTap = 1;
+        rifle.shootForce = 25;
+        rifle.spread = 0;
+        rifle.reloadTime = 1;
+        rifle.timeBetweenShots = 0.3f;
+        rifle.timeBetweenShooting = 0.3f;
+        rifle.automaticGun = true;
+        existingGuns[2] = rifle;
+    }
+
     private void InitializeSniper()
     {
         Gun sniper = new Gun();
@@ -64,7 +84,7 @@ public class PlayerGuns
         sniper.timeBetweenShots = 0.0f;
         sniper.timeBetweenShooting = 1.5f;
         sniper.automaticGun = false;
-        existingGuns[2] = sniper;
+        existingGuns[3] = sniper;
     }
 
     public Gun[] getGuns() {

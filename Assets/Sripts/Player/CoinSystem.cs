@@ -13,10 +13,16 @@ public class CoinSystem : MonoBehaviour
     {
         totalCoinsInGame = 0;
         coinDisplay = GameObject.Find("CoinCounter").GetComponent<Text>();
+        AddCoin(10000);
     }
 
     public void AddCoin(int newCoin) {
         totalCoinsInGame += newCoin;
+        coinDisplay.text = totalCoinsInGame.ToString();
+    }
+
+    public void SpendCoin(int newCoin) { 
+        totalCoinsInGame -= newCoin;
         coinDisplay.text = totalCoinsInGame.ToString();
     }
 }

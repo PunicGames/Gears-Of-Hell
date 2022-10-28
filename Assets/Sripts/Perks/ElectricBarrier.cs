@@ -12,7 +12,7 @@ public class ElectricBarrier : MonoBehaviour
 
     private void Start()
     {
-        healthScript = GameObject.Find("Player_Character_FINAL").GetComponent<Health>();
+        healthScript = GetComponentInParent<Health>();
         visualBarrier = GameObject.Find("VisualElectricBarrier");
         gameObject.SetActive(false);
     }

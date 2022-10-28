@@ -938,7 +938,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyAmmo1
+        m_MethodName: BuyGunAmmo1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1469,7 +1469,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyPerk1
+        m_MethodName: BuyNewOldPerk1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2154,7 +2154,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyAmmo3
+        m_MethodName: BuyGunAmmo3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2288,7 +2288,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyPerk3
+        m_MethodName: BuyNewOldPerk3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3417,7 +3417,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyAmmo2
+        m_MethodName: BuyGunAmmo2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4042,7 +4042,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8487460702918015519}
         m_TargetAssemblyTypeName: ManageShops, Assembly-CSharp
-        m_MethodName: BuyPerk2
+        m_MethodName: BuyNewOldPerk2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4709,15 +4709,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
   - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
   - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
+  - {fileID: 21300000, guid: a597b425c97f4fe478bab7f089d39c39, type: 3}
   spritesPerks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 2e300e98df474fe45b6d73f43c2b3776, type: 3}
+  - {fileID: 21300000, guid: 6815dfe7b33c41440a30e5575e8d34b9, type: 3}
+  - {fileID: 21300000, guid: 481ca325621a9fa41b825557743b892f, type: 3}
+  - {fileID: 21300000, guid: 04c41f59a86f89046b8dcc925f07598d, type: 3}
+  - {fileID: 21300000, guid: f5aa476e3f5e6cb4bb6ed33ad18b83d5, type: 3}
+  - {fileID: 21300000, guid: c3157b82473b53d4b875cd12bd7c692a, type: 3}
+  - {fileID: 21300000, guid: 63751ac9712df1640a2462d0a9af8ff0, type: 3}
+  - {fileID: 21300000, guid: 2b3c34793ae3d3b419b6194644a64722, type: 3}
+  spritesGuns:
+  - {fileID: 21300000, guid: dfda472c9ea0f314d9dee61e93760778, type: 3}
+  - {fileID: 21300000, guid: 544af5e53abff9d4aa93898241567c3d, type: 3}
+  - {fileID: 21300000, guid: 33f7f8e5782ff6e4f8b192c052a2fd4a, type: 3}
+  - {fileID: 21300000, guid: 12411a37bff6a2c488683cbc8407d1d8, type: 3}
   titleText:
   - {fileID: 2047120260359115042}
   - {fileID: 7998734612739135420}
@@ -4725,7 +4731,7 @@ MonoBehaviour:
   - {fileID: 368154430044523417}
   - {fileID: 4633715260848921623}
   - {fileID: 3553682676615413519}
-  displaysAmmo:
+  displaysAmmoAndGuns:
   - {fileID: 67735574633281500}
   - {fileID: 5427236345316958562}
   - {fileID: 8076501646694554757}
@@ -4740,7 +4746,37 @@ MonoBehaviour:
   - {fileID: 914271248886709157}
   - {fileID: 1475994702814962708}
   - {fileID: 8942686218663438960}
-  ammoPrices: 0a0000000a0000000a000000
+  ammoPrices: 01000000030000000500000008000000
+  gunPrices: 0000000064000000c80000002c010000
+  ammoQuantity: e70300008c000000c80000003c000000
+  perkInitPrices: 0a000000140000001e00000028000000320000003c0000004600000050000000
+  rapidFirePrices: 050000000a0000000f00000014000000
+  laserShotPrices: 050000000b0000001100000018000000
+  bigShotPrices: 090000000f0000001800000022000000
+  tacticVestPrices: 080000000b0000001b00000021000000
+  tacticalBootsPrices: 0a000000140000001e00000028000000
+  medicPrices: 070000004d0000005000000063000000
+  electricalBarrierPrices: 0e00000019000000240000002f000000
+  gunsmithPrices: 500000005a000000640000006e000000
+  gunTexts:
+  - Pistola
+  - Subfusil
+  - Rifle
+  - Sniper
+  ammoTexts:
+  - Pist. Ammo
+  - Sub. Ammo
+  - Rifle Ammo
+  - Sniper Ammo
+  perksTexts:
+  - Rapid Fire
+  - Laser Shot
+  - Big Shot
+  - Vest
+  - Boots
+  - Medic
+  - Barrier
+  - GunSmith
 --- !u!1 &8660802644760807148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4759,7 +4795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8638665821046643858
 RectTransform:
   m_ObjectHideFlags: 0
