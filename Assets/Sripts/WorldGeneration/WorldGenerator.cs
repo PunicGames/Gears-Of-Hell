@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -71,6 +72,10 @@ public class WorldGenerator : MonoBehaviour
     public GameObject[] gates;
     public GameObject[] obstacles;
 
+    [Header("Shops")]
+    public int nShops = 3;
+    public GameObject shop;
+
     // Navmesh
     private NavMeshSurface surface;
 
@@ -79,6 +84,7 @@ public class WorldGenerator : MonoBehaviour
 
     // Needed for delete 
     private LinkedList<GameObject> spawnedCells = new LinkedList<GameObject>();
+    private List<GameObject> shops = new List<GameObject>();
 
     // Property that returns copy
     public static Dictionary<Vector2Int, bool[]> GetBlueprint => new Dictionary<Vector2Int, bool[]>(blueprint);
@@ -145,7 +151,8 @@ public class WorldGenerator : MonoBehaviour
 
     private void GenerateCells(Dictionary<Vector2Int, bool[]> blueprint)
     {
-        var gateCandidates = new Dictionary<Vector2Int, bool[]>();
+        // Gate Spawn Management
+        //var gateCandidates = new Dictionary<Vector2Int, bool[]>();
 
         // Paralelizable
         foreach (var cell in blueprint)
@@ -153,11 +160,11 @@ public class WorldGenerator : MonoBehaviour
             int doors = 0;
             foreach (var door in cell.Value)
                 if (door) doors++;
-
+            /*
             // Gates
             if (doors == 2)
                 gateCandidates.Add(cell.Key, cell.Value);
-
+            */
 
             SpawnCell(cell.Key, doors, cell.Value);
 
@@ -166,7 +173,24 @@ public class WorldGenerator : MonoBehaviour
 
         }
 
-        GenerateGates(gateCandidates);
+        //GenerateGates(gateCandidates);
+        var cells = blueprint.Keys.ToList();
+        for (int i = nShops; i > 0; i--)
+        {
+            SpawnShop(ref cells);
+        }
+    }
+
+    private void SpawnShop(ref List<Vector2Int> cells)
+    {
+        var cell = cells[Random.Range(0, cells.Count)];
+        cells.Remove(cell);
+        var pos = cell * cellScale;
+        //Vector2 rndOffset = new Vector2(Random.Range((-cellScale.x / 2) + wallSize.x, (cellScale.x / 2) - wallSize.y), Random.Range((-cellScale.y / 2) + wallSize.x, (cellScale.y / 2) - wallSize.y));
+        GameObject obs = Instantiate(shop, new Vector3( pos.x, 0.0f, pos.y), Quaternion.identity);
+        obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
+        obs.transform.parent = transform;
+        shops.Add(obs);
     }
 
     private bool flipCoin()
