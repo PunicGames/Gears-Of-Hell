@@ -192,7 +192,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   playerAnimator: {fileID: 0}
-  mobileUI: {fileID: 0}
 --- !u!65 &278288688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -325,6 +324,14 @@ PrefabInstance:
     - target: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
       propertyPath: m_Name
       value: BasicEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330653623977720479, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+      propertyPath: currentHealth
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330653623977720479, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+      propertyPath: startingHealth
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
@@ -707,7 +714,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c7675b68541fe54ebdc55db22800f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deviceColor: {fileID: 1777312818}
 --- !u!4 &1574956630
 Transform:
   m_ObjectHideFlags: 0
@@ -1389,6 +1395,10 @@ PrefabInstance:
     - target: {fileID: 919294009874013116, guid: 31c898b8220e6fe4fbe7c5963c762b5f, type: 3}
       propertyPath: m_Name
       value: Player_Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 4489942564261132345, guid: 31c898b8220e6fe4fbe7c5963c762b5f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31c898b8220e6fe4fbe7c5963c762b5f, type: 3}

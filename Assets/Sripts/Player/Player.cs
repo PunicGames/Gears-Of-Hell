@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        playerAnimator.SetBool("isRifle", true);
+        //playerAnimator.SetBool("isRifle", true);
     }
     private void Update()
     {
