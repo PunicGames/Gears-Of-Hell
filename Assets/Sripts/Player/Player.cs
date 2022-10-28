@@ -257,8 +257,8 @@ public class Player : MonoBehaviour
             playerInputActions.Player.MobileAim.canceled += ResetShoot;
             playerInputActions.Player.Recharge.performed += ReloadGun;
             playerInputActions.Player.SwapGun.performed += SwapGun;
-            // PONER LA RECARGA CON EL MOVIL
-            // PONER CAMBIO DE ARMA CON EL MOVIL
+            playerInputActions.Player.Esc.performed += PauseMenuCall;
+            playerInputActions.Player.Shop.performed += OpenShop;
         }
     }
 
@@ -284,9 +284,8 @@ public class Player : MonoBehaviour
             playerInputActions.Player.MobileAim.canceled -= ResetShoot;
             playerInputActions.Player.Recharge.performed -= ReloadGun;
             playerInputActions.Player.SwapGun.performed -= SwapGun;
-            // PONER LA RECARGA CON EL MOVIL
-            // PONER CAMBIO DE ARMA CON EL MOVIL
-
+            playerInputActions.Player.Esc.performed -= PauseMenuCall;
+            playerInputActions.Player.Shop.performed -= OpenShop;
         }
     }
 
