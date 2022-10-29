@@ -10,8 +10,8 @@ public class EnemySpawnController : MonoBehaviour
     [SerializeField] private List<GameObject> spawnList;
 
     [SerializeField] private int spawnCount;
-    [SerializeField] private float minSpawnDelay;
-    [SerializeField] private float maxSpawnDelay;
+    private float minSpawnDelay = 8;
+    private float maxSpawnDelay = 12;
 
     private float spawnTime;
     private float timeZero;
@@ -20,11 +20,18 @@ public class EnemySpawnController : MonoBehaviour
     [SerializeField] private int minSpawnSteps;
     [SerializeField] private int maxSpawnSteps;
 
+    //time registry
+    private GameRegistry timeScript;
+
     public void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         spawnList = new List<GameObject>();
-        spawning = true;
+
+        spawning = false;
+
+        spawnTime = Time.time + 10f;//primer respawn de enemigo
+        timeScript = GameObject.Find("GameRegistry").GetComponent<GameRegistry>();
     }
 
     public void Update()
@@ -35,6 +42,14 @@ public class EnemySpawnController : MonoBehaviour
     private void ResetTimer()
     {
         //timeZero = Time.time;
+
+        float aux = timeScript.minutes + 1;
+
+        aux = 10 / aux;
+
+        minSpawnDelay = aux * 0.8f;
+        maxSpawnDelay = aux * 1.2f;
+
         spawnTime = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
         spawning = false;
     }

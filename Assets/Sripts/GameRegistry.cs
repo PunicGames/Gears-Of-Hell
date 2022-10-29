@@ -8,7 +8,7 @@ public class GameRegistry : MonoBehaviour
 {
 
     private float elapsedTime;
-    private int minutes, seconds;
+    [HideInInspector] public int minutes, seconds;
 
     // Display time
     private Text timeDisplay;
