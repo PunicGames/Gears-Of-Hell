@@ -9,7 +9,11 @@
 </br>
 <p align="center"> 
 
-  <img src=https://user-images.githubusercontent.com/79087129/198836993-af18f267-094e-4cd5-970e-57ae5551bbf4.jpg width=100%>
+
+
+  <img src=https://user-images.githubusercontent.com/79087129/198841111-ab53b4a5-4c8b-4d31-b99d-85f9fa39bb08.gif width=80%>
+ <br> 
+</br>
   <img src=https://user-images.githubusercontent.com/79087129/198837116-ad304cc8-8520-417a-9316-623312229afb.png width=25%>
   
 <br> 
