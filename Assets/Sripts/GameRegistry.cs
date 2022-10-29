@@ -17,6 +17,15 @@ public class GameRegistry : MonoBehaviour
     [SerializeField]
     private GameObject shopManager;
     private bool generated;
+    public float firstShopTime;
+    public float shopActivationTime;
+
+    private WorldGenerator wgScript;
+
+    private void Awake()
+    {
+        wgScript = GameObject.Find("WorldGenerator").GetComponent<WorldGenerator>();
+    }
 
     void Start()
     {
@@ -24,6 +33,9 @@ public class GameRegistry : MonoBehaviour
         minutes = 0;
         seconds = 0;
         timeDisplay = GameObject.Find("GameTimer").GetComponent<Text>();
+
+        //shopManager.GetComponent<ManageShops>().RefreshShop();
+        InvokeRepeating("ChangeShop", firstShopTime, shopActivationTime);
     }
 
 
@@ -45,44 +57,24 @@ public class GameRegistry : MonoBehaviour
         else
             timeDisplay.text += " : 0" + seconds.ToString();
 
+    }
 
+    void ChangeShop()
+    {
+        
+        //desactivamos todas
+        foreach(GameObject s in wgScript.shops)
+        {
+            s.GetComponent<Shop>().active = false;
+        }
 
-        // HAY QUE HACER PARA QUE SOLO ACTUALICE LA TIENDA UNA ÚNICA VEZ
-        if (minutes == 0 && seconds == 5 && !generated)
-        {
-            Debug.Log("Nuevos objetos en tienda");
-            shopManager.GetComponent<ManageShops>().RefreshShop();
-            generated = true;
-        }
-        if (minutes == 0 && seconds == 6)
-        {
-            generated = false;
-        }
-        if (minutes == 0 && seconds == 10 && !generated)
-        {
-            Debug.Log("Nuevos objetos en tienda");
-            shopManager.GetComponent<ManageShops>().RefreshShop();
-            generated = true;
-        }
-        if (minutes == 0 && seconds == 11)
-        {
-            generated = false;
-        }
-        if (minutes == 0 && seconds == 15 && !generated)
-        {
-            Debug.Log("Nuevos objetos en tienda");
-            shopManager.GetComponent<ManageShops>().RefreshShop();
-            generated = true;
-        }
-        if (minutes == 0 && seconds == 16)
-        {
-            generated = false;
-        }
-        if (minutes == 0 && seconds == 20 && !generated)
-        {
-            Debug.Log("Nuevos objetos en tienda");
-            shopManager.GetComponent<ManageShops>().RefreshShop();
-            generated = true;
-        }
+        //calculamos el indice de la nueva a activar
+        int i = Random.Range(0, wgScript.shops.Count);
+
+        wgScript.shops[i].GetComponent<Shop>().active = true;
+
+        shopManager.GetComponent<ManageShops>().RefreshShop();
+
+        
     }
 }

@@ -84,7 +84,7 @@ public class WorldGenerator : MonoBehaviour
 
     // Needed for delete 
     private LinkedList<GameObject> spawnedCells = new LinkedList<GameObject>();
-    private List<GameObject> shops = new List<GameObject>();
+    [HideInInspector] public List<GameObject> shops = new List<GameObject>();
 
     // Property that returns copy
     public static Dictionary<Vector2Int, bool[]> GetBlueprint => new Dictionary<Vector2Int, bool[]>(blueprint);
@@ -177,11 +177,19 @@ public class WorldGenerator : MonoBehaviour
         var cells = blueprint.Keys.ToList();
         for (int i = nShops; i > 0; i--)
         {
-            SpawnShop(ref cells);
+            if (i == nShops)
+            {
+                SpawnShop(ref cells, true);
+            }
+            else
+            {
+                SpawnShop(ref cells, false);
+            }
+            
         }
     }
 
-    private void SpawnShop(ref List<Vector2Int> cells)
+    private void SpawnShop(ref List<Vector2Int> cells, bool act)
     {
         var cell = cells[Random.Range(0, cells.Count)];
         cells.Remove(cell);
@@ -190,6 +198,7 @@ public class WorldGenerator : MonoBehaviour
         GameObject obs = Instantiate(shop, new Vector3( pos.x, 0.0f, pos.y), Quaternion.identity);
         obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
         obs.transform.parent = transform;
+        obs.GetComponent<Shop>().active = false;
         shops.Add(obs);
     }
 

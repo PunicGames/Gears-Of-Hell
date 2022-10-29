@@ -78,10 +78,11 @@ public class ManageShops : MonoBehaviour
 
     void Start()
     {
+        /*
         for (int i = 0; i < posicionesIniciales.Length; i++)
         {
             GameObject t = Instantiate(tienda, posicionesIniciales[i].position, Quaternion.identity);
-        }
+        }*/
     }
 
     public void RefreshShop()

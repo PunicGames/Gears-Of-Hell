@@ -9,7 +9,7 @@ public class FirstAidKit : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Health healthScript = GameObject.Find("Player_Character_FINAL").GetComponent<Health>();
+            Health healthScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
             ParticleSystem ps = gameObject.GetComponentInChildren<ParticleSystem>();
             SkinnedMeshRenderer smr = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
             if (healthScript != null)
