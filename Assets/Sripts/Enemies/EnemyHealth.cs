@@ -9,6 +9,9 @@ public class EnemyHealth : MonoBehaviour
     public int currentHealth;
     public int scoreValue = 10;
 
+    public int minScoreValue;
+    public int maxScoreValue;
+
     [SerializeField]
     private GameObject coin;
 
@@ -80,7 +83,8 @@ public class EnemyHealth : MonoBehaviour
 
         // Suelta moneda
         GameObject moneda = Instantiate(coin, transform.position, Quaternion.identity);
-        moneda.gameObject.GetComponent<Moneda>().value = scoreValue;
+        //moneda.gameObject.GetComponent<Moneda>().value = scoreValue;
+        moneda.gameObject.GetComponent<Moneda>().value = Random.Range(minScoreValue, maxScoreValue);
 
 
     }
