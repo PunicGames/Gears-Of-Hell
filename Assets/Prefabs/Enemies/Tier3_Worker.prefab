@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 792b950aed6337f4f880b4d3c116b3a8, type: 2}
+  - {fileID: 2100000, guid: 0c8bbbba761927a439b34d1a1c63e818, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -471,8 +471,9 @@ GameObject:
   - component: {fileID: 6014481276430231423}
   - component: {fileID: 6212409924883035094}
   - component: {fileID: 3699641362541068157}
+  - component: {fileID: 5867907439477152508}
   m_Layer: 7
-  m_Name: MeleEnemy_Tier_1
+  m_Name: Tier3_Worker
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -529,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2048a17784f594b80cf5d70fb00b26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRange: 10
+  sightRange: 500
 --- !u!54 &2140532941445721655
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -576,8 +577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beea883880f7a1b4fba245b950953459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 0.5
-  attackDamage: 5
+  timeBetweenAttacks: 1000
+  attackDamage: 60
 --- !u!136 &6212409924883035094
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -612,6 +613,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &5867907439477152508
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140532941445721662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.68755287, y: 1, z: 0.87866205}
+  m_Center: {x: 0.029246837, y: 0.5, z: 0.31933102}
 --- !u!1 &2236531451138121158
 GameObject:
   m_ObjectHideFlags: 0
