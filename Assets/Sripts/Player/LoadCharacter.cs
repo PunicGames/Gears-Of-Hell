@@ -7,7 +7,7 @@ public class LoadCharacter : MonoBehaviour
     public GameObject[] characterPrefabs;
     public Transform spawnPoint;
 
-    void Start()
+    void Awake()
     {
         int selectedCharacter = PlayerPrefs.GetInt("selectedCharacter");
         GameObject prefab = characterPrefabs[selectedCharacter];

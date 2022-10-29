@@ -25,13 +25,18 @@ public class EnemySpawnController : MonoBehaviour
 
     public void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        
         spawnList = new List<GameObject>();
 
         spawning = false;
 
         spawnTime = Time.time + 10f;//primer respawn de enemigo
         timeScript = GameObject.Find("GameRegistry").GetComponent<GameRegistry>();
+    }
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void Update()
@@ -84,6 +89,7 @@ public class EnemySpawnController : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        
         var pl_pos = player.transform.position;
         var cellScale = WorldGenerator.cellScale;
 
