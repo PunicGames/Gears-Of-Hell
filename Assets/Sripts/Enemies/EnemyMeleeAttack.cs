@@ -12,10 +12,12 @@ public class EnemyMeleeAttack : MonoBehaviour
     Health playerHealth;
     bool playerInRange;
     float timer;
+    Animator animator;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        animator = GetComponent<Animator>();
 
         // Si a alguien le da error esto de aqui haciendo pruebas en PlayerScene es normal, ya que los enemigos estan spawneados antes que el personaje principal
         playerHealth = player.GetComponent<Health>();
@@ -25,12 +27,12 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= timeBetweenAttacks && playerInRange) {
-            Attack();
-        }
+        //if (timer >= timeBetweenAttacks && playerInRange) {
+        //    Attack();
+        //}
     }
 
-    private void Attack() 
+    public void Attack() 
     {
         timer = 0f;
 
@@ -56,6 +58,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (other.gameObject == player) {
             playerInRange = true;
+            animator.SetTrigger("Attack");
         }
     }
 
