@@ -64,6 +64,25 @@ public class GameRegistry : MonoBehaviour
             shopManager.GetComponent<ManageShops>().RefreshShop();
             generated = true;
         }
-
+        if (minutes == 0 && seconds == 11)
+        {
+            generated = false;
+        }
+        if (minutes == 0 && seconds == 15 && !generated)
+        {
+            Debug.Log("Nuevos objetos en tienda");
+            shopManager.GetComponent<ManageShops>().RefreshShop();
+            generated = true;
+        }
+        if (minutes == 0 && seconds == 16)
+        {
+            generated = false;
+        }
+        if (minutes == 0 && seconds == 20 && !generated)
+        {
+            Debug.Log("Nuevos objetos en tienda");
+            shopManager.GetComponent<ManageShops>().RefreshShop();
+            generated = true;
+        }
     }
 }
