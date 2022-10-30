@@ -66,7 +66,9 @@ MonoBehaviour:
   - {fileID: 6505218325808694531, guid: 3c2f11cba0ca20042a2b8749e215f816, type: 3}
   obstacles:
   - {fileID: 2819038164688161236, guid: 07e934d8358882f46a1abae560b889c5, type: 3}
+  nShops: 3
   shop: {fileID: 5403548014249073235, guid: 7541124c11da73c489736c8437988b5a, type: 3}
+  shops: []
 --- !u!114 &7912361067319672377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,19 +105,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7912361067319672372}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a66c015a8d913d46ae2b405167c0a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   enemyList:
-  - {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
+  - {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
   - {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
   - {fileID: 7724889248031397008, guid: f6710d0be1051c542a88cfed6a30869a, type: 3}
   spawnList: []
+  gameRegistry: {fileID: 0}
   spawnCount: 0
-  minSpawnDelay: 1
-  maxSpawnDelay: 2
   minSpawnSteps: 1
-  maxSpawnSteps: 1
+  maxSpawnSteps: 2
