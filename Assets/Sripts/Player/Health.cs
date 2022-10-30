@@ -19,6 +19,9 @@ public class Health : MonoBehaviour
     //Perks barriers
     public bool electricBarrier;
 
+    // Display health
+    private Text lifeDisplay;
+
     private void Awake()
     {
         playerMovement = GetComponent<Player>();
@@ -30,6 +33,8 @@ public class Health : MonoBehaviour
     private void Start()
     {
         damageImage = GameObject.Find("DamagedBlood").GetComponent<Image>();
+        lifeDisplay = GameObject.Find("LifeCounter").GetComponent<Text>();
+        lifeDisplay.text = currentHealth.ToString();
     }
 
 
@@ -58,8 +63,13 @@ public class Health : MonoBehaviour
     {
         damaged = true;
 
-        currentHealth -= amount;
-        Debug.Log("Vida actual: " + currentHealth);
+        if (currentHealth > amount)
+            currentHealth -= amount;
+        else
+            currentHealth = 0;
+
+        lifeDisplay.text = currentHealth.ToString();
+        //Debug.Log("Vida actual: " + currentHealth);
 
         if (currentHealth <= 0 && !isDead)
         {
