@@ -25,18 +25,22 @@ public class BulletEnemy : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             Debug.Log("Colision con jugador");
             // Quitamos vida al jugador
-            Health playerHealth = collision.gameObject.GetComponent<Health>();
+            Health playerHealth = other.gameObject.GetComponent<Health>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
             }
             Destroy(gameObject);
         }
+        if (other.gameObject.tag == "Wall")
+            Destroy(gameObject);
+
+
     }
 }

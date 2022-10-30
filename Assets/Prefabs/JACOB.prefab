@@ -141,6 +141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b16ad8cf37661488065b6965fdee8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon_meshes:
+  - {fileID: 3486320720226086702, guid: ddf13aa564db693499df21348ecb6002, type: 3}
+  - {fileID: 8009028354194868464, guid: a78886a34c5673344b4cff1c25764840, type: 3}
+  - {fileID: 8009028354194868464, guid: a78886a34c5673344b4cff1c25764840, type: 3}
+  - {fileID: 8009028354194868464, guid: a78886a34c5673344b4cff1c25764840, type: 3}
+  meshFilter: {fileID: 8511468124164692168}
   selectedGun: 0
   availableGuns: 
   bullet: {fileID: 441659958780119776, guid: 6331b5f3ae9ff874cb7e2a69f698ac91, type: 3}
@@ -432,7 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RigLayers:
   - m_Rig: {fileID: 7311397536098811932}
-    m_Active: 0
+    m_Active: 1
   - m_Rig: {fileID: 7311397535458953258}
     m_Active: 0
   m_Effectors: []
@@ -514,7 +520,7 @@ SphereCollider:
   m_GameObject: {fileID: 919294009874013116}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.8947536
   m_Center: {x: 0, y: 0.52, z: -0.02}
