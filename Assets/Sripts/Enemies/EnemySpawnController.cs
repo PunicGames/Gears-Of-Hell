@@ -5,9 +5,10 @@ using UnityEngine;
 public class EnemySpawnController : MonoBehaviour
 {
     // params
-    [SerializeField] private GameObject player;
+    private GameObject player;
     [SerializeField] private GameObject[] enemyList;
     [SerializeField] private List<GameObject> spawnList;
+    [SerializeField] private GameObject gameRegistry;
 
     [SerializeField] private int spawnCount;
     private float minSpawnDelay = 8;
@@ -31,7 +32,7 @@ public class EnemySpawnController : MonoBehaviour
         spawning = false;
 
         spawnTime = Time.time + 10f;//primer respawn de enemigo
-        timeScript = GameObject.Find("GameRegistry").GetComponent<GameRegistry>();
+        timeScript = gameRegistry.GetComponent<GameRegistry>();
     }
 
     private void Start()

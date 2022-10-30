@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
     private int previousSelected = 0;
 
     public void PlayGame() {
-        SceneManager.LoadScene("PlayerScene");
+        SceneManager.LoadScene("MainScene");
     }
 
     public void SelectJacob()

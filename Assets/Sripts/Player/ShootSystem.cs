@@ -27,6 +27,7 @@ public class ShootSystem : MonoBehaviour
 
     // Display
     private Text ammunitionDisplay;
+    private GameObject rechargingDisplay;
 
     //Perks Modifies
     [HideInInspector]
@@ -56,6 +57,8 @@ public class ShootSystem : MonoBehaviour
 
         // Display initialization
         ammunitionDisplay = GameObject.Find("Municion").GetComponent<Text>();
+        rechargingDisplay = GameObject.Find("Recargando");
+        rechargingDisplay.SetActive(false);
     }
 
     void Update()
@@ -63,8 +66,12 @@ public class ShootSystem : MonoBehaviour
         // Recarga automáticamente si no quedan balas
         if (readyToShoot && shooting && !reloading && guns.getGuns()[selectedGun].bulletsLeftInMagazine <= 0) Reload();
 
-        if (ammunitionDisplay != null)
-            ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / " + guns.getGuns()[selectedGun].totalBullets);
+        if (ammunitionDisplay != null) {
+            if (selectedGun != 0)
+                ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / " + guns.getGuns()[selectedGun].totalBullets);
+            else // En caso de ser la pistola
+                ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / Infinito";
+        }
     }
 
     public void Shooting(Animator anim) 
@@ -112,9 +119,9 @@ public class ShootSystem : MonoBehaviour
             currentBullet.transform.localScale *= scaleFactor;
         }
 
-
         guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
         guns.getGuns()[selectedGun].bulletsShot++;
+        
 
         if (allowInvoke) {
             Invoke("ResetShot", guns.getGuns()[selectedGun].timeBetweenShooting); // Llama a la función después de timeBetweenShooting segundos
@@ -141,6 +148,7 @@ public class ShootSystem : MonoBehaviour
         if ((guns.getGuns()[selectedGun].bulletsLeftInMagazine < guns.getGuns()[selectedGun].magazineSize) && !reloading && guns.getGuns()[selectedGun].totalBullets > 0) {
             Debug.Log("Pasa");
             reloading = true;
+            rechargingDisplay.SetActive(true);
             Invoke("ReloadFinished", guns.getGuns()[selectedGun].reloadTime);
         }
     }
@@ -159,6 +167,7 @@ public class ShootSystem : MonoBehaviour
         }
 
         reloading = false;
+        rechargingDisplay.SetActive(false);
         //Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
     }
 
