@@ -13,7 +13,7 @@ public class CoinSystem : MonoBehaviour
     {
         totalCoinsInGame = 0;
         coinDisplay = GameObject.Find("CoinCounter").GetComponent<Text>();
-        AddCoin(5000);
+        //AddCoin(5000);
     }
 
     public void AddCoin(int newCoin) {
