@@ -43,8 +43,6 @@
 ![render_Camera 1_007](https://user-images.githubusercontent.com/79087129/198837205-7d8c88c5-512a-4748-9917-449e8cf7b241.png)
 
 ![render_Camera 1_005](https://user-images.githubusercontent.com/79087129/198837230-eb2dd244-e800-43a7-9716-a511d633f215.png)
-
- ![render_Camera 4](https://user-images.githubusercontent.com/79087129/198837456-fbabfd76-16cc-4e1e-8a8a-ce6b242d5a48.png)
  
  ![render_Camera 4_005](https://user-images.githubusercontent.com/79087129/198840805-743487a2-b41e-4e1f-ac2a-5a9ceff32b22.png)
 
