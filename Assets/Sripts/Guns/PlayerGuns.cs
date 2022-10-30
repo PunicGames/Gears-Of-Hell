@@ -19,7 +19,7 @@ public class PlayerGuns
         pistol.bulletDamage = 10;
         pistol.magazineSize = 10;
         pistol.bulletsLeftInMagazine = pistol.magazineSize;
-        pistol.maxTotalBullets = 120;
+        pistol.maxTotalBullets = 99999;
         pistol.totalBullets = pistol.maxTotalBullets - pistol.magazineSize;
         pistol.bulletsShot = 0;
         pistol.bulletsPerTap = 1;

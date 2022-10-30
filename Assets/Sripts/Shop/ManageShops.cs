@@ -70,20 +70,10 @@ public class ManageShops : MonoBehaviour
 
     // Controladores de tienda
     int numGunsGenerated = 0;
-    int numAmmoGenerated = 0;
     int numNewPerksGenerated = 0;
-    int numOldPerksGenerated = 0;
     int[] gunsAmmoGeneratedIndexes = new int[3];
     int[] perksNewOldGeneratedIndexes = new int[3];
 
-    void Start()
-    {
-        /*
-        for (int i = 0; i < posicionesIniciales.Length; i++)
-        {
-            GameObject t = Instantiate(tienda, posicionesIniciales[i].position, Quaternion.identity);
-        }*/
-    }
 
     public void RefreshShop()
     {
@@ -131,7 +121,7 @@ public class ManageShops : MonoBehaviour
             }
 
             numGunsGenerated = 3;
-            numAmmoGenerated = 0;
+
         }
         else if (numGunsHasPlayer == 2) // Solo tiene la pistola y un arma más, por lo que se ofrecen 2 armas y munición de la que ya se tiene
         {
@@ -177,7 +167,7 @@ public class ManageShops : MonoBehaviour
             coinsText[2].text = ammoPrices[ammoIdx].ToString();
 
             numGunsGenerated = 2;
-            numAmmoGenerated = 1;
+
         }
         else if (numGunsHasPlayer == 3 && playerGuns[0]) // Se tienen todas las armas y una de ellas es la pistola, por lo que se ofrece un arma para cambiar por la pistola
         {
@@ -227,7 +217,7 @@ public class ManageShops : MonoBehaviour
             }
 
             numGunsGenerated = 1;
-            numAmmoGenerated = 2;
+
         }
         else if (numGunsHasPlayer == 3 && !playerGuns[0]) // El jugador tiene ya 3 armas, sienda una de ellas distinta a la pistola por lo que se ofrecen los 3 tipos de munición
         {
@@ -247,7 +237,7 @@ public class ManageShops : MonoBehaviour
             }
 
             numGunsGenerated = 0;
-            numAmmoGenerated = 3;
+
         }
 
 
@@ -296,7 +286,7 @@ public class ManageShops : MonoBehaviour
             }
 
             numNewPerksGenerated = 3;
-            numOldPerksGenerated = 0;
+
         }
         else if (numPerksHasPlayer == 3) // Caso de que al jugador le quedan 2 ventajas por conseguir. Muestra 1 para mejorar y 2 para comprar nuevas.
         {
@@ -381,7 +371,7 @@ public class ManageShops : MonoBehaviour
             }
 
             numNewPerksGenerated = 2;
-            numOldPerksGenerated = 1;
+
         }
         else if (numPerksHasPlayer == 4) // Caso de que al jugador le quedan 1 ventaja por conseguir. Muestra 2 para mejorar y 1 para comprar nueva.
         {
@@ -470,7 +460,7 @@ public class ManageShops : MonoBehaviour
             }
             
             numNewPerksGenerated = 1;
-            numOldPerksGenerated = 2;
+
 
         }
         else // Caso de que el jugador tiene todas las ventajas. Muestra 3 para mejorar o muestra ya mejoradas para ocupar huecos restantes
@@ -567,7 +557,6 @@ public class ManageShops : MonoBehaviour
             }
 
             numNewPerksGenerated = 0;
-            numOldPerksGenerated = 3;
         
         }
         

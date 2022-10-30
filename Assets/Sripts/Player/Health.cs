@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -91,6 +92,12 @@ public class Health : MonoBehaviour
 
         // Faltaría poner sistema de animaciones o audios, etc. Por eso está esto en un método a parte
 
-        Destroy(gameObject, 3);
+        Invoke("LoadMenu", 3);
+    }
+
+    public void LoadMenu()
+    {
+        Destroy(gameObject);
+        SceneManager.LoadScene("Menu");
     }
 }
