@@ -80,6 +80,11 @@ public class EnemyHealth : MonoBehaviour
         }
         animator.SetTrigger("death");
 
+        //Look for a box collider in case its a melee enemy and deactivate
+        BoxCollider coll = GetComponent<BoxCollider>();
+        if (coll)
+            coll.enabled = false;
+
 
         // Suelta moneda
         GameObject moneda = Instantiate(coin, transform.position, Quaternion.identity);

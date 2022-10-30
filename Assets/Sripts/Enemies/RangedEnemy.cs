@@ -18,6 +18,7 @@ public class RangedEnemy : MonoBehaviour
     Transform player;
     NavMeshAgent agent;
     Animator animator;
+    AudioSource gunAudio;
 
     private void Start()
     {
@@ -25,6 +26,8 @@ public class RangedEnemy : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        gunAudio = GetComponent<AudioSource>();
+
     }
 
     private void Update()
@@ -50,7 +53,8 @@ public class RangedEnemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            GameObject b = Instantiate(bullet, transform.position, Quaternion.identity);
+            gunAudio.Play();
+            GameObject b = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y+1f, transform.position.z), Quaternion.identity);
             b.transform.LookAt(player.transform);
             b.GetComponent<BulletEnemy>().setForce(bulletSpeed);
             b.GetComponent<BulletEnemy>().setDamage(damage);

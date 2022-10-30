@@ -48,9 +48,11 @@ public class BulletPlayer : MonoBehaviour
                 {
                     Destroy(gameObject);
                 }
-            }
-            
+            }   
         }
+        if (other.gameObject.tag == "Wall")
+            Destroy(gameObject);
+        
     }
     
 }

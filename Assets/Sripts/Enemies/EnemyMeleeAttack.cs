@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class EnemyMeleeAttack : MonoBehaviour
@@ -26,10 +27,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     private void FixedUpdate()
     {
         timer += Time.deltaTime;
-
-        //if (timer >= timeBetweenAttacks && playerInRange) {
-        //    Attack();
-        //}
+       
     }
 
     public void Attack() 
@@ -57,6 +55,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player) {
+            GetComponent<NavMeshAgent>().isStopped = true;
             playerInRange = true;
             animator.SetTrigger("Attack");
         }
@@ -66,6 +65,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (other.gameObject == player)
         {
+            GetComponent<NavMeshAgent>().isStopped = false;
             playerInRange = false;
         }
     }

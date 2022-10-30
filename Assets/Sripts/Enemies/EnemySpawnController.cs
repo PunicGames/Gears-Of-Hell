@@ -6,17 +6,23 @@ public class EnemySpawnController : MonoBehaviour
 {
     // params
     private GameObject player;
-    [SerializeField] private GameObject[] enemyList;
+    [SerializeField] private GameObject[] tier1_Enemies;
+    [SerializeField] private GameObject[] tier2_Enemies;
+    [SerializeField] private GameObject[] tier3_Enemies;
     [SerializeField] private List<GameObject> spawnList;
     [SerializeField] private GameObject gameRegistry;
 
     [SerializeField] private int spawnCount;
-    private float minSpawnDelay = 8;
-    private float maxSpawnDelay = 12;
+    private float minSpawnDelay = 1;
+    private float maxSpawnDelay = 4;
 
-    private float spawnTime;
+    private float tier1_spawnTime;
+    private float tier2_spawnTime;
+    private float tier3_spawnTime;
     private float timeZero;
-    private bool spawning;
+    private bool tier1_spawning;
+    private bool tier2_spawning;
+    private bool tier3_spawning;
 
     [SerializeField] private int minSpawnSteps;
     [SerializeField] private int maxSpawnSteps;
@@ -29,9 +35,13 @@ public class EnemySpawnController : MonoBehaviour
         
         spawnList = new List<GameObject>();
 
-        spawning = false;
+        tier1_spawning = false;
+        tier2_spawning = false;
+        tier3_spawning = false;
 
-        spawnTime = Time.time + 10f;//primer respawn de enemigo
+        tier1_spawnTime = Time.time + 5f;//primer respawn de enemigo
+        tier2_spawnTime = Time.time + 60f;
+        tier3_spawnTime = Time.time + 120f;
         timeScript = gameRegistry.GetComponent<GameRegistry>();
     }
 
@@ -56,8 +66,8 @@ public class EnemySpawnController : MonoBehaviour
         minSpawnDelay = aux * 0.8f;
         maxSpawnDelay = aux * 1.2f;
 
-        spawnTime = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
-        spawning = false;
+        tier1_spawnTime = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
+        tier1_spawning = false;
     }
 
     private Vector3 GetSpawnPosition(Vector2Int key)
@@ -96,23 +106,24 @@ public class EnemySpawnController : MonoBehaviour
         Vector2Int index = new Vector2Int(Mathf.RoundToInt(pl_pos.x / WorldGenerator.cellScale.x), Mathf.RoundToInt(pl_pos.z / WorldGenerator.cellScale.y));
 
         var position = GetSpawnPosition(index);
-        var enemy = enemyList[Random.Range(0, enemyList.Length)];
+        var enemy1 = tier1_Enemies[Random.Range(0, tier1_Enemies.Length)];
+
 
         print("Spawning enemy at: " + position.ToString());
          
-        Instantiate(enemy, new Vector3(position.x * WorldGenerator.cellScale.x, 0.0f, position.z * WorldGenerator.cellScale.y), Quaternion.identity);
+        Instantiate(enemy1, new Vector3(position.x * WorldGenerator.cellScale.x, 0.0f, position.z * WorldGenerator.cellScale.y), Quaternion.identity);
 
     }
 
     private void SpawnLoop()
     {
-        if (spawning)
+        if (tier1_spawning)
         {
             SpawnEnemy();
             ResetTimer();
         } else
-            if (Time.time > spawnTime)
-                spawning = true;
+            if (Time.time > tier1_spawnTime)
+                tier1_spawning = true;
     }
 
 }
