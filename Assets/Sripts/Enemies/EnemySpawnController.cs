@@ -92,16 +92,15 @@ public class EnemySpawnController : MonoBehaviour
     {
         
         var pl_pos = player.transform.position;
-        var cellScale = WorldGenerator.cellScale;
 
-        Vector2Int index = new Vector2Int(Mathf.RoundToInt(pl_pos.x / cellScale.x), Mathf.RoundToInt(pl_pos.z / cellScale.y));
+        Vector2Int index = new Vector2Int(Mathf.RoundToInt(pl_pos.x / WorldGenerator.cellScale.x), Mathf.RoundToInt(pl_pos.z / WorldGenerator.cellScale.y));
 
         var position = GetSpawnPosition(index);
         var enemy = enemyList[Random.Range(0, enemyList.Length)];
 
-        Debug_UI.Print("Spawning enemy at: " + position.ToString());
+        print("Spawning enemy at: " + position.ToString());
          
-        Instantiate(enemy, position * cellScale, Quaternion.identity);
+        Instantiate(enemy, new Vector3(position.x * WorldGenerator.cellScale.x, 0.0f, position.z * WorldGenerator.cellScale.y), Quaternion.identity);
 
     }
 
