@@ -49,8 +49,4 @@ public class EnemiesMovement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
-
-
-
-
 }
