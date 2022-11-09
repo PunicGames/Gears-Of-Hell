@@ -705,12 +705,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: gameRegistry
       value: 
       objectReference: {fileID: 1696807106}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tier1_Enemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tier1_Enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tier1_Enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 2140532941445721662, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
     - target: {fileID: 7912361067319672372, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Name
       value: WorldGenerator
@@ -791,8 +803,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterPrefabs:
-  - {fileID: 581063614235908743, guid: 52368f693f910e24b8581ae1e401c4d5, type: 3}
   - {fileID: 919294009874013116, guid: 31c898b8220e6fe4fbe7c5963c762b5f, type: 3}
+  - {fileID: 919294009874013116, guid: 2a093ef1fba7d7a4eba57d25ce7d5bb8, type: 3}
   spawnPoint: {fileID: 784026619}
 --- !u!4 &747295941
 Transform:
@@ -1259,6 +1271,7 @@ MonoBehaviour:
   minScoreValue: 0
   maxScoreValue: 0
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  popupPosition: {fileID: 0}
 --- !u!65 &1503322545
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1386,64 +1399,6 @@ MonoBehaviour:
   shopManager: {fileID: 1844086408}
   firstShopTime: 0
   shopActivationTime: 0
---- !u!1 &1780985122
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1780985124}
-  - component: {fileID: 1780985123}
-  - component: {fileID: 1780985125}
-  m_Layer: 0
-  m_Name: PopUp - Testing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1780985123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780985122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80ea88b0d4815134ab0c4ab9af4c1113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1780985124
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780985122}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.8853064, y: -18.242521, z: 4.1762094}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1780985125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780985122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 831a9c56b81b84a40a32a4915aaa31ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  popUpObject: {fileID: 7578110236925590997, guid: 82e6bf8e920b7514fb13d6adf4019ed6, type: 3}
 --- !u!1001 &1844086407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1636,6 +1591,7 @@ MonoBehaviour:
   minScoreValue: 0
   maxScoreValue: 0
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  popupPosition: {fileID: 0}
 --- !u!114 &1872047789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1730,6 +1686,7 @@ MonoBehaviour:
   minScoreValue: 0
   maxScoreValue: 0
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  popupPosition: {fileID: 0}
 --- !u!65 &1914165266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3668,6 +3625,7 @@ MonoBehaviour:
   flashSpeed: 5
   damageColor: {r: 1, g: 0, b: 0, a: 0.1}
   electricBarrier: 0
+  popupPosition: {fileID: 0}
 --- !u!4 &7736355888692817724
 Transform:
   m_ObjectHideFlags: 0

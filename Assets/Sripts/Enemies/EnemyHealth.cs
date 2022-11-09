@@ -20,6 +20,9 @@ public class EnemyHealth : MonoBehaviour
     private Animator animator;
     private float timeUntilDestroy = 2f;
 
+    private PopUp popup;
+    [SerializeField] private Transform popupPosition;
+
     //private int timeAnimationDead = 1;
     private void Awake()
     {
@@ -27,6 +30,8 @@ public class EnemyHealth : MonoBehaviour
         animator = GetComponent<Animator>();
         currentHealth = startingHealth;
         //Debug.Log("Health: " + currentHealth);
+
+        popup = GetComponent<PopUp>();
     }
 
     public void TakeDamage(int amount)
@@ -35,6 +40,8 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= amount;
         Debug.Log("Vida enemigo: " + currentHealth);
+
+        popup.Create(popupPosition.position, amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
 
         if (currentHealth <= 0)
         {

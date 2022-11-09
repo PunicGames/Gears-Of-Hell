@@ -22,9 +22,14 @@ public class Health : MonoBehaviour
     // Display health
     private Text lifeDisplay;
 
+    // PopUp
+    private PopUp popup;
+    [SerializeField] private Transform popupPosition;
+
     private void Awake()
     {
         playerMovement = GetComponent<Player>();
+        popup = GetComponent<PopUp>();
         currentHealth = maxHealth;
 
         electricBarrier = false;
@@ -62,6 +67,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float amount)
     {
         damaged = true;
+        popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
 
         if (currentHealth > amount)
             currentHealth -= amount;
