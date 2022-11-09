@@ -28,7 +28,7 @@ public class ShootSystem : MonoBehaviour
     public bool allowInvoke = true;
 
     // Audio
-    AudioSource gunAudio;
+    AudioManager audioManager;
 
     // Display
     private Text ammunitionDisplay;
@@ -49,7 +49,7 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-        availableGuns[4] = true;
+        //availableGuns[4] = true;
     }
 
     private void Start()
@@ -60,7 +60,7 @@ public class ShootSystem : MonoBehaviour
         laserShot = false;
 
         // Inicializacion de componentes
-        gunAudio = GetComponent<AudioSource>();
+        audioManager = transform.GetComponent<AudioManager>();
 
         // Display initialization
         ammunitionDisplay = GameObject.Find("Municion").GetComponent<Text>();
@@ -97,7 +97,7 @@ public class ShootSystem : MonoBehaviour
     private void Shoot()
     {
         readyToShoot = false;
-        gunAudio.Play();
+        audioManager.Play(selectedGun);
 
         // Se calcula la dirección y origen del disparo
         Vector3 origin = transform.position;

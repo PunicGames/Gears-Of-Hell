@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 163662322787722}
   - component: {fileID: 163662322787766}
   - component: {fileID: 6850674011200154169}
+  - component: {fileID: 1417841220658975163}
   m_Layer: 0
   m_Name: ShotOrigin
   m_TagString: Untagged
@@ -157,6 +158,39 @@ MonoBehaviour:
   laserShot: 0
   bigShot: 0
   scaleFactor: 1
+--- !u!114 &1417841220658975163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163662322787723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458b70e5ed918394696460dc98fb4d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Pistol Sound
+    clip: {fileID: 8300000, guid: 3b1ca887fd462ae45a4d5b8b02d8de3b, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Pistol Sound
+    clip: {fileID: 8300000, guid: 3b1ca887fd462ae45a4d5b8b02d8de3b, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Pistol Sound
+    clip: {fileID: 8300000, guid: 3b1ca887fd462ae45a4d5b8b02d8de3b, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Pistol Sound
+    clip: {fileID: 8300000, guid: 3b1ca887fd462ae45a4d5b8b02d8de3b, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Shotgun Sound
+    clip: {fileID: 8300000, guid: 6546eeb5fab199b4c8276bcbf74a32ef, type: 3}
+    volume: 1
+    pitch: 1
 --- !u!1 &155806547307120758
 GameObject:
   m_ObjectHideFlags: 0
