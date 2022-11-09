@@ -7,7 +7,7 @@ public class PopupBehaviour : MonoBehaviour
 {
 
     private float currentDisappearTimer;
-    public float totalDisappearTime;
+    [HideInInspector] public float totalDisappearTime;
     private TextMeshPro textMesh;
     float upwardSpeed = 2.0f;
 
@@ -22,6 +22,12 @@ public class PopupBehaviour : MonoBehaviour
         // Hace que se superponga sobre los popups existentes
         sortingOrder++;
         textMesh.sortingOrder = sortingOrder;
+
+        // Movemos el contenedor de texto un poco de forma aleatoria para que tenga más gracia
+        float offsetXaxis = Random.Range(-0.8f, 0.8f);
+        float offsetYaxis = Random.Range(-0.2f, 0.2f);
+        Vector3 offsetVector = new Vector3(offsetXaxis, offsetYaxis, 0f);
+        transform.position += offsetVector;
     }
 
     private void Update()

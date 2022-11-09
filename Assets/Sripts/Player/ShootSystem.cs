@@ -13,6 +13,9 @@ public class ShootSystem : MonoBehaviour
     public int selectedGun = 0;
     public bool[] availableGuns;
 
+    // Guns in Order: pistol, subfusil, rifle, sniper, shotgun
+
+
     // Bullet
     public GameObject bullet;
     public GameObject laserBullet;
@@ -46,6 +49,7 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
+        availableGuns[4] = true;
     }
 
     private void Start()
@@ -99,34 +103,41 @@ public class ShootSystem : MonoBehaviour
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;
 
-        // Cálculo de spread
-        float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
 
-        // Cálculo de la nueva dirección con spread
-        Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
+        int numBulletsAtTime = 1; // Cualquier otro arma
+        if (selectedGun == 4) // Escopeta
+            numBulletsAtTime = 3;
 
-        // Instanciación de la bala en funcion de las perks
-        if (laserShot)
-        {
-            GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
-            currentBullet.transform.forward = directionWithSpread.normalized;
-            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
-            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
-            currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
-            currentBullet.transform.localScale *= scaleFactor;
+        for (int i = 0; i < numBulletsAtTime; i++) { 
+            // Cálculo de spread
+            float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
+
+            // Cálculo de la nueva dirección con spread
+            Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
+
+            // Instanciación de la bala en funcion de las perks
+            if (laserShot)
+            {
+                GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
+                currentBullet.transform.forward = directionWithSpread.normalized;
+                currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
+                currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
+                currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
+                currentBullet.transform.localScale *= scaleFactor;
+            }
+            else
+            {
+                GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
+                currentBullet.transform.forward = directionWithSpread.normalized;
+                currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
+                currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
+                currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
+                currentBullet.transform.localScale *= scaleFactor;
+            }
+
+            guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
+            guns.getGuns()[selectedGun].bulletsShot++;
         }
-        else
-        {
-            GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
-            currentBullet.transform.forward = directionWithSpread.normalized;
-            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
-            currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
-            currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
-            currentBullet.transform.localScale *= scaleFactor;
-        }
-
-        guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
-        guns.getGuns()[selectedGun].bulletsShot++;
 
 
         if (allowInvoke)
