@@ -9,7 +9,7 @@ public class PopUp : MonoBehaviour
 
     public enum TypePopUp{ LIFE, DAMAGE, MONEY}
 
-    public GameObject Create(Vector3 position, int count, TypePopUp type) { 
+    public void Create(Vector3 position, int count, TypePopUp type, bool plus, float dissapearTime) {
         GameObject popup = Instantiate(popUpObject, position, Quaternion.identity);
         TextMeshPro textContainer = popup.GetComponent<TextMeshPro>();
 
@@ -25,10 +25,13 @@ public class PopUp : MonoBehaviour
                 break;
             default:
                 break;
-
         }
 
-        textContainer.text = count.ToString();
-        return popup;
+        if(plus)
+            textContainer.text = "+ " + count.ToString();
+        else
+            textContainer.text = "- " + count.ToString();
+
+        popup.GetComponent<PopupBehaviour>().totalDisappearTime = dissapearTime;
     }
 }

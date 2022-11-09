@@ -9,21 +9,28 @@ public class CoinSystem : MonoBehaviour
 
     // Display coin
     private Text coinDisplay;
+
+    // PopUp
+    private PopUp popup;
+    [SerializeField] private Transform popupPosition;
+
     void Start()
     {
         totalCoinsInGame = 0;
         coinDisplay = GameObject.Find("CoinCounter").GetComponent<Text>();
-        //AddCoin(5000);
+        popup = GetComponent<PopUp>();
     }
 
     public void AddCoin(int newCoin) {
         totalCoinsInGame += newCoin;
         coinDisplay.text = totalCoinsInGame.ToString();
+        popup.Create(popupPosition.position, newCoin, PopUp.TypePopUp.MONEY, true, 0.5f);
     }
 
     public void SpendCoin(int newCoin)
     {
         totalCoinsInGame -= newCoin;
         coinDisplay.text = totalCoinsInGame.ToString();
+        popup.Create(popupPosition.position, newCoin, PopUp.TypePopUp.MONEY, false, 0.5f);
     }
 }

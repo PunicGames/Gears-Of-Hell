@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 919294009874013059}
   - component: {fileID: 919294009874013056}
   - component: {fileID: 3597798663532466692}
+  - component: {fileID: 3209731723266497721}
   m_Layer: 0
   m_Name: JACOB
   m_TagString: Player
@@ -341,6 +342,7 @@ Transform:
   - {fileID: 7311397536098811935}
   - {fileID: 163662322787722}
   - {fileID: 1175260734527155087}
+  - {fileID: 3209184924289274629}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -390,6 +392,7 @@ MonoBehaviour:
   flashSpeed: 5
   damageColor: {r: 1, g: 0, b: 0, a: 0.1}
   electricBarrier: 0
+  popupPosition: {fileID: 3209184924289274629}
 --- !u!114 &163662100253487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,6 +636,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalCoinsInGame: 0
+  popupPosition: {fileID: 3209184924289274629}
+--- !u!114 &3209731723266497721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919294009874013116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 831a9c56b81b84a40a32a4915aaa31ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpObject: {fileID: 7578110236925590997, guid: 82e6bf8e920b7514fb13d6adf4019ed6, type: 3}
 --- !u!1 &935098715315494881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,6 +2907,37 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.015986294, y: 0.06872464, z: 0.00075520575}
     m_Extent: {x: 0.7323328, y: 0.21168953, z: 0.3346539}
   m_DirtyAABB: 0
+--- !u!1 &8041089363311097455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3209184924289274629}
+  m_Layer: 0
+  m_Name: PopUpPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3209184924289274629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041089363311097455}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.488, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543296890068730118}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8080869671387316079
 GameObject:
   m_ObjectHideFlags: 0

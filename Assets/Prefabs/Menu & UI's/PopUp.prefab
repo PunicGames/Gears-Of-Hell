@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8670921304856882210}
   - component: {fileID: 4904888860685843180}
   - component: {fileID: 2959898230658629566}
+  - component: {fileID: 711500259506315830}
   m_Layer: 0
   m_Name: PopUp
   m_TagString: Untagged
@@ -36,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 12.79056, y: -2.2120943}
-  m_SizeDelta: {x: 2.4, y: 1.2}
+  m_SizeDelta: {x: 1.59, y: 0.61}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4904888860685843180
 MeshRenderer:
@@ -76,8 +77,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1973752745
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2959898230658629566
@@ -127,8 +128,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 9.53
-  m_fontSizeBase: 9.53
+  m_fontSize: 4.35
+  m_fontSizeBase: 4.35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -172,3 +173,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4904888860685843180}
   m_maskType: 0
+--- !u!114 &711500259506315830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7578110236925590997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595dbb750f067ed429681bb3ccee517f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalDisappearTime: 0
