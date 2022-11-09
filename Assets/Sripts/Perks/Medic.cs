@@ -9,10 +9,15 @@ public class Medic : MonoBehaviour
 
     private Health healthScript;
 
+    // PopUp
+    private PopUp popup;
+    [SerializeField] private Transform popupPosition;
+
     private void Start()
     {
         healthScript = GetComponentInParent<Health>();
         gameObject.SetActive(false);
+        popup = GetComponentInParent<PopUp>();
     }
 
     private void OnEnable()
@@ -27,11 +32,9 @@ public class Medic : MonoBehaviour
 
     private void MedicHeal()
     {
-        healthScript.currentHealth += healthScript.maxHealth / 100 * healPercentAmount;
-        if(healthScript.currentHealth > healthScript.maxHealth)
-        {
-            healthScript.currentHealth = healthScript.maxHealth;
-        }
-        print(healthScript.currentHealth);
+
+        float lifeHealed = healthScript.maxHealth / 100 * healPercentAmount;
+        healthScript.Heal(lifeHealed);
+        //print(healthScript.currentHealth);
     }
 }

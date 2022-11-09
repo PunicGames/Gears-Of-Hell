@@ -83,6 +83,20 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void Heal(float amount) {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.LIFE, true, 0.5f);
+        }
+
+        lifeDisplay.text = currentHealth.ToString();
+    }
+
     private void Death()
     {
         isDead = true;
