@@ -61,8 +61,9 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] public static Vector2 cellScale = new Vector2( 10.0f, 10.0f);
     [SerializeField] private Vector2 wallSize;
     [SerializeField] private float obstacleRatio;
-    
+
     [Header("Chunks")]
+    public GameObject[] floors;
     public GameObject[] door_1;
     public GameObject[] door_2_1;
     public GameObject[] door_2_2;
@@ -168,8 +169,6 @@ public class WorldGenerator : MonoBehaviour
 
             SpawnCell(cell.Key, doors, cell.Value);
 
-            if (flipCoin())
-                SpawnObstacle(cell.Key);
 
         }
 
@@ -214,6 +213,7 @@ public class WorldGenerator : MonoBehaviour
         bool finded = false;
         int it = -1;
         GameObject cell = null;
+        GameObject floor = Instantiate(floors[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
 
         switch (doors)
         {
@@ -223,7 +223,7 @@ public class WorldGenerator : MonoBehaviour
                     it++;
                     finded = doorDistribution[it];
                 }
-                cell = Instantiate(door_1[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                cell = Instantiate(door_1[Random.Range(0, door_1.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                 cell.GetComponent<Transform>().Rotate(Vector3.up, -90 * it);
                 break;
             case 2:
@@ -231,15 +231,15 @@ public class WorldGenerator : MonoBehaviour
                 {
                     if (doorDistribution[1])
                     {
-                        cell = Instantiate(door_2_1[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_1[Random.Range(0, door_2_1.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                     }
                     else if (doorDistribution[2])
                     {
-                        cell = Instantiate(door_2_2[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_2[Random.Range(0, door_2_2.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                     }
                     else
                     {
-                        cell = Instantiate(door_2_1[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_1[Random.Range(0, door_2_1.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                         cell.GetComponent<Transform>().Rotate(Vector3.up, 90);
                     }
                 }
@@ -247,12 +247,12 @@ public class WorldGenerator : MonoBehaviour
                 {
                     if (doorDistribution[2])
                     {
-                        cell = Instantiate(door_2_1[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_1[Random.Range(0, door_2_1.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                         cell.GetComponent<Transform>().Rotate(Vector3.up, -90);
                     }
                     else
                     {
-                        cell = Instantiate(door_2_2[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_2[Random.Range(0, door_2_2.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                         cell.GetComponent<Transform>().Rotate(Vector3.up, -90);
                     }
                 }
@@ -260,7 +260,7 @@ public class WorldGenerator : MonoBehaviour
                 {
                     if (doorDistribution[3])
                     {
-                        cell = Instantiate(door_2_1[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                        cell = Instantiate(door_2_1[Random.Range(0, door_2_1.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                         cell.GetComponent<Transform>().Rotate(Vector3.up, 180);
                     }
                 }
@@ -272,15 +272,21 @@ public class WorldGenerator : MonoBehaviour
                     it++;
                     finded = doorDistribution[it];
                 }
-                cell = Instantiate(door_3[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
+                cell = Instantiate(door_3[Random.Range(0, door_3.Length)], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                 cell.GetComponent<Transform>().Rotate(Vector3.up, -90 * it);
                 break;
             case 4:
                 cell = Instantiate(door_4[0], new Vector3(position.x * cellScale.x, 0, position.y * cellScale.y), Quaternion.identity);
                 break;
         }
-
+        floor.transform.parent = cell.transform;
         cell.transform.parent = transform;
+        cell.name = "Cell: ( " + position.x.ToString() + ", "+ position.y.ToString() + ") -\t" + doors.ToString();
+
+        if (flipCoin())
+            SpawnObstacle(position).parent = cell.transform;
+        
+
         spawnedCells.AddLast(cell);
     }
 
@@ -329,14 +335,13 @@ public class WorldGenerator : MonoBehaviour
         spawnedCells.AddLast(obj);
     }
 
-    private void SpawnObstacle(Vector2Int position)
+    private Transform SpawnObstacle(Vector2Int position)
     {
         Vector2 pos = new Vector2(position.x * cellScale.x, position.y * cellScale.y);
         Vector2 rndOffset = new Vector2(Random.Range((-cellScale.x / 2) + wallSize.x, (cellScale.x / 2) - wallSize.y), Random.Range((-cellScale.y / 2) + wallSize.x, (cellScale.y / 2) - wallSize.y));
         GameObject obs = Instantiate(obstacles[0], new Vector3(pos.x + rndOffset.x, 0.0f, pos.y + rndOffset.y), Quaternion.identity);
-        obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
-        obs.transform.parent = transform;
-        spawnedCells.AddLast(obs);
+        obs.transform.Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
+        return obs.transform;
 
     }
 
