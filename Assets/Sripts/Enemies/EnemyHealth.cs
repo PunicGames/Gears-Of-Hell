@@ -23,6 +23,10 @@ public class EnemyHealth : MonoBehaviour
     private PopUp popup;
     [SerializeField] private Transform popupPosition;
 
+    // Enemy Type
+    public enum EnemyType { WORKER, GUNSLINGER, GUNNER, EXPLOSIVE_SPIDERBOT, WORKER_SPIDERBOT, ATTACK_SPIDERBOT, FOREMAN}
+    public EnemyType enemyType;
+
     //private int timeAnimationDead = 1;
     private void Awake()
     {
