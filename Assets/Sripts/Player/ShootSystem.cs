@@ -49,10 +49,6 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-        availableGuns[1] = true;
-        availableGuns[2] = true;
-        availableGuns[3] = true;
-        availableGuns[4] = true;
     }
 
     private void Start()

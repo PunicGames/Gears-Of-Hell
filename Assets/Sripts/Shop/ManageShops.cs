@@ -70,6 +70,13 @@ public class ManageShops : MonoBehaviour
     int[] gunsAmmoGeneratedIndexes = new int[3];
     int[] perksNewOldGeneratedIndexes = new int[3];
 
+    // Player reference
+    private GameObject player;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     public void RefreshShop()
     {
@@ -80,7 +87,7 @@ public class ManageShops : MonoBehaviour
         // -------------------------------------------------------------------//
         // MUNICION Y ARMAS
         // -------------------------------------------------------------------//
-        bool[] playerGuns = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().availableGuns;
+        bool[] playerGuns = player.GetComponentInChildren<ShootSystem>().availableGuns;
 
         for (int i = 0; i < playerGuns.Length; i++)
         {
@@ -242,8 +249,8 @@ public class ManageShops : MonoBehaviour
         // PERKS/VENTAJAS
         // -------------------------------------------------------------------//
         int numPerksHasPlayer = 0;
-        bool[] playerPerks = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PerksManager>().availablePerks;
-        int[] playerPerkLevels = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PerksManager>().perkLevels;
+        bool[] playerPerks = player.GetComponentInChildren<PerksManager>().availablePerks;
+        int[] playerPerkLevels = player.GetComponentInChildren<PerksManager>().perkLevels;
         for (int i = 0; i < playerPerks.Length; i++)
         {
             if (playerPerks[i])
@@ -561,11 +568,11 @@ public class ManageShops : MonoBehaviour
 
     public void BuyGunAmmo1()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[0]]) return; // Si el jugador no tiene suficientes monedas no compra nada
+        if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[0]]) return; // Si el jugador no tiene suficientes monedas no compra nada
 
 
         int numGunsHasAlreadyPlayer = 0;
-        bool[] playerHasGuns = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().availableGuns;
+        bool[] playerHasGuns = player.GetComponentInChildren<ShootSystem>().availableGuns;
         for (int i = 0; i < playerHasGuns.Length; i++)
         {
             if (playerHasGuns[i])
@@ -579,28 +586,28 @@ public class ManageShops : MonoBehaviour
         {
             if (playerHasGuns[gunsAmmoGeneratedIndexes[0]]) return; // Si hemos comprado el arma y la tienda todavia no se ha actualizado, salimos del método
             // Se compra el arma
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[0]);
+            player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[0]);
             if (numGunsHasAlreadyPlayer == 3 && playerHasGuns[0]) // Si el jugador tiene 3 armas y una de ellas es la pistola, se sustituye la pistola por la nueva
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().DeactivateGun(0);
+                player.GetComponentInChildren<ShootSystem>().DeactivateGun(0);
             }
 
             // Le quitamos el dinero
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[0]]);
+            player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[0]]);
         }
         else if (numGunsGenerated == 0) // Se comprará munición
         {
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[0]];
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[0]].AddAmmo(ammoQ);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[0]]);
+            player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[0]].AddAmmo(ammoQ);
+            player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[0]]);
         }
     }
     public void BuyGunAmmo2()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[1]]) return;
+        if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[1]]) return;
 
         int numGunsHasAlreadyPlayer = 0;
-        bool[] playerHasGuns = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().availableGuns;
+        bool[] playerHasGuns = player.GetComponentInChildren<ShootSystem>().availableGuns;
         for (int i = 0; i < playerHasGuns.Length; i++)
         {
             if (playerHasGuns[i])
@@ -615,25 +622,25 @@ public class ManageShops : MonoBehaviour
 
             if (numGunsHasAlreadyPlayer == 3 && playerHasGuns[0]) // Si el jugador tiene 3 armas y una de ellas es la pistola, se sustituye la pistola por la nueva
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().DeactivateGun(0);
+                player.GetComponentInChildren<ShootSystem>().DeactivateGun(0);
             }
 
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[1]);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[1]]);
+            player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[1]);
+            player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[1]]);
         }
         else // Se compra munición 
         {
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[1]];
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[1]].AddAmmo(ammoQ);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[1]]);
+            player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[1]].AddAmmo(ammoQ);
+            player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[1]]);
         }
     }
     public void BuyGunAmmo3()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[2]]) return;
+        if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[2]]) return;
 
         int numGunsHasAlreadyPlayer = 0;
-        bool[] playerHasGuns = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().availableGuns;
+        bool[] playerHasGuns = player.GetComponentInChildren<ShootSystem>().availableGuns;
         for (int i = 0; i < playerHasGuns.Length; i++)
         {
             if (playerHasGuns[i])
@@ -648,18 +655,18 @@ public class ManageShops : MonoBehaviour
             if (playerHasGuns[gunsAmmoGeneratedIndexes[2]]) return; // Si hemos comprado el arma y la tienda todavia no se ha actualizado, salimos del método
             if (numGunsHasAlreadyPlayer == 3 && playerHasGuns[0]) // Si el jugador tiene 3 armas y una de ellas es la pistola, se sustituye la pistola por la nueva
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().DeactivateGun(0);
+                player.GetComponentInChildren<ShootSystem>().DeactivateGun(0);
             }
 
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[2]);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[2]]);
+            player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[2]);
+            player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[2]]);
         }
         else // Se compra munición
         {
             Debug.Log("Se compra munición");
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[2]];
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[2]].AddAmmo(ammoQ);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[2]]);
+            player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[2]].AddAmmo(ammoQ);
+            player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[2]]);
         }
     }
     public void BuyNewOldPerk1()
@@ -667,7 +674,7 @@ public class ManageShops : MonoBehaviour
 
         if (numNewPerksGenerated > 0)  // Se comprará una nueva ventaja
         {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < perkInitPrices[perksNewOldGeneratedIndexes[0]]) return;
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < perkInitPrices[perksNewOldGeneratedIndexes[0]]) return;
             BuyNewPerk(perksNewOldGeneratedIndexes[0], 0);
         }
         else if (numNewPerksGenerated == 0) // Se mejorará una ventaja
@@ -680,7 +687,7 @@ public class ManageShops : MonoBehaviour
     {
         if (numNewPerksGenerated > 1)
         {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < perkInitPrices[perksNewOldGeneratedIndexes[1]]) return;
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < perkInitPrices[perksNewOldGeneratedIndexes[1]]) return;
             BuyNewPerk(perksNewOldGeneratedIndexes[1], 1);
         }
         else
@@ -692,7 +699,7 @@ public class ManageShops : MonoBehaviour
     {
         if (numNewPerksGenerated > 2) // Se compra una nueva ventaja
         {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < perkInitPrices[perksNewOldGeneratedIndexes[2]]) return;
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < perkInitPrices[perksNewOldGeneratedIndexes[2]]) return;
             BuyNewPerk(perksNewOldGeneratedIndexes[2], 2);
         }
         else // Se mejora la ventaja existente
@@ -704,7 +711,6 @@ public class ManageShops : MonoBehaviour
     private void BuyNewPerk(int idx, int place)
     {
         int numPerks = 0;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         bool[] perksHasPlayer = player.GetComponentInChildren<PerksManager>().availablePerks;
         for (int i = 0; i < perksHasPlayer.Length; i++) {
@@ -755,12 +761,12 @@ public class ManageShops : MonoBehaviour
     private void UpgradePerk(int idx, int place)
     {
         int lvl = 0;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
         switch (idx)
         {
             case 0:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[0];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < rapidFirePrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < rapidFirePrices[lvl]) return;
                 if (lvl == 4) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeRapidFire();
                 player.GetComponent<CoinSystem>().SpendCoin(rapidFirePrices[lvl]);
@@ -773,7 +779,7 @@ public class ManageShops : MonoBehaviour
                 break;
             case 1:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[1];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < laserShotPrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < laserShotPrices[lvl]) return;
                 if (lvl == 4) return; // Si ya esta al máximo nivel, salimos del método
                 player.GetComponentInChildren<PerksManager>().UpgradeLaserShot();
                 player.GetComponent<CoinSystem>().SpendCoin(laserShotPrices[lvl]);
@@ -786,7 +792,7 @@ public class ManageShops : MonoBehaviour
                 break;
             case 2:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[2];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < bigShotPrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < bigShotPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
                 player.GetComponentInChildren<PerksManager>().UpgradeBigShot();
                 player.GetComponent<CoinSystem>().SpendCoin(bigShotPrices[lvl]);
@@ -799,7 +805,7 @@ public class ManageShops : MonoBehaviour
                 break;
             case 3:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[3];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < tacticVestPrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < tacticVestPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
                 player.GetComponentInChildren<PerksManager>().UpgradeTacticVest();
                 player.GetComponent<CoinSystem>().SpendCoin(tacticVestPrices[lvl]);
@@ -812,7 +818,7 @@ public class ManageShops : MonoBehaviour
                 break;
             case 4:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[4];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < tacticalBootsPrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < tacticalBootsPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
                 player.GetComponentInChildren<PerksManager>().UpgradeTacticalBoots();
                 player.GetComponent<CoinSystem>().SpendCoin(tacticalBootsPrices[lvl]);
@@ -825,7 +831,7 @@ public class ManageShops : MonoBehaviour
                 break;
             case 5:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[5];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < medicPrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < medicPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
                 player.GetComponentInChildren<PerksManager>().UpgradeMedic();
                 player.GetComponent<CoinSystem>().SpendCoin(medicPrices[lvl]);
@@ -838,7 +844,7 @@ public class ManageShops : MonoBehaviour
                 break;
             case 6:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[6];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < electricalBarrierPrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < electricalBarrierPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
                 player.GetComponentInChildren<PerksManager>().UpgradeElectricalBarrier();
                 player.GetComponent<CoinSystem>().SpendCoin(electricalBarrierPrices[lvl]);
@@ -851,7 +857,7 @@ public class ManageShops : MonoBehaviour
                 break;
             case 7:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[7];
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame < gunsmithPrices[lvl]) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunsmithPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
                 player.GetComponentInChildren<PerksManager>().UpgradeGunsmith();
                 player.GetComponent<CoinSystem>().SpendCoin(gunsmithPrices[lvl]);
