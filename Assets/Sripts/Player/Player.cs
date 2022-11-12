@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         //playerAnimator.SetBool("isRifle", true);
+        footSteps.volume *= AudioManager.getGeneralVolume();
     }
     private void Update()
     {
