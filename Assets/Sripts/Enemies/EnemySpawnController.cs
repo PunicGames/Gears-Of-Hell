@@ -6,15 +6,13 @@ public class EnemySpawnController : MonoBehaviour
 {
     // params
     private GameObject player;
+
+    public int EnemiesOnScene => GameObject.FindGameObjectsWithTag("Enemy").Length;
+
     [SerializeField] private GameObject[] tier1_Enemies;
     [SerializeField] private GameObject[] tier2_Enemies;
     [SerializeField] private GameObject[] tier3_Enemies;
-    [SerializeField] private List<GameObject> spawnList;
     [SerializeField] private GameObject gameRegistry;
-
-    [SerializeField] private int spawnCount;
-    private float minSpawnDelay = 1;
-    private float maxSpawnDelay = 4;
 
     private float tier1_spawnTime;
     private float tier2_spawnTime;
@@ -24,17 +22,15 @@ public class EnemySpawnController : MonoBehaviour
     private bool tier2_spawning;
     private bool tier3_spawning;
 
-    [SerializeField] private int minSpawnSteps;
-    [SerializeField] private int maxSpawnSteps;
-
+    [SerializeField] private int spawnDistance;
+    [SerializeField] private int maxEnemiesAtSameTime;
+    [SerializeField] private int minEnemiesAtSameTime;
     //time registry
     private GameRegistry timeScript;
+    [SerializeField] private uint nTicks;
 
     public void Awake()
     {
-        
-        spawnList = new List<GameObject>();
-
         tier1_spawning = false;
         tier2_spawning = false;
         tier3_spawning = false;
@@ -43,6 +39,7 @@ public class EnemySpawnController : MonoBehaviour
         tier2_spawnTime = Time.time + 60f;
         tier3_spawnTime = Time.time + 120f;
         timeScript = gameRegistry.GetComponent<GameRegistry>();
+        nTicks = 0;
     }
 
     private void Start()
@@ -63,13 +60,32 @@ public class EnemySpawnController : MonoBehaviour
 
         aux = 10 / aux;
 
-        minSpawnDelay = aux * 0.8f;
-        maxSpawnDelay = aux * 1.2f;
+        var minSpawnDelay = aux * 0.8f;
+        var maxSpawnDelay = aux * 1.2f;
 
         tier1_spawnTime = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
         tier1_spawning = false;
+        nTicks++;
     }
 
+
+    private Vector3 GetSpawnPosition(Vector2Int key)
+    {
+        var keyList = new List<Vector2Int>(WorldGenerator.GetBlueprint.Keys);
+
+        keyList.RemoveAll(x => {
+            var dist = ManhathanDistance(key, x);
+            //return (dist <= spawDistance - 2) || (dist >= spawDistance + 1);
+            return dist != spawnDistance;
+        });
+
+        var pos = keyList[Random.Range(0, keyList.Count)];
+
+        return new Vector3(pos.x, 0.0f, pos.y);
+    }
+
+
+    /* DEPRECATED SPAWN POSITION SOLVER
     private Vector3 GetSpawnPosition(Vector2Int key)
     {
         var bp = WorldGenerator.GetBlueprint;
@@ -97,6 +113,13 @@ public class EnemySpawnController : MonoBehaviour
         else
             return new Vector3(pos.x, 0.0f, pos.y);
     }
+    */
+
+
+    private void SpawnEnemies(int n)
+    {
+
+    }
 
     private void SpawnEnemy()
     {
@@ -104,26 +127,44 @@ public class EnemySpawnController : MonoBehaviour
         var pl_pos = player.transform.position;
 
         Vector2Int index = new Vector2Int(Mathf.RoundToInt(pl_pos.x / WorldGenerator.cellScale.x), Mathf.RoundToInt(pl_pos.z / WorldGenerator.cellScale.y));
-
-        var position = GetSpawnPosition(index);
         var enemy1 = tier1_Enemies[Random.Range(0, tier1_Enemies.Length)];
+        var position = GetSpawnPosition(index);
+       
+        //print("Spawning enemy at: " + position.ToString());
 
+        var pnj = Instantiate(enemy1, new Vector3(position.x * WorldGenerator.cellScale.x, 0.0f, position.z * WorldGenerator.cellScale.y), Quaternion.identity);
+    }
 
-        print("Spawning enemy at: " + position.ToString());
-         
-        Instantiate(enemy1, new Vector3(position.x * WorldGenerator.cellScale.x, 0.0f, position.z * WorldGenerator.cellScale.y), Quaternion.identity);
+    private int MaxEnemiesOnScene()
+    {
+        //y = (((-(x^2)/2)+1 )/( (-(x^2)/2)-1))+1)/2
+        var x = nTicks * 0.025f;
+        var num = ((-1.0f * x * x) / 2.0f) + 1.0f;
+        var den = ((-1.0f * x * x) / 2.0f) - 1.0f;
+        var res = ((num / den) + 1.0f )/ 2.0f;
 
+        return minEnemiesAtSameTime + Mathf.CeilToInt(res * maxEnemiesAtSameTime);
     }
 
     private void SpawnLoop()
     {
         if (tier1_spawning)
         {
-            SpawnEnemy();
+            var max = MaxEnemiesOnScene();
+            print("max: " + max + "\nnEnemies: " + EnemiesOnScene);
+            if (EnemiesOnScene < max)
+                SpawnEnemy();
             ResetTimer();
         } else
             if (Time.time > tier1_spawnTime)
                 tier1_spawning = true;
+
+        
+    }
+
+    public static int ManhathanDistance(Vector2Int a, Vector2Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
     }
 
 }
