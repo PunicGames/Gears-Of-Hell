@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
             desktop = true;
         }
 
-        desktop = false;
+        //desktop = false;
 
         // Input actions
         playerInputActions = new PlayerInputActions();
