@@ -53,12 +53,14 @@ public class WorldGenerator : MonoBehaviour
 
     #region Variables
     // World's Blueprint
+    public bool debug = false;
+
     private static Dictionary<Vector2Int, bool[]> blueprint;
 
     //  Algorithm params
     [SerializeField] private uint nCells = 100;
     [SerializeField] private uint nGates = 5;
-    [SerializeField] public static Vector2 cellScale = new Vector2( 10.0f, 10.0f);
+    [SerializeField] public static readonly Vector2 cellScale = new Vector2( 10.0f, 10.0f);
     [SerializeField] private Vector2 wallSize;
     [SerializeField] private float obstacleRatio;
 
@@ -74,8 +76,9 @@ public class WorldGenerator : MonoBehaviour
     public GameObject[] obstacles;
 
     [Header("Shops")]
-    public int nShops = 3;
     public GameObject shop;
+    public int numberOfShops = 3;
+    [Range(3, 5)] public int shopInterSpace = 4;
 
     // Navmesh
     private NavMeshSurface surface;
@@ -173,32 +176,64 @@ public class WorldGenerator : MonoBehaviour
         }
 
         //GenerateGates(gateCandidates);
-        var cells = blueprint.Keys.ToList();
-        for (int i = nShops; i > 0; i--)
+
+        SpawnShops();
+    }
+
+
+    private Vector2Int[] GetShopsPositions(int n)
+    { 
+        var salida = new Vector2Int[n];
+        int i = 0;
+        int error = 0;
+        int space = shopInterSpace;
+
+        while (i < salida.Length)
         {
-            if (i == nShops)
+            var candidates = new List<Vector2Int>(blueprint.Keys);
+
+            for (int j = 0; j < i; j++)
             {
-                SpawnShop(ref cells, true);
+                var b = salida[j];
+                candidates.RemoveAll(a=>
+                {
+                    var dist = EnemySpawnController.ManhathanDistance(a, b);
+                    return dist <= space;
+                });
+            }
+
+            if (candidates.Count != 0) { 
+                error++;
+                if (error > 25)
+                {
+                    error = 0;
+                    space--;
+                }
+                salida[i] = candidates[Random.Range(0, candidates.Count)];
+                i++;
             }
             else
             {
-                SpawnShop(ref cells, false);
+                i--;
             }
             
         }
-    }
 
-    private void SpawnShop(ref List<Vector2Int> cells, bool act)
+        return salida;
+    }
+    private void SpawnShops()
     {
-        var cell = cells[Random.Range(0, cells.Count)];
-        cells.Remove(cell);
-        var pos = cell * cellScale;
-        //Vector2 rndOffset = new Vector2(Random.Range((-cellScale.x / 2) + wallSize.x, (cellScale.x / 2) - wallSize.y), Random.Range((-cellScale.y / 2) + wallSize.x, (cellScale.y / 2) - wallSize.y));
-        GameObject obs = Instantiate(shop, new Vector3( pos.x, 0.0f, pos.y), Quaternion.identity);
-        obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
-        obs.transform.parent = transform;
-        obs.GetComponent<Shop>().active = false;
-        shops.Add(obs);
+        var shopPositions = GetShopsPositions(numberOfShops);
+
+        foreach(var p in shopPositions)
+        {
+            var pos = p * cellScale;
+            GameObject obs = Instantiate(shop, new Vector3(pos.x, 0.0f, pos.y), Quaternion.identity);
+            obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
+            obs.transform.parent = transform;
+            obs.GetComponent<Shop>().active = false;
+            shops.Add(obs);
+        }
     }
 
     private bool flipCoin()
@@ -380,6 +415,10 @@ public class WorldGenerator : MonoBehaviour
         {
             Destroy(cell);
         }
+        foreach (var shop in shops)
+        {
+            Destroy(shop);
+        }
     }
     #endregion
 
@@ -394,15 +433,15 @@ public class WorldGenerator : MonoBehaviour
         GenerateWorld();
     }
 
-    /*
+    
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (debug && Input.GetKeyDown(KeyCode.R))
         {
             DeleteWorld();
             GenerateWorld();
         }
     }
-    */
+    
     #endregion
 }
