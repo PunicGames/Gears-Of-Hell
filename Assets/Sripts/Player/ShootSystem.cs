@@ -8,10 +8,9 @@ public class ShootSystem : MonoBehaviour
     public List<Mesh> weapon_meshes;
     [SerializeField] MeshFilter meshFilter;
     // Guns
-    public PlayerGuns guns;
-    [Range(0, 1)]
-    public int selectedGun = 0;
-    public bool[] availableGuns;
+    [HideInInspector]public PlayerGuns guns;
+    [HideInInspector]public int selectedGun = 0;
+    [HideInInspector]public bool[] availableGuns;
 
     // Guns in Order: pistol, subfusil, rifle, sniper, shotgun
 
@@ -42,6 +41,9 @@ public class ShootSystem : MonoBehaviour
     [HideInInspector]
     public float scaleFactor = 1f;
 
+    // Animator reference
+    private Animator anim;
+
     private void Awake()
     {
         // Guns initialization
@@ -60,6 +62,7 @@ public class ShootSystem : MonoBehaviour
 
         // Inicializacion de componentes
         audioManager = transform.GetComponent<AudioManager>();
+        anim = GetComponentInParent<Animator>();
 
         // Display initialization
         ammunitionDisplay = GameObject.Find("Municion").GetComponent<Text>();
@@ -82,7 +85,7 @@ public class ShootSystem : MonoBehaviour
         }
     }
 
-    public void Shooting(Animator anim)
+    public void Shooting()
     {
         // Comprueba si se puede disparar
         if (readyToShoot && shooting && !reloading && (guns.getGuns()[selectedGun].bulletsLeftInMagazine) > 0)
@@ -120,18 +123,22 @@ public class ShootSystem : MonoBehaviour
                 {
                     GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
                     currentBullet.transform.forward = directionWithSpread.normalized;
-                    currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
-                    currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
-                    currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
+                    Bullet bulletParams = currentBullet.GetComponent<Bullet>();
+                    bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
+                    bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
+                    bulletParams.SetLaser(true);
+                    bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     currentBullet.transform.localScale *= scaleFactor;
                 }
                 else
                 {
                     GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
                     currentBullet.transform.forward = directionWithSpread.normalized;
-                    currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
-                    currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
-                    currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
+                    Bullet bulletParams = currentBullet.GetComponent<Bullet>();
+                    bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
+                    bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
+                    bulletParams.SetLaser(false);
+                    bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     currentBullet.transform.localScale *= scaleFactor;
                 }
 
@@ -193,7 +200,7 @@ public class ShootSystem : MonoBehaviour
 
         reloading = false;
         rechargingDisplay.SetActive(false);
-        //Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
+        Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
     }
 
     public void SwapGun()

@@ -7,6 +7,15 @@ public class Moneda : MonoBehaviour
     [HideInInspector]
     public int value;
 
+    private AudioSource coinSound;
+    [SerializeField] GameObject coinMesh;
+
+    private void Start()
+    {
+        coinSound = GetComponent<AudioSource>();
+        coinSound.volume *= AudioManager.getGeneralVolume();
+    }
+
     void Update()
     {
         transform.Rotate(Vector3.up * 150 * Time.deltaTime, Space.Self);
@@ -21,7 +30,11 @@ public class Moneda : MonoBehaviour
             {
                 coins.AddCoin(value);
             }
-            Destroy(gameObject);
+            coinMesh.SetActive(false);
+            transform.GetComponent<SphereCollider>().enabled = false;
+
+            coinSound.Play();
+            Destroy(gameObject, 1);
         }
     }
 }

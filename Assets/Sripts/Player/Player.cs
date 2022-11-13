@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping) { 
             shootingSystem.shooting = true;
-            shootingSystem.Shooting(playerAnimator);
+            shootingSystem.Shooting();
         }
     }
 
@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
         if (aux > 0.7)
         {
             shootingSystem.shooting = true;
-            shootingSystem.Shooting(playerAnimator);
+            shootingSystem.Shooting();
         }
         else
         {
