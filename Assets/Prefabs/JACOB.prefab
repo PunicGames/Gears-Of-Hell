@@ -172,27 +172,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Pistol Sound
-    clip: {fileID: 8300000, guid: 3b1ca887fd462ae45a4d5b8b02d8de3b, type: 3}
-    volume: 1
+    clips:
+    - {fileID: 8300000, guid: 90cedfb256426dc47b33298b2700ac36, type: 3}
+    - {fileID: 8300000, guid: 3835bacab04ce1844bb961390ee99f9b, type: 3}
+    - {fileID: 8300000, guid: ce2ba8749f656e24290a78eee17e05dc, type: 3}
+    volume: 0.75
     pitch: 1
     source: {fileID: 0}
   - name: Subfusil Sound
-    clip: {fileID: 8300000, guid: 3b1ca887fd462ae45a4d5b8b02d8de3b, type: 3}
+    clips:
+    - {fileID: 8300000, guid: 30bb0b06a78d914438192814019057cb, type: 3}
+    - {fileID: 8300000, guid: 982d0b8243076114c84d7c4950c57c29, type: 3}
+    - {fileID: 8300000, guid: 056124cb91b22b849947b8ce08a81e9f, type: 3}
+    - {fileID: 8300000, guid: cddb4c1f3d071df40928818ce1b39ee0, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: Rifle Sound
-    clip: {fileID: 8300000, guid: 711fe315c0462984f98fb7a158ee0144, type: 3}
+    clips:
+    - {fileID: 8300000, guid: 7ca29828cb19e9349a45cee740b1205e, type: 3}
+    - {fileID: 8300000, guid: c148acf3fe0c95a4fa73f1b397048573, type: 3}
+    - {fileID: 8300000, guid: 52cc333e1c8e7ff4fa5294dc4523b128, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: Sniper Sound
-    clip: {fileID: 8300000, guid: 3858ba8b96b949640abbae3d3d174a8f, type: 3}
+    clips:
+    - {fileID: 8300000, guid: 3858ba8b96b949640abbae3d3d174a8f, type: 3}
     volume: 0.684
     pitch: 1
     source: {fileID: 0}
   - name: Shotgun Sound
-    clip: {fileID: 8300000, guid: 6546eeb5fab199b4c8276bcbf74a32ef, type: 3}
+    clips:
+    - {fileID: 8300000, guid: fac14e10392f24e4c814acbfec683462, type: 3}
+    - {fileID: 8300000, guid: a3fcff42cf0c0bd46a68dcf1afa71742, type: 3}
+    - {fileID: 8300000, guid: 02620c8b98a4cb947b7f1d601e4b033e, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
