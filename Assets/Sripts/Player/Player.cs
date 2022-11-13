@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
             desktop = true;
         }
 
-        //desktop = false;
+        desktop = false;
 
         // Input actions
         playerInputActions = new PlayerInputActions();
@@ -197,10 +197,34 @@ public class Player : MonoBehaviour
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
-            Vector3 vec = new Vector3(CachedAimInput.x, 0f, CachedAimInput.y);
-            Quaternion newPlayerRotation = Quaternion.LookRotation(vec);
-            rb.MoveRotation(newPlayerRotation);
+
+            if (CachedAimInput != Vector2.zero)
+            {
+                Vector3 vec = new Vector3(CachedAimInput.x, 0f, CachedAimInput.y);
+                Quaternion newPlayerRotation = Quaternion.LookRotation(vec);
+                rb.MoveRotation(newPlayerRotation);
+            }
         }
+        
+        float aux = CachedAimInput.magnitude;
+
+        print(aux);
+
+        if (aux > 0.7)
+        {
+            shootingSystem.shooting = true;
+            shootingSystem.Shooting(playerAnimator);
+        }
+        else
+        {
+            shootingSystem.shooting = false;
+        }
+        
+    }
+
+    private void ResetAim(InputAction.CallbackContext context)
+    {
+        CachedAimInput = Vector2.zero;
     }
 
     private void ReloadGun(InputAction.CallbackContext context) {
@@ -254,8 +278,9 @@ public class Player : MonoBehaviour
             playerInputActions.Player.MobileMovement.performed += Movement;
             playerInputActions.Player.MobileMovement.canceled += ResetMovement;
             playerInputActions.Player.MobileAim.performed += MousePosition;
-            playerInputActions.Player.MobileAim.performed += Shoot;
+            //playerInputActions.Player.MobileAim.performed += Shoot;
             playerInputActions.Player.MobileAim.canceled += ResetShoot;
+            playerInputActions.Player.MobileAim.canceled += ResetAim;
             playerInputActions.Player.Recharge.performed += ReloadGun;
             playerInputActions.Player.SwapGun.performed += SwapGun;
             playerInputActions.Player.Esc.performed += PauseMenuCall;
@@ -281,8 +306,9 @@ public class Player : MonoBehaviour
             playerInputActions.Player.MobileMovement.performed -= Movement;
             playerInputActions.Player.MobileMovement.canceled -= ResetMovement;
             playerInputActions.Player.MobileAim.performed -= MousePosition;
-            playerInputActions.Player.MobileAim.performed -= Shoot;
+            //playerInputActions.Player.MobileAim.performed -= Shoot;
             playerInputActions.Player.MobileAim.canceled -= ResetShoot;
+            playerInputActions.Player.MobileAim.canceled -= ResetAim;
             playerInputActions.Player.Recharge.performed -= ReloadGun;
             playerInputActions.Player.SwapGun.performed -= SwapGun;
             playerInputActions.Player.Esc.performed -= PauseMenuCall;
