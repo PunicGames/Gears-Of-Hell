@@ -95,64 +95,66 @@ public class ShootSystem : MonoBehaviour
 
     private void Shoot()
     {
-        readyToShoot = false;
-        audioManager.Play(selectedGun);
+        if (shooting) { // Shooting ayuda para controlar las balas de las armas automáticas de la función Invoke del final de este método. Evita que se disparen balas indeseadas
+            readyToShoot = false;
+            audioManager.Play(selectedGun);
 
-        // Se calcula la dirección y origen del disparo
-        Vector3 origin = transform.position;
-        Vector3 direction = transform.forward;
+            // Se calcula la dirección y origen del disparo
+            Vector3 origin = transform.position;
+            Vector3 direction = transform.forward;
 
 
-        int numBulletsAtTime = 1; // Cualquier otro arma
-        if (selectedGun == 4) // Escopeta
-            numBulletsAtTime = 3;
+            int numBulletsAtTime = 1; // Cualquier otro arma
+            if (selectedGun == 4) // Escopeta
+                numBulletsAtTime = 3;
 
-        for (int i = 0; i < numBulletsAtTime; i++) { 
-            // Cálculo de spread
-            float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
+            for (int i = 0; i < numBulletsAtTime; i++) { 
+                // Cálculo de spread
+                float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
 
-            // Cálculo de la nueva dirección con spread
-            Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
+                // Cálculo de la nueva dirección con spread
+                Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
 
-            // Instanciación de la bala en funcion de las perks
-            if (laserShot)
-            {
-                GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
-                currentBullet.transform.forward = directionWithSpread.normalized;
-                currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
-                currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
-                currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
-                currentBullet.transform.localScale *= scaleFactor;
+                // Instanciación de la bala en funcion de las perks
+                if (laserShot)
+                {
+                    GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
+                    currentBullet.transform.forward = directionWithSpread.normalized;
+                    currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
+                    currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
+                    currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = true;
+                    currentBullet.transform.localScale *= scaleFactor;
+                }
+                else
+                {
+                    GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
+                    currentBullet.transform.forward = directionWithSpread.normalized;
+                    currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
+                    currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
+                    currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
+                    currentBullet.transform.localScale *= scaleFactor;
+                }
+
+                guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
+                guns.getGuns()[selectedGun].bulletsShot++;
             }
-            else
+
+
+            if (allowInvoke)
             {
-                GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
-                currentBullet.transform.forward = directionWithSpread.normalized;
-                currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * guns.getGuns()[selectedGun].shootForce, ForceMode.Impulse);
-                currentBullet.gameObject.GetComponent<BulletPlayer>().damage = guns.getGuns()[selectedGun].bulletDamage;
-                currentBullet.gameObject.GetComponent<BulletPlayer>().laserShot = false;
-                currentBullet.transform.localScale *= scaleFactor;
+                Invoke("ResetShot", guns.getGuns()[selectedGun].timeBetweenShooting); // Llama a la función después de timeBetweenShooting segundos
+                allowInvoke = false;
             }
 
-            guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
-            guns.getGuns()[selectedGun].bulletsShot++;
-        }
-
-
-        if (allowInvoke)
-        {
-            Invoke("ResetShot", guns.getGuns()[selectedGun].timeBetweenShooting); // Llama a la función después de timeBetweenShooting segundos
-            allowInvoke = false;
-        }
-
-        // Repetimos la funcion de disparo dependiendo de bulletsPerTap
-        if (guns.getGuns()[selectedGun].bulletsShot < guns.getGuns()[selectedGun].bulletsPerTap && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0))
-        {
-            Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
-        }
-        if ((guns.getGuns()[selectedGun].automaticGun && shooting && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0)))
-        { // Si es un arma automática, sigue disparando
-            Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
+            // Repetimos la funcion de disparo dependiendo de bulletsPerTap
+            if (guns.getGuns()[selectedGun].bulletsShot < guns.getGuns()[selectedGun].bulletsPerTap && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0))
+            {
+                Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
+            }
+            if ((guns.getGuns()[selectedGun].automaticGun && shooting && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0)))
+            { // Si es un arma automática, sigue disparando
+                Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
+            }
         }
     }
 

@@ -65,8 +65,8 @@ public class PlayerGuns
         rifle.shootForce = 25;
         rifle.spread = 0;
         rifle.reloadTime = 1;
-        rifle.timeBetweenShots = 0.4f;
-        rifle.timeBetweenShooting = 0.4f;
+        rifle.timeBetweenShots = 0.3f;
+        rifle.timeBetweenShooting = 0.3f;
         rifle.automaticGun = true;
         existingGuns[2] = rifle;
     }

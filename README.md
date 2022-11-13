@@ -48,13 +48,16 @@
 
 ![render_Camera 4_008](https://user-images.githubusercontent.com/79087129/198840811-f3912f6b-56f0-43a7-9ac6-c13494b5b8fa.png)
 
+![render_Main Camera_010](https://user-images.githubusercontent.com/79087129/201485131-4389bd40-5c12-4998-87fe-28a894778cd0.png)
+
+
 </p>
 <H2 ALIGN="CENTER">GET TO KNOW THE WEAPONS</H2>
  <br> 
   </br>
   <p align="center"> 
   
-![render_Camera 4_003](https://user-images.githubusercontent.com/79087129/198837511-58ea7a9d-3e10-43d3-9067-4daff91a420a.png)
+ ![render_Main Camera_013](https://user-images.githubusercontent.com/79087129/201485159-c2aa9b20-1060-47e5-9a3f-89b9d7e42567.png)
 
 ![render_Camera 6](https://user-images.githubusercontent.com/79087129/198837512-cebe2fbe-d1e8-402e-a7c2-315198bd093d.png)
 
