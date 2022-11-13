@@ -157,6 +157,7 @@ public class Player : MonoBehaviour
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             CachedAimInput = context.ReadValue<Vector2>();
+
         }
     }
 
@@ -207,6 +208,7 @@ public class Player : MonoBehaviour
             if (CachedAimInput != Vector2.zero)
             {
                 Vector3 vec = new Vector3(CachedAimInput.x, 0f, CachedAimInput.y);
+                vec = Quaternion.Euler(0, cam.rotation.eulerAngles.y, 0) * vec;
                 Quaternion newPlayerRotation = Quaternion.LookRotation(vec);
                 rb.MoveRotation(newPlayerRotation);
             }
