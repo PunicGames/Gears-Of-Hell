@@ -48,7 +48,8 @@ public class SeeThroughWalls : MonoBehaviour
         }
         else
         {
-            lastRenderer.material.color = lastColor;
+            if (lastRenderer != null)
+                lastRenderer.material.color = lastColor;
         }
     }
 }

@@ -127,7 +127,7 @@ public class Health : MonoBehaviour
 
     public void LoadMenu()
     {
-        Destroy(gameObject);
         SceneManager.LoadScene("Menu");
+        Destroy(gameObject);
     }
 }
