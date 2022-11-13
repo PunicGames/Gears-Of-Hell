@@ -97,22 +97,6 @@ public class EnemySpawnController : MonoBehaviour
         return keyList;
     }
 
-    private Vector3 GetSpawnPosition(Vector2Int key)
-    {
-        var keyList = new List<Vector2Int>(WorldGenerator.GetBlueprint.Keys);
-
-        keyList.RemoveAll(x => {
-            var dist = ManhathanDistance(key, x);
-            //return (dist <= spawDistance - 2) || (dist >= spawDistance + 1);
-            return dist != spawnDistance;
-        });
-
-        var pos = keyList[Random.Range(0, keyList.Count)];
-
-        return new Vector3(pos.x, 0.0f, pos.y);
-    }
-
-
     /* DEPRECATED SPAWN POSITION SOLVER
     private Vector3 GetSpawnPosition(Vector2Int key)
     {
@@ -152,26 +136,14 @@ public class EnemySpawnController : MonoBehaviour
         {
             var pick = candidates[Random.Range(0, candidates.Count)];
 
-            var enemy = tier1_Enemies[Random.Range(0, tier1_Enemies.Length)];
+            //var enemy = tier1_Enemies[Random.Range(0, tier1_Enemies.Length)];
+            var enemy = GetEnemyToInstantiate();
 
             Instantiate(enemy, new Vector3(pick.x * WorldGenerator.cellScale.x, 0.0f, pick.y * WorldGenerator.cellScale.y), Quaternion.identity);
             
             candidates.Remove(pick);
             n--;
         }
-    }
-
-    private void SpawnEnemy()
-    {
-        var index = GetPlayerV2IntPosition();
-
-        var position = GetSpawnPosition(index);
-
-        var enemy1 = tier1_Enemies[Random.Range(0, tier1_Enemies.Length)];
-       
-        //print("Spawning enemy at: " + position.ToString());
-
-        var pnj = Instantiate(enemy1, new Vector3(position.x * WorldGenerator.cellScale.x, 0.0f, position.z * WorldGenerator.cellScale.y), Quaternion.identity);
     }
 
     private Vector2Int GetPlayerV2IntPosition()
@@ -195,6 +167,22 @@ public class EnemySpawnController : MonoBehaviour
     public static int ManhathanDistance(Vector2Int a, Vector2Int b)
     {
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
+
+    private GameObject GetEnemyToInstantiate()
+    {
+        var n = Random.Range(0.0f, 1.0f);
+
+        if (n < 0.6f)
+        {
+            return tier1_Enemies[0];
+        } else if (n >= 0.6f && n < 0.8f)
+        {
+            return tier1_Enemies[1];
+        } else
+        {
+            return tier1_Enemies[2];
+        }
     }
 
 }
