@@ -27,6 +27,8 @@ public class GestorUIinGame : MonoBehaviour
         {
             desktop = true;
         }
+
+        //desktop = false;
     }
 
     void Start()
