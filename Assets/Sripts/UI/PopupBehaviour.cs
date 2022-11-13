@@ -28,6 +28,8 @@ public class PopupBehaviour : MonoBehaviour
         float offsetYaxis = Random.Range(-0.2f, 0.2f);
         Vector3 offsetVector = new Vector3(offsetXaxis, offsetYaxis, 0f);
         transform.position += offsetVector;
+
+        transform.Rotate(60f, 45f, 0f);
     }
 
     private void Update()

@@ -56,9 +56,11 @@ public class RangedEnemy : MonoBehaviour
             gunAudio.Play();
             GameObject b = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y+1f, transform.position.z), Quaternion.identity);
             b.transform.LookAt(player.transform);
-            b.GetComponent<BulletEnemy>().setForce(bulletSpeed);
-            b.GetComponent<BulletEnemy>().setDamage(damage);
-
+            Bullet bulletParams = b.GetComponent<Bullet>();
+            bulletParams.SetForce(bulletSpeed);
+            bulletParams.SetDamage(damage);
+            bulletParams.SetLaser(false);
+            bulletParams.owner = Bullet.BulletOwner.ENEMY;
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), attackSpeed);
         }

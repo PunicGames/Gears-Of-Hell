@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     private bool shopActive;
     private GestorUIinGame uiGestor;
 
+    //Camera reference
+    private Transform cam;
+
 
     private void Awake()
     {
@@ -63,6 +66,8 @@ public class Player : MonoBehaviour
     {
         //playerAnimator.SetBool("isRifle", true);
         footSteps.volume *= AudioManager.getGeneralVolume();
+
+        cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
     private void Update()
     {
@@ -113,7 +118,7 @@ public class Player : MonoBehaviour
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping) { 
             shootingSystem.shooting = true;
-            shootingSystem.Shooting(playerAnimator);
+            shootingSystem.Shooting();
         }
     }
 
@@ -168,6 +173,7 @@ public class Player : MonoBehaviour
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             movement.Set(CachedMoveInput.x, 0.0f, CachedMoveInput.y);
+            movement = Quaternion.Euler(0, cam.rotation.eulerAngles.y, 0) * movement;
             movement = movement * speed * Time.deltaTime;
 
             rb.MovePosition(transform.position + movement);
@@ -213,7 +219,7 @@ public class Player : MonoBehaviour
         if (aux > 0.7)
         {
             shootingSystem.shooting = true;
-            shootingSystem.Shooting(playerAnimator);
+            shootingSystem.Shooting();
         }
         else
         {
