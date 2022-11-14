@@ -594,6 +594,7 @@ public class ManageShops : MonoBehaviour
 
             // Le quitamos el dinero
             player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[0]]);
+            coinsText[0].text = "PURCHASED";
         }
         else if (numGunsGenerated == 0) // Se comprará munición
         {
@@ -627,6 +628,7 @@ public class ManageShops : MonoBehaviour
 
             player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[1]);
             player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[1]]);
+            coinsText[1].text = "PURCHASED";
         }
         else // Se compra munición 
         {
@@ -660,6 +662,7 @@ public class ManageShops : MonoBehaviour
 
             player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[2]);
             player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[2]]);
+            coinsText[2].text = "PURCHASED";
         }
         else // Se compra munición
         {
@@ -757,6 +760,8 @@ public class ManageShops : MonoBehaviour
             default:
                 break;
         }
+
+        coinsText[3 + place].text = "PURCHASED";
     }
     private void UpgradePerk(int idx, int place)
     {
@@ -766,8 +771,8 @@ public class ManageShops : MonoBehaviour
         {
             case 0:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[0];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < rapidFirePrices[lvl]) return;
                 if (lvl == 4) return;
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < rapidFirePrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeRapidFire();
                 player.GetComponent<CoinSystem>().SpendCoin(rapidFirePrices[lvl]);
 
@@ -779,8 +784,8 @@ public class ManageShops : MonoBehaviour
                 break;
             case 1:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[1];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < laserShotPrices[lvl]) return;
                 if (lvl == 4) return; // Si ya esta al máximo nivel, salimos del método
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < laserShotPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeLaserShot();
                 player.GetComponent<CoinSystem>().SpendCoin(laserShotPrices[lvl]);
 
@@ -792,8 +797,8 @@ public class ManageShops : MonoBehaviour
                 break;
             case 2:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[2];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < bigShotPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < bigShotPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeBigShot();
                 player.GetComponent<CoinSystem>().SpendCoin(bigShotPrices[lvl]);
 
@@ -805,8 +810,8 @@ public class ManageShops : MonoBehaviour
                 break;
             case 3:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[3];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < tacticVestPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < tacticVestPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeTacticVest();
                 player.GetComponent<CoinSystem>().SpendCoin(tacticVestPrices[lvl]);
 
@@ -818,8 +823,8 @@ public class ManageShops : MonoBehaviour
                 break;
             case 4:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[4];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < tacticalBootsPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < tacticalBootsPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeTacticalBoots();
                 player.GetComponent<CoinSystem>().SpendCoin(tacticalBootsPrices[lvl]);
 
@@ -831,8 +836,8 @@ public class ManageShops : MonoBehaviour
                 break;
             case 5:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[5];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < medicPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < medicPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeMedic();
                 player.GetComponent<CoinSystem>().SpendCoin(medicPrices[lvl]);
 
@@ -844,8 +849,8 @@ public class ManageShops : MonoBehaviour
                 break;
             case 6:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[6];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < electricalBarrierPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < electricalBarrierPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeElectricalBarrier();
                 player.GetComponent<CoinSystem>().SpendCoin(electricalBarrierPrices[lvl]);
 
@@ -857,8 +862,8 @@ public class ManageShops : MonoBehaviour
                 break;
             case 7:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[7];
-                if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunsmithPrices[lvl]) return;
                 if (lvl == 4) return;// Si ya esta al máximo nivel, salimos del método
+                if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunsmithPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeGunsmith();
                 player.GetComponent<CoinSystem>().SpendCoin(gunsmithPrices[lvl]);
 

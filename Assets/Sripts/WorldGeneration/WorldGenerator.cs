@@ -229,7 +229,6 @@ public class WorldGenerator : MonoBehaviour
         {
             var pos = p * cellScale;
             GameObject obs = Instantiate(shop, new Vector3(pos.x, 0.0f, pos.y), Quaternion.identity);
-            obs.GetComponent<Transform>().Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
             obs.transform.parent = transform;
             obs.GetComponent<Shop>().active = false;
             shops.Add(obs);
