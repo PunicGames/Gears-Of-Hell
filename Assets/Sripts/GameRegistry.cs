@@ -61,20 +61,30 @@ public class GameRegistry : MonoBehaviour
 
     void ChangeShop()
     {
-        
-        //desactivamos todas
-        foreach(GameObject s in wgScript.shops)
-        {
-            s.GetComponent<Shop>().active = false;
+
+        int lastIndexOfActiveShop = 0;
+
+        for (int i = 0; i < wgScript.shops.Count; i++) {
+            if (wgScript.shops[i].GetComponent<Shop>().active) { 
+                lastIndexOfActiveShop = i;
+                wgScript.shops[i].GetComponent<Shop>().active = false;
+            }
         }
 
         //calculamos el indice de la nueva a activar
-        int i = Random.Range(0, wgScript.shops.Count);
-
-        wgScript.shops[i].GetComponent<Shop>().active = true;
+        bool generated = false;
+        int idx = Random.Range(0, wgScript.shops.Count);
+        while (!generated) {
+            if (idx != lastIndexOfActiveShop)
+            {
+                generated = true;
+                wgScript.shops[idx].GetComponent<Shop>().active = true;
+            }
+            else {
+                idx = Random.Range(0, wgScript.shops.Count);
+            }
+        }
 
         shopManager.GetComponent<ManageShops>().RefreshShop();
-
-        
     }
 }
