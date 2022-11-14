@@ -8,19 +8,17 @@ public class Health : MonoBehaviour
 {
     public float maxHealth = 100;
     public float currentHealth;
-    private Image damageImage;
     public float flashSpeed = 5f;
     public Color damageColor = new Color(1.0f, 0.0f, 0.0f, 0.1f);
 
     Player playerMovement; // Referencia a dicho script para desactivarlo si el jugador muere para que no se pueda mover.
     bool isDead;
-    bool damaged;
 
     //Perks barriers
     public bool electricBarrier;
 
     // Display health
-    private Text lifeDisplay;
+    private RectTransform lifeScaler;
 
     // PopUp
     private PopUp popup;
@@ -37,27 +35,9 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
-        damageImage = GameObject.Find("DamagedBlood").GetComponent<Image>();
-        lifeDisplay = GameObject.Find("LifeCounter").GetComponent<Text>();
-        lifeDisplay.text = currentHealth.ToString();
+        lifeScaler = GameObject.Find("LifeScaler").GetComponent<RectTransform>();
     }
 
-
-    private void FixedUpdate()
-    {
-        if (damaged)
-        {
-            damageImage.color = damageColor;
-        }
-        else
-        {
-            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-        }
-        damaged = false;
-
-
-
-    }
 
     private void Update()
     {
@@ -66,7 +46,6 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        damaged = true;
         popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
 
         if (currentHealth > amount)
@@ -74,8 +53,7 @@ public class Health : MonoBehaviour
         else
             currentHealth = 0;
 
-        lifeDisplay.text = currentHealth.ToString();
-        //Debug.Log("Vida actual: " + currentHealth);
+        lifeScaler.localScale = new Vector3(currentHealth / 100, 1, 1);
 
         if (currentHealth <= 0 && !isDead)
         {
@@ -94,7 +72,7 @@ public class Health : MonoBehaviour
             popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.LIFE, true, 0.5f);
         }
 
-        lifeDisplay.text = currentHealth.ToString();
+        lifeScaler.localScale = new Vector3(currentHealth/100, 1, 1);
     }
 
     private void Death()

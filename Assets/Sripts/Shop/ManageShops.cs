@@ -70,12 +70,17 @@ public class ManageShops : MonoBehaviour
     int[] gunsAmmoGeneratedIndexes = new int[3];
     int[] perksNewOldGeneratedIndexes = new int[3];
 
+    // Perks in UI
+    [SerializeField] private Image[] perksUI;
+    private int numPerksPurchased;
+
     // Player reference
     private GameObject player;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        numPerksPurchased = 0;
     }
 
     public void RefreshShop()
@@ -728,40 +733,50 @@ public class ManageShops : MonoBehaviour
             case 0:
                 player.GetComponentInChildren<PerksManager>().ActivateRapidFire();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[0]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[0];
                 break;
             case 1:
                 player.GetComponentInChildren<PerksManager>().ActivateLaserShot();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[1]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[1];
                 break;
             case 2:
                 player.GetComponentInChildren<PerksManager>().ActivateBigShot();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[2]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[2];
                 break;
             case 3:
                 player.GetComponentInChildren<PerksManager>().ActivateTacticVest();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[3]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[3];
                 break;
             case 4:
                 player.GetComponentInChildren<PerksManager>().ActivateTacticalBoots();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[4]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[4];
                 break;
             case 5:
                 player.GetComponentInChildren<PerksManager>().ActivateMedic();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[5]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[5];
                 break;
             case 6:
                 player.GetComponentInChildren<PerksManager>().ActivateElectricalBarrier();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[6]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[6];
                 break;
             case 7:
                 player.GetComponentInChildren<PerksManager>().ActivateGunsmith();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[7]);
+                perksUI[numPerksPurchased].sprite = spritesPerks[7];
                 break;
             default:
                 break;
         }
 
         coinsText[3 + place].text = "PURCHASED";
+        perksUI[numPerksPurchased].color += new Color(0, 0, 0, 1);
+        numPerksPurchased++;
     }
     private void UpgradePerk(int idx, int place)
     {
