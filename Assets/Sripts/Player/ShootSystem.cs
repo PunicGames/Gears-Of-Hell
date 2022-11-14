@@ -81,7 +81,7 @@ public class ShootSystem : MonoBehaviour
             if (selectedGun != 0)
                 ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / " + guns.getGuns()[selectedGun].totalBullets);
             else // En caso de ser la pistola
-                ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / Infinito";
+                ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / 9999";
         }
     }
 
