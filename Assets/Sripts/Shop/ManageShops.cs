@@ -71,7 +71,7 @@ public class ManageShops : MonoBehaviour
     int[] perksNewOldGeneratedIndexes = new int[3];
 
     // Perks in UI
-    [SerializeField] private Image[] perksUI;
+    private Image[] perksUI = new Image[5];
     private int numPerksPurchased;
 
     // Player reference
@@ -81,6 +81,19 @@ public class ManageShops : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         numPerksPurchased = 0;
+
+        //perks image references, works on mobile too
+        GameObject perk1 = GameObject.Find("Perk1");
+        GameObject perk2 = GameObject.Find("Perk2");
+        GameObject perk3 = GameObject.Find("Perk3");
+        GameObject perk4 = GameObject.Find("Perk4");
+        GameObject perk5 = GameObject.Find("Perk5");
+
+        perksUI[0] = perk1.transform.Find("PerkImage").GetComponent<Image>();
+        perksUI[1] = perk2.transform.Find("PerkImage").GetComponent<Image>();
+        perksUI[2] = perk3.transform.Find("PerkImage").GetComponent<Image>();
+        perksUI[3] = perk4.transform.Find("PerkImage").GetComponent<Image>();
+        perksUI[4] = perk5.transform.Find("PerkImage").GetComponent<Image>();
     }
 
     public void RefreshShop()
