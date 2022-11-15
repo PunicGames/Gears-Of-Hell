@@ -29,14 +29,21 @@ public class GestorUIinGame : MonoBehaviour
         }
 
         //desktop = false;
+
+        if (!desktop)
+        {
+            mobileUI.SetActive(true);
+        }
+
     }
 
     void Start()
     {
-
+        /*
         if (!desktop) {
             mobileUI.SetActive(true);
         }
+        */
     }
 
     public void ShowShop() { 
