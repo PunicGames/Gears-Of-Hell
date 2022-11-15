@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30787501843310540}
   m_LocalRotation: {x: -0.08889324, y: 0.9938926, z: 0.056121927, w: -0.033553492}
-  m_LocalPosition: {x: -0.09, y: 0.008, z: -0.256}
+  m_LocalPosition: {x: -0.098, y: 0.012, z: -0.294}
   m_LocalScale: {x: 1.6487635, y: 1.6487635, z: 1.2828}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -242,6 +242,65 @@ Transform:
   m_Father: {fileID: 6012813236671673242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1435591011215045315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 991221599923284583}
+  - component: {fileID: 8066598708919305886}
+  - component: {fileID: 9202156217422373328}
+  m_Layer: 0
+  m_Name: weaponCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &991221599923284583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435591011215045315}
+  m_LocalRotation: {x: 0.74431956, y: 0.027661132, z: -0.040138293, w: 0.6660422}
+  m_LocalPosition: {x: -0.116, y: 0.021, z: -0.578}
+  m_LocalScale: {x: 0.9187813, y: 0.91878104, z: 0.91878}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3643305985198032628}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 96.425995, y: 11.809006, z: 6.304001}
+--- !u!136 &8066598708919305886
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435591011215045315}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.31
+  m_Height: 0.61
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9202156217422373328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435591011215045315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb73fe4df274eb4c90f5d5997fbff5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1562388543588629508
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,7 +524,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2140532941445721648}
   - component: {fileID: 2140532941445721660}
-  - component: {fileID: 2140532941445721661}
   - component: {fileID: 2140532941445721655}
   - component: {fileID: 7330653623977720479}
   - component: {fileID: 6014481276430231423}
@@ -511,8 +569,8 @@ NavMeshAgent:
   m_Speed: 3
   m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0.1
+  m_AngularSpeed: 1000
+  m_StoppingDistance: 1.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -520,19 +578,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2140532941445721661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140532941445721662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e2048a17784f594b80cf5d70fb00b26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sightRange: 500
 --- !u!54 &2140532941445721655
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -568,6 +613,7 @@ MonoBehaviour:
   maxScoreValue: 10
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
   popupPosition: {fileID: 3603720825505649390}
+  enemyType: 0
 --- !u!114 &6014481276430231423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,8 +626,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beea883880f7a1b4fba245b950953459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 500
+  timeBetweenAttacks: 3
   attackDamage: 60
+  weaponCollider: {fileID: 0}
 --- !u!136 &6212409924883035094
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1935,6 +1982,7 @@ Transform:
   - {fileID: 8291299683013109205}
   - {fileID: 1917547321252078627}
   - {fileID: 5445077165645599068}
+  - {fileID: 991221599923284583}
   m_Father: {fileID: 4341508676698854290}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
