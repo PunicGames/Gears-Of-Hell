@@ -58,10 +58,15 @@ public class EnemyHealth : MonoBehaviour
         isDead = true;
         collider.enabled = false;
 
+        //Look for a box collider in case its a melee enemy and deactivate
+        BoxCollider coll = GetComponent<BoxCollider>();
+        if (coll)
+            coll.enabled = false;
+
 
         NavMeshAgent navMov = GetComponent<NavMeshAgent>();
         EnemiesMovement eM = GetComponent<EnemiesMovement>();
-        EnemyMeleeAttack mE = GetComponent<EnemyMeleeAttack>();
+        WorkerBehavior mE = GetComponent<WorkerBehavior>();
         RangedEnemy rE = GetComponent<RangedEnemy>();
         if (eM != null)
             eM.enabled = false;
@@ -90,11 +95,6 @@ public class EnemyHealth : MonoBehaviour
 
         }
         animator.SetTrigger("death");
-
-        //Look for a box collider in case its a melee enemy and deactivate
-        BoxCollider coll = GetComponent<BoxCollider>();
-        if (coll)
-            coll.enabled = false;
 
 
         // Suelta moneda
