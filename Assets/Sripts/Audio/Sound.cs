@@ -7,6 +7,7 @@ public class Sound
 {
     public string name;
     public AudioClip[] clips;
+    public AudioClip secundary;
 
     [Range(0f, 1f)]
     public float volume;
@@ -20,5 +21,11 @@ public class Sound
     {
         source.clip = clips[Random.Range(0, clips.Length)];
         source.Play();
+    }
+
+    public void PlaySecundary() 
+    {
+        source.clip = secundary;
+        source?.Play();
     }
 }

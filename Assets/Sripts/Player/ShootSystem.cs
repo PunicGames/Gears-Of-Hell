@@ -8,9 +8,10 @@ public class ShootSystem : MonoBehaviour
     public List<Mesh> weapon_meshes;
     [SerializeField] MeshFilter meshFilter;
     // Guns
-    [HideInInspector]public PlayerGuns guns;
+    [HideInInspector] public PlayerGuns guns;
+    [SerializeField] private AudioClip[] reloadAudioClip;
     [HideInInspector]public int selectedGun = 0;
-    [HideInInspector]public bool[] availableGuns;
+    public bool[] availableGuns;
 
     // Guns in Order: pistol, subfusil, rifle, sniper, shotgun
 
@@ -177,6 +178,7 @@ public class ShootSystem : MonoBehaviour
         if ((guns.getGuns()[selectedGun].bulletsLeftInMagazine < guns.getGuns()[selectedGun].magazineSize) && !reloading && guns.getGuns()[selectedGun].totalBullets > 0)
         {
             Debug.Log("Pasa");
+            audioManager.PlaySecundary(selectedGun);
             reloading = true;
             rechargingDisplay.SetActive(true);
             Invoke("ReloadFinished", guns.getGuns()[selectedGun].reloadTime);

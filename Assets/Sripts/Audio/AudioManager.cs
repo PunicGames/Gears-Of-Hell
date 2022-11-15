@@ -33,6 +33,10 @@ public class AudioManager : MonoBehaviour
     public void Play(int idx) {
         sounds[idx].Play();
     }
+    public void PlaySecundary(int idx)
+    {
+        sounds[idx].PlaySecundary();
+    }
 
     public static float getGeneralVolume()
     {

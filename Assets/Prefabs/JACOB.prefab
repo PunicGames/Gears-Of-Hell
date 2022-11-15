@@ -149,6 +149,7 @@ MonoBehaviour:
   - {fileID: 8009028354194868464, guid: a78886a34c5673344b4cff1c25764840, type: 3}
   - {fileID: 8009028354194868464, guid: a78886a34c5673344b4cff1c25764840, type: 3}
   meshFilter: {fileID: 8511468124164692168}
+  reloadAudioClip: []
   selectedGun: 0
   availableGuns: 
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
@@ -176,7 +177,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 90cedfb256426dc47b33298b2700ac36, type: 3}
     - {fileID: 8300000, guid: 3835bacab04ce1844bb961390ee99f9b, type: 3}
     - {fileID: 8300000, guid: ce2ba8749f656e24290a78eee17e05dc, type: 3}
-    volume: 0.75
+    secundary: {fileID: 8300000, guid: 7d51c527a7aba5b44b3aee92400b7d15, type: 3}
+    volume: 0.6
     pitch: 1.09
     source: {fileID: 0}
   - name: Subfusil Sound
@@ -185,7 +187,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 982d0b8243076114c84d7c4950c57c29, type: 3}
     - {fileID: 8300000, guid: 056124cb91b22b849947b8ce08a81e9f, type: 3}
     - {fileID: 8300000, guid: cddb4c1f3d071df40928818ce1b39ee0, type: 3}
-    volume: 1
+    secundary: {fileID: 8300000, guid: 800bad1ae17bca148a679abe4eea9de5, type: 3}
+    volume: 0.6
     pitch: 1
     source: {fileID: 0}
   - name: Rifle Sound
@@ -193,13 +196,16 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 7ca29828cb19e9349a45cee740b1205e, type: 3}
     - {fileID: 8300000, guid: c148acf3fe0c95a4fa73f1b397048573, type: 3}
     - {fileID: 8300000, guid: 52cc333e1c8e7ff4fa5294dc4523b128, type: 3}
-    volume: 1
+    secundary: {fileID: 8300000, guid: d505d289730bd844aa1795ee386599bf, type: 3}
+    volume: 0.6
     pitch: 1
     source: {fileID: 0}
   - name: Sniper Sound
     clips:
-    - {fileID: 8300000, guid: 3858ba8b96b949640abbae3d3d174a8f, type: 3}
-    volume: 0.684
+    - {fileID: 8300000, guid: cb86a37be95b90b40beca639e94bb043, type: 3}
+    - {fileID: 8300000, guid: cd832af579f4d224cad49d260c3169da, type: 3}
+    secundary: {fileID: 8300000, guid: 55c7fa95d4262484bab75ab7d1320f6e, type: 3}
+    volume: 0.6
     pitch: 1
     source: {fileID: 0}
   - name: Shotgun Sound
@@ -207,7 +213,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: fac14e10392f24e4c814acbfec683462, type: 3}
     - {fileID: 8300000, guid: a3fcff42cf0c0bd46a68dcf1afa71742, type: 3}
     - {fileID: 8300000, guid: 02620c8b98a4cb947b7f1d601e4b033e, type: 3}
-    volume: 1
+    secundary: {fileID: 8300000, guid: f161449a65d60b047aa76f36ccffdfae, type: 3}
+    volume: 0.6
     pitch: 1
     source: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: da771ec059f5b114fa931904e073ac87, type: 2}
