@@ -73,8 +73,12 @@ public class Player : MonoBehaviour
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
 
-        leftJoystick = GameObject.Find("LeftJoystick").GetComponent<VariableJoystick>();
-        rightJoystick = GameObject.Find("RightJoystick").GetComponent<VariableJoystick>();
+        if (!desktop)
+        {
+            leftJoystick = GameObject.Find("LeftJoystick").GetComponent<VariableJoystick>();
+            rightJoystick = GameObject.Find("RightJoystick").GetComponent<VariableJoystick>();
+        }
+        
     }
     private void Update()
     {

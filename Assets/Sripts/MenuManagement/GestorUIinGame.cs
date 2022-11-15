@@ -8,6 +8,8 @@ public class GestorUIinGame : MonoBehaviour
     public static GestorUIinGame guingame;
 
     [SerializeField]
+    private GameObject desktopUI;
+    [SerializeField]
     private GameObject mobileUI;
     [SerializeField]
     private GameObject shopUI;
@@ -34,6 +36,12 @@ public class GestorUIinGame : MonoBehaviour
         if (!desktop)
         {
             mobileUI.SetActive(true);
+            desktopUI.SetActive(false);
+        }
+        else
+        {
+            mobileUI.SetActive(false);
+            desktopUI.SetActive(true);
         }
         
     }
