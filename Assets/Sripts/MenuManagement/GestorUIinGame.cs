@@ -28,13 +28,14 @@ public class GestorUIinGame : MonoBehaviour
             desktop = true;
         }
 
-        //desktop = false;
+        desktop = false;
 
+        
         if (!desktop)
         {
             mobileUI.SetActive(true);
         }
-
+        
     }
 
     void Start()
