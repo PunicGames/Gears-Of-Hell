@@ -32,6 +32,10 @@ public class Player : MonoBehaviour
     //Camera reference
     private Transform cam;
 
+    //Joysticks reference
+    private VariableJoystick leftJoystick;
+    private VariableJoystick rightJoystick;
+
 
     private void Awake()
     {
@@ -68,6 +72,9 @@ public class Player : MonoBehaviour
         footSteps.volume *= AudioManager.getGeneralVolume();
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
+        leftJoystick = GameObject.Find("LeftJoystick").GetComponent<VariableJoystick>();
+        rightJoystick = GameObject.Find("RightJoystick").GetComponent<VariableJoystick>();
     }
     private void Update()
     {
@@ -100,6 +107,13 @@ public class Player : MonoBehaviour
 
         // En principio cuando está el menu de pausa timeScale es 0 y el FixedUpdate no se ejecuta. Aun así, comprobamos por si acaso.
         if (PauseMenu.GameIsPaused) return;
+
+        if (!desktop)
+        {
+            MobileMovement(leftJoystick.input);
+            CachedAimInput = rightJoystick.input;
+
+        }
 
         Move();
         if (desktop)
@@ -140,6 +154,20 @@ public class Player : MonoBehaviour
                 footSteps.Play();
         }
     }
+
+    public void MobileMovement(Vector2 context)
+    {
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
+        {
+            playerAnimator.SetBool("isMoving", true);
+            CachedMoveInput = context;
+            if (context == Vector2.zero)
+                MobileResetMovement();
+            if (!footSteps.isPlaying && context!=Vector2.zero)
+                footSteps.Play();
+        }
+    }
+
     public void ResetMovement(InputAction.CallbackContext context)
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
@@ -152,6 +180,20 @@ public class Player : MonoBehaviour
         }
         
     }
+
+    public void MobileResetMovement()
+    {
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
+        {
+            playerAnimator.SetBool("isMoving", false);
+            CachedMoveInput = new Vector2(0.0f, 0.0f);
+            movement = movement * speed * Time.deltaTime;
+            if (footSteps.isPlaying)
+                footSteps.Pause();
+        }
+
+    }
+
     public void MousePosition(InputAction.CallbackContext context)
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
@@ -216,7 +258,7 @@ public class Player : MonoBehaviour
         
         float aux = CachedAimInput.magnitude;
 
-        print(aux);
+        //print(aux);
 
         if (aux > 0.7)
         {
@@ -283,12 +325,11 @@ public class Player : MonoBehaviour
         {
             //desktop = false;
 
-            playerInputActions.Player.MobileMovement.performed += Movement;
-            playerInputActions.Player.MobileMovement.canceled += ResetMovement;
-            playerInputActions.Player.MobileAim.performed += MousePosition;
-            //playerInputActions.Player.MobileAim.performed += Shoot;
-            playerInputActions.Player.MobileAim.canceled += ResetShoot;
-            playerInputActions.Player.MobileAim.canceled += ResetAim;
+            //playerInputActions.Player.MobileMovement.performed += Movement;
+            //playerInputActions.Player.MobileMovement.canceled += ResetMovement;
+            //playerInputActions.Player.MobileAim.performed += MousePosition;
+            //playerInputActions.Player.MobileAim.canceled += ResetShoot;
+            //playerInputActions.Player.MobileAim.canceled += ResetAim;
             playerInputActions.Player.Recharge.performed += ReloadGun;
             playerInputActions.Player.SwapGun.performed += SwapGun;
             playerInputActions.Player.Esc.performed += PauseMenuCall;
@@ -311,12 +352,11 @@ public class Player : MonoBehaviour
             playerInputActions.Player.Shop.performed -= OpenShop;
         }
         else {
-            playerInputActions.Player.MobileMovement.performed -= Movement;
-            playerInputActions.Player.MobileMovement.canceled -= ResetMovement;
-            playerInputActions.Player.MobileAim.performed -= MousePosition;
-            //playerInputActions.Player.MobileAim.performed -= Shoot;
-            playerInputActions.Player.MobileAim.canceled -= ResetShoot;
-            playerInputActions.Player.MobileAim.canceled -= ResetAim;
+            //playerInputActions.Player.MobileMovement.performed -= Movement;
+            //playerInputActions.Player.MobileMovement.canceled -= ResetMovement;
+            //playerInputActions.Player.MobileAim.performed -= MousePosition;
+            //playerInputActions.Player.MobileAim.canceled -= ResetShoot;
+            //playerInputActions.Player.MobileAim.canceled -= ResetAim;
             playerInputActions.Player.Recharge.performed -= ReloadGun;
             playerInputActions.Player.SwapGun.performed -= SwapGun;
             playerInputActions.Player.Esc.performed -= PauseMenuCall;
