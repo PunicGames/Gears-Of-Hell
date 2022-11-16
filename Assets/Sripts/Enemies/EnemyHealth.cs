@@ -23,8 +23,12 @@ public class EnemyHealth : MonoBehaviour
     private PopUp popup;
     [SerializeField] private Transform popupPosition;
 
+    public delegate void TakeDamageDel();
+
+    public TakeDamageDel takeDamage;
+
     // Enemy Type
-    public enum EnemyType { WORKER, GUNSLINGER, GUNNER, EXPLOSIVE_SPIDERBOT, WORKER_SPIDERBOT, ATTACK_SPIDERBOT, FOREMAN}
+    public enum EnemyType { WORKER, GUNSLINGER, GUNNER, EXPLOSIVE_SPIDERBOT, WORKER_SPIDERBOT, ATTACK_SPIDERBOT, FOREMAN }
     public EnemyType enemyType;
 
     //private int timeAnimationDead = 1;
@@ -44,6 +48,9 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= amount;
         Debug.Log("Vida enemigo: " + currentHealth);
+
+        if (takeDamage != null)
+            takeDamage();
 
         popup.Create(popupPosition.position, amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
 

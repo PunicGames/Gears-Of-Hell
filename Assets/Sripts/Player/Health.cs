@@ -24,6 +24,11 @@ public class Health : MonoBehaviour
     private PopUp popup;
     [SerializeField] private Transform popupPosition;
 
+    public delegate void TakeDamageDel();
+
+    public TakeDamageDel takeDamage;
+
+
     private void Awake()
     {
         playerMovement = GetComponent<Player>();
@@ -47,11 +52,14 @@ public class Health : MonoBehaviour
     public void TakeDamage(float amount)
     {
         popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
+        if (takeDamage != null)
+            takeDamage();
 
         if (currentHealth > amount)
             currentHealth -= amount;
         else
             currentHealth = 0;
+
 
         lifeScaler.localScale = new Vector3(currentHealth / 100, 1, 1);
 

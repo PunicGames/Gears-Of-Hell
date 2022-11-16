@@ -531,6 +531,7 @@ GameObject:
   - component: {fileID: 3699641362541068157}
   - component: {fileID: 5867907439477152508}
   - component: {fileID: 551933975219724089}
+  - component: {fileID: 1407852017148471494}
   m_Layer: 7
   m_Name: Tier3_Worker
   m_TagString: Enemy
@@ -566,7 +567,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 3.6
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 1000
@@ -627,8 +628,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 2
-  attackDamage: 40
+  attackDamage: 30
   weaponCollider: {fileID: 9202156217422373328}
+  attackType: 0
+  randomAttack: 0
 --- !u!136 &6212409924883035094
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -689,6 +692,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUpObject: {fileID: 7578110236925590997, guid: 82e6bf8e920b7514fb13d6adf4019ed6, type: 3}
+--- !u!114 &1407852017148471494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140532941445721662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc563e538ce06c418e43f9ed2ca9ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitTime: 0.08
 --- !u!1 &2236531451138121158
 GameObject:
   m_ObjectHideFlags: 0
