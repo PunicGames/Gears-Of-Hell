@@ -14,6 +14,17 @@ public class MainMenu : MonoBehaviour
     private int selectedCharacter = 0;
     private int previousSelected = 0;
 
+    // Cursor
+    // Cursor
+    [SerializeField] private Texture2D cursorSprite;
+    private Vector2 cursorHotSpot;
+
+    private void Start()
+    {
+        cursorHotSpot = new Vector2(0, 0);
+        Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.Auto);
+    }
+
     public void PlayGame() {
         SceneManager.LoadScene("MainScene");
     }

@@ -203,7 +203,6 @@ public class Player : MonoBehaviour
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             CachedAimInput = context.ReadValue<Vector2>();
-
         }
     }
 

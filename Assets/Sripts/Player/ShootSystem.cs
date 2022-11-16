@@ -45,6 +45,10 @@ public class ShootSystem : MonoBehaviour
     // Animator reference
     private Animator anim;
 
+    // Cursor sprites
+    [SerializeField] private Texture2D[] cursorSprites;
+    private Vector2 cursorHotSpot;
+
     private void Awake()
     {
         // Guns initialization
@@ -70,6 +74,15 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
+        // Display cursor
+        cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
+        Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+
+        // Init guns in mobile
+        if (Application.isMobilePlatform)
+        {
+            InitGunsMobile();
+        }
     }
 
     void Update()
@@ -217,6 +230,7 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
+                Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
                 // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque debería llamarse mejor al finalizar la animación)
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS MÁS ARRIBA)
@@ -230,6 +244,7 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
+                Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
                 return;
@@ -245,5 +260,15 @@ public class ShootSystem : MonoBehaviour
     public void DeactivateGun(int idx)
     {
         availableGuns[idx] = false;
+    }
+
+    public void ChangeCursorBack() {
+        Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+    }
+
+    private void InitGunsMobile() {
+        for (int i = 0; i < guns.getGuns().Length; i++) {
+            guns.getGuns()[i].automaticGun = false;
+        }
     }
 }
