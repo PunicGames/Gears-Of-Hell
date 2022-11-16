@@ -18,6 +18,10 @@ public class GestorUIinGame : MonoBehaviour
 
     public bool shooping;
 
+    // Cursor
+    [SerializeField] private Texture2D cursorSprite;
+    private Vector2 cursorHotSpot;
+
     private void Awake()
     {
         // Deteccion de dispositivo
@@ -53,17 +57,22 @@ public class GestorUIinGame : MonoBehaviour
             mobileUI.SetActive(true);
         }
         */
+
+        // Cursor
+        cursorHotSpot = new Vector2(0, 0);
     }
 
     public void ShowShop() { 
         shopUI.SetActive(true);
         Time.timeScale = 0.0f;
         shooping = true;
+        Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.Auto);
     }
 
     public void HideShop() { 
         shopUI.SetActive(false);
         Time.timeScale = 1.0f;
         shooping = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }
 }

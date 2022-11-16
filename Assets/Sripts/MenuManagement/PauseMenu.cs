@@ -12,6 +12,15 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject PauseMenuUI;
 
+    // Cursor
+    [SerializeField] private Texture2D cursorSprite;
+    private Vector2 cursorHotSpot;
+
+    private void Start()
+    {
+        cursorHotSpot = new Vector2(0, 0);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -32,6 +41,7 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }
 
     private void Pause()
@@ -39,6 +49,7 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.Auto);
     }
 
     public void LoadMenu()
