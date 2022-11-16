@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30787501843310540}
   m_LocalRotation: {x: -0.08889324, y: 0.9938926, z: 0.056121927, w: -0.033553492}
-  m_LocalPosition: {x: -0.098, y: 0.012, z: -0.294}
-  m_LocalScale: {x: 1.6487635, y: 1.6487635, z: 1.2828}
+  m_LocalPosition: {x: -0.107, y: 0.023, z: -0.388}
+  m_LocalScale: {x: 1.9110819, y: 1.9110819, z: 1.5451797}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3643305985198032628}
@@ -268,7 +268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435591011215045315}
   m_LocalRotation: {x: 0.74431956, y: 0.027661132, z: -0.040138293, w: 0.6660422}
-  m_LocalPosition: {x: -0.116, y: 0.021, z: -0.578}
+  m_LocalPosition: {x: -0.132, y: 0.029, z: -0.654}
   m_LocalScale: {x: 0.9187813, y: 0.91878104, z: 0.91878}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -285,8 +285,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.31
-  m_Height: 0.61
+  m_Radius: 0.46
+  m_Height: 1.1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9202156217422373328
@@ -626,9 +626,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beea883880f7a1b4fba245b950953459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 3
-  attackDamage: 60
-  weaponCollider: {fileID: 0}
+  timeBetweenAttacks: 2
+  attackDamage: 40
+  weaponCollider: {fileID: 9202156217422373328}
 --- !u!136 &6212409924883035094
 CapsuleCollider:
   m_ObjectHideFlags: 0
