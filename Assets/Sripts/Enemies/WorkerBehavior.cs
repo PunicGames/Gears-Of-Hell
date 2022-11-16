@@ -16,7 +16,6 @@ public class WorkerBehavior : MonoBehaviour
     NavMeshAgent agent;
     bool canAttack = true;
     bool attackRange = false;
-    bool isChasing = true;
 
     private void Start()
     {
@@ -25,6 +24,7 @@ public class WorkerBehavior : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         weaponCollider.player = player;
+        weaponCollider.health = GetComponent<EnemyHealth>();
         weaponCollider.playerHealth = player.GetComponent<Health>();
         weaponCollider.attackDamage = attackDamage;
         weaponCollider.enabled = false;

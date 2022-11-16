@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class MeleeWeaponBehaviour : MonoBehaviour
 {
-    public GameObject player { get; set; }
-    public Health playerHealth { get; set; }
+    [HideInInspector] public GameObject player { get; set; }
+    [HideInInspector] public Health playerHealth { get; set; }
     [HideInInspector] public int attackDamage { get; set; }
+    [HideInInspector] public EnemyHealth health { get; set; }
+
 
 
     private void OnTriggerEnter(Collider other)
@@ -25,7 +27,7 @@ public class MeleeWeaponBehaviour : MonoBehaviour
 
                 if (playerHealth.electricBarrier)
                 {
-                    gameObject.GetComponent<EnemyHealth>().Death();
+                    health.Death();
                     player.GetComponentInChildren<ElectricBarrier>().ConsumeBarrier();
                 }
                 else
