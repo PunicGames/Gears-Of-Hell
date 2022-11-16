@@ -56,8 +56,6 @@ public class WorkerBehavior : MonoBehaviour
 
     }
 
-    // Para ejecutar los siguientes métodos el objeto debe tener un collider con IsTrigger activado.
-    // Al objeto de enemigo le he dado dos collider iguales. Uno con IsTrigger y otro sin él.
     private void OnTriggerEnter(Collider other)
     {
         if (enabled)
@@ -68,7 +66,7 @@ public class WorkerBehavior : MonoBehaviour
                 if (canAttack)
                 {
                     canAttack = false;
-                    animator.SetTrigger("Attack");
+                    //animator.SetTrigger("Attack");
                     StartCoroutine(AttackCooldown());
                 }
 
@@ -96,9 +94,14 @@ public class WorkerBehavior : MonoBehaviour
 
     IEnumerator AttackCooldown()
     {
+        while (attackRange)
+        {
 
-        yield return new WaitForSeconds(timeBetweenAttacks);
+            animator.SetTrigger("Attack");
+            yield return new WaitForSeconds(timeBetweenAttacks);
+        }
         canAttack = true;
+        yield return 0;
 
     }
 
