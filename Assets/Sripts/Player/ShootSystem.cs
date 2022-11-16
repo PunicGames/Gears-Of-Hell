@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ public class ShootSystem : MonoBehaviour
     AudioManager audioManager;
 
     // Display
-    private Text ammunitionDisplay;
+    private TextMeshProUGUI ammunitionDisplay;
     private GameObject rechargingDisplay;
 
     //Perks Modifies
@@ -44,6 +45,10 @@ public class ShootSystem : MonoBehaviour
 
     // Animator reference
     private Animator anim;
+
+    // Cursor sprites
+    [SerializeField] private Texture2D[] cursorSprites;
+    private Vector2 cursorHotSpot;
 
     private void Awake()
     {
@@ -66,10 +71,19 @@ public class ShootSystem : MonoBehaviour
         anim = GetComponentInParent<Animator>();
 
         // Display initialization
-        ammunitionDisplay = GameObject.Find("Municion").GetComponent<Text>();
+        ammunitionDisplay = GameObject.Find("Municion").GetComponent<TextMeshProUGUI>();
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
+        // Display cursor
+        cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
+        Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+
+        // Init guns in mobile
+        if (Application.isMobilePlatform)
+        {
+            InitGunsMobile();
+        }
     }
 
     void Update()
@@ -80,9 +94,9 @@ public class ShootSystem : MonoBehaviour
         if (ammunitionDisplay != null)
         {
             if (selectedGun != 0)
-                ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / " + guns.getGuns()[selectedGun].totalBullets);
+                ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/" + guns.getGuns()[selectedGun].totalBullets);
             else // En caso de ser la pistola
-                ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / 9999";
+                ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/9999";
         }
     }
 
@@ -217,6 +231,7 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
+                Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
                 // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque debería llamarse mejor al finalizar la animación)
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS MÁS ARRIBA)
@@ -230,6 +245,7 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
+                Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
                 return;
@@ -245,5 +261,15 @@ public class ShootSystem : MonoBehaviour
     public void DeactivateGun(int idx)
     {
         availableGuns[idx] = false;
+    }
+
+    public void ChangeCursorBack() {
+        Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+    }
+
+    private void InitGunsMobile() {
+        for (int i = 0; i < guns.getGuns().Length; i++) {
+            guns.getGuns()[i].automaticGun = false;
+        }
     }
 }

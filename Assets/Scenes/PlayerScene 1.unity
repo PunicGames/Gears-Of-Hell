@@ -1291,6 +1291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 0.5
   attackDamage: 20
+  weaponCollider: {fileID: 0}
 --- !u!114 &1503322544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,6 +1750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 0.5
   attackDamage: 20
+  weaponCollider: {fileID: 0}
 --- !u!135 &1872047790
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1811,6 +1813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 0.5
   attackDamage: 20
+  weaponCollider: {fileID: 0}
 --- !u!114 &1914165265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3671,6 +3674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon_meshes: []
   meshFilter: {fileID: 0}
+  reloadAudioClip: []
   selectedGun: 0
   availableGuns: 
   bullet: {fileID: 441659958780119776, guid: 6331b5f3ae9ff874cb7e2a69f698ac91, type: 3}
@@ -3680,6 +3684,7 @@ MonoBehaviour:
   laserShot: 0
   bigShot: 0
   scaleFactor: 1
+  cursorSprites: []
 --- !u!4 &7548470674204276466
 Transform:
   m_ObjectHideFlags: 0
