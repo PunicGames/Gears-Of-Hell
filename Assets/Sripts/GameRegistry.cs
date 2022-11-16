@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class GameRegistry : MonoBehaviour
     [HideInInspector] public int minutes, seconds;
 
     // Display time
-    private Text timeDisplay;
+    private TextMeshProUGUI timeDisplay;
 
     // Shop
     [SerializeField]
@@ -32,7 +33,7 @@ public class GameRegistry : MonoBehaviour
         elapsedTime = 0f;
         minutes = 0;
         seconds = 0;
-        timeDisplay = GameObject.Find("GameTimer").GetComponent<Text>();
+        timeDisplay = GameObject.Find("GameTimer").GetComponent<TextMeshProUGUI>();
 
         //shopManager.GetComponent<ManageShops>().RefreshShop();
         InvokeRepeating("ChangeShop", firstShopTime, shopActivationTime);

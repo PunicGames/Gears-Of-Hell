@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class CoinSystem : MonoBehaviour
     public int totalCoinsInGame;
 
     // Display coin
-    private Text coinDisplay;
+    private TextMeshProUGUI coinDisplay;
 
     // PopUp
     private PopUp popup;
@@ -17,7 +18,7 @@ public class CoinSystem : MonoBehaviour
     void Start()
     {
         totalCoinsInGame = 0;
-        coinDisplay = GameObject.Find("CoinCounter").GetComponent<Text>();
+        coinDisplay = GameObject.Find("CoinCounter").GetComponent<TextMeshProUGUI>();
         popup = GetComponent<PopUp>();
     }
 

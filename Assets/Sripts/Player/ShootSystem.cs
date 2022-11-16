@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ public class ShootSystem : MonoBehaviour
     AudioManager audioManager;
 
     // Display
-    private Text ammunitionDisplay;
+    private TextMeshProUGUI ammunitionDisplay;
     private GameObject rechargingDisplay;
 
     //Perks Modifies
@@ -70,7 +71,7 @@ public class ShootSystem : MonoBehaviour
         anim = GetComponentInParent<Animator>();
 
         // Display initialization
-        ammunitionDisplay = GameObject.Find("Municion").GetComponent<Text>();
+        ammunitionDisplay = GameObject.Find("Municion").GetComponent<TextMeshProUGUI>();
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
@@ -93,9 +94,9 @@ public class ShootSystem : MonoBehaviour
         if (ammunitionDisplay != null)
         {
             if (selectedGun != 0)
-                ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / " + guns.getGuns()[selectedGun].totalBullets);
+                ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/" + guns.getGuns()[selectedGun].totalBullets);
             else // En caso de ser la pistola
-                ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + " / 9999";
+                ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/9999";
         }
     }
 
