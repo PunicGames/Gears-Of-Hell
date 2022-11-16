@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 805858125500327647}
   - component: {fileID: 6280348045863214405}
   - component: {fileID: 6405950787550650569}
+  - component: {fileID: 8937590430435411528}
   m_Layer: 7
   m_Name: Tier2_Gunslinger
   m_TagString: Enemy
@@ -522,6 +523,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUpObject: {fileID: 7578110236925590997, guid: 82e6bf8e920b7514fb13d6adf4019ed6, type: 3}
+--- !u!114 &8937590430435411528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362870519766169385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc563e538ce06c418e43f9ed2ca9ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitTime: 0.08
 --- !u!1 &1639239646711664052
 GameObject:
   m_ObjectHideFlags: 0

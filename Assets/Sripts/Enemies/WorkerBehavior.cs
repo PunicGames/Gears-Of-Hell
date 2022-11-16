@@ -16,6 +16,8 @@ public class WorkerBehavior : MonoBehaviour
     NavMeshAgent agent;
     bool canAttack = true;
     bool attackRange = false;
+    [SerializeField] public float attackType = 0;
+    [SerializeField] bool randomAttack =false;
 
     private void Start()
     {
@@ -30,6 +32,7 @@ public class WorkerBehavior : MonoBehaviour
         weaponCollider.enabled = false;
 
         animator.SetBool("Moving", true);
+        animator.SetFloat("attack_type", attackType);
     }
     private void Update()
     {
@@ -96,7 +99,21 @@ public class WorkerBehavior : MonoBehaviour
     {
         while (attackRange)
         {
+            if (randomAttack)
+            {
+                int r = Random.Range(0, 1);
+                //Randomly choose death animation type
+                switch (r)
+                {
+                    case 0:
+                        animator.SetFloat("attack_type", 0);
+                        break;
+                    case 2:
+                        animator.SetFloat("attack_type", 1);
+                        break;
 
+                }
+            }
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
