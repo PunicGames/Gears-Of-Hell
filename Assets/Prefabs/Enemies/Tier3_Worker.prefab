@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30787501843310540}
   m_LocalRotation: {x: -0.08889324, y: 0.9938926, z: 0.056121927, w: -0.033553492}
-  m_LocalPosition: {x: -0.098, y: 0.012, z: -0.294}
-  m_LocalScale: {x: 1.6487635, y: 1.6487635, z: 1.2828}
+  m_LocalPosition: {x: -0.103, y: 0.019, z: -0.362}
+  m_LocalScale: {x: 1.9577417, y: 1.6487635, z: 1.4911267}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3643305985198032628}
@@ -268,7 +268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435591011215045315}
   m_LocalRotation: {x: 0.74431956, y: 0.027661132, z: -0.040138293, w: 0.6660422}
-  m_LocalPosition: {x: -0.116, y: 0.021, z: -0.578}
+  m_LocalPosition: {x: -0.126, y: 0.032, z: -0.673}
   m_LocalScale: {x: 0.9187813, y: 0.91878104, z: 0.91878}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -285,8 +285,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.31
-  m_Height: 0.61
+  m_Radius: 0.4
+  m_Height: 0.88
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9202156217422373328
@@ -566,7 +566,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 3.6
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 1000
@@ -609,8 +609,8 @@ MonoBehaviour:
   startingHealth: 30
   currentHealth: 30
   scoreValue: 5
-  minScoreValue: 5
-  maxScoreValue: 10
+  minScoreValue: 10
+  maxScoreValue: 15
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
   popupPosition: {fileID: 3603720825505649390}
   enemyType: 0
@@ -627,8 +627,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 3
-  attackDamage: 60
-  weaponCollider: {fileID: 0}
+  attackDamage: 30
+  weaponCollider: {fileID: 9202156217422373328}
 --- !u!136 &6212409924883035094
 CapsuleCollider:
   m_ObjectHideFlags: 0
