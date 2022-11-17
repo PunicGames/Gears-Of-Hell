@@ -19,10 +19,26 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Texture2D cursorSprite;
     private Vector2 cursorHotSpot;
 
+    // Platform control 
+    private bool desktop;
+
+    private void Awake()
+    {
+        if (Application.isMobilePlatform)
+        {
+            desktop = false;
+        }
+        else if (SystemInfo.deviceType == DeviceType.Desktop)
+        {
+            desktop = true;
+        }
+    }
+
     private void Start()
     {
         cursorHotSpot = new Vector2(0, 0);
-        Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.Auto);
+        if (desktop)
+            Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     public void PlayGame() {

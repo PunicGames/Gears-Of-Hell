@@ -16,6 +16,22 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Texture2D cursorSprite;
     private Vector2 cursorHotSpot;
 
+    // Platform control
+    private bool desktop;
+
+    private void Awake()
+    {
+        // Platform
+        if (Application.isMobilePlatform)
+        {
+            desktop = false;
+        }
+        else if (SystemInfo.deviceType == DeviceType.Desktop)
+        {
+            desktop = true;
+        }
+    }
+
     private void Start()
     {
         cursorHotSpot = new Vector2(0, 0);
@@ -49,7 +65,8 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
-        Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.Auto);
+        if (desktop)
+            Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     public void LoadMenu()

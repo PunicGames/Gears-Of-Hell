@@ -50,8 +50,22 @@ public class ShootSystem : MonoBehaviour
     [SerializeField] private Texture2D[] cursorSprites;
     private Vector2 cursorHotSpot;
 
+    // Platform control
+    private bool desktop;
+
     private void Awake()
     {
+        // Platform
+        if (Application.isMobilePlatform)
+        {
+            desktop = false;
+        }
+        else if (SystemInfo.deviceType == DeviceType.Desktop)
+        {
+            desktop = true;
+        }
+
+
         // Guns initialization
         guns = new PlayerGuns();
         availableGuns = new bool[guns.getGuns().Length];
@@ -76,11 +90,13 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay.SetActive(false);
 
         // Display cursor
-        cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
-        Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+        if (desktop) { 
+            cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
+            Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
+        }
 
         // Init guns in mobile
-        if (Application.isMobilePlatform)
+        if (!desktop)
         {
             InitGunsMobile();
         }
@@ -231,7 +247,8 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
-                Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+                if (desktop)
+                    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
                 // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque debería llamarse mejor al finalizar la animación)
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS MÁS ARRIBA)
@@ -245,7 +262,8 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
-                Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+                if (desktop)
+                    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
                 return;
@@ -264,7 +282,8 @@ public class ShootSystem : MonoBehaviour
     }
 
     public void ChangeCursorBack() {
-        Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.Auto);
+        if (desktop)
+            Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     private void InitGunsMobile() {
