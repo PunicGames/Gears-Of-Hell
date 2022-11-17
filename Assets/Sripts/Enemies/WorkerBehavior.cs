@@ -9,6 +9,8 @@ public class WorkerBehavior : MonoBehaviour
 
     [SerializeField] float timeBetweenAttacks;
     [SerializeField] int attackDamage = 10;
+    [SerializeField] float attack1Speed = 1;
+    [SerializeField] float attack2Speed = 1;
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
 
     private Animator animator;
@@ -93,7 +95,10 @@ public class WorkerBehavior : MonoBehaviour
     {
         weaponCollider.enabled = false;
     }
-
+    public void ResetAnimatorSpeed()
+    {
+        animator.speed = 1;
+    }
 
     IEnumerator AttackCooldown()
     {
@@ -106,14 +111,17 @@ public class WorkerBehavior : MonoBehaviour
                 switch (r)
                 {
                     case 0:
+                        animator.speed = attack1Speed;
                         animator.SetFloat("attack_type", 0);
                         break;
                     case 2:
+                        animator.speed = attack2Speed;
                         animator.SetFloat("attack_type", 1);
                         break;
 
                 }
             }
+            animator.speed = attack1Speed;
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(timeBetweenAttacks);
         }

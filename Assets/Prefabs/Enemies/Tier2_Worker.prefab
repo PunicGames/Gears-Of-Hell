@@ -660,6 +660,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 2
   attackDamage: 20
+  attack1Speed: 1.5
+  attack2Speed: 1.2
   weaponCollider: {fileID: 3113646754877747242}
   attackType: 0
   randomAttack: 0
@@ -741,7 +743,6 @@ MonoBehaviour:
   - {fileID: 1803976489694449513}
   - {fileID: 7451894289335677}
   - {fileID: 3833636119489297068}
-  waitTime: 0.08
 --- !u!1 &2236531451138121158
 GameObject:
   m_ObjectHideFlags: 0
