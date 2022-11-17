@@ -373,7 +373,7 @@ public class WorldGenerator : MonoBehaviour
     {
         Vector2 pos = new Vector2(position.x * cellScale.x, position.y * cellScale.y);
         Vector2 rndOffset = new Vector2(Random.Range((-cellScale.x / 2) + wallSize.x, (cellScale.x / 2) - wallSize.y), Random.Range((-cellScale.y / 2) + wallSize.x, (cellScale.y / 2) - wallSize.y));
-        GameObject obs = Instantiate(obstacles[0], new Vector3(pos.x + rndOffset.x, 0.0f, pos.y + rndOffset.y), Quaternion.identity);
+        GameObject obs = Instantiate(obstacles[Random.Range(0, obstacles.Length)], new Vector3(pos.x + rndOffset.x, 0.0f, pos.y + rndOffset.y), Quaternion.identity);
         obs.transform.Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
         return obs.transform;
 
