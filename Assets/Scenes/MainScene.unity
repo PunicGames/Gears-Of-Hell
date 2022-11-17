@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tier5_Worker
       objectReference: {fileID: 0}
+    - target: {fileID: 2140532941445721662, guid: 5e9ada390a3bbc3478f8ac50396d6ba5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9ada390a3bbc3478f8ac50396d6ba5, type: 3}
 --- !u!1001 &80335458
@@ -463,6 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   playerAnimator: {fileID: 0}
+  footSteps: {fileID: 0}
 --- !u!65 &278288688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -720,7 +725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2140532941445721662, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
@@ -896,6 +901,10 @@ PrefabInstance:
     - target: {fileID: 2124990719792774337, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_fontSizeBase
       value: 21.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261920680522879814, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8440183992955040711, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_text
@@ -1359,6 +1368,10 @@ PrefabInstance:
     - target: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
       propertyPath: m_Name
       value: Tier4_Worker
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7330653623977720479, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
       propertyPath: currentHealth
