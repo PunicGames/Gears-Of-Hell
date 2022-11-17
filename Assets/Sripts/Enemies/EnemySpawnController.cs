@@ -12,6 +12,8 @@ public class EnemySpawnController : MonoBehaviour
     [SerializeField] private GameObject[] tier1_Enemies;
     [SerializeField] private GameObject[] tier2_Enemies;
     [SerializeField] private GameObject[] tier3_Enemies;
+    [SerializeField] private GameObject[] tier4_Enemies;
+    [SerializeField] private GameObject[] tier5_Enemies;
     [SerializeField] private GameObject gameRegistry;
 
     private float tier1_spawnTime;

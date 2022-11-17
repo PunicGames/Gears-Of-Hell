@@ -124,8 +124,10 @@ public class Health : MonoBehaviour
         int minutes = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().minutes;
         int seconds = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().seconds;
         GameObject.Find("InGameUI").GetComponent<GestorUIinGame>().FinishGame(minutes, seconds);
+        GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().SetGameOverMusic();
         //Destroy(gameObject);
     }
+    
 
     public void UpdateLifeUI() {
         lifeScaler.localScale = new Vector3(currentHealth / maxHealth, 1, 1);
