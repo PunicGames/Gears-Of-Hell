@@ -112,13 +112,19 @@ public class Health : MonoBehaviour
 
         // Faltaría poner sistema de animaciones o audios, etc. Por eso está esto en un método a parte
 
-        Invoke("LoadMenu", 3);
+        // Finish walking sound
+        playerMovement.footSteps.Stop();
+
+        // Tiempo de espera para el menú de resumen
+        Invoke("LoadResume", 3);
     }
 
-    public void LoadMenu()
+    public void LoadResume()
     {
-        SceneManager.LoadScene("Menu");
-        Destroy(gameObject);
+        int minutes = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().minutes;
+        int seconds = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().seconds;
+        GameObject.Find("InGameUI").GetComponent<GestorUIinGame>().FinishGame(minutes, seconds);
+        //Destroy(gameObject);
     }
 
     public void UpdateLifeUI() {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GestorUIinGame : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GestorUIinGame : MonoBehaviour
     private GameObject mobileUI;
     [SerializeField]
     private GameObject shopUI;
+    [SerializeField]
+    private GameObject finPartida;
 
     private bool desktop = true;
 
@@ -52,12 +55,6 @@ public class GestorUIinGame : MonoBehaviour
 
     void Start()
     {
-        /*
-        if (!desktop) {
-            mobileUI.SetActive(true);
-        }
-        */
-
         // Cursor
         cursorHotSpot = new Vector2(0, 0);
     }
@@ -74,5 +71,21 @@ public class GestorUIinGame : MonoBehaviour
         Time.timeScale = 1.0f;
         shooping = false;
         GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
+    }
+
+    public void FinishGame(int min, int secs) {
+        Time.timeScale = 0.0f;
+
+        if (desktop)
+            mobileUI.SetActive(false);
+        else
+            desktopUI.SetActive(false);
+
+        finPartida.SetActive(true);
+
+        if(secs < 10)
+            GameObject.Find("TotalTime").GetComponent<TextMeshProUGUI>().text = min + " : 0" + secs;
+        else
+            GameObject.Find("TotalTime").GetComponent<TextMeshProUGUI>().text = min + " : " + secs;
     }
 }
