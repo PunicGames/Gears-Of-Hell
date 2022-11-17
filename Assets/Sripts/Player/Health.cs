@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
@@ -19,6 +19,7 @@ public class Health : MonoBehaviour
 
     // Display health
     private RectTransform lifeScaler;
+    private TextMeshProUGUI lifeText;
 
     // PopUp
     private PopUp popup;
@@ -27,6 +28,7 @@ public class Health : MonoBehaviour
     public delegate void TakeDamageDel();
 
     public TakeDamageDel takeDamage;
+
 
 
     private void Awake()
@@ -41,6 +43,8 @@ public class Health : MonoBehaviour
     private void Start()
     {
         lifeScaler = GameObject.Find("LifeScaler").GetComponent<RectTransform>();
+        lifeText = GameObject.Find("LifeCounter").GetComponent<TextMeshProUGUI>();
+        UpdateLifeUI();
     }
 
 
@@ -61,7 +65,7 @@ public class Health : MonoBehaviour
             currentHealth = 0;
 
 
-        lifeScaler.localScale = new Vector3(currentHealth / 100, 1, 1);
+        UpdateLifeUI();
 
         if (currentHealth <= 0 && !isDead)
         {
@@ -80,7 +84,7 @@ public class Health : MonoBehaviour
             popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.LIFE, true, 0.5f);
         }
 
-        lifeScaler.localScale = new Vector3(currentHealth/100, 1, 1);
+        UpdateLifeUI();
     }
 
     private void Death()
@@ -115,5 +119,10 @@ public class Health : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
         Destroy(gameObject);
+    }
+
+    public void UpdateLifeUI() {
+        lifeScaler.localScale = new Vector3(currentHealth / maxHealth, 1, 1);
+        lifeText.text = (int)currentHealth + " / " + maxHealth;
     }
 }

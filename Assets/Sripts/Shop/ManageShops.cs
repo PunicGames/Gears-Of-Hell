@@ -761,6 +761,7 @@ public class ManageShops : MonoBehaviour
             case 3:
                 player.GetComponentInChildren<PerksManager>().ActivateTacticVest();
                 player.GetComponent<CoinSystem>().SpendCoin(perkInitPrices[3]);
+                player.GetComponent<Health>().UpdateLifeUI();
                 perksUI[numPerksPurchased].sprite = spritesPerks[3];
                 break;
             case 4:
@@ -842,6 +843,7 @@ public class ManageShops : MonoBehaviour
                 if (player.GetComponent<CoinSystem>().totalCoinsInGame < tacticVestPrices[lvl]) return;
                 player.GetComponentInChildren<PerksManager>().UpgradeTacticVest();
                 player.GetComponent<CoinSystem>().SpendCoin(tacticVestPrices[lvl]);
+                player.GetComponent<Health>().UpdateLifeUI();
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
