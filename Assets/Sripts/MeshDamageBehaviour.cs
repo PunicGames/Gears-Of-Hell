@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class MeshDamageBehaviour : MonoBehaviour
 {
-    List<Material> mats = new List<Material>();
-    [SerializeField] float waitTime = 0.08f;
+   
+    [SerializeField] List<Renderer> renderers = new List<Renderer>();
+    float waitTime = 0.08f;
 
 
     void Start()
     {
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        foreach (var r in renderers)
-        {
-            mats.Add(r.material);
-        }
-
+       
         if (gameObject.tag == "Enemy")
             GetComponent<EnemyHealth>().takeDamage += ChangeColor;
         else
@@ -24,9 +20,9 @@ public class MeshDamageBehaviour : MonoBehaviour
     }
     void ChangeColor()
     {
-        foreach (var m in mats)
+        foreach (var r in renderers)
         {
-            m.color = new Color(1, 0, 0);
+            r.material.color = new Color(1, 0, 0);
         }
 
         StartCoroutine(ResetColor());
@@ -35,10 +31,10 @@ public class MeshDamageBehaviour : MonoBehaviour
     IEnumerator ResetColor()
     {
         yield return new WaitForSeconds(waitTime);
-        foreach (var m in mats)
+        foreach (var r in renderers)
         {
-            m.color = new Color(1, 1, 1);
+            r.material.color = new Color(1, 1, 1);
         }
-    }
 
+    }
 }
