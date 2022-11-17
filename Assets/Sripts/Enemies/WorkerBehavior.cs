@@ -9,7 +9,7 @@ public class WorkerBehavior : MonoBehaviour
 
     [SerializeField] float timeBetweenAttacks;
     [SerializeField] int attackDamage = 10;
-    [SerializeField] int numberOfAttacks = 1;
+    [SerializeField][Range(1,3)] int numberOfAttacks = 1;
     [SerializeField] float attack1Speed = 1;
     [SerializeField] float attack2Speed = 1;
     [SerializeField] float attack3Speed = 1;
