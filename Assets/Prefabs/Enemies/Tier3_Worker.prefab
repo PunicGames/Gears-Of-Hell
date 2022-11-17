@@ -607,11 +607,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 30
-  currentHealth: 30
-  scoreValue: 5
-  minScoreValue: 5
-  maxScoreValue: 10
+  startingHealth: 50
+  currentHealth: 50
+  scoreValue: 10
+  minScoreValue: 12
+  maxScoreValue: 18
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
   popupPosition: {fileID: 3603720825505649390}
   enemyType: 0
@@ -629,8 +629,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 2
   attackDamage: 30
+  numberOfAttacks: 2
   attack1Speed: 1.2
   attack2Speed: 1.2
+  attack3Speed: 1
   weaponCollider: {fileID: 9202156217422373328}
   attackType: 0
   randomAttack: 1

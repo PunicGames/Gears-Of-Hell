@@ -9,8 +9,10 @@ public class WorkerBehavior : MonoBehaviour
 
     [SerializeField] float timeBetweenAttacks;
     [SerializeField] int attackDamage = 10;
+    [SerializeField] int numberOfAttacks = 1;
     [SerializeField] float attack1Speed = 1;
     [SerializeField] float attack2Speed = 1;
+    [SerializeField] float attack3Speed = 1;
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
 
     private Animator animator;
@@ -19,7 +21,7 @@ public class WorkerBehavior : MonoBehaviour
     bool canAttack = true;
     bool attackRange = false;
     [SerializeField] public float attackType = 0;
-    [SerializeField] bool randomAttack =false;
+    [SerializeField] bool randomAttack = false;
 
     private void Start()
     {
@@ -106,7 +108,7 @@ public class WorkerBehavior : MonoBehaviour
         {
             if (randomAttack)
             {
-                int r = Random.Range(0, 1);
+                int r = Random.Range(0, numberOfAttacks);
                 //Randomly choose death animation type
                 switch (r)
                 {
@@ -114,14 +116,19 @@ public class WorkerBehavior : MonoBehaviour
                         animator.speed = attack1Speed;
                         animator.SetFloat("attack_type", 0);
                         break;
-                    case 2:
+                    case 1:
                         animator.speed = attack2Speed;
+                        animator.SetFloat("attack_type", 0.5f);
+                        break;
+                    case 2:
+                        animator.speed = attack3Speed;
                         animator.SetFloat("attack_type", 1);
                         break;
 
                 }
             }
-            animator.speed = attack1Speed;
+            else
+                animator.speed = attack1Speed;
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
