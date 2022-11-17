@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47839f688879beb4e885192687cc8c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   nCells: 20
   nGates: 0
   wallSize: {x: 1.5, y: 1.5}
@@ -54,11 +55,8 @@ MonoBehaviour:
   - {fileID: 6505218325808694531, guid: 3c923eaafb98e0e4c81327e3a8e7d669, type: 3}
   door_1:
   - {fileID: 6505218325808694531, guid: 8b16467e230b91144bd1209816f3b9cb, type: 3}
-  - {fileID: 6505218325808694531, guid: c48e04d76670a1a42be8b59466a1b022, type: 3}
-  - {fileID: 6505218325808694531, guid: f75439bf31cd22741beb94bd62921917, type: 3}
   door_2_1:
   - {fileID: 6505218325808694531, guid: 1f4230fd4f6f5a44a91e0a28ebac2cf8, type: 3}
-  - {fileID: 6505218325808694531, guid: d2fe11720d725bd418dfeecf769f8a20, type: 3}
   door_2_2:
   - {fileID: 6505218325808694531, guid: 1bf38d02da652f44dbec4246c9b07739, type: 3}
   door_3:
@@ -70,9 +68,25 @@ MonoBehaviour:
   gates:
   - {fileID: 6505218325808694531, guid: 3c2f11cba0ca20042a2b8749e215f816, type: 3}
   obstacles:
-  - {fileID: 2819038164688161236, guid: 07e934d8358882f46a1abae560b889c5, type: 3}
-  nShops: 3
+  - {fileID: 7126293510535426713, guid: ee7828a36a438e74285af921f0a7e035, type: 3}
+  - {fileID: 194613029423722368, guid: e82ec12c3c1445a4db490533ab95b9d5, type: 3}
+  - {fileID: 1258970761757476738, guid: 7868240e16c3df44e9351873e8794357, type: 3}
+  - {fileID: 6157212911822775566, guid: e9c64f42ba3883e4d91600bb714471cd, type: 3}
+  - {fileID: 4951839689923246903, guid: 4d3669cc664235a4ca2d4cb06ec8793c, type: 3}
+  - {fileID: 2354575763203046597, guid: f5cbdbc4f0062684494561a894a98a41, type: 3}
+  - {fileID: 2562240242946135283, guid: c8cef02d57ef29140b783759c2fcf586, type: 3}
+  - {fileID: 8271760229975335287, guid: 2c4226a3c3b3bbf4f9d6d311ba345a30, type: 3}
+  - {fileID: 1518265617077956317, guid: 982ef026d3560404dbe164cfe520d2e1, type: 3}
+  - {fileID: 5943189913811301960, guid: a30acdb7b2c742e45acbb914989ea29e, type: 3}
+  - {fileID: 3700683536498798879, guid: 9925292664397ed4db6207637c3c9df5, type: 3}
+  - {fileID: 4678877141788931931, guid: 6d64293eba366764abcb943851336e3c, type: 3}
+  - {fileID: 8574579574170338929, guid: 432a4d6515657db499d0489124e3ecda, type: 3}
+  - {fileID: 6745596596922479086, guid: 797924d3dd4e9854fa08d6363a031f44, type: 3}
+  - {fileID: 5093987469125956568, guid: d1485c87baf8f1043b0984b2495c8e21, type: 3}
+  - {fileID: 1819031590745360082, guid: fa39789b797e52c47944a6e24deaaf66, type: 3}
   shop: {fileID: 5403548014249073235, guid: 7541124c11da73c489736c8437988b5a, type: 3}
+  numberOfShops: 3
+  shopInterSpace: 4
   shops: []
 --- !u!114 &7912361067319672377
 MonoBehaviour:
