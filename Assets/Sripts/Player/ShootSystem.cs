@@ -65,6 +65,7 @@ public class ShootSystem : MonoBehaviour
             desktop = true;
         }
 
+        //desktop = false;
 
         // Guns initialization
         guns = new PlayerGuns();
