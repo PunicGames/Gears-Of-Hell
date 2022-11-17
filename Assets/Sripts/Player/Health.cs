@@ -29,14 +29,19 @@ public class Health : MonoBehaviour
 
     public TakeDamageDel takeDamage;
 
+    [SerializeField] private AudioClip healClip;
+    [SerializeField] private AudioClip deathClip;
+    [SerializeField] private AudioClip[] hurtClips;
 
+    [HideInInspector]
+    private AudioSource source;
 
     private void Awake()
     {
         playerMovement = GetComponent<Player>();
         popup = GetComponent<PopUp>();
         currentHealth = maxHealth;
-
+        source = GetComponents<AudioSource>()[2];
         electricBarrier = false;
     }
 
@@ -69,7 +74,11 @@ public class Health : MonoBehaviour
 
         if (currentHealth <= 0 && !isDead)
         {
+            PlaySound(deathClip);
             Death();
+        } else if (!isDead)
+        {
+            PlaySound(hurtClips[Random.Range(0, hurtClips.Length)]);
         }
     }
 
@@ -83,8 +92,14 @@ public class Health : MonoBehaviour
         {
             popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.LIFE, true, 0.5f);
         }
-
+        PlaySound(healClip);
         UpdateLifeUI();
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        source.clip = clip;
+        source.Play();
     }
 
     private void Death()

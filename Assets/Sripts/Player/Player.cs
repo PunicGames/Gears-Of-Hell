@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public Animator playerAnimator;
 
     [HideInInspector]
-    public AudioSource footSteps;
+    public AudioSource footSteps, hitmarker;
 
     private bool desktop = true;
 
@@ -44,7 +44,9 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         shootingSystem = GetComponentInChildren<ShootSystem>();
         playerAnimator = GetComponent<Animator>();
-        footSteps = GetComponent<AudioSource>();
+        var audioSources = GetComponents<AudioSource>();
+        footSteps = audioSources[0];
+        hitmarker = audioSources[1];
 
         // Others
         floorMask = LayerMask.GetMask("Floor");
@@ -158,6 +160,11 @@ public class Player : MonoBehaviour
             if (!footSteps.isPlaying)
                 footSteps.Play();
         }
+    }
+
+    public void PlayHitMarker() 
+    {
+        hitmarker.Play();
     }
 
     public void MobileMovement(Vector2 context)

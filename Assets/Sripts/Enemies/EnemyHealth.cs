@@ -49,6 +49,8 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= amount;
         Debug.Log("Vida enemigo: " + currentHealth);
 
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().PlayHitMarker();
+
         if (takeDamage != null)
             takeDamage();
 
