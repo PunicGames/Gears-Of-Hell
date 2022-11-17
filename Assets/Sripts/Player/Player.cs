@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
 
     public Animator playerAnimator;
 
-    private AudioSource footSteps;
+    [HideInInspector]
+    public AudioSource footSteps;
 
     private bool desktop = true;
 
