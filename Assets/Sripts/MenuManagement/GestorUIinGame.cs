@@ -25,6 +25,9 @@ public class GestorUIinGame : MonoBehaviour
     [SerializeField] private Texture2D cursorSprite;
     private Vector2 cursorHotSpot;
 
+    [SerializeField]
+    private TextMeshProUGUI shopCoins;
+
     private void Awake()
     {
         // Deteccion de dispositivo
@@ -63,6 +66,15 @@ public class GestorUIinGame : MonoBehaviour
         shopUI.SetActive(true);
         Time.timeScale = 0.0f;
         shooping = true;
+
+        if(desktop)
+            desktopUI.SetActive(false);
+        else
+            mobileUI.SetActive(false);
+
+        shopCoins.text = GameObject.FindGameObjectWithTag("Player").GetComponent<CoinSystem>().totalCoinsInGame.ToString();
+
+        // Cursor
         //if (desktop)
         //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
@@ -71,6 +83,13 @@ public class GestorUIinGame : MonoBehaviour
         shopUI.SetActive(false);
         Time.timeScale = 1.0f;
         shooping = false;
+
+        if(desktop)
+            desktopUI.SetActive(true);
+        else
+            mobileUI.SetActive(true);
+
+        // Cursor
         //if(desktop)
         //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }

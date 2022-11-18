@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ManageShops : MonoBehaviour
 {
@@ -76,6 +77,9 @@ public class ManageShops : MonoBehaviour
 
     // Player reference
     private GameObject player;
+
+    // Coin displayer in shop
+    [SerializeField]private TextMeshProUGUI shopCoins;
 
     private void Start()
     {
@@ -612,6 +616,7 @@ public class ManageShops : MonoBehaviour
 
             // Le quitamos el dinero
             player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[0]]);
+            shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString(); ;
             coinsText[0].text = "PURCHASED";
         }
         else if (numGunsGenerated == 0) // Se comprará munición
@@ -619,6 +624,7 @@ public class ManageShops : MonoBehaviour
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[0]];
             player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[0]].AddAmmo(ammoQ);
             player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[0]]);
+            shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString(); ;
         }
     }
     public void BuyGunAmmo2()
@@ -646,6 +652,7 @@ public class ManageShops : MonoBehaviour
 
             player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[1]);
             player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[1]]);
+            shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString();
             coinsText[1].text = "PURCHASED";
         }
         else // Se compra munición 
@@ -653,6 +660,7 @@ public class ManageShops : MonoBehaviour
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[1]];
             player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[1]].AddAmmo(ammoQ);
             player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[1]]);
+            shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString();
         }
     }
     public void BuyGunAmmo3()
@@ -680,6 +688,7 @@ public class ManageShops : MonoBehaviour
 
             player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[2]);
             player.GetComponent<CoinSystem>().SpendCoin(gunPrices[gunsAmmoGeneratedIndexes[2]]);
+            shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString(); ;
             coinsText[2].text = "PURCHASED";
         }
         else // Se compra munición
@@ -688,6 +697,7 @@ public class ManageShops : MonoBehaviour
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[2]];
             player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[2]].AddAmmo(ammoQ);
             player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[2]]);
+            shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString(); ;
         }
     }
     public void BuyNewOldPerk1()
@@ -787,6 +797,8 @@ public class ManageShops : MonoBehaviour
             default:
                 break;
         }
+
+        shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString();
 
         coinsText[3 + place].text = "PURCHASED";
         perksUI[numPerksPurchased].color += new Color(0, 0, 0, 1);
@@ -912,5 +924,6 @@ public class ManageShops : MonoBehaviour
         titleText[place + 3].text = tT;
         displaysPerks[place].sprite = spritesPerks[perksNewOldGeneratedIndexes[place]];
         coinsText[place + 3].text = cT;
+        shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString();
     }
 }
