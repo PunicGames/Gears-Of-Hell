@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -20,6 +21,10 @@ public class MainMenu : MonoBehaviour
 
     // Platform control 
     private bool desktop;
+
+    // Progress ui
+    [SerializeField] private GameObject loaderUI;
+    [SerializeField] private Slider progressSlider;
 
     private void Awake()
     {
@@ -41,7 +46,7 @@ public class MainMenu : MonoBehaviour
     }
 
     public void PlayGame() {
-        SceneManager.LoadScene("MainScene");
+        StartCoroutine(LoadScene_Coroutine());
     }
 
     public void SelectJacob()
@@ -83,5 +88,23 @@ public class MainMenu : MonoBehaviour
     public void OptionsToMenu()
     {
         characters[selectedCharacter].SetActive(true);
+    }
+
+    private IEnumerator LoadScene_Coroutine() {
+        progressSlider.value = 0;
+        loaderUI.SetActive(true);
+
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("MainScene");
+        asyncOperation.allowSceneActivation = false;
+        float progress = 0;
+        while (!asyncOperation.isDone) {
+            progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
+            progressSlider.value = progress;
+            if (progress >= 0.9f) {
+                progressSlider.value = 1;
+                asyncOperation.allowSceneActivation = true;
+            }
+            yield return null;
+        }
     }
 }
