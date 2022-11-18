@@ -90,9 +90,10 @@ public class Health : MonoBehaviour
         }
         else
         {
+            PlaySound(healClip);
             popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.LIFE, true, 0.5f);
         }
-        PlaySound(healClip);
+        
         UpdateLifeUI();
     }
 
