@@ -37,6 +37,10 @@ public class AudioManager : MonoBehaviour
     {
         sounds[idx].PlaySecundary();
     }
+    public void PlayLaser(int idx)
+    {
+        sounds[idx].PlayLaser();
+    }
 
     public static float getGeneralVolume()
     {
