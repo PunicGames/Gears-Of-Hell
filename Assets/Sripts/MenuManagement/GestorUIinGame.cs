@@ -63,16 +63,16 @@ public class GestorUIinGame : MonoBehaviour
         shopUI.SetActive(true);
         Time.timeScale = 0.0f;
         shooping = true;
-        if (desktop)
-            Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
+        //if (desktop)
+        //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     public void HideShop() { 
         shopUI.SetActive(false);
         Time.timeScale = 1.0f;
         shooping = false;
-        if(desktop)
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
+        //if(desktop)
+        //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }
 
     public void FinishGame(int min, int secs) {

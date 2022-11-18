@@ -1567,6 +1567,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 708468633105597309, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5048725444850633134, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8607388110424686180, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_Name
       value: InGameUI
@@ -3484,6 +3492,7 @@ MonoBehaviour:
   speed: 6
   playerAnimator: {fileID: 0}
   footSteps: {fileID: 0}
+  hitmarker: {fileID: 0}
 --- !u!4 &7311551715173160390
 Transform:
   m_ObjectHideFlags: 0
@@ -3794,6 +3803,9 @@ MonoBehaviour:
   damageColor: {r: 1, g: 0, b: 0, a: 0.1}
   electricBarrier: 0
   popupPosition: {fileID: 0}
+  healClip: {fileID: 0}
+  deathClip: {fileID: 0}
+  hurtClips: []
 --- !u!4 &7736355888692817724
 Transform:
   m_ObjectHideFlags: 0

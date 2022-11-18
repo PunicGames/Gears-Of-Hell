@@ -91,10 +91,10 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay.SetActive(false);
 
         // Display cursor
-        if (desktop) { 
-            cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
-            Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
-        }
+        //if (desktop) { 
+        //    cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
+        //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
+        //}
 
         // Init guns in mobile
         if (!desktop)
@@ -248,8 +248,10 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
-                if (desktop)
-                    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
+
+                //if (desktop)
+                //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
+
                 // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque debería llamarse mejor al finalizar la animación)
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS MÁS ARRIBA)
@@ -263,8 +265,10 @@ public class ShootSystem : MonoBehaviour
             {
                 meshFilter.sharedMesh = weapon_meshes[i];
                 selectedGun = i;
-                if (desktop)
-                    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
+
+                //if (desktop)
+                //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
+                
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
                 return;
@@ -283,8 +287,8 @@ public class ShootSystem : MonoBehaviour
     }
 
     public void ChangeCursorBack() {
-        if (desktop)
-            Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
+        //if (desktop)
+        //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     private void InitGunsMobile() {
