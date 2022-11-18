@@ -146,18 +146,13 @@ public class EnemySpawnController : MonoBehaviour
     // Every time we want to increase the Tier, we will add enemies of higher tiers. And as we progress we will remove those enemies that are at very low levels.
     public void TierIncrement()
     {
-        tierCounter++;
+        var aux = tierCounter + 1;
 
         // Add new Tier
-        if (tierCounter < tierList.Length)
-        {
-            tierAtUse.Add(tierList[tierCounter]);
+        if (aux < tierList.Length)
+            tierCounter = aux;
 
-            // Remove older tiers
-            var candidate = tierCounter - 2;
-            if (candidate >= 0)
-                tierAtUse.Add(tierList[candidate]);
-        }
+        tierAtUse = tierList[tierCounter];
     }
 
     // Return the cell where the player is

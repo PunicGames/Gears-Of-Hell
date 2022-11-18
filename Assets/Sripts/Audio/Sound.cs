@@ -8,6 +8,7 @@ public class Sound
     public string name;
     public AudioClip[] clips;
     public AudioClip secundary;
+    public AudioClip laser;
 
     [Range(0f, 1f)]
     public float volume;
@@ -26,6 +27,12 @@ public class Sound
     public void PlaySecundary() 
     {
         source.clip = secundary;
-        source?.Play();
+        source.Play();
+    }
+
+    public void PlayLaser() 
+    {
+        source.clip = laser;
+        source.Play();
     }
 }

@@ -29,9 +29,9 @@ public class Tier
         if (value < prob_melee)
             return melee[Random.Range(0, melee.Count)];
         else if (value < (prob_melee + prob_ranged))
-            return ranged[Random.Range(0, melee.Count)];
+            return ranged[Random.Range(0, ranged.Count)];
         else
-            return special[Random.Range(0, melee.Count)];
+            return special[Random.Range(0, special.Count)];
 
     }
 

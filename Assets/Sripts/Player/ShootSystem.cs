@@ -36,7 +36,7 @@ public class ShootSystem : MonoBehaviour
     private GameObject rechargingDisplay;
 
     //Perks Modifies
-    [HideInInspector]
+    //[HideInInspector]
     public bool laserShot;
     [HideInInspector]
     public bool bigShot;
@@ -139,7 +139,7 @@ public class ShootSystem : MonoBehaviour
     {
         if (shooting) { // Shooting ayuda para controlar las balas de las armas automáticas de la función Invoke del final de este método. Evita que se disparen balas indeseadas
             readyToShoot = false;
-            audioManager.Play(selectedGun);
+            
 
             // Se calcula la dirección y origen del disparo
             Vector3 origin = transform.position;
@@ -169,6 +169,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetShootSystem(this);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     currentBullet.transform.localScale *= scaleFactor;
+                    audioManager.PlayLaser(selectedGun);
                 }
                 else
                 {
@@ -181,6 +182,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetShootSystem(this);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     currentBullet.transform.localScale *= scaleFactor;
+                    audioManager.Play(selectedGun);
                 }
 
                 guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
