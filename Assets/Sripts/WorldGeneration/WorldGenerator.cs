@@ -233,6 +233,18 @@ public class WorldGenerator : MonoBehaviour
             obs.GetComponent<Shop>().active = false;
             shops.Add(obs);
         }
+
+        var obsPos = new List<Vector2Int>(blueprint.Keys);
+
+        foreach (var pos in shopPositions)
+            obsPos.Remove(pos);
+
+        foreach (var pos in obsPos)
+            if (flipCoin())
+                SpawnObstacle(pos).parent = transform;
+            
+                
+        
     }
 
     private bool flipCoin()
@@ -317,10 +329,6 @@ public class WorldGenerator : MonoBehaviour
         cell.transform.parent = transform;
         cell.name = "Cell: ( " + position.x.ToString() + ", "+ position.y.ToString() + ") -\t" + doors.ToString();
 
-        if (flipCoin())
-            SpawnObstacle(position).parent = cell.transform;
-        
-
         spawnedCells.AddLast(cell);
     }
 
@@ -371,8 +379,9 @@ public class WorldGenerator : MonoBehaviour
 
     private Transform SpawnObstacle(Vector2Int position)
     {
-        Vector2 pos = new Vector2(position.x * cellScale.x, position.y * cellScale.y);
+        Vector2 pos = position * cellScale;
         Vector2 rndOffset = new Vector2(Random.Range((-cellScale.x / 2) + wallSize.x, (cellScale.x / 2) - wallSize.y), Random.Range((-cellScale.y / 2) + wallSize.x, (cellScale.y / 2) - wallSize.y));
+        //GameObject obs = Instantiate(obstacles[0], new Vector3(pos.x + rndOffset.x, 0.0f, pos.y + rndOffset.y), Quaternion.identity);
         GameObject obs = Instantiate(obstacles[Random.Range(0, obstacles.Length)], new Vector3(pos.x + rndOffset.x, 0.0f, pos.y + rndOffset.y), Quaternion.identity);
         obs.transform.Rotate(Vector3.up, Random.Range(0.0f, 359.9f));
         return obs.transform;

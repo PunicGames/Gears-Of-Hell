@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 1371193911229381657}
   m_LocalRotation: {x: -0.6532815, y: 0.27059802, z: 0.27059802, w: 0.6532815}
   m_LocalPosition: {x: -1.3800001, y: 0, z: -0.77}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6257466848172157780}
   m_RootOrder: 0
@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7851252127451945615}
   - component: {fileID: 8582690704527382099}
   - component: {fileID: 3193690199277943448}
+  - component: {fileID: 1266906089122201473}
   m_Layer: 0
   m_Name: cinta transportadora
   m_TagString: Untagged
@@ -110,8 +111,8 @@ Transform:
   m_GameObject: {fileID: 2211811731042014187}
   m_LocalRotation: {x: -0.6532815, y: 0.27059802, z: 0.27059802, w: 0.6532815}
   m_LocalPosition: {x: -1.3800001, y: 0, z: -0.77}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6257466848172157780}
   m_RootOrder: 1
@@ -166,6 +167,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1266906089122201473
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2211811731042014187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 67104297402924119, guid: b0c3ee5b41d6de44a829c7fa84da14c0, type: 3}
 --- !u!1 &6745596596922479086
 GameObject:
   m_ObjectHideFlags: 0
