@@ -9,21 +9,17 @@ public class EnemySpawnController : MonoBehaviour
 
     public int EnemiesOnScene => GameObject.FindGameObjectsWithTag("Enemy").Length;
 
-    [SerializeField] private GameObject[] tier1_Enemies;
-    [SerializeField] private GameObject[] tier2_Enemies;
-    [SerializeField] private GameObject[] tier3_Enemies;
-    [SerializeField] private GameObject[] tier4_Enemies;
-    [SerializeField] private GameObject[] tier5_Enemies;
     [SerializeField] private GameObject gameRegistry;
 
-    private float tier1_spawnTime;
-    private float tier2_spawnTime;
-    private float tier3_spawnTime;
-    private float timeZero;
-    private bool tier1_spawning;
-    private bool tier2_spawning;
-    private bool tier3_spawning;
 
+    private int tierCounter= 0;
+    private Tier tierAtUse;
+    public Tier[] tierList;
+
+    private float spawnTime;
+    private bool spawning;
+
+    [Header("Parameters")]
     [SerializeField] private int spawnDistance;
     [SerializeField] private int maxEnemiesAtSameTime;
     [SerializeField] private int minEnemiesAtSameTime;
@@ -33,13 +29,12 @@ public class EnemySpawnController : MonoBehaviour
 
     public void Awake()
     {
-        tier1_spawning = false;
-        tier2_spawning = false;
-        tier3_spawning = false;
+        spawning = false;
+        tierAtUse = tierList[0];
 
-        tier1_spawnTime = Time.time + 5f;//primer respawn de enemigo
-        tier2_spawnTime = Time.time + 60f;
-        tier3_spawnTime = Time.time + 120f;
+        spawnTime = Time.time + 5f;//primer respawn de enemigo
+        //tier2_spawnTime = Time.time + 60f;
+        //tier3_spawnTime = Time.time + 120f;
         timeScript = gameRegistry.GetComponent<GameRegistry>();
         nTicks = 0;
     }
@@ -56,17 +51,17 @@ public class EnemySpawnController : MonoBehaviour
 
     private void SpawnLoop()
     {
-        if (tier1_spawning)
+        if (spawning)
         {
             var max = MaxEnemiesOnScene();
-            print("max: " + max + "\nnEnemies: " + EnemiesOnScene);
+            print("TIER "+ tierCounter+"\nmax: " + max + "\nnEnemies: " + EnemiesOnScene);
             if (EnemiesOnScene < max)
                 SpawnEnemies(max - EnemiesOnScene);
             ResetTimer();
         }
         else
-            if (Time.time > tier1_spawnTime)
-            tier1_spawning = true;
+            if (Time.time > spawnTime)
+            spawning = true;
     }
 
     private void ResetTimer()
@@ -80,8 +75,8 @@ public class EnemySpawnController : MonoBehaviour
         var minSpawnDelay = aux * 0.8f;
         var maxSpawnDelay = aux * 1.2f;
 
-        tier1_spawnTime = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
-        tier1_spawning = false;
+        spawnTime = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
+        spawning = false;
         nTicks++;
     }
 
@@ -129,7 +124,6 @@ public class EnemySpawnController : MonoBehaviour
     }
     */
 
-
     private void SpawnEnemies(int n)
     {
         var index = GetPlayerV2IntPosition();
@@ -139,7 +133,8 @@ public class EnemySpawnController : MonoBehaviour
             var pick = candidates[Random.Range(0, candidates.Count)];
 
             //var enemy = tier1_Enemies[Random.Range(0, tier1_Enemies.Length)];
-            var enemy = GetEnemyToInstantiate();
+            //var enemy = GetEnemyToInstantiate();
+            var enemy = tierAtUse.GetRandomEnemy();
 
             Instantiate(enemy, new Vector3(pick.x * WorldGenerator.cellScale.x, 0.0f, pick.y * WorldGenerator.cellScale.y), Quaternion.identity);
             
@@ -148,12 +143,32 @@ public class EnemySpawnController : MonoBehaviour
         }
     }
 
+    // Every time we want to increase the Tier, we will add enemies of higher tiers. And as we progress we will remove those enemies that are at very low levels.
+    public void TierIncrement()
+    {
+        tierCounter++;
+
+        // Add new Tier
+        if (tierCounter < tierList.Length)
+        {
+            tierAtUse.Add(tierList[tierCounter]);
+
+            // Remove older tiers
+            var candidate = tierCounter - 2;
+            if (candidate >= 0)
+                tierAtUse.Add(tierList[candidate]);
+        }
+    }
+
+    // Return the cell where the player is
     private Vector2Int GetPlayerV2IntPosition()
     {
         var pl_pos = player.transform.position;
         return new Vector2Int(Mathf.RoundToInt(pl_pos.x / WorldGenerator.cellScale.x), Mathf.RoundToInt(pl_pos.z / WorldGenerator.cellScale.y));
     }
+    
 
+    // Return the number of max enemies that could be spawned
     private int MaxEnemiesOnScene()
     {
         //y = (((-(x^2)/2)+1 )/( (-(x^2)/2)-1))+1)/2
@@ -169,22 +184,6 @@ public class EnemySpawnController : MonoBehaviour
     public static int ManhathanDistance(Vector2Int a, Vector2Int b)
     {
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
-    }
-
-    private GameObject GetEnemyToInstantiate()
-    {
-        var n = Random.Range(0.0f, 1.0f);
-
-        if (n < 0.6f)
-        {
-            return tier1_Enemies[0];
-        } else if (n >= 0.6f && n < 0.8f)
-        {
-            return tier1_Enemies[1];
-        } else
-        {
-            return tier1_Enemies[2];
-        }
     }
 
 }
