@@ -78,7 +78,7 @@ public class EnemyHealth : MonoBehaviour
 
 
         NavMeshAgent navMov = GetComponent<NavMeshAgent>();
-        EnemiesMovement eM = GetComponent<EnemiesMovement>();
+        EnemyMovement eM = GetComponent<EnemyMovement>();
         WorkerBehavior mE = GetComponent<WorkerBehavior>();
         RangedEnemy rE = GetComponent<RangedEnemy>();
         if (eM != null)
