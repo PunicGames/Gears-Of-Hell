@@ -2360,6 +2360,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2087441411}
     m_Modifications:
+    - target: {fileID: 347340377, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000047683716
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176712926, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176712926, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305649571562970094, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305649571562970094, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1305649572546324397, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2367,6 +2387,10 @@ PrefabInstance:
     - target: {fileID: 1305649572855379326, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
       propertyPath: m_Name
       value: OptionsMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305649572855379326, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1305649572855379327, guid: 210021ed9cc8b3c43b39c621573e5ece, type: 3}
       propertyPath: m_Pivot.x
@@ -2730,7 +2754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1305649572855379326, guid: b98fa6223cc323b4f9e66442fdf3954d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1305649572855379327, guid: b98fa6223cc323b4f9e66442fdf3954d, type: 3}
       propertyPath: m_Pivot.x
@@ -4431,6 +4455,10 @@ PrefabInstance:
     - target: {fileID: 7347503040607930540, guid: 54a824d5653c6d246bfcc4206af5e219, type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347503040607930540, guid: 54a824d5653c6d246bfcc4206af5e219, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7347503040607930541, guid: 54a824d5653c6d246bfcc4206af5e219, type: 3}
       propertyPath: m_Pivot.x
