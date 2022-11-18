@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
         {
             playerAnimator.SetBool("isMoving", true);
             CachedMoveInput = context.ReadValue<Vector2>();
-            if (!footSteps.isPlaying)
+            if (!footSteps.mute && !footSteps.isPlaying )
                 footSteps.Play();
         }
     }
@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
             CachedMoveInput = context;
             if (context == Vector2.zero)
                 MobileResetMovement();
-            if (!footSteps.isPlaying && context!=Vector2.zero)
+            if (!footSteps.mute && !footSteps.isPlaying && context!=Vector2.zero)
                 footSteps.Play();
         }
     }
@@ -308,6 +308,8 @@ public class Player : MonoBehaviour
         {
             // Abrir tienda
             Debug.Log("Se abre la tienda");
+            GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().PlayShopMusic();
+
             CachedMoveInput = new Vector2(0.0f, 0.0f);
             uiGestor.ShowShop();
         }
