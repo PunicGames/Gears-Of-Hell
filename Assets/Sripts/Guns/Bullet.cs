@@ -9,6 +9,9 @@ public class Bullet : MonoBehaviour
     private int timeToDestroy = 3;
     [HideInInspector] public bool laserShot;
 
+    // Shoot System reference to update bullets record from player
+    private ShootSystem sS = null;
+
     // Bullet Shooted by
     public enum BulletOwner { PLAYER, ENEMY}
     public BulletOwner owner;
@@ -38,6 +41,10 @@ public class Bullet : MonoBehaviour
         laserShot = option;
     }
 
+    public void SetShootSystem(ShootSystem ss) {
+        sS = ss;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         switch (owner) {
@@ -49,12 +56,15 @@ public class Bullet : MonoBehaviour
                     if (enemyHealth != null)
                     {
                         enemyHealth.TakeDamage((int)damage);
-
+                        sS.numBulletsHit++;
                         if (!laserShot)
                         {
                             Destroy(gameObject);
                         }
                     }
+                }
+                else {
+                    sS.numBulletsMissed++;
                 }
                 break;
             case BulletOwner.ENEMY:

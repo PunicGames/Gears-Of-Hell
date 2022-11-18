@@ -104,6 +104,7 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
+        Debug.Log("LLEGA 1 ");
         isDead = true;
         int r = Random.Range(0, 2);
         //Randomly choose death animation type
@@ -136,9 +137,12 @@ public class Health : MonoBehaviour
 
     public void LoadResume()
     {
+        Debug.Log("LLEGA 2 ");
         int minutes = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().minutes;
         int seconds = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().seconds;
-        GameObject.Find("InGameUI").GetComponent<GestorUIinGame>().FinishGame(minutes, seconds);
+        int bulletsHit = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().numBulletsHit;
+        int bulletsMissed = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().numBulletsMissed;
+        GameObject.Find("InGameUI").GetComponent<GestorUIinGame>().FinishGame(minutes, seconds, bulletsHit, bulletsMissed);
         GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().SetGameOverMusic();
         //Destroy(gameObject);
     }
