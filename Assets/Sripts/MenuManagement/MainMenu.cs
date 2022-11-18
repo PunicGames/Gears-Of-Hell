@@ -15,7 +15,6 @@ public class MainMenu : MonoBehaviour
     private int previousSelected = 0;
 
     // Cursor
-    // Cursor
     [SerializeField] private Texture2D cursorSprite;
     private Vector2 cursorHotSpot;
 
@@ -37,8 +36,8 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         cursorHotSpot = new Vector2(0, 0);
-        if (desktop)
-            Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
+        //if (desktop)
+        //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     public void PlayGame() {
