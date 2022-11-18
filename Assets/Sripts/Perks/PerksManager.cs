@@ -106,7 +106,7 @@ public class PerksManager : MonoBehaviour
         InitializeMedicFactors();
         InitializeElectricBarrierFactors();
         InitializeGunsmithFactors();
-
+        ActivateElectricalBarrier();
     }
 
     ////////////////////////Initialize perks factors////////////////////////
