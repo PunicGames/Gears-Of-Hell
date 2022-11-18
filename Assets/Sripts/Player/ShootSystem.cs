@@ -53,6 +53,12 @@ public class ShootSystem : MonoBehaviour
     // Platform control
     private bool desktop;
 
+    // Bullets record
+    [HideInInspector] public float precision = 0f;
+    [HideInInspector] public int numBulletsHit = 0;
+    [HideInInspector] public int numBulletsMissed = 0;
+
+
     private void Awake()
     {
         // Platform
@@ -115,6 +121,7 @@ public class ShootSystem : MonoBehaviour
             else // En caso de ser la pistola
                 ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/9999";
         }
+
     }
 
     public void Shooting()
@@ -159,6 +166,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
                     bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
                     bulletParams.SetLaser(true);
+                    bulletParams.SetShootSystem(this);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     currentBullet.transform.localScale *= scaleFactor;
                 }
@@ -170,6 +178,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
                     bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
                     bulletParams.SetLaser(false);
+                    bulletParams.SetShootSystem(this);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     currentBullet.transform.localScale *= scaleFactor;
                 }

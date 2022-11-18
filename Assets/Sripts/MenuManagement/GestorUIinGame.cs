@@ -25,8 +25,14 @@ public class GestorUIinGame : MonoBehaviour
     [SerializeField] private Texture2D cursorSprite;
     private Vector2 cursorHotSpot;
 
+    // Shop display
     [SerializeField]
     private TextMeshProUGUI shopCoins;
+
+    // Resume game displays
+    [SerializeField] private TextMeshProUGUI bulletsHit;
+    [SerializeField] private TextMeshProUGUI bulletsMissed;
+    [SerializeField] private TextMeshProUGUI accuracy;
 
     private void Awake()
     {
@@ -94,7 +100,7 @@ public class GestorUIinGame : MonoBehaviour
         //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }
 
-    public void FinishGame(int min, int secs) {
+    public void FinishGame(int min, int secs, int bHit, int bMissed) {
         Time.timeScale = 0.0f;
 
         if (desktop)
@@ -104,9 +110,15 @@ public class GestorUIinGame : MonoBehaviour
 
         finPartida.SetActive(true);
 
+        // Display resume values
         if(secs < 10)
             GameObject.Find("TotalTime").GetComponent<TextMeshProUGUI>().text = min + " : 0" + secs;
         else
             GameObject.Find("TotalTime").GetComponent<TextMeshProUGUI>().text = min + " : " + secs;
+
+        bulletsHit.text = bHit.ToString();
+        bulletsMissed.text = bMissed.ToString();
+        float acc = ((float)bHit/((float)bHit + (float)bMissed))*100;
+        accuracy.text = System.Math.Round(acc, 2) + "%";
     }
 }
