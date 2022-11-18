@@ -73,11 +73,20 @@ public class Bullet : MonoBehaviour
 
                     // Quitamos vida al jugador
                     Health playerHealth = other.gameObject.GetComponent<Health>();
-                    if (playerHealth != null)
+
+                    if(playerHealth != null)
                     {
-                        playerHealth.TakeDamage(damage);
+                        if (playerHealth.electricBarrier)
+                        {
+                            other.GetComponentInChildren<ElectricBarrier>().ConsumeBarrier();
+                        }
+                        else
+                        {
+                            playerHealth.TakeDamage(damage);
+                        }
+                        Destroy(gameObject);
                     }
-                    Destroy(gameObject);
+                    
                 }
                 break;
             default:
