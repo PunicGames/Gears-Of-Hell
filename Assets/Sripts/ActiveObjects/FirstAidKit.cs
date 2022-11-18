@@ -15,6 +15,7 @@ public class FirstAidKit : MonoBehaviour
             if (healthScript != null)
             {
                 healthScript.currentHealth = healthScript.maxHealth;
+                healthScript.UpdateLifeUI();
                 smr.enabled = false;
                 ps.Play();
                 Invoke("AuxDestroy", ps.main.duration);

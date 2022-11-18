@@ -614,6 +614,10 @@ MonoBehaviour:
   maxScoreValue: 8
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
   popupPosition: {fileID: 7425483053707239458}
+  itemsRatio: 0.4
+  items:
+  - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
+  - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 0
 --- !u!114 &6014481276430231423
 MonoBehaviour:
@@ -629,8 +633,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 1.5
   attackDamage: 10
+  numberOfAttacks: 1
   attack1Speed: 2.2
   attack2Speed: 1.2
+  attack3Speed: 1
   weaponCollider: {fileID: 3243473412370746670}
   attackType: 0
   randomAttack: 0
