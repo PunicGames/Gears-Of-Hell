@@ -379,6 +379,10 @@ MonoBehaviour:
   maxScoreValue: 13
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
   popupPosition: {fileID: 2145997274644605940}
+  itemsRatio: 0.5
+  items:
+  - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
+  - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 1
 --- !u!136 &4597903607373781857
 CapsuleCollider:
@@ -541,7 +545,6 @@ MonoBehaviour:
   - {fileID: 287814280246875788}
   - {fileID: 7760186890388266470}
   - {fileID: 4255873936731710095}
-  waitTime: 0.08
 --- !u!1 &1639239646711664052
 GameObject:
   m_ObjectHideFlags: 0

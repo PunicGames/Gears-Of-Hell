@@ -32,9 +32,11 @@ public class Medic : MonoBehaviour
 
     private void MedicHeal()
     {
+        if(healthScript.currentHealth < healthScript.maxHealth)
+        {
+            float lifeHealed = healthScript.maxHealth / 100 * healPercentAmount;
+            healthScript.Heal(lifeHealed);
+        }
 
-        float lifeHealed = healthScript.maxHealth / 100 * healPercentAmount;
-        healthScript.Heal(lifeHealed);
-        //print(healthScript.currentHealth);
     }
 }
