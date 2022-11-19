@@ -16,6 +16,8 @@ public class Bullet : MonoBehaviour
     public enum BulletOwner { PLAYER, ENEMY}
     public BulletOwner owner;
 
+    private List<GameObject> alreadyHitted = new List<GameObject>();
+
     private void Awake()
     {
         rb = transform.GetComponent<Rigidbody>();
@@ -53,7 +55,7 @@ public class Bullet : MonoBehaviour
                 {
                     // Quitamos vida al enemigo
                     EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-                    if (enemyHealth != null)
+                    if ((enemyHealth != null) && (!alreadyHitted.Contains(other.gameObject)))
                     {
                         enemyHealth.TakeDamage((int)damage);
                         sS.numBulletsHit++;
@@ -62,6 +64,9 @@ public class Bullet : MonoBehaviour
                             Destroy(gameObject);
                         }
                     }
+
+                    alreadyHitted.Add(other.gameObject);
+
                 }
                 else {
                     sS.numBulletsMissed++;
@@ -74,7 +79,7 @@ public class Bullet : MonoBehaviour
                     // Quitamos vida al jugador
                     Health playerHealth = other.gameObject.GetComponent<Health>();
 
-                    if(playerHealth != null)
+                    if((playerHealth != null) && (!alreadyHitted.Contains(other.gameObject)))
                     {
                         if (playerHealth.electricBarrier)
                         {
@@ -86,7 +91,9 @@ public class Bullet : MonoBehaviour
                         }
                         Destroy(gameObject);
                     }
-                    
+
+                    alreadyHitted.Add(other.gameObject);
+
                 }
                 break;
             default:
