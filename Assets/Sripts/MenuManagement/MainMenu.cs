@@ -49,25 +49,7 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(LoadScene_Coroutine());
     }
 
-    public void SelectJacob()
-    {
-        characters[1].SetActive(false);
-        selectedCharacter = 0;
-        PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
-        characters[0].SetActive(true);
-        characters[0].transform.rotation = characters[previousSelected].transform.rotation;
-        previousSelected = 0;
-    }
-
-    public void SelectBrenda()
-    {
-        characters[1].SetActive(true);
-        selectedCharacter = 1;
-        PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
-        characters[0].SetActive(false);
-        characters[1].transform.rotation = characters[previousSelected].transform.rotation;
-        previousSelected = 1;
-    }
+    
 
     public void MenuToSelector() {
         //characters[selectedCharacter].SetActive(true);
@@ -106,5 +88,58 @@ public class MainMenu : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+
+
+    // ---------- CHARACTERS SELECTOR IN BESTIARY --------------
+    //public void SelectJacob()
+    //{
+    //    characters[1].SetActive(false);
+    //    selectedCharacter = 0;
+    //    PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
+    //    characters[0].SetActive(true);
+    //    characters[0].transform.rotation = characters[previousSelected].transform.rotation;
+    //    previousSelected = 0;
+    //}
+
+    //public void SelectBrenda()
+    //{
+    //    characters[1].SetActive(true);
+    //    selectedCharacter = 1;
+    //    PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
+    //    characters[0].SetActive(false);
+    //    characters[1].transform.rotation = characters[previousSelected].transform.rotation;
+    //    previousSelected = 1;
+    //}
+
+    public void SelectJacob() {
+        characters[previousSelected].SetActive(false);
+        characters[0].SetActive(true);
+        characters[0].transform.rotation = characters[previousSelected].transform.rotation;
+        previousSelected = 0;
+    }
+
+    public void SelectGunnerTier2() {
+        characters[previousSelected].SetActive(false);
+        characters[2].SetActive(true);
+        characters[2].transform.rotation = characters[previousSelected].transform.rotation;
+        previousSelected = 2;
+    }
+
+    public void SelectGunslingerTier2()
+    {
+        characters[previousSelected].SetActive(false);
+        characters[3].SetActive(true);
+        characters[3].transform.rotation = characters[previousSelected].transform.rotation;
+        previousSelected = 3;
+    }
+
+    public void SelectWorkerTier2()
+    {
+        characters[previousSelected].SetActive(false);
+        characters[4].SetActive(true);
+        characters[4].transform.rotation = characters[previousSelected].transform.rotation;
+        previousSelected = 4;
     }
 }
