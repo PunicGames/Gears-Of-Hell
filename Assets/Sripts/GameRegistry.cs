@@ -85,7 +85,7 @@ public class GameRegistry : MonoBehaviour
                 idx = Random.Range(0, wgScript.shops.Count);
             }
         }
-        GameObject.Find("WorldGenerator").GetComponent<EnemySpawnController>().TierIncrement();
         shopManager.GetComponent<ManageShops>().RefreshShop();
+        //GameObject.Find("WorldGenerator").GetComponent<EnemySpawnController>().TierIncrement();
     }
 }

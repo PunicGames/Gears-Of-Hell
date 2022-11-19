@@ -270,11 +270,13 @@ public class ManageShops : MonoBehaviour
         // -------------------------------------------------------------------//
         // PERKS/VENTAJAS
         // -------------------------------------------------------------------//
+
         int numPerksHasPlayer = 0;
         bool[] playerPerks = player.GetComponentInChildren<PerksManager>().availablePerks;
         int[] playerPerkLevels = player.GetComponentInChildren<PerksManager>().perkLevels;
         for (int i = 0; i < playerPerks.Length; i++)
         {
+            Debug.Log(playerPerks[i]);
             if (playerPerks[i])
             {
                 numPerksHasPlayer++;
@@ -501,15 +503,18 @@ public class ManageShops : MonoBehaviour
             }
 
             // Se generan las ventajas que no estén al máximo nivel
+            bool[] generatedPerks = new bool[playerPerks.Length];
+
             if (numPerksNotMaxLevel != 0) { 
                 bool generated = false;
                 for (int i = 0; i < numPerksNotMaxLevel; i++) {
                     generated = false;
                     while (!generated) {
                         int idx = Random.Range(0, playerPerks.Length);
-                        if (playerPerks[idx] && (playerPerkLevels[idx] != 4)) { 
+                        if (playerPerks[idx] && (playerPerkLevels[idx] != 4) && !generatedPerks[idx]) { 
                             generated = true;
                             indexes.Add(idx);
+                            generatedPerks[idx] = true;
                         }
                     }
                 }

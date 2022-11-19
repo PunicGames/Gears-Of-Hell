@@ -308,7 +308,7 @@ public class Player : MonoBehaviour
         {
             // Abrir tienda
             Debug.Log("Se abre la tienda");
-            GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().PlayShopMusic();
+            //GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().PlayShopMusic();
 
             CachedMoveInput = new Vector2(0.0f, 0.0f);
             uiGestor.ShowShop();
@@ -329,7 +329,7 @@ public class Player : MonoBehaviour
             playerInputActions.Player.Movement.performed += Movement;
             playerInputActions.Player.Movement.canceled += ResetMovement;
             playerInputActions.Player.Aim.performed += MousePosition;
-            playerInputActions.Player.Esc.performed += PauseMenuCall;
+            playerInputActions.Player.Pause.performed += PauseMenuCall;
             playerInputActions.Player.Recharge.performed += ReloadGun;
             playerInputActions.Player.SwapGun.performed += SwapGun;
             playerInputActions.Player.Shop.performed += OpenShop;
@@ -345,7 +345,7 @@ public class Player : MonoBehaviour
             //playerInputActions.Player.MobileAim.canceled += ResetAim;
             playerInputActions.Player.Recharge.performed += ReloadGun;
             playerInputActions.Player.SwapGun.performed += SwapGun;
-            playerInputActions.Player.Esc.performed += PauseMenuCall;
+            playerInputActions.Player.Pause.performed += PauseMenuCall;
             playerInputActions.Player.Shop.performed += OpenShop;
         }
     }
@@ -359,7 +359,7 @@ public class Player : MonoBehaviour
             playerInputActions.Player.Movement.performed -= Movement;
             playerInputActions.Player.Movement.canceled -= ResetMovement;
             playerInputActions.Player.Aim.performed -= MousePosition;
-            playerInputActions.Player.Esc.performed -= PauseMenuCall;
+            playerInputActions.Player.Pause.performed -= PauseMenuCall;
             playerInputActions.Player.Recharge.performed -= ReloadGun;
             playerInputActions.Player.SwapGun.performed -= SwapGun;
             playerInputActions.Player.Shop.performed -= OpenShop;
@@ -372,7 +372,7 @@ public class Player : MonoBehaviour
             //playerInputActions.Player.MobileAim.canceled -= ResetAim;
             playerInputActions.Player.Recharge.performed -= ReloadGun;
             playerInputActions.Player.SwapGun.performed -= SwapGun;
-            playerInputActions.Player.Esc.performed -= PauseMenuCall;
+            playerInputActions.Player.Pause.performed -= PauseMenuCall;
             playerInputActions.Player.Shop.performed -= OpenShop;
         }
     }
