@@ -21,7 +21,14 @@ public class RapidFire : MonoBehaviour
     {
         if (shootScript != null)
         {
-            shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots /= bufAttackSpeed;
+            //shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots /= bufAttackSpeed;
+
+            var aux = shootScript.guns.getGuns();
+
+            foreach (Gun g in aux)
+            {
+                g.timeBetweenShots /= bufAttackSpeed;
+            }
         }
         
     }
@@ -30,7 +37,15 @@ public class RapidFire : MonoBehaviour
     {
         if (shootScript != null)
         {
-            shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots = defAttackSpeed;
+            //shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots = defAttackSpeed;
+
+            var aux = shootScript.guns.getGuns();
+
+            foreach (Gun g in aux)
+            {
+                g.timeBetweenShots = defAttackSpeed;
+            }
+
         }
             
     }
