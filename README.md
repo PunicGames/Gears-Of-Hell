@@ -65,6 +65,12 @@
   <p align="center"> 
   
  ![render_Main Camera_013](https://user-images.githubusercontent.com/79087129/201485159-c2aa9b20-1060-47e5-9a3f-89b9d7e42567.png)
+ 
+ ![assaultRifle](https://user-images.githubusercontent.com/79087129/202876248-9b0e6ed1-75b1-4211-aab2-c03930f4ea05.png)
+ 
+ ![sniper](https://user-images.githubusercontent.com/79087129/202876251-2ef7333a-bf0b-433d-9690-6d19e0b0973c.png)
+ 
+![submachineGun](https://user-images.githubusercontent.com/79087129/202876253-8daee343-339b-412c-b141-6108baf4dd1a.png)
 
 ![render_Camera 6](https://user-images.githubusercontent.com/79087129/198837512-cebe2fbe-d1e8-402e-a7c2-315198bd093d.png)
 
