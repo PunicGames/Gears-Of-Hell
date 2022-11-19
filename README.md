@@ -50,6 +50,13 @@
 
 ![render_Main Camera_010](https://user-images.githubusercontent.com/79087129/201485131-4389bd40-5c12-4998-87fe-28a894778cd0.png)
 
+![tier4](https://user-images.githubusercontent.com/79087129/202856038-c3515ed6-1234-4ff2-850d-44e46430f9d6.png)
+
+![foreman](https://user-images.githubusercontent.com/79087129/202856043-31712e75-719f-4127-9a53-25695eb686ed.png)
+
+![eorker_TIER5](https://user-images.githubusercontent.com/79087129/202856047-d95ee94e-7af7-474b-ac33-853e3b068a79.png)
+
+
 
 </p>
 <H2 ALIGN="CENTER">GET TO KNOW THE WEAPONS</H2>
