@@ -73,7 +73,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Esc"",
+                    ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""7d08441e-4ea1-4400-a542-928277a3fd6b"",
                     ""expectedControlType"": ""Button"",
@@ -190,11 +190,22 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ddb44cc3-486e-4f14-8222-ce4f3c614e02"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Esc"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c116be9-449e-4c97-849f-32171f1db59c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -244,8 +255,19 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""800fe2d0-8a50-40e5-92e9-a5f14b4f560b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapGun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f70bc380-3b24-4c2e-9ea1-170dd54fba85"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -265,7 +287,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Recharge = m_Player.FindAction("Recharge", throwIfNotFound: true);
         m_Player_SwapGun = m_Player.FindAction("SwapGun", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
-        m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_MobileMovement = m_Player.FindAction("MobileMovement", throwIfNotFound: true);
         m_Player_MobileAim = m_Player.FindAction("MobileAim", throwIfNotFound: true);
         m_Player_Shop = m_Player.FindAction("Shop", throwIfNotFound: true);
@@ -333,7 +355,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Recharge;
     private readonly InputAction m_Player_SwapGun;
     private readonly InputAction m_Player_Aim;
-    private readonly InputAction m_Player_Esc;
+    private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_MobileMovement;
     private readonly InputAction m_Player_MobileAim;
     private readonly InputAction m_Player_Shop;
@@ -346,7 +368,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Recharge => m_Wrapper.m_Player_Recharge;
         public InputAction @SwapGun => m_Wrapper.m_Player_SwapGun;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
-        public InputAction @Esc => m_Wrapper.m_Player_Esc;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @MobileMovement => m_Wrapper.m_Player_MobileMovement;
         public InputAction @MobileAim => m_Wrapper.m_Player_MobileAim;
         public InputAction @Shop => m_Wrapper.m_Player_Shop;
@@ -374,9 +396,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                @Esc.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
-                @Esc.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
-                @Esc.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @MobileMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
                 @MobileMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
                 @MobileMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMobileMovement;
@@ -405,9 +427,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
-                @Esc.started += instance.OnEsc;
-                @Esc.performed += instance.OnEsc;
-                @Esc.canceled += instance.OnEsc;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
                 @MobileMovement.started += instance.OnMobileMovement;
                 @MobileMovement.performed += instance.OnMobileMovement;
                 @MobileMovement.canceled += instance.OnMobileMovement;
@@ -428,7 +450,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnRecharge(InputAction.CallbackContext context);
         void OnSwapGun(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
-        void OnEsc(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
         void OnMobileMovement(InputAction.CallbackContext context);
         void OnMobileAim(InputAction.CallbackContext context);
         void OnShop(InputAction.CallbackContext context);

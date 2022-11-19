@@ -14,8 +14,9 @@ public class FirstAidKit : MonoBehaviour
             SkinnedMeshRenderer smr = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
             if (healthScript != null)
             {
-                healthScript.currentHealth = healthScript.maxHealth;
-                healthScript.UpdateLifeUI();
+
+                healthScript.Heal(healthScript.maxHealth - healthScript.currentHealth);
+
                 smr.enabled = false;
                 ps.Play();
                 Invoke("AuxDestroy", ps.main.duration);
