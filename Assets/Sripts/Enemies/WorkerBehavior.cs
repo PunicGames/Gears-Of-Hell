@@ -23,11 +23,17 @@ public class WorkerBehavior : MonoBehaviour
     [SerializeField] public float attackType = 0;
     [SerializeField] bool randomAttack = false;
 
+    public AudioClip attackAudioClip;
+    [HideInInspector]
+    private AudioSource attackAudioSource;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
+
+        attackAudioSource = gameObject.GetComponent<AudioSource>();
 
         weaponCollider.player = player;
         weaponCollider.health = GetComponent<EnemyHealth>();
@@ -81,6 +87,12 @@ public class WorkerBehavior : MonoBehaviour
         }
     }
 
+    private void PlayHit()
+    {
+        attackAudioSource.clip = attackAudioClip;
+        attackAudioSource.Play();
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == player)
@@ -130,6 +142,7 @@ public class WorkerBehavior : MonoBehaviour
             else
                 animator.speed = attack1Speed;
             animator.SetTrigger("Attack");
+            PlayHit();
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
         canAttack = true;
