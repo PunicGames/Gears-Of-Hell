@@ -50,7 +50,7 @@ MonoBehaviour:
   nCells: 20
   nGates: 0
   wallSize: {x: 1.5, y: 1.5}
-  obstacleRatio: 80
+  obstacleRatio: 95
   floors:
   - {fileID: 6505218325808694531, guid: 3c923eaafb98e0e4c81327e3a8e7d669, type: 3}
   door_1:
@@ -68,22 +68,14 @@ MonoBehaviour:
   gates:
   - {fileID: 6505218325808694531, guid: 3c2f11cba0ca20042a2b8749e215f816, type: 3}
   obstacles:
-  - {fileID: 7126293510535426713, guid: ee7828a36a438e74285af921f0a7e035, type: 3}
-  - {fileID: 7126293510535426713, guid: 69ad510c1f9360b49a568b4d10218c7f, type: 3}
-  - {fileID: 7126293510535426713, guid: 272ee7a446f2fe3408f88776466de2b8, type: 3}
-  - {fileID: 7126293510535426713, guid: 97529c8b2744dd044935180a2f0ca721, type: 3}
-  - {fileID: 4951839689923246903, guid: 4d3669cc664235a4ca2d4cb06ec8793c, type: 3}
-  - {fileID: 2354575763203046597, guid: f5cbdbc4f0062684494561a894a98a41, type: 3}
-  - {fileID: 2562240242946135283, guid: c8cef02d57ef29140b783759c2fcf586, type: 3}
-  - {fileID: 8271760229975335287, guid: 2c4226a3c3b3bbf4f9d6d311ba345a30, type: 3}
-  - {fileID: 1518265617077956317, guid: 982ef026d3560404dbe164cfe520d2e1, type: 3}
-  - {fileID: 5943189913811301960, guid: a30acdb7b2c742e45acbb914989ea29e, type: 3}
-  - {fileID: 3700683536498798879, guid: 9925292664397ed4db6207637c3c9df5, type: 3}
-  - {fileID: 4678877141788931931, guid: 6d64293eba366764abcb943851336e3c, type: 3}
-  - {fileID: 8574579574170338929, guid: 432a4d6515657db499d0489124e3ecda, type: 3}
+  - {fileID: 8758139205775711030, guid: c147c7714cd4d2a4eafabd92febe247d, type: 3}
+  - {fileID: 4621079626020336588, guid: c8288bd60c73b0647a2f031203a3b7e1, type: 3}
+  - {fileID: 4933185634871532531, guid: 3c78653e34137d54e889d6a0f6c39304, type: 3}
+  - {fileID: 4888444825140038896, guid: 1a5100a2e9552f84698bbbf80be44d47, type: 3}
+  - {fileID: 4888444825140038896, guid: 1aa53c5e568aa8145b024bf4c5a137bb, type: 3}
+  - {fileID: 4888444825140038896, guid: 1d0fe034400823d429b7e53e7cb27eef, type: 3}
   - {fileID: 6745596596922479086, guid: 797924d3dd4e9854fa08d6363a031f44, type: 3}
   - {fileID: 5093987469125956568, guid: d1485c87baf8f1043b0984b2495c8e21, type: 3}
-  - {fileID: 1819031590745360082, guid: fa39789b797e52c47944a6e24deaaf66, type: 3}
   shop: {fileID: 5403548014249073235, guid: 7541124c11da73c489736c8437988b5a, type: 3}
   numberOfShops: 3
   shopInterSpace: 4
@@ -129,19 +121,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a66c015a8d913d46ae2b405167c0a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tier1_Enemies:
-  - {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
-  - {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
-  - {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
-  tier2_Enemies:
-  - {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
-  - {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
-  - {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
-  tier3_Enemies:
-  - {fileID: 0}
-  tier4_Enemies: []
-  tier5_Enemies: []
   gameRegistry: {fileID: 0}
+  tierList:
+  - name: Tier I
+    enemies:
+    - prefab: {fileID: 0}
+      prob: 0.5
+    - prefab: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
+      prob: 0.4
+    - prefab: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+      prob: 0
+  - name: Tier II
+    enemies:
+    - prefab: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
+      prob: 0.55
+    - prefab: {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
+      prob: 0.4
+    - prefab: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+      prob: 0
+  - name: Tier III
+    enemies:
+    - prefab: {fileID: 2140532941445721662, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
+      prob: 0.4
+    - prefab: {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
+      prob: 0.4
+    - prefab: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+      prob: 0.5
+    - prefab: {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
+      prob: 0
   spawnDistance: 2
   maxEnemiesAtSameTime: 10
   minEnemiesAtSameTime: 1

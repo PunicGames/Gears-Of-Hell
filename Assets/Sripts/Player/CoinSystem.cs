@@ -33,5 +33,6 @@ public class CoinSystem : MonoBehaviour
         totalCoinsInGame -= newCoin;
         coinDisplay.text = totalCoinsInGame.ToString();
         popup.Create(popupPosition.position, newCoin, PopUp.TypePopUp.MONEY, false, 0.5f);
+        GameObject.Find("MenuMusic").GetComponent<ButtonSFX>().PlayBuy();
     }
 }

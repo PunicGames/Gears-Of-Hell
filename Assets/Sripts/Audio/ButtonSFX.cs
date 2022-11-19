@@ -5,14 +5,13 @@ using UnityEngine;
 public class ButtonSFX : MonoBehaviour
 {
 
-    public AudioClip accept, cancel, toggle;
-
+    public AudioClip accept, cancel, toggle, buy;
+    [HideInInspector]
     public AudioSource interaction;
 
     public void Awake()
     {
-        var audioSource = GetComponents<AudioSource>();
-        interaction = audioSource[1];
+        interaction = GetComponent<AudioSource>();
     }
 
 
@@ -29,6 +28,11 @@ public class ButtonSFX : MonoBehaviour
     public void PlayToggle()
     {
         interaction.clip = toggle;
+        interaction.Play();
+    }
+    public void PlayBuy()
+    {
+        interaction.clip = buy;
         interaction.Play();
     }
 }
