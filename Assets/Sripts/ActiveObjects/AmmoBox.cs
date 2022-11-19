@@ -19,8 +19,7 @@ public class AmmoBox : MonoBehaviour
 
                     if (shootScript.availableGuns[i])
                     {
-
-                        sg.totalBullets = sg.maxTotalBullets - sg.magazineSize;
+                        sg.totalBullets += sg.magazineSize*3;
 
                     }
                 }
