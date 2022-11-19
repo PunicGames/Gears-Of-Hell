@@ -834,6 +834,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1722422165}
+    - target: {fileID: 708468633105597309, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5048725444850633134, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8607388110424686180, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_Name
       value: InGameUI
@@ -1785,6 +1793,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: gameRegistry
       value: 
