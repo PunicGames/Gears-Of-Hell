@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 3597798663532466692}
   - component: {fileID: 3209731723266497721}
   - component: {fileID: 4693440988594534055}
+  - component: {fileID: 2534359485031200211}
   m_Layer: 0
   m_Name: JACOB
   m_TagString: Player
@@ -526,7 +527,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -622,7 +623,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -742,7 +743,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -945,6 +946,14 @@ MonoBehaviour:
   - {fileID: 6290385385806560542}
   - {fileID: 5907095846821129218}
   - {fileID: 2319227297413681669}
+--- !u!81 &2534359485031200211
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919294009874013116}
+  m_Enabled: 1
 --- !u!1 &935098715315494881
 GameObject:
   m_ObjectHideFlags: 0
