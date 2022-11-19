@@ -308,7 +308,7 @@ public class Player : MonoBehaviour
         {
             // Abrir tienda
             Debug.Log("Se abre la tienda");
-            //GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().PlayShopMusic();
+            GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().PlayShopMusic();
 
             CachedMoveInput = new Vector2(0.0f, 0.0f);
             uiGestor.ShowShop();
