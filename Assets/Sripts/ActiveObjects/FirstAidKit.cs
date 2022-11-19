@@ -15,10 +15,15 @@ public class FirstAidKit : MonoBehaviour
             if (healthScript != null)
             {
 
-                healthScript.Heal(healthScript.maxHealth - healthScript.currentHealth);
+                var healing = healthScript.maxHealth - healthScript.currentHealth;
 
+                if(healing > 0)
+                {
+                    healthScript.Heal(healing);
+                    ps.Play();
+                }
+              
                 smr.enabled = false;
-                ps.Play();
                 Invoke("AuxDestroy", ps.main.duration);
             }
         }
