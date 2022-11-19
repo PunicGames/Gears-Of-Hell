@@ -33,13 +33,7 @@ public class Gunsmith : MonoBehaviour
 
             if (shootScript.availableGuns[i])
             {
-
                 sg.totalBullets += ammoRegenAmount;
-
-                if(sg.totalBullets + sg.magazineSize > sg.maxTotalBullets)
-                {
-                    sg.totalBullets = sg.maxTotalBullets - sg.magazineSize;
-                }
             }
         }
     }
