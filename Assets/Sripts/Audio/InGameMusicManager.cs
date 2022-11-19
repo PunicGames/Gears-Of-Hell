@@ -68,12 +68,12 @@ public class InGameMusicManager : MonoBehaviour
         if (state)
         {
             mainMusic.Pause();
-            shopMusic.Play();
+            //shopMusic.Play();
         }            
         else
         {
             mainMusic.UnPause();
-            shopMusic.Stop();
+            //shopMusic.Stop();
         }
             
     }
