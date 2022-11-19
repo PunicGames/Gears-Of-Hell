@@ -10,6 +10,8 @@ public class ElectricBarrier : MonoBehaviour
 
     private GameObject visualBarrier;
 
+    [SerializeField] private AudioSource electricSound;
+
     private void Start()
     {
         healthScript = GetComponentInParent<Health>();
@@ -50,6 +52,7 @@ public class ElectricBarrier : MonoBehaviour
     {
         if (healthScript != null)
         {
+            electricSound.Play();
             healthScript.electricBarrier = false;
             visualBarrier.SetActive(false);
         }
