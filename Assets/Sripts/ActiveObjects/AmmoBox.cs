@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AmmoBox : MonoBehaviour
 {
+    private bool picked = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (!picked && other.gameObject.tag == "Player")
         {
             ShootSystem shootScript = GameObject.Find("ShotOrigin").GetComponent<ShootSystem>();
             ParticleSystem ps = gameObject.GetComponentInChildren<ParticleSystem>();
@@ -25,7 +26,9 @@ public class AmmoBox : MonoBehaviour
                 }
 
                 mr.enabled = false;
+                picked = true;
                 ps.Play();
+                gameObject.GetComponent<AudioSource>().Play();
                 Invoke("AuxDestroy", ps.main.duration);
             }
         }

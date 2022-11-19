@@ -240,8 +240,14 @@ public class WorldGenerator : MonoBehaviour
             obsPos.Remove(pos);
 
         foreach (var pos in obsPos)
-            //if (flipCoin())
+        {
             SpawnObstacle(pos).parent = transform;
+            //SpawnObstacle(pos).parent = transform;
+            //SpawnObstacle(pos).parent = transform;
+        }
+
+            //if (flipCoin())
+            
             
                 
         

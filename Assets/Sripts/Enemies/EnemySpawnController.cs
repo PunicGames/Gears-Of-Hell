@@ -149,7 +149,7 @@ public class EnemySpawnController : MonoBehaviour
         var aux = tierCounter + 1;
 
         // Add new Tier
-        if (aux < tierList.Length)
+        if (aux <= tierList.Length - 1)
             tierCounter = aux;
 
         tierAtUse = tierList[tierCounter];
@@ -166,11 +166,17 @@ public class EnemySpawnController : MonoBehaviour
     // Return the number of max enemies that could be spawned
     private int MaxEnemiesOnScene()
     {
-        //y = (((-(x^2)/2)+1 )/( (-(x^2)/2)-1))+1)/2
-
         var x = nTicks * 0.025f;
-        var num = ((-1.0f * x * x) / 2.0f) + 1.0f;
-        var den = ((-1.0f * x * x) / 2.0f) - 1.0f;
+        //f: y = (((-(x^2)/2)+1 )/( (-(x^2)/2)-1))+1)/2
+
+        //var num = ((-1.0f * x * x) / 2.0f) + 1.0f;
+        //var den = ((-1.0f * x * x) / 2.0f) - 1.0f;
+
+        //f: y = ((((-x + 1) / (-x - 1)) + 1) / (2))
+        
+        var num = -1.0f * x + 1.0f;
+        var den = -1.0f * x - 1.0f;
+
         var res = ((num / den) + 1.0f )/ 2.0f;
 
         return minEnemiesAtSameTime + Mathf.CeilToInt(res * maxEnemiesAtSameTime);
