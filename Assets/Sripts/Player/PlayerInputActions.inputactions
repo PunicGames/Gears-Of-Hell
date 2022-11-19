@@ -51,7 +51,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Esc",
+                    "name": "Pause",
                     "type": "Button",
                     "id": "7d08441e-4ea1-4400-a542-928277a3fd6b",
                     "expectedControlType": "Button",
@@ -168,11 +168,22 @@
                 {
                     "name": "",
                     "id": "ddb44cc3-486e-4f14-8222-ce4f3c614e02",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Esc",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c116be9-449e-4c97-849f-32171f1db59c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -222,8 +233,19 @@
                 },
                 {
                     "name": "",
+                    "id": "800fe2d0-8a50-40e5-92e9-a5f14b4f560b",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwapGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f70bc380-3b24-4c2e-9ea1-170dd54fba85",
-                    "path": "<Keyboard>/t",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
