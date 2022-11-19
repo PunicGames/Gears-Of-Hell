@@ -672,11 +672,46 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
---- !u!1 &652555705 stripped
+--- !u!1 &541660767
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
-  m_PrefabInstance: {fileID: 1903850914}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 541660768}
+  - component: {fileID: 541660769}
+  m_Layer: 0
+  m_Name: Listener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &541660768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541660767}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 31.609}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 859768317}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &541660769
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541660767}
+  m_Enabled: 1
 --- !u!1001 &688725165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -898,7 +933,6 @@ GameObject:
   m_Component:
   - component: {fileID: 859768317}
   - component: {fileID: 859768316}
-  - component: {fileID: 859768315}
   - component: {fileID: 859768318}
   - component: {fileID: 859768319}
   m_Layer: 0
@@ -908,14 +942,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &859768315
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859768314}
-  m_Enabled: 1
 --- !u!20 &859768316
 Camera:
   m_ObjectHideFlags: 0
@@ -970,7 +996,8 @@ Transform:
   m_LocalPosition: {x: -11.2, y: 28.79, z: -10.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 541660768}
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 60, y: 45, z: 0}
@@ -1790,6 +1817,50 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1418230371}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+      propertyPath: tierList.Array.data[0].enemies.Array.data[0].prob
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.data[1].prob
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[1].enemies.Array.data[0].prob
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[1].enemies.Array.data[1].prob
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[2].enemies.Array.data[0].prob
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[2].enemies.Array.data[1].prob
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[2].enemies.Array.data[2].prob
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[1].enemies.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[2].enemies.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
+=======
+>>>>>>> Stashed changes
       propertyPath: tierList.Array.data[1].enemies.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -1833,6 +1904,10 @@ PrefabInstance:
       propertyPath: tierList.Array.data[2].enemies.Array.data[5].prefab
       value: 
       objectReference: {fileID: 2140532941445721662, guid: 5e9ada390a3bbc3478f8ac50396d6ba5, type: 3}
+<<<<<<< Updated upstream
+=======
+>>>>>>> 06287a95900193047af1a2d756d29c7e24eef155
+>>>>>>> Stashed changes
     - target: {fileID: 7912361067319672372, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Name
       value: WorldGenerator
