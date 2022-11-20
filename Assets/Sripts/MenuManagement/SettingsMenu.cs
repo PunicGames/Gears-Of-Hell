@@ -20,10 +20,14 @@ public class SettingsMenu : MonoBehaviour
         if (Application.isMobilePlatform)
         {
             desktop = false;
+            PlayerPrefs.SetInt("bloomEffect", 0);
+            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateBloom(false);
         }
         else if (SystemInfo.deviceType == DeviceType.Desktop)
         {
             desktop = true;
+            PlayerPrefs.SetInt("bloomEffect", 1);
+            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateBloom(true);
         }
 
         //desktop = false;
@@ -83,5 +87,16 @@ public class SettingsMenu : MonoBehaviour
         {
             MobileGameplay.SetActive(false);
         }
+    }
+
+    public void SetBloom(bool option) {
+        if (option)
+            PlayerPrefs.SetInt("bloomEffect", 1);
+        else
+            PlayerPrefs.SetInt("bloomEffect", 0);
+
+
+            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateBloom(option);
+
     }
 }
