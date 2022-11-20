@@ -13,7 +13,7 @@ public class ShootSystem : MonoBehaviour
     // Guns
     [HideInInspector] public PlayerGuns guns;
     [SerializeField] private AudioClip[] reloadAudioClip;
-    [HideInInspector]public int selectedGun = 0;
+    [HideInInspector] public int selectedGun = 0;
     public bool[] availableGuns;
 
     // Guns in Order: pistol, subfusil, rifle, sniper, shotgun
@@ -84,7 +84,7 @@ public class ShootSystem : MonoBehaviour
 
     private void Start()
     {
-        
+
         // Inicializacion de variables
         readyToShoot = true;
         laserShot = false;
@@ -98,6 +98,7 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
+        
         // Display cursor
         //if (desktop) { 
         //    cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
@@ -139,9 +140,10 @@ public class ShootSystem : MonoBehaviour
 
     private void Shoot()
     {
-        if (shooting) { // Shooting ayuda para controlar las balas de las armas automáticas de la función Invoke del final de este método. Evita que se disparen balas indeseadas
+        if (shooting)
+        { // Shooting ayuda para controlar las balas de las armas automáticas de la función Invoke del final de este método. Evita que se disparen balas indeseadas
             readyToShoot = false;
-            
+
 
             // Se calcula la dirección y origen del disparo
             Vector3 origin = weapon_origins[selectedGun].position;
@@ -152,7 +154,8 @@ public class ShootSystem : MonoBehaviour
             if (selectedGun == 4) // Escopeta
                 numBulletsAtTime = 3;
 
-            for (int i = 0; i < numBulletsAtTime; i++) { 
+            for (int i = 0; i < numBulletsAtTime; i++)
+            {
                 // Cálculo de spread
                 float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
 
@@ -252,7 +255,6 @@ public class ShootSystem : MonoBehaviour
 
     public void SwapGun()
     {
-
         // Explora las opciones de armas en orden. Hay dos bucles ya que podriamos estar posicionados en el arma número 1,
         // por lo que explora primero hacia arriba y luego da la vuelta y explora las que jerárquicamente están por debajo
 
@@ -262,6 +264,7 @@ public class ShootSystem : MonoBehaviour
             {
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
+
                 selectedGun = i;
 
                 //if (desktop)
@@ -270,6 +273,9 @@ public class ShootSystem : MonoBehaviour
                 // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque debería llamarse mejor al finalizar la animación)
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS MÁS ARRIBA)
+                if (selectedGun == 2 || selectedGun == 3 || selectedGun == 4)
+                    anim.SetBool("isRifle", true);
+                else anim.SetBool("isRifle", false);
                 return;
             }
         }
@@ -287,9 +293,13 @@ public class ShootSystem : MonoBehaviour
 
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
+                if (selectedGun == 2 || selectedGun == 3 || selectedGun == 4)
+                    anim.SetBool("isRifle", true);
+                else anim.SetBool("isRifle", false);
                 return;
             }
         }
+        
     }
 
     public void ActivateGun(int idx)
@@ -302,13 +312,16 @@ public class ShootSystem : MonoBehaviour
         availableGuns[idx] = false;
     }
 
-    public void ChangeCursorBack() {
+    public void ChangeCursorBack()
+    {
         //if (desktop)
         //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
     }
 
-    private void InitGunsMobile() {
-        for (int i = 0; i < guns.getGuns().Length; i++) {
+    private void InitGunsMobile()
+    {
+        for (int i = 0; i < guns.getGuns().Length; i++)
+        {
             guns.getGuns()[i].automaticGun = false;
         }
     }
