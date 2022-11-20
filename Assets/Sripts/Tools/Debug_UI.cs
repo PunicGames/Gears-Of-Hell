@@ -9,29 +9,6 @@ public class Debug_UI : MonoBehaviour
     [SerializeField] private float refreshRate;
     private float timer;
 
-    [SerializeField] private TextMeshProUGUI consoleTextField;
-    [SerializeField] private static uint consoleCount = 3;
-    private static Queue<string> msgQueue = new Queue<string>();
-
-    public static void Print(string msg)
-    {
-        if (msgQueue.Count >= consoleCount)
-        {
-            msgQueue.Dequeue();
-        }
-        msgQueue.Enqueue(msg);
-    }
-
-    private void FillConsole()
-    {
-        string finalText = "";
-        foreach (var msg in msgQueue)
-        {
-            finalText += msg + "\n";
-        }
-        consoleTextField.text = finalText;
-    }
-
     void Update()
     {
         if (Time.unscaledTime > timer)
@@ -41,6 +18,5 @@ public class Debug_UI : MonoBehaviour
             timer = Time.unscaledTime + refreshRate;
         }
 
-        FillConsole();
     }
 }
