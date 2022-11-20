@@ -80,6 +80,7 @@ public class EnemyHealth : MonoBehaviour
         NavMeshAgent navMov = GetComponent<NavMeshAgent>();
         EnemyMovement eM = GetComponent<EnemyMovement>();
         WorkerBehavior mE = GetComponent<WorkerBehavior>();
+        GunnerBehaviour gb = GetComponent<GunnerBehaviour>();
         RangedEnemy rE = GetComponent<RangedEnemy>();
         if (eM != null)
             eM.enabled = false;
@@ -89,6 +90,12 @@ public class EnemyHealth : MonoBehaviour
             mE.enabled = false;
         if (navMov != null)
             navMov.enabled = false;
+        if (gb)
+        {
+            
+            gb.enabled = false;
+
+        }
 
         // Faltan sonidos y animaciones de muerte etc etc
 
@@ -118,13 +125,13 @@ public class EnemyHealth : MonoBehaviour
         //Soltar items consumibles
 
         float aux = Random.Range(0f, 1f);
-        if(aux <= itemsRatio)
+        if (aux <= itemsRatio)
         {
             int index = Random.Range(0, items.Length);
             GameObject item = Instantiate(items[index], transform.position + new Vector3(0.8f, 0f, -0.8f), Quaternion.identity);
         }
 
-        
+
     }
     //Autamitacally call when death animation ended
     public void DestroyCallback()
