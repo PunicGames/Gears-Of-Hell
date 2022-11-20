@@ -403,7 +403,6 @@ public class WorldGenerator : MonoBehaviour
         GenerateCells(blueprint);
 
         sw.Stop();
-        Debug_UI.Print("Mapa generado en: " + sw.Elapsed.ToString());
 
         surface.BuildNavMesh();
 
