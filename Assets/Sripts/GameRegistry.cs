@@ -86,6 +86,6 @@ public class GameRegistry : MonoBehaviour
             }
         }
         shopManager.GetComponent<ManageShops>().RefreshShop();
-        GameObject.Find("WorldGenerator").GetComponent<EnemySpawnController>().TierIncrement();
+        //GameObject.Find("WorldGenerator").GetComponent<EnemySpawnController>().TierIncrement();
     }
 }

@@ -9,7 +9,7 @@ public class AmmoBox : MonoBehaviour
     {
         if (!picked && other.gameObject.tag == "Player")
         {
-            ShootSystem shootScript = GameObject.Find("ShotOrigin").GetComponent<ShootSystem>();
+            ShootSystem shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
             ParticleSystem ps = gameObject.GetComponentInChildren<ParticleSystem>();
             MeshRenderer mr = gameObject.GetComponentInChildren<MeshRenderer>();
             if (shootScript != null)

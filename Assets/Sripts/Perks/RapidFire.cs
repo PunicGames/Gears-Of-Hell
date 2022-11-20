@@ -12,7 +12,7 @@ public class RapidFire : MonoBehaviour
 
     private void Start()
     {
-        shootScript = GameObject.Find("ShotOrigin").GetComponent<ShootSystem>();
+        shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
         defAttackSpeed = shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots;
         gameObject.SetActive(false);
     }

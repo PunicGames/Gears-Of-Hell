@@ -276,7 +276,6 @@ public class ManageShops : MonoBehaviour
         int[] playerPerkLevels = player.GetComponentInChildren<PerksManager>().perkLevels;
         for (int i = 0; i < playerPerks.Length; i++)
         {
-            Debug.Log(playerPerks[i]);
             if (playerPerks[i])
             {
                 numPerksHasPlayer++;

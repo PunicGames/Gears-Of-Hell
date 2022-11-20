@@ -1278,6 +1278,7 @@ MonoBehaviour:
   weaponCollider: {fileID: 0}
   attackType: 0
   randomAttack: 0
+  attackAudioClip: {fileID: 0}
 --- !u!114 &1503322544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1747,6 +1748,7 @@ MonoBehaviour:
   weaponCollider: {fileID: 0}
   attackType: 0
   randomAttack: 0
+  attackAudioClip: {fileID: 0}
 --- !u!135 &1872047790
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1816,6 +1818,7 @@ MonoBehaviour:
   weaponCollider: {fileID: 0}
   attackType: 0
   randomAttack: 0
+  attackAudioClip: {fileID: 0}
 --- !u!114 &1914165265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3679,7 +3682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon_meshes: []
-  meshFilter: {fileID: 0}
+  weapon_origins: []
   reloadAudioClip: []
   selectedGun: 0
   availableGuns: 
