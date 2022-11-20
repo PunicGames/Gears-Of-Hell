@@ -85,7 +85,7 @@ PlayerSettings:
   hideHomeButton: 0
   submitAnalytics: 1
   usePlayerLog: 1
-  bakeCollisionMeshes: 0
+  bakeCollisionMeshes: 1
   forceSingleInstance: 0
   useFlipModelSwapchain: 1
   resizableWindow: 0
@@ -136,7 +136,15 @@ PlayerSettings:
     Others: 1
   bundleVersion: 0.1
   preloadedAssets:
-  - {fileID: 0}
+  - {fileID: 919132149155446097, guid: 9d1aa22b0dcc44d48bb03abb83c041e4, type: 3}
+  - {fileID: 919132149155446097, guid: 94f6e24a780fb8343b7e4471fbfe0973, type: 3}
+  - {fileID: 6505218325808694531, guid: 3c923eaafb98e0e4c81327e3a8e7d669, type: 3}
+  - {fileID: 7126293510535426713, guid: 317f6329994b0334ead09359c9b02da2, type: 3}
+  - {fileID: 4621079626020336588, guid: c8288bd60c73b0647a2f031203a3b7e1, type: 3}
+  - {fileID: 8758139205775711030, guid: c147c7714cd4d2a4eafabd92febe247d, type: 3}
+  - {fileID: 5093987469125956568, guid: d1485c87baf8f1043b0984b2495c8e21, type: 3}
+  - {fileID: 6745596596922479086, guid: 797924d3dd4e9854fa08d6363a031f44, type: 3}
+  - {fileID: 8627989844424746842, guid: d1979d1d78387a344bf4f60a0103aa82, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -382,8 +390,8 @@ PlayerSettings:
     m_StaticBatching: 1
     m_DynamicBatching: 0
   - m_BuildTarget: WebGL
-    m_StaticBatching: 0
-    m_DynamicBatching: 0
+    m_StaticBatching: 1
+    m_DynamicBatching: 1
   m_BuildTargetGraphicsJobs:
   - m_BuildTarget: MacStandaloneSupport
     m_GraphicsJobs: 0
@@ -428,7 +436,7 @@ PlayerSettings:
     m_Automatic: 1
   - m_BuildTarget: WebGLSupport
     m_APIs: 0b000000
-    m_Automatic: 1
+    m_Automatic: 0
   m_BuildTargetVRSettings:
   - m_BuildTarget: Standalone
     m_Enabled: 0
