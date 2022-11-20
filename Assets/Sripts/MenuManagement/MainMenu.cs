@@ -64,12 +64,12 @@ public class MainMenu : MonoBehaviour
 
     public void MenuToOptions()
     {
-        characters[selectedCharacter].SetActive(false);
+        //characters[selectedCharacter].SetActive(false);
     }
 
     public void OptionsToMenu()
     {
-        characters[selectedCharacter].SetActive(true);
+        //characters[selectedCharacter].SetActive(true);
     }
 
     private IEnumerator LoadScene_Coroutine() {
@@ -120,26 +120,10 @@ public class MainMenu : MonoBehaviour
         previousSelected = 0;
     }
 
-    public void SelectGunnerTier2() {
+    public void SelectAlmanac(int idx) {
         characters[previousSelected].SetActive(false);
-        characters[2].SetActive(true);
-        characters[2].transform.rotation = characters[previousSelected].transform.rotation;
-        previousSelected = 2;
-    }
-
-    public void SelectGunslingerTier2()
-    {
-        characters[previousSelected].SetActive(false);
-        characters[3].SetActive(true);
-        characters[3].transform.rotation = characters[previousSelected].transform.rotation;
-        previousSelected = 3;
-    }
-
-    public void SelectWorkerTier2()
-    {
-        characters[previousSelected].SetActive(false);
-        characters[4].SetActive(true);
-        characters[4].transform.rotation = characters[previousSelected].transform.rotation;
-        previousSelected = 4;
+        characters[idx].SetActive(true);
+        characters[idx].transform.rotation = characters[previousSelected].transform.rotation;
+        previousSelected = idx;
     }
 }
