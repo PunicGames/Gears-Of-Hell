@@ -11,7 +11,7 @@ public class BigShot : MonoBehaviour
 
     private void Start()
     {
-        shootScript = GameObject.Find("ShotOrigin").GetComponent<ShootSystem>();
+        shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
         defScaleFactor = shootScript.scaleFactor;
         gameObject.SetActive(false);
     }

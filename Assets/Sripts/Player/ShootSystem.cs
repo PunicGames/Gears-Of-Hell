@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class ShootSystem : MonoBehaviour
 {
-    public List<Mesh> weapon_meshes;
-    [SerializeField] MeshFilter meshFilter;
+    // Weapon personalization
+    [SerializeField] private GameObject[] weapon_meshes;
+    [SerializeField] private Transform[] weapon_origins;
+
     // Guns
     [HideInInspector] public PlayerGuns guns;
     [SerializeField] private AudioClip[] reloadAudioClip;
@@ -142,8 +144,8 @@ public class ShootSystem : MonoBehaviour
             
 
             // Se calcula la dirección y origen del disparo
-            Vector3 origin = transform.position;
-            Vector3 direction = transform.forward;
+            Vector3 origin = weapon_origins[selectedGun].position;
+            Vector3 direction = weapon_origins[selectedGun].forward;
 
 
             int numBulletsAtTime = 1; // Cualquier otro arma
@@ -258,7 +260,8 @@ public class ShootSystem : MonoBehaviour
         {
             if (availableGuns[i])
             {
-                meshFilter.sharedMesh = weapon_meshes[i];
+                weapon_meshes[selectedGun].SetActive(false);
+                weapon_meshes[i].SetActive(true);
                 selectedGun = i;
 
                 //if (desktop)
@@ -275,12 +278,13 @@ public class ShootSystem : MonoBehaviour
         {
             if (availableGuns[i])
             {
-                meshFilter.sharedMesh = weapon_meshes[i];
+                weapon_meshes[selectedGun].SetActive(false);
+                weapon_meshes[i].SetActive(true);
                 selectedGun = i;
 
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
-                
+
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
                 return;

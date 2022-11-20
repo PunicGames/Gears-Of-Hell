@@ -11,7 +11,7 @@ public class Gunsmith : MonoBehaviour
 
     private void Start()
     {
-        shootScript = GameObject.Find("ShotOrigin").GetComponent<ShootSystem>();
+        shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
         gameObject.SetActive(false);
     }
 
