@@ -43,6 +43,20 @@ public class MainMenu : MonoBehaviour
         cursorHotSpot = new Vector2(0, 0);
         //if (desktop)
         //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
+
+        if (!desktop)
+        {
+            PlayerPrefs.SetInt("bloomEffect", 0);
+            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateBloom(false);
+            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateColorGrading(false);
+        }
+        else if (desktop)
+        {
+            PlayerPrefs.SetInt("bloomEffect", 1);
+            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateBloom(true);
+            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateColorGrading(true);
+        }
+
     }
 
     public void PlayGame() {
