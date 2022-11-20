@@ -54,7 +54,6 @@ public class GunnerBehaviour : MonoBehaviour
         }
         else
         {
-            inAttackRange = false;
             Chase();
             animator.SetBool("Moving", true);
         }
