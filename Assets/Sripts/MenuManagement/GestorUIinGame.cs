@@ -46,7 +46,7 @@ public class GestorUIinGame : MonoBehaviour
             desktop = true;
         }
 
-        //desktop = false;
+        desktop = false;
 
         
         if (!desktop)
