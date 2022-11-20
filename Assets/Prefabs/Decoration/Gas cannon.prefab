@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 8744821609647036518}
   m_Layer: 0
   m_Name: Gas cannon
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4932,6 +4932,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 970098d881aa45249b934673a3e0f84e, type: 3}
+--- !u!1 &7275627503533552133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 970098d881aa45249b934673a3e0f84e, type: 3}
+  m_PrefabInstance: {fileID: 7510123443516395348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015890206191327516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7275627503533552133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 452ca8884fd446442b51f83772d47d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 2100000, guid: 7baa7798af8e9de428a67fec963cdce1, type: 2}
+  probDestroy: 0.2
+  canUnInstantiate: 1
 --- !u!4 &8049032072458512575 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 970098d881aa45249b934673a3e0f84e, type: 3}
