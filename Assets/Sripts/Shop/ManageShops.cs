@@ -361,7 +361,7 @@ public class ManageShops : MonoBehaviour
             // Muestra el dinero de la mejora que le corresponde
             if (playerPerkLevels[idxExistentPerk] == 4)
             {
-                coinsText[5].text = "MAX.";
+                coinsText[5].text = "MAX. LVL";
             }
             else
             {
@@ -449,7 +449,7 @@ public class ManageShops : MonoBehaviour
                 // Muestra el dinero de la mejora que le corresponde
                 if (playerPerkLevels[idxExistentPerks[i]] == 4)
                 {
-                    coinsText[i + 4].text = "MAX.";
+                    coinsText[i + 4].text = "MAX. LVL";
                 }
                 else
                 {
@@ -547,7 +547,7 @@ public class ManageShops : MonoBehaviour
                 // Muestra el dinero de la mejora que le corresponde
                 if (playerPerkLevels[indexes[i]] == 4)
                 {
-                    coinsText[i + 3].text = "MAX LVL";
+                    coinsText[i + 3].text = "MAX. LVL";
                     continue;
                 }
                 else { 
@@ -823,7 +823,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo. Eso es, cuando es nivel 3 y entramos en este método haciendo que suba al máximo.
                 if(lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
@@ -836,7 +836,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
@@ -849,7 +849,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
@@ -863,7 +863,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
@@ -876,7 +876,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
@@ -889,7 +889,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
@@ -902,7 +902,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
@@ -915,7 +915,7 @@ public class ManageShops : MonoBehaviour
 
                 // Si con la subida de nivel alcanza el máximo
                 if (lvl == 3)
-                    UpdateUi(place, perksTexts[idx], "MAX");
+                    UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
                     UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
                 break;
