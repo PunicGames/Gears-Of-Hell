@@ -325,4 +325,18 @@ public class ShootSystem : MonoBehaviour
             guns.getGuns()[i].automaticGun = false;
         }
     }
+
+    public void addAmmoToWeapons()
+    {
+        for (int i = 0; i < guns.getGuns().Length; i++)
+        {
+            var sg = guns.getGuns()[i];
+
+            if (availableGuns[i])
+            {
+                sg.totalBullets += sg.magazineSize * 3;
+
+            }
+        }
+    }
 }
