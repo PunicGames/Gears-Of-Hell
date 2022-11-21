@@ -9,31 +9,22 @@ public class AmmoBox : MonoBehaviour
     {
         if (!picked && other.gameObject.tag == "Player")
         {
-            ShootSystem shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
-            ParticleSystem ps = gameObject.GetComponentInChildren<ParticleSystem>();
+            ShootSystem shootScript = other.gameObject.GetComponentInChildren<ShootSystem>();
             MeshRenderer mr = gameObject.GetComponentInChildren<MeshRenderer>();
-            if (shootScript != null)
+
+            if (shootScript)
             {
-                for (int i = 0; i < shootScript.guns.getGuns().Length; i++)
-                {
-                    var sg = shootScript.guns.getGuns()[i];
-
-                    if (shootScript.availableGuns[i])
-                    {
-                        sg.totalBullets += sg.magazineSize*3;
-
-                    }
-                }
+                shootScript.addAmmoToWeapons();
+                //Particle effects
+                other.gameObject.GetComponent<Player>().onItemTaken.Invoke(effect.AMMO);
 
                 mr.enabled = false;
                 picked = true;
-                ps.Play();
                 gameObject.GetComponent<AudioSource>().Play();
-                Invoke("AuxDestroy", ps.main.duration);
+                Invoke("AuxDestroy", 1f);
             }
         }
     }
-
     private void AuxDestroy()
     {
         Destroy(gameObject);

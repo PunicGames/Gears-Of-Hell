@@ -37,6 +37,10 @@ public class Player : MonoBehaviour
     private VariableJoystick leftJoystick;
     private VariableJoystick rightJoystick;
 
+    //Delegates
+    public delegate void OnItemTaken(effect vfx);
+    public OnItemTaken onItemTaken;
+
 
     private void Awake()
     {

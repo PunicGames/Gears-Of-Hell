@@ -9,28 +9,22 @@ public class FirstAidKit : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Health healthScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-            ParticleSystem ps = gameObject.GetComponentInChildren<ParticleSystem>();
+            Health healthScript = other.gameObject.GetComponent<Health>();
             SkinnedMeshRenderer smr = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
             if (healthScript != null)
             {
-
                 var healing = healthScript.maxHealth - healthScript.currentHealth;
 
                 if(healing > 0)
                 {
                     healthScript.Heal(healing);
-                    ps.Play();
                 }
               
                 smr.enabled = false;
-                Invoke("AuxDestroy", ps.main.duration);
+                Destroy(gameObject);
             }
         }
     }
 
-    private void AuxDestroy()
-    {
-        Destroy(gameObject);
-    }
+   
 }

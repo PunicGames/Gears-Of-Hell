@@ -93,6 +93,8 @@ public class Health : MonoBehaviour
             PlaySound(healClip);
             popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.LIFE, true, 0.5f);
         }
+        //Particle effect activation
+        playerMovement.onItemTaken.Invoke(effect.HEAL);
         
         UpdateLifeUI();
     }
