@@ -60,6 +60,8 @@ public class ShootSystem : MonoBehaviour
     [HideInInspector] public int numBulletsHit = 0;
     [HideInInspector] public int numBulletsMissed = 0;
 
+    // Directiion
+    //public Vector3 directionAim = new Vector3(0f, 0f, 0f);
 
     private void Awake()
     {
@@ -80,6 +82,7 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
+        
     }
 
     private void Start()
@@ -99,6 +102,7 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay.SetActive(false);
 
         
+
         // Display cursor
         //if (desktop) { 
         //    cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
@@ -147,12 +151,14 @@ public class ShootSystem : MonoBehaviour
 
             // Se calcula la dirección y origen del disparo
             Vector3 origin = weapon_origins[selectedGun].position;
+            //Vector3 direction = (directionAim - origin).normalized;// weapon_origins[selectedGun].forward;
             Vector3 direction = weapon_origins[selectedGun].forward;
+
 
 
             int numBulletsAtTime = 1; // Cualquier otro arma
             if (selectedGun == 4) // Escopeta
-                numBulletsAtTime = 3;
+                numBulletsAtTime = 5;
 
             for (int i = 0; i < numBulletsAtTime; i++)
             {
