@@ -44,7 +44,7 @@ public class PlayerGuns
         subfusil.bulletsShot = 0;
         subfusil.bulletsPerTap = 1;
         subfusil.shootForce = 10;
-        subfusil.spread = 0.1f;
+        subfusil.spread = 0.0f;
         subfusil.reloadTime = 1.5f;
         subfusil.timeBetweenShots = 0.1f;
         subfusil.timeBetweenShooting = 0.2f;
@@ -93,15 +93,15 @@ public class PlayerGuns
     private void InitializeShotgun()
     {
         Gun shotgun = new Gun();
-        shotgun.bulletDamage = 10;
-        shotgun.magazineSize = 21;
+        shotgun.bulletDamage = 7;
+        shotgun.magazineSize = 30;
         shotgun.bulletsLeftInMagazine = shotgun.magazineSize;
         shotgun.maxTotalBullets = shotgun.magazineSize * 4;
         shotgun.totalBullets = shotgun.maxTotalBullets - shotgun.magazineSize;
         shotgun.bulletsShot = 0;
         shotgun.bulletsPerTap = 1;
         shotgun.shootForce = 20;
-        shotgun.spread = 0.2f;
+        shotgun.spread = 0.25f;
         shotgun.reloadTime = 2.0f;
         shotgun.timeBetweenShots = 0.0f;
         shotgun.timeBetweenShooting = 1.5f;

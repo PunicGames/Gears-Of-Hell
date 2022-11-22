@@ -53,7 +53,8 @@ public class Player : MonoBehaviour
         hitmarker = audioSources[1];
 
         // Others
-        floorMask = LayerMask.GetMask("Floor");
+        floorMask = LayerMask.GetMask("mouseRaycast");
+        //floorMask = LayerMask.GetMask("floor");
 
         if (Application.isMobilePlatform)
         {
@@ -249,6 +250,7 @@ public class Player : MonoBehaviour
             { // En caso de colisionar...
                 Vector3 playerToMouse = floorHit.point - transform.position;
                 playerToMouse.y = 0f;
+                //shootingSystem.directionAim = floorHit.point;
 
                 Quaternion newPlayerRotation = Quaternion.LookRotation(playerToMouse);
                 rb.MoveRotation(newPlayerRotation);
