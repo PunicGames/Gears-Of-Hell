@@ -10,7 +10,7 @@ public class FirstAidKit : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Health healthScript = other.gameObject.GetComponent<Health>();
-            SkinnedMeshRenderer smr = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+            MeshRenderer smr = gameObject.GetComponentInChildren<MeshRenderer>();
             if (healthScript != null)
             {
                 var healing = healthScript.maxHealth - healthScript.currentHealth;

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class RotateSelector : MonoBehaviour
 {
+    [SerializeField] bool isLocal = true;
+    [SerializeField] float speed = 5f;
+
     void Update()
     {
-        transform.Rotate(Vector3.up * 50 * Time.deltaTime, Space.Self);
+        if (!isLocal) transform.Rotate(Vector3.up * (speed * 10) * Time.deltaTime,Space.World);
+        else transform.Rotate(Vector3.up * (speed * 10) * Time.deltaTime, Space.Self);
     }
 }

@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3923956822455795553}
-  - {fileID: 7609598420025500454}
+  - {fileID: 3914581530439890180}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f78c960fdf472b43ac06fbb991e59a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2815836429028657037
+--- !u!1 &4402466022865301438
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,37 +85,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7609598420025500454}
-  - component: {fileID: 1987277729388420912}
+  - component: {fileID: 3914581530439890180}
+  - component: {fileID: 143192406167370401}
+  - component: {fileID: 2745031890631347819}
+  - component: {fileID: 6888758592335479410}
   m_Layer: 0
-  m_Name: Med_Kit
+  m_Name: Syringe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7609598420025500454
+--- !u!4 &3914581530439890180
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2815836429028657037}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 396.5907, y: 396.5907, z: 396.5907}
+  m_GameObject: {fileID: 4402466022865301438}
+  m_LocalRotation: {x: 0.043956283, y: 0.70573926, z: -0.31480244, w: 0.6331662}
+  m_LocalPosition: {x: 0, y: 2.24, z: 0}
+  m_LocalScale: {x: 0.74144876, y: 0.74144876, z: 0.5810743}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 731208244242926113}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &1987277729388420912
-SkinnedMeshRenderer:
+  m_LocalEulerAnglesHint: {x: 30, y: 90, z: -22.872}
+--- !u!33 &143192406167370401
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2815836429028657037}
+  m_GameObject: {fileID: 4402466022865301438}
+  m_Mesh: {fileID: 4309010749960864949, guid: e4a7d64dbcf61114da673461bc94f7d5, type: 3}
+--- !u!23 &2745031890631347819
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402466022865301438}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -124,13 +134,13 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
+  m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5408432792050381387, guid: 80407525a6a6f614096dd5db5c10609a, type: 3}
-  - {fileID: 142473395887354925, guid: 80407525a6a6f614096dd5db5c10609a, type: 3}
+  - {fileID: 2100000, guid: 7e5aeb1b1c664244aa3d618cde81422c, type: 2}
+  - {fileID: 2100000, guid: 24ea4c7d8c1c1774aa53cb10e7bf40c1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,20 +161,21 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 989981401615237183, guid: 80407525a6a6f614096dd5db5c10609a, type: 3}
-  m_Bones:
-  - {fileID: 3895820751847283256}
-  - {fileID: 3135000063504360113}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 3135000063504360113}
-  m_AABB:
-    m_Center: {x: 0, y: -0.004119546, z: 9.313226e-10}
-    m_Extent: {x: 0.005129355, y: 0.003903349, z: 0.005129354}
-  m_DirtyAABB: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6888758592335479410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402466022865301438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad9e1ced06e9b74292e64a41733dcdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocal: 1
+  speed: 12
 --- !u!1 &5803499553452770190
 GameObject:
   m_ObjectHideFlags: 0
