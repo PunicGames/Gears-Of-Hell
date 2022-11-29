@@ -60,8 +60,9 @@ public class ShootSystem : MonoBehaviour
     [HideInInspector] public int numBulletsHit = 0;
     [HideInInspector] public int numBulletsMissed = 0;
 
-    // Directiion
-    //public Vector3 directionAim = new Vector3(0f, 0f, 0f);
+    // Bullet colors
+    [SerializeField] private Color albedo;
+    [SerializeField] private Color emissive;
 
     private void Awake()
     {
@@ -179,6 +180,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetLaser(true);
                     bulletParams.SetShootSystem(this);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
+                    bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;
                     audioManager.PlayLaser(selectedGun);
                 }
@@ -192,6 +194,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetLaser(false);
                     bulletParams.SetShootSystem(this);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
+                    bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;
                     audioManager.Play(selectedGun);
                 }
