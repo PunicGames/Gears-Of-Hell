@@ -838,7 +838,7 @@ public class ManageShops : MonoBehaviour
                 if (lvl == 3)
                     UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
-                    UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
+                    UpdateUi(place, perksTexts[idx], (laserShotPrices[lvl + 1]).ToString());
                 break;
             case 2:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[2];
@@ -851,7 +851,7 @@ public class ManageShops : MonoBehaviour
                 if (lvl == 3)
                     UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
-                    UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
+                    UpdateUi(place, perksTexts[idx], (bigShotPrices[lvl + 1]).ToString());
                 break;
             case 3:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[3];
@@ -865,7 +865,7 @@ public class ManageShops : MonoBehaviour
                 if (lvl == 3)
                     UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
-                    UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
+                    UpdateUi(place, perksTexts[idx], (tacticVestPrices[lvl + 1]).ToString());
                 break;
             case 4:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[4];
@@ -878,7 +878,7 @@ public class ManageShops : MonoBehaviour
                 if (lvl == 3)
                     UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
-                    UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
+                    UpdateUi(place, perksTexts[idx], (tacticalBootsPrices[lvl + 1]).ToString());
                 break;
             case 5:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[5];
@@ -891,7 +891,7 @@ public class ManageShops : MonoBehaviour
                 if (lvl == 3)
                     UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
-                    UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
+                    UpdateUi(place, perksTexts[idx], (medicPrices[lvl + 1]).ToString());
                 break;
             case 6:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[6];
@@ -904,7 +904,7 @@ public class ManageShops : MonoBehaviour
                 if (lvl == 3)
                     UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
-                    UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
+                    UpdateUi(place, perksTexts[idx], (electricalBarrierPrices[lvl + 1]).ToString());
                 break;
             case 7:
                 lvl = player.GetComponentInChildren<PerksManager>().perkLevels[7];
@@ -917,7 +917,7 @@ public class ManageShops : MonoBehaviour
                 if (lvl == 3)
                     UpdateUi(place, perksTexts[idx], "MAX. LVL");
                 else
-                    UpdateUi(place, perksTexts[idx], (rapidFirePrices[lvl + 1]).ToString());
+                    UpdateUi(place, perksTexts[idx], (gunsmithPrices[lvl + 1]).ToString());
                 break;
             default:
                 break;
@@ -926,7 +926,7 @@ public class ManageShops : MonoBehaviour
 
     private void UpdateUi(int place, string tT, string cT) {
         titleText[place + 3].text = tT;
-        displaysPerks[place].sprite = spritesPerks[perksNewOldGeneratedIndexes[place]];
+        //displaysPerks[place].sprite = spritesPerks[perksNewOldGeneratedIndexes[place]];
         coinsText[place + 3].text = cT;
         shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString();
     }
