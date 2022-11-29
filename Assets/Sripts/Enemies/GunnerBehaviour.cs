@@ -27,6 +27,10 @@ public class GunnerBehaviour : MonoBehaviour
     Animator animator;
     AudioSource gunAudio;
 
+    // Bullet colors
+    [SerializeField] private Color albedo;
+    [SerializeField] private Color emissive;
+
     private void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -69,6 +73,7 @@ public class GunnerBehaviour : MonoBehaviour
         bulletParams.SetDamage(damage);
         bulletParams.SetLaser(false);
         bulletParams.owner = Bullet.BulletOwner.ENEMY;
+        bulletParams.SetBulletColors(albedo, emissive);
         bulletsInMag--;
         alreadyAttacked = true;
         if (SemiAuto)

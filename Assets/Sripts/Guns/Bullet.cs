@@ -47,6 +47,11 @@ public class Bullet : MonoBehaviour
         sS = ss;
     }
 
+    public void SetBulletColors(Color albedo, Color emissive) {
+        this.GetComponent<Renderer>().material.SetColor("_Color", albedo);
+        this.GetComponent<Renderer>().material.SetColor("_EmissionColor", emissive);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         switch (owner) {
