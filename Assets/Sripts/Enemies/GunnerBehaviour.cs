@@ -13,6 +13,10 @@ public class GunnerBehaviour : MonoBehaviour
     public bool SemiAuto = false;
     public int bulletsPerBurst = 5;
     public float SemiAutoTime = 2f;
+
+    public Transform shootOrigin;
+    [SerializeField] ParticleSystem muzzleVFX;
+
     private int bulletsInMag;
     private int bulletsInBurst;
 
@@ -66,7 +70,7 @@ public class GunnerBehaviour : MonoBehaviour
     {
 
         gunAudio.Play();
-        GameObject b = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+        GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
         b.transform.LookAt(player.transform);
         Bullet bulletParams = b.GetComponent<Bullet>();
         bulletParams.SetForce(bulletSpeed);
@@ -106,7 +110,7 @@ public class GunnerBehaviour : MonoBehaviour
                 bulletsInMag = bulletsPerMag;
             }
         }
-
+        muzzleVFX.Play();
 
 
 

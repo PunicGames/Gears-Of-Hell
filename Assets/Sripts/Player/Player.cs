@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     float camRayLength = 100f;
 
     private Rigidbody rb;
-    private ShootSystem shootingSystem;
+    public ShootSystem shootingSystem { get; private set; }
     private Vector2 CachedMoveInput { get; set; }
     private Vector2 CachedAimInput { get; set; }
 

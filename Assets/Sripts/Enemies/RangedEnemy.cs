@@ -20,6 +20,8 @@ public class RangedEnemy : MonoBehaviour
     Animator animator;
     AudioSource gunAudio;
 
+    public Transform shootOrigin;
+    [SerializeField] ParticleSystem muzzleVFX;
 
     // Bullet colors
     [SerializeField] private Color albedo;
@@ -59,7 +61,7 @@ public class RangedEnemy : MonoBehaviour
         if (!alreadyAttacked)
         {
             gunAudio.Play();
-            GameObject b = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y+1f, transform.position.z), Quaternion.identity);
+            GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
             b.transform.LookAt(player.transform);
             Bullet bulletParams = b.GetComponent<Bullet>();
             bulletParams.SetForce(bulletSpeed);
@@ -68,6 +70,7 @@ public class RangedEnemy : MonoBehaviour
             bulletParams.owner = Bullet.BulletOwner.ENEMY;
             bulletParams.SetBulletColors(albedo, emissive);
             alreadyAttacked = true;
+            muzzleVFX.Play();
             Invoke(nameof(ResetAttack), attackSpeed);
         }
     }

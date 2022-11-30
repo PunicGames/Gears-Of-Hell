@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum effect { HEAL, AMMO, RAPIDFIRE, FAST, VEST }
+public enum effect { HEAL, AMMO}
 
 public class PlayerVFXsManager : MonoBehaviour
 {
     [SerializeField] ParticleSystem HealVFX;
     [SerializeField] ParticleSystem AmmoVFX;
+    [SerializeField] ParticleSystem MuzzleVFX;
     [SerializeField] ParticleSystem RapidFireVFX;
     [SerializeField] ParticleSystem FastBootsVFX;
     [SerializeField] ParticleSystem VestVFX;
 
     private void Start()
     {
-        GetComponentInParent<Player>().onItemTaken += ActivateVFX;
+        Player p = GetComponentInParent<Player>();
+        p.onItemTaken += ActivateConsumableVFX;
+        p.shootingSystem.onShootWeapon += ActivateMuzzleVFX;
     }
-    public void ActivateVFX(effect vfx)
+    private void ActivateConsumableVFX(effect vfx)
     {
         switch (vfx)
         {
@@ -26,35 +29,11 @@ public class PlayerVFXsManager : MonoBehaviour
             case effect.AMMO:
                 AmmoVFX.Play();
                 break;
-            case effect.RAPIDFIRE:
-                RapidFireVFX.Play();
-                break;
-            case effect.FAST:
-                FastBootsVFX.Play();
-                break;
-            case effect.VEST:
-                VestVFX.Play();
-                break;
-            default:
-                break;
         }
     }
-    public void DeactivateVFX(effect vfx)
+    private void ActivateMuzzleVFX()
     {
-        switch (vfx)
-        {
-
-            case effect.RAPIDFIRE:
-                RapidFireVFX.Stop();
-                break;
-            case effect.FAST:
-                FastBootsVFX.Stop();
-                break;
-            case effect.VEST:
-                VestVFX.Stop();
-                break;
-            default:
-                break;
-        }
+        MuzzleVFX.Play();
     }
+    
 }

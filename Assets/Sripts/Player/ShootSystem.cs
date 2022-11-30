@@ -64,6 +64,10 @@ public class ShootSystem : MonoBehaviour
     [SerializeField] private Color albedo;
     [SerializeField] private Color emissive;
 
+    // Delegates
+    public delegate void OnShootWeapon();
+    public OnShootWeapon onShootWeapon;
+
     private void Awake()
     {
         // Platform
@@ -203,6 +207,7 @@ public class ShootSystem : MonoBehaviour
                 guns.getGuns()[selectedGun].bulletsShot++;
             }
 
+            onShootWeapon.Invoke();
 
             if (allowInvoke)
             {
