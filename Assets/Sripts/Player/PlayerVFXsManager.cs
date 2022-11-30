@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public enum effect { HEAL, AMMO}
 
@@ -8,7 +9,11 @@ public class PlayerVFXsManager : MonoBehaviour
 {
     [SerializeField] ParticleSystem HealVFX;
     [SerializeField] ParticleSystem AmmoVFX;
+    
     [SerializeField] ParticleSystem MuzzleVFX;
+
+    [SerializeField] ParticleSystem LaserMuzzleVFX;
+   
     [SerializeField] ParticleSystem RapidFireVFX;
     [SerializeField] ParticleSystem FastBootsVFX;
     [SerializeField] ParticleSystem VestVFX;
@@ -18,6 +23,7 @@ public class PlayerVFXsManager : MonoBehaviour
         Player p = GetComponentInParent<Player>();
         p.onItemTaken += ActivateConsumableVFX;
         p.shootingSystem.onShootWeapon += ActivateMuzzleVFX;
+        
     }
     private void ActivateConsumableVFX(effect vfx)
     {
@@ -31,9 +37,10 @@ public class PlayerVFXsManager : MonoBehaviour
                 break;
         }
     }
-    private void ActivateMuzzleVFX()
+    private void ActivateMuzzleVFX(bool t)
     {
-        MuzzleVFX.Play();
+        if (!t) MuzzleVFX.Play(); else LaserMuzzleVFX.Play();
     }
-    
+   
+
 }
