@@ -65,7 +65,7 @@ public class ShootSystem : MonoBehaviour
     [SerializeField] private Color emissive;
 
     // Delegates
-    public delegate void OnShootWeapon();
+    public delegate void OnShootWeapon(bool t);
     public OnShootWeapon onShootWeapon;
 
     private void Awake()
@@ -87,7 +87,7 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-        
+
     }
 
     private void Start()
@@ -106,7 +106,7 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
-        
+
 
         // Display cursor
         //if (desktop) { 
@@ -169,7 +169,6 @@ public class ShootSystem : MonoBehaviour
             {
                 // Cálculo de spread
                 float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
-
                 // Cálculo de la nueva dirección con spread
                 Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
 
@@ -184,9 +183,10 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetLaser(true);
                     bulletParams.SetShootSystem(this);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
-                    bulletParams.SetBulletColors(albedo, emissive);
+                    //bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;
                     audioManager.PlayLaser(selectedGun);
+                    onShootWeapon.Invoke(true);
                 }
                 else
                 {
@@ -201,13 +201,13 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;
                     audioManager.Play(selectedGun);
+                    onShootWeapon.Invoke(false);
                 }
-
+                anim.SetTrigger("shoot");
                 guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
                 guns.getGuns()[selectedGun].bulletsShot++;
             }
 
-            onShootWeapon.Invoke();
 
             if (allowInvoke)
             {
@@ -313,7 +313,7 @@ public class ShootSystem : MonoBehaviour
                 return;
             }
         }
-        
+
     }
 
     public void ActivateGun(int idx)
