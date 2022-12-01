@@ -120,7 +120,7 @@ public class MainMenu : MonoBehaviour
     public void SelectJacob() {
         characters[previousSelected].SetActive(false);
         characters[0].SetActive(true);
-        characters[0].transform.rotation = characters[previousSelected].transform.rotation;
+        //characters[0].transform.rotation = characters[previousSelected].transform.rotation;
         previousSelected = 0;
     }
 

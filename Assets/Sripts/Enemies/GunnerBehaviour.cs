@@ -70,6 +70,7 @@ public class GunnerBehaviour : MonoBehaviour
     {
 
         gunAudio.Play();
+        animator.SetTrigger("shoot");
         GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
         b.transform.LookAt(player.transform);
         Bullet bulletParams = b.GetComponent<Bullet>();

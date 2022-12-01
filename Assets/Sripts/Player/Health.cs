@@ -25,16 +25,19 @@ public class Health : MonoBehaviour
     private PopUp popup;
     [SerializeField] private Transform popupPosition;
 
-    public delegate void TakeDamageDel();
-
-    public TakeDamageDel takeDamage;
-
     [SerializeField] private AudioClip healClip;
     [SerializeField] private AudioClip deathClip;
     [SerializeField] private AudioClip[] hurtClips;
 
     [HideInInspector]
     private AudioSource source;
+
+    //DELEGATES
+
+    public delegate void TakeDamageDel();
+    public TakeDamageDel takeDamage;
+    public delegate void OnDeath(bool t);
+    public OnDeath onDeath;
 
     private void Awake()
     {
@@ -127,7 +130,7 @@ public class Health : MonoBehaviour
         playerMovement.playerAnimator.SetTrigger("death");
         playerMovement.enabled = false;
 
-
+        onDeath.Invoke(false);
 
         // Faltaría poner sistema de animaciones o audios, etc. Por eso está esto en un método a parte
 

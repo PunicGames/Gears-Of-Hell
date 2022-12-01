@@ -383,6 +383,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    
+    //public void ActivateShootingRigs()
+    //{
+    //    shootingSystem.rig.ActivateRRig(true);
+    //    shootingSystem.rig.ActivateLRig(true);
+    //}
 
 
     // Sistema de tiendas
