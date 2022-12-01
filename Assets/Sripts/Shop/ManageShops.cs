@@ -594,7 +594,6 @@ public class ManageShops : MonoBehaviour
 
     public void BuyGunAmmo1()
     {
-        if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[0]]) return; // Si el jugador no tiene suficientes monedas no compra nada
 
 
         int numGunsHasAlreadyPlayer = 0;
@@ -610,6 +609,8 @@ public class ManageShops : MonoBehaviour
 
         if (numGunsGenerated > 0)  // Se comprará un arma
         {
+            Debug.Log("Se intenta comprar arma por" + gunPrices[gunsAmmoGeneratedIndexes[0]]);
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[0]]) return; // Si el jugador no tiene suficientes monedas no compra nada
             if (playerHasGuns[gunsAmmoGeneratedIndexes[0]]) return; // Si hemos comprado el arma y la tienda todavia no se ha actualizado, salimos del método
             // Se compra el arma
             player.GetComponentInChildren<ShootSystem>().ActivateGun(gunsAmmoGeneratedIndexes[0]);
@@ -625,6 +626,8 @@ public class ManageShops : MonoBehaviour
         }
         else if (numGunsGenerated == 0) // Se comprará munición
         {
+            Debug.Log("Se intenta comprar municion por" + ammoPrices[gunsAmmoGeneratedIndexes[0]]);
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < ammoPrices[gunsAmmoGeneratedIndexes[0]]) return;
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[0]];
             player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[0]].AddAmmo(ammoQ);
             player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[0]]);
@@ -633,7 +636,7 @@ public class ManageShops : MonoBehaviour
     }
     public void BuyGunAmmo2()
     {
-        if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[1]]) return;
+
 
         int numGunsHasAlreadyPlayer = 0;
         bool[] playerHasGuns = player.GetComponentInChildren<ShootSystem>().availableGuns;
@@ -647,6 +650,9 @@ public class ManageShops : MonoBehaviour
 
         if (numGunsGenerated > 1) // Se compra un arma
         {
+            Debug.Log("Se intenta comprar arma por" + gunPrices[gunsAmmoGeneratedIndexes[1]]);
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[1]]) return;
+
             if (playerHasGuns[gunsAmmoGeneratedIndexes[1]]) return; // Si hemos comprado el arma y la tienda todavia no se ha actualizado, salimos del método
 
             if (numGunsHasAlreadyPlayer == 3 && playerHasGuns[0]) // Si el jugador tiene 3 armas y una de ellas es la pistola, se sustituye la pistola por la nueva
@@ -661,6 +667,8 @@ public class ManageShops : MonoBehaviour
         }
         else // Se compra munición 
         {
+            Debug.Log("Se intenta comprar municion por" + ammoPrices[gunsAmmoGeneratedIndexes[1]]);
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < ammoPrices[gunsAmmoGeneratedIndexes[1]]) return;
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[1]];
             player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[1]].AddAmmo(ammoQ);
             player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[1]]);
@@ -669,7 +677,7 @@ public class ManageShops : MonoBehaviour
     }
     public void BuyGunAmmo3()
     {
-        if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[2]]) return;
+
 
         int numGunsHasAlreadyPlayer = 0;
         bool[] playerHasGuns = player.GetComponentInChildren<ShootSystem>().availableGuns;
@@ -683,6 +691,8 @@ public class ManageShops : MonoBehaviour
 
         if (numGunsGenerated > 2) // Se compra un arma
         {
+            Debug.Log("Se intenta comprar arma por" + gunPrices[gunsAmmoGeneratedIndexes[2]]);
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < gunPrices[gunsAmmoGeneratedIndexes[2]]) return;
 
             if (playerHasGuns[gunsAmmoGeneratedIndexes[2]]) return; // Si hemos comprado el arma y la tienda todavia no se ha actualizado, salimos del método
             if (numGunsHasAlreadyPlayer == 3 && playerHasGuns[0]) // Si el jugador tiene 3 armas y una de ellas es la pistola, se sustituye la pistola por la nueva
@@ -697,7 +707,8 @@ public class ManageShops : MonoBehaviour
         }
         else // Se compra munición
         {
-            Debug.Log("Se compra munición");
+            Debug.Log("Se intenta comprar municion por" + ammoPrices[gunsAmmoGeneratedIndexes[2]]);
+            if (player.GetComponent<CoinSystem>().totalCoinsInGame < ammoPrices[gunsAmmoGeneratedIndexes[2]]) return;
             int ammoQ = ammoQuantity[gunsAmmoGeneratedIndexes[2]];
             player.GetComponentInChildren<ShootSystem>().guns.getGuns()[gunsAmmoGeneratedIndexes[2]].AddAmmo(ammoQ);
             player.GetComponent<CoinSystem>().SpendCoin(ammoPrices[gunsAmmoGeneratedIndexes[2]]);
@@ -926,7 +937,7 @@ public class ManageShops : MonoBehaviour
 
     private void UpdateUi(int place, string tT, string cT) {
         titleText[place + 3].text = tT;
-        //displaysPerks[place].sprite = spritesPerks[perksNewOldGeneratedIndexes[place]];
+        displaysPerks[place].sprite = spritesPerks[perksNewOldGeneratedIndexes[place]];
         coinsText[place + 3].text = cT;
         shopCoins.text = player.GetComponent<CoinSystem>().totalCoinsInGame.ToString();
     }
