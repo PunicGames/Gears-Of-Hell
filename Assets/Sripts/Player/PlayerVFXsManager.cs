@@ -23,6 +23,7 @@ public class PlayerVFXsManager : MonoBehaviour
         Player p = GetComponentInParent<Player>();
         p.onItemTaken += ActivateConsumableVFX;
         p.shootingSystem.onShootWeapon += ActivateMuzzleVFX;
+        p.shootingSystem.onSwapWeapon += ChangeMuzzlePosition;
         
     }
     private void ActivateConsumableVFX(effect vfx)
@@ -41,6 +42,10 @@ public class PlayerVFXsManager : MonoBehaviour
     {
         if (!t) MuzzleVFX.Play(); else LaserMuzzleVFX.Play();
     }
-   
+   private void ChangeMuzzlePosition(Vector3 p)
+    {
+        MuzzleVFX.transform.localPosition = new Vector3(p.x,p.y,p.z+0.230F);
+        LaserMuzzleVFX.transform.localPosition = new Vector3(p.x, p.y, p.z - 0.230F);
+    }
 
 }
