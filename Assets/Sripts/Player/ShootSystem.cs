@@ -9,9 +9,9 @@ public class ShootSystem : MonoBehaviour
     // Weapon personalization
     [SerializeField] private GameObject[] weapon_meshes;
     [SerializeField] private Transform[] weapon_origins;
-    [SerializeField] RHandRigBehaviour r_hand_rig;
-    
-    
+    [SerializeField] public PlayerRigBehaviour rig;
+
+
 
     // Guns
     [HideInInspector] public PlayerGuns guns;
@@ -93,10 +93,7 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-        availableGuns[1] = true;
-        availableGuns[2] = true;
-        availableGuns[3] = true;
-        availableGuns[4] = true;
+       
 
     }
 
@@ -253,6 +250,13 @@ public class ShootSystem : MonoBehaviour
             audioManager.PlaySecundary(selectedGun);
             reloading = true;
             rechargingDisplay.SetActive(true);
+
+            rig.ActivateRRig(false);
+            rig.ActivateLRig(false);
+            if (selectedGun == 0)
+                anim.SetBool("isPistol", true); else anim.SetBool("isPistol", false);
+            anim.SetTrigger("Reload");
+
             Invoke("ReloadFinished", guns.getGuns()[selectedGun].reloadTime);
         }
     }
@@ -271,7 +275,9 @@ public class ShootSystem : MonoBehaviour
             guns.getGuns()[selectedGun].bulletsLeftInMagazine = guns.getGuns()[selectedGun].totalBullets + bulletsInMagazine;
             guns.getGuns()[selectedGun].totalBullets = 0;
         }
-
+        if (selectedGun > 1)
+            rig.ActivateLRig(true,2);
+        rig.ActivateRRig(true,2);
         reloading = false;
         rechargingDisplay.SetActive(false);
         Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
@@ -300,12 +306,14 @@ public class ShootSystem : MonoBehaviour
                 if (selectedGun > 1)
                 {
                     anim.SetBool("isRifle", true);
-                    r_hand_rig.ChangeTargetRigPos(1);
+                    rig.ChangeRightTargetRigPos(1);
+                    rig.ActivateLRig(true);
                 }
                 else
                 {
                     anim.SetBool("isRifle", false);
-                    r_hand_rig.ChangeTargetRigPos(0);
+                    rig.ChangeRightTargetRigPos(0);
+                    rig.ActivateLRig(false);
 
                 }
 
@@ -331,13 +339,14 @@ public class ShootSystem : MonoBehaviour
                 if (selectedGun > 1)
                 {
                     anim.SetBool("isRifle", true);
-                    r_hand_rig.ChangeTargetRigPos(1);
+                    rig.ChangeRightTargetRigPos(1);
+                    rig.ActivateLRig(true);
                 }
                 else
                 {
                     anim.SetBool("isRifle", false);
-                    r_hand_rig.ChangeTargetRigPos(0);
-
+                    rig.ChangeRightTargetRigPos(0);
+                    rig.ActivateLRig(true);
                 }
 
                 onSwapWeapon.Invoke(weapon_origins[selectedGun].localPosition);
