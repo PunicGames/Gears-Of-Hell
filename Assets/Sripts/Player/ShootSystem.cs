@@ -9,6 +9,9 @@ public class ShootSystem : MonoBehaviour
     // Weapon personalization
     [SerializeField] private GameObject[] weapon_meshes;
     [SerializeField] private Transform[] weapon_origins;
+    [SerializeField] RHandRigBehaviour r_hand_rig;
+    
+    
 
     // Guns
     [HideInInspector] public PlayerGuns guns;
@@ -68,6 +71,9 @@ public class ShootSystem : MonoBehaviour
     public delegate void OnShootWeapon(bool t);
     public OnShootWeapon onShootWeapon;
 
+    public delegate void OnSwapWeapon(Vector3 p);
+    public OnSwapWeapon onSwapWeapon;
+
     private void Awake()
     {
         // Platform
@@ -87,6 +93,10 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
+        availableGuns[1] = true;
+        availableGuns[2] = true;
+        availableGuns[3] = true;
+        availableGuns[4] = true;
 
     }
 
@@ -287,9 +297,20 @@ public class ShootSystem : MonoBehaviour
                 // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque debería llamarse mejor al finalizar la animación)
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS MÁS ARRIBA)
-                if (selectedGun == 2 || selectedGun == 3 || selectedGun == 4)
+                if (selectedGun > 1)
+                {
                     anim.SetBool("isRifle", true);
-                else anim.SetBool("isRifle", false);
+                    r_hand_rig.ChangeTargetRigPos(1);
+                }
+                else
+                {
+                    anim.SetBool("isRifle", false);
+                    r_hand_rig.ChangeTargetRigPos(0);
+
+                }
+
+                onSwapWeapon.Invoke(weapon_origins[selectedGun].localPosition);
+
                 return;
             }
         }
@@ -307,9 +328,19 @@ public class ShootSystem : MonoBehaviour
 
                 ResetShot();
                 // AQUI VA LA ANIMACIÓN DE CAMBIO DE ARMA
-                if (selectedGun == 2 || selectedGun == 3 || selectedGun == 4)
+                if (selectedGun > 1)
+                {
                     anim.SetBool("isRifle", true);
-                else anim.SetBool("isRifle", false);
+                    r_hand_rig.ChangeTargetRigPos(1);
+                }
+                else
+                {
+                    anim.SetBool("isRifle", false);
+                    r_hand_rig.ChangeTargetRigPos(0);
+
+                }
+
+                onSwapWeapon.Invoke(weapon_origins[selectedGun].localPosition);
                 return;
             }
         }
