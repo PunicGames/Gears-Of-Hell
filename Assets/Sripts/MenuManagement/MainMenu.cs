@@ -26,22 +26,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject loaderUI;
     [SerializeField] private Slider progressSlider;
 
-    private void Awake()
-    {
-        if (Application.isMobilePlatform)
-        {
-            PlayerPrefs.SetInt("bloomEffect", 1);
-            PlayerPrefs.SetInt("colorGrading", 1);
-            desktop = false;
-        }
-        else if (SystemInfo.deviceType == DeviceType.Desktop)
-        {
-            PlayerPrefs.SetInt("bloomEffect", 1);
-            PlayerPrefs.SetInt("colorGrading", 1);
-            desktop = true;
-        }
-    }
-
     private void Start()
     {
         cursorHotSpot = new Vector2(0, 0);
@@ -130,4 +114,5 @@ public class MainMenu : MonoBehaviour
         characters[idx].transform.rotation = characters[previousSelected].transform.rotation;
         previousSelected = idx;
     }
+
 }

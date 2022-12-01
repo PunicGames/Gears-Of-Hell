@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class SettingsMenu : MonoBehaviour
 
     [SerializeField] private GameObject PcGameplay;
     [SerializeField] private GameObject MobileGameplay;
+
+    // Toggles
+    [SerializeField] private Toggle bloomToggle;
+    [SerializeField] private Toggle colorGradingToggle;
 
     private void Awake()
     {
@@ -29,6 +34,11 @@ public class SettingsMenu : MonoBehaviour
         }
 
         //desktop = false;
+    }
+
+    private void Start()
+    {
+        UpdateToggles();
     }
 
     public void SetVolume(float volume) {
@@ -108,5 +118,10 @@ public class SettingsMenu : MonoBehaviour
 
         GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateColorGrading(option);
 
+    }
+
+    private void UpdateToggles() {
+        bloomToggle.isOn = PlayerPrefs.GetInt("bloomEffect") == 0 ? false : true;
+        colorGradingToggle.isOn = PlayerPrefs.GetInt("colorGrading") == 0 ? false : true;
     }
 }
