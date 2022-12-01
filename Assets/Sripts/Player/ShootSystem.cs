@@ -276,8 +276,8 @@ public class ShootSystem : MonoBehaviour
             guns.getGuns()[selectedGun].totalBullets = 0;
         }
         if (selectedGun > 1)
-            rig.ActivateLRig(true,2);
-        rig.ActivateRRig(true,2);
+            rig.ActivateLRig(true,1);
+        rig.ActivateRRig(true,1);
         reloading = false;
         rechargingDisplay.SetActive(false);
         Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar

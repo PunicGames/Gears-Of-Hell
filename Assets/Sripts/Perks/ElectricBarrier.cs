@@ -8,14 +8,14 @@ public class ElectricBarrier : MonoBehaviour
 
     private Health healthScript;
 
-    private GameObject visualBarrier;
+    [SerializeField]private GameObject visualBarrier;
 
     [SerializeField] private AudioSource electricSound;
 
     private void Start()
     {
         healthScript = GetComponentInParent<Health>();
-        visualBarrier = GameObject.Find("VisualElectricBarrier");
+        //visualBarrier = GameObject.Find("VisualElectricBarrier");
         gameObject.SetActive(false);
     }
 

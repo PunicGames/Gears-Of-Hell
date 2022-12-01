@@ -1105,7 +1105,6 @@ MonoBehaviour:
   renderers:
   - {fileID: 6290385385806560542}
   - {fileID: 5907095846821129218}
-  - {fileID: 2319227297413681669}
 --- !u!1 &935098715315494881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2415,6 +2414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 5
+  visualBarrier: {fileID: 7782061365324300459}
   electricSound: {fileID: 362654613469192440}
 --- !u!82 &362654613469192440
 AudioSource:
@@ -4446,6 +4446,22 @@ PrefabInstance:
     - target: {fileID: 5043301841235702228, guid: 503914f6e076d6643bcfa982771ef4bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529914869953622915, guid: 503914f6e076d6643bcfa982771ef4bf, type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529914869953622915, guid: 503914f6e076d6643bcfa982771ef4bf, type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 0.0234375
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529914869953622915, guid: 503914f6e076d6643bcfa982771ef4bf, type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529914869953622915, guid: 503914f6e076d6643bcfa982771ef4bf, type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 503914f6e076d6643bcfa982771ef4bf, type: 3}

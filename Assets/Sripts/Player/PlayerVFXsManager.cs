@@ -45,7 +45,7 @@ public class PlayerVFXsManager : MonoBehaviour
    private void ChangeMuzzlePosition(Vector3 p)
     {
         MuzzleVFX.transform.localPosition = new Vector3(p.x,p.y,p.z+0.230F);
-        LaserMuzzleVFX.transform.localPosition = new Vector3(p.x, p.y, p.z - 0.230F);
+        LaserMuzzleVFX.transform.localPosition = new Vector3(p.x, p.y, p.z+0.230F);
     }
 
 }
