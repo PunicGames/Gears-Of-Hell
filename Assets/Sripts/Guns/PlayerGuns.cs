@@ -36,7 +36,7 @@ public class PlayerGuns
     private void InitializeSubfusil()
     {
         Gun subfusil = new Gun();
-        subfusil.bulletDamage = 5;
+        subfusil.bulletDamage = 8;
         subfusil.magazineSize = 30;
         subfusil.bulletsLeftInMagazine = subfusil.magazineSize;
         subfusil.maxTotalBullets = 210;
@@ -55,7 +55,7 @@ public class PlayerGuns
     private void InitializeRifle()
     {
         Gun rifle = new Gun();
-        rifle.bulletDamage = 30;
+        rifle.bulletDamage = 15;
         rifle.magazineSize = 25;
         rifle.bulletsLeftInMagazine = rifle.magazineSize;
         rifle.maxTotalBullets = 250;
@@ -65,8 +65,8 @@ public class PlayerGuns
         rifle.shootForce = 25;
         rifle.spread = 0;
         rifle.reloadTime = 1;
-        rifle.timeBetweenShots = 0.3f;
-        rifle.timeBetweenShooting = 0.3f;
+        rifle.timeBetweenShots = 0.4f;
+        rifle.timeBetweenShooting = 0.4f;
         rifle.automaticGun = true;
         existingGuns[2] = rifle;
     }
@@ -74,7 +74,7 @@ public class PlayerGuns
     private void InitializeSniper()
     {
         Gun sniper = new Gun();
-        sniper.bulletDamage = 50;
+        sniper.bulletDamage = 60;
         sniper.magazineSize = 5;
         sniper.bulletsLeftInMagazine = sniper.magazineSize;
         sniper.maxTotalBullets = 20;
@@ -85,7 +85,7 @@ public class PlayerGuns
         sniper.spread = 0.0f;
         sniper.reloadTime = 2.0f;
         sniper.timeBetweenShots = 0.0f;
-        sniper.timeBetweenShooting = 2.5f;
+        sniper.timeBetweenShooting = 2.0f;
         sniper.automaticGun = false;
         existingGuns[3] = sniper;
     }
@@ -93,10 +93,10 @@ public class PlayerGuns
     private void InitializeShotgun()
     {
         Gun shotgun = new Gun();
-        shotgun.bulletDamage = 7;
+        shotgun.bulletDamage = 8;
         shotgun.magazineSize = 30;
         shotgun.bulletsLeftInMagazine = shotgun.magazineSize;
-        shotgun.maxTotalBullets = shotgun.magazineSize * 4;
+        shotgun.maxTotalBullets = shotgun.magazineSize * 5;
         shotgun.totalBullets = shotgun.maxTotalBullets - shotgun.magazineSize;
         shotgun.bulletsShot = 0;
         shotgun.bulletsPerTap = 1;
@@ -104,7 +104,7 @@ public class PlayerGuns
         shotgun.spread = 0.25f;
         shotgun.reloadTime = 2.0f;
         shotgun.timeBetweenShots = 0.0f;
-        shotgun.timeBetweenShooting = 1.5f;
+        shotgun.timeBetweenShooting = 1.0f;
         shotgun.automaticGun = false;
         existingGuns[4] = shotgun;
     }
