@@ -9,7 +9,7 @@ public class WorkerBehavior : MonoBehaviour
 
     [SerializeField] float timeBetweenAttacks;
     [SerializeField] int attackDamage = 10;
-    [SerializeField][Range(1, 3)] int numberOfAttacks = 1;
+    [SerializeField] [Range(1, 3)] int numberOfAttacks = 1;
     [SerializeField] float attack1Speed = 1;
     [SerializeField] float attack2Speed = 1;
     [SerializeField] float attack3Speed = 1;
@@ -29,6 +29,7 @@ public class WorkerBehavior : MonoBehaviour
 
     private void Start()
     {
+
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -60,7 +61,6 @@ public class WorkerBehavior : MonoBehaviour
             animator.SetBool("Moving", false);
 
         }
-
         Chase();
     }
     private void Chase()
