@@ -465,6 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Prospector: {fileID: 7922977577974309430}
+  m_ProspectorHealth: {fileID: 0}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -741,7 +742,7 @@ MonoBehaviour:
   items:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
-  enemyType: 0
+  enemyType: 6
 --- !u!136 &6212409924883035094
 CapsuleCollider:
   m_ObjectHideFlags: 0

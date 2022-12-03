@@ -6,8 +6,14 @@ public class outerRing : MonoBehaviour
 {
 
     [SerializeField] private ProspectorBehaviour m_Prospector;
-
     [SerializeField] private LayerMask m_LayerMask;
+
+    private SphereCollider sC;
+
+    private void Start()
+    {
+        sC = GetComponent<SphereCollider>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,20 +36,35 @@ public class outerRing : MonoBehaviour
     public int checkNumEnemiesInRange()
     {
         // Checks for number of enemies
-        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
         return hitColliders.Length;
     }
 
     public float checkEnemiesHealthStatus() {
-        // TODO: Quitar de la ecuación la vida propia y arreglar el número de colisionadores
+        // TODO: Arreglar el número de colisionadores
 
         float healthRatio = 0.0f;
-        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
+
         // Checks for number of enemies
-        foreach (Collider eC in hitColliders) { 
-            
+        //Debug.Log("Num enemies in range (counting prospector): " + hitColliders.Length);
+        foreach (Collider eC in hitColliders) {
+            EnemyHealth eH = eC.gameObject.GetComponent<EnemyHealth>();
+            if (eH.enemyType != EnemyHealth.EnemyType.FOREMAN)
+            {
+                // Health ratio only based on surrounding enemies
+                healthRatio += ((float)eH.currentHealth / (float)eH.startingHealth);
+                //Debug.Log("Current Health: " + eH.currentHealth + ". Max Health: " + eH.startingHealth+ ". HealthRatio: " + healthRatio);
+            }
         }
 
-        return 1.0f;
+
+        if(hitColliders.Length > 1)
+            healthRatio /= (float)(hitColliders.Length - 1);
+        Debug.Log("HealthRatio: " + healthRatio);
+        //else
+        //    healthRatio = 1.0f; // 1 is returned in case no enemies in Foremans range for the mathematical function in ProspectorBehavour when calculating VU.
+
+        return healthRatio;
     }
 }
