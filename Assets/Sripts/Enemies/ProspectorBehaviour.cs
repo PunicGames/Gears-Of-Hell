@@ -27,7 +27,7 @@ public class ProspectorBehaviour : MonoBehaviour
     private bool casting = false;
 
     // Utility system variables
-    [SerializeField] private EnemyHealth m_prospectorHealth;
+    private EnemyHealth m_prospectorHealth;
     private Health m_playerHealth;
     private float currentProspectorHealthRate;
     private float enemiesHealthStatus;
@@ -113,15 +113,15 @@ public class ProspectorBehaviour : MonoBehaviour
         // Variables to make a decision
         numEnemiesInRange = m_outerRing.checkNumEnemiesInRange();
         enemiesHealthStatus = m_outerRing.checkEnemiesHealthStatus();
-        currentPlayerHealthRate = m_playerHealth.currentHealth / m_playerHealth.maxHealth;
-        currentProspectorHealthRate = (Mathf.Pow(m_prospectorHealth.startingHealth, 3f) - Mathf.Pow(m_prospectorHealth.currentHealth, 3f)) / (Mathf.Pow(m_prospectorHealth.startingHealth, 3f));
+        currentPlayerHealthRate = (float)m_playerHealth.currentHealth / (float)m_playerHealth.maxHealth;
+        currentProspectorHealthRate = m_prospectorHealth.startingHealth / m_prospectorHealth.startingHealth; // No se usa. Probablemente hay que borrarla.
 
         // DECISION BASED ON VARIABLES
         // -------- Functions --------
         float VJ = currentPlayerHealthRate;
         int NW = numEnemiesInRange > 3 ? 1 : 0; // Have in mind the foreman adds up 1 in the numEnemiesInRange variable.
-        float VP = currentProspectorHealthRate;
-        float VU = 1 - enemiesHealthStatus;
+        float VP = (Mathf.Pow(m_prospectorHealth.startingHealth, 3f) - Mathf.Pow(m_prospectorHealth.currentHealth, 3f)) / (Mathf.Pow(m_prospectorHealth.startingHealth, 3f));
+        float VU = enemiesHealthStatus;
 
         Debug.Log("VJ: " + VJ);
         Debug.Log("NW: " + NW);
@@ -131,14 +131,19 @@ public class ProspectorBehaviour : MonoBehaviour
         // Utility system
         float castVelocityValue = 0.3f * VJ + 0.7f * NW;
         float castOwnCure = VP;
-        float castAreaCure = 0.8f * VU + 0.2f * VP;
+        float castAreaCure = 0.85f * VU + 0.15f * VP;
 
         Debug.Log("CastVelocityValue: " + castVelocityValue);
         Debug.Log("CastOwnCure: " + castOwnCure);
         Debug.Log("CastAreaCure: " + castAreaCure);
 
+        // Decision maker
+        if (castVelocityValue >= castOwnCure && castVelocityValue >= castAreaCure) { 
+            
+        }
+        
 
-        // BORRAR
+        // BORRAR Y TRASLADAR A FUNCIONES DE CASTEO
         casting = false;
     }
 
