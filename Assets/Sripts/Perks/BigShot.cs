@@ -7,11 +7,12 @@ public class BigShot : MonoBehaviour
     private float defScaleFactor;
     public float bufScaleFactor;
 
+    [SerializeField] private GameObject shootObject;
     private ShootSystem shootScript;
 
     private void Start()
     {
-        shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
+        shootScript = shootObject.GetComponent<ShootSystem>();
         defScaleFactor = shootScript.scaleFactor;
         gameObject.SetActive(false);
     }

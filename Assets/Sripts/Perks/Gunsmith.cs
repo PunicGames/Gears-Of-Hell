@@ -7,11 +7,12 @@ public class Gunsmith : MonoBehaviour
     public float ammoRegenRate;
     public int ammoRegenAmount;
 
+    [SerializeField] private GameObject shootObject;
     private ShootSystem shootScript;
 
     private void Start()
     {
-        shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
+        shootScript = shootObject.GetComponent<ShootSystem>();
         gameObject.SetActive(false);
     }
 

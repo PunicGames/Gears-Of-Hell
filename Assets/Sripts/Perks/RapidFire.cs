@@ -8,11 +8,12 @@ public class RapidFire : MonoBehaviour
     private float defAttackSpeed;
     public float bufAttackSpeed;
 
+    [SerializeField] private GameObject shootObject;
     private ShootSystem shootScript;
 
     private void Start()
     {
-        shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
+        shootScript = shootObject.GetComponent<ShootSystem>();
         defAttackSpeed = shootScript.guns.getGuns()[shootScript.selectedGun].timeBetweenShots;
         gameObject.SetActive(false);
     }

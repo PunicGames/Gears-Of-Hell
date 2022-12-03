@@ -7,11 +7,12 @@ public class LaserShot : MonoBehaviour
     private float defBulletForce;
     public float bufBulletForce;
 
+    [SerializeField] private GameObject shootObject;
     private ShootSystem shootScript;
 
     private void Start()
     {
-        shootScript = GameObject.Find("ShootSystem").GetComponent<ShootSystem>();
+        shootScript = shootObject.GetComponent<ShootSystem>();
         defBulletForce = shootScript.guns.getGuns()[shootScript.selectedGun].shootForce;
         gameObject.SetActive(false);
     }

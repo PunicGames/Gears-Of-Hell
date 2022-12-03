@@ -184,15 +184,15 @@ public class PerksManager : MonoBehaviour
         tacticalBootsFactor = new float[maxPerksLevel];
 
         //level 1
-        tacticalBootsFactor[0] = 1.2f;
+        tacticalBootsFactor[0] = 1.1f;
         //level 2
-        tacticalBootsFactor[1] = 1.4f;
+        tacticalBootsFactor[1] = 1.2f;
         //level 3
-        tacticalBootsFactor[2] = 1.6f;
+        tacticalBootsFactor[2] = 1.3f;
         //level 4
-        tacticalBootsFactor[3] = 1.8f;
+        tacticalBootsFactor[3] = 1.4f;
         //level 5
-        tacticalBootsFactor[4] = 2f;
+        tacticalBootsFactor[4] = 1.5f;
     }
 
     private void InitializeMedicFactors()
