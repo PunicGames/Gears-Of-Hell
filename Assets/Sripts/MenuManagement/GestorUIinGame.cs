@@ -121,4 +121,7 @@ public class GestorUIinGame : MonoBehaviour
         float acc = ((float)bHit/((float)bHit + (float)bMissed))*100;
         accuracy.text = System.Math.Round(acc, 2) + "%";
     }
+
+    
+
 }

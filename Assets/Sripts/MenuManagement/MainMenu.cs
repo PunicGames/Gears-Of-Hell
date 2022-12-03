@@ -26,18 +26,26 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject loaderUI;
     [SerializeField] private Slider progressSlider;
 
+    List<string> scenes = new List<string>(); 
+
     private void Start()
     {
+
+        scenes.Add("MainScene");
+        scenes.Add("MultiplayerScene");
         cursorHotSpot = new Vector2(0, 0);
         //if (desktop)
         //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     public void PlayGame() {
-        StartCoroutine(LoadScene_Coroutine());
+        StartCoroutine(LoadScene_Coroutine(0));
+    }
+    public void PlayOnlineGame()
+    {
+        StartCoroutine(LoadScene_Coroutine(1));
     }
 
-    
 
     public void MenuToSelector() {
         //characters[selectedCharacter].SetActive(true);
@@ -60,11 +68,11 @@ public class MainMenu : MonoBehaviour
         //characters[selectedCharacter].SetActive(true);
     }
 
-    private IEnumerator LoadScene_Coroutine() {
+    private IEnumerator LoadScene_Coroutine(int n) {
         progressSlider.value = 0;
         loaderUI.SetActive(true);
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("MainScene");
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scenes[n]);
         asyncOperation.allowSceneActivation = false;
         float progress = 0;
         while (!asyncOperation.isDone) {
@@ -77,8 +85,7 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
     }
-
-
+  
 
     // ---------- CHARACTERS SELECTOR IN BESTIARY --------------
     //public void SelectJacob()
