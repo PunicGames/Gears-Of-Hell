@@ -150,4 +150,10 @@ public class WorkerBehavior : MonoBehaviour
 
     }
 
+    public void UpgradeAttackSpeed() {
+        attack1Speed = 2.5f;
+        attack2Speed = 1.5f;
+        attack3Speed = 1.2f;
+    }
+
 }
