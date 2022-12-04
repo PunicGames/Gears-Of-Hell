@@ -24,7 +24,7 @@ public class PopupBehaviour : MonoBehaviour
         textMesh.sortingOrder = sortingOrder;
 
         // Movemos el contenedor de texto un poco de forma aleatoria para que tenga más gracia
-        float offsetXaxis = Random.Range(-0.8f, 0.8f);
+        float offsetXaxis = Random.Range(-0.5f, 0.5f);
         float offsetYaxis = Random.Range(-0.2f, 0.2f);
         Vector3 offsetVector = new Vector3(offsetXaxis, offsetYaxis, 0f);
         transform.position += offsetVector;

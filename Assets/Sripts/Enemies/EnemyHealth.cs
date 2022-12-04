@@ -138,4 +138,10 @@ public class EnemyHealth : MonoBehaviour
     {
         Destroy(gameObject, timeUntilDestroy);
     }
+
+    public void Heal(int hp) { 
+        int hpHealed = (hp > startingHealth - currentHealth) ? startingHealth - currentHealth : hp;
+        popup.Create(popupPosition.position, hpHealed, PopUp.TypePopUp.LIFE, true, 0.5f);
+        currentHealth += hpHealed;
+    }
 }

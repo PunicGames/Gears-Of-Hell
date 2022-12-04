@@ -76,8 +76,7 @@ public class ProspectorBehaviour : MonoBehaviour
                     casting = true;
                     UtilityCasting();
                 }
-
-                currentState = State.CHASING;
+                
                 break;
             default:
                 break;
@@ -121,7 +120,7 @@ public class ProspectorBehaviour : MonoBehaviour
         float VJ = currentPlayerHealthRate;
         int NW = numEnemiesInRange > 3 ? 1 : 0; // Have in mind the foreman adds up 1 in the numEnemiesInRange variable.
         float VP = (Mathf.Pow(m_prospectorHealth.startingHealth, 3f) - Mathf.Pow(m_prospectorHealth.currentHealth, 3f)) / (Mathf.Pow(m_prospectorHealth.startingHealth, 3f));
-        float VU = enemiesHealthStatus;
+        float VU = 1 - enemiesHealthStatus;
 
         Debug.Log("VJ: " + VJ);
         Debug.Log("NW: " + NW);
@@ -138,13 +137,18 @@ public class ProspectorBehaviour : MonoBehaviour
         Debug.Log("CastAreaCure: " + castAreaCure);
 
         // Decision maker
-        if (castVelocityValue >= castOwnCure && castVelocityValue >= castAreaCure) { 
-            
+        if (castVelocityValue >= castOwnCure && castVelocityValue >= castAreaCure)
+        {
+            animator.SetTrigger("IncreaseAttackSpeed");
+        }
+        else if (castOwnCure >= castAreaCure)
+        {
+            animator.SetTrigger("Heal");
+        }
+        else {
+            animator.SetTrigger("HealAround");
         }
         
-
-        // BORRAR Y TRASLADAR A FUNCIONES DE CASTEO
-        casting = false;
     }
 
     private void Chase()
@@ -153,14 +157,42 @@ public class ProspectorBehaviour : MonoBehaviour
         animator.SetBool("isMoving", true);
     }
 
-    private void CastVelocityUpgrade() { 
+    public void CastVelocityUpgrade() {
+        Collider[] hitColliders = m_outerRing.GetEnemiesInRange();
+        foreach(Collider collider in hitColliders) {
 
+            // TODO: Wait for more behaviours
+
+            if (collider != null) { // In case an enemy died while receiving and checking the loop
+                // Increase Attack of different enemies
+                if (collider.gameObject.GetComponent<RangedEnemy>() != null) {
+                    // RangedEnemy
+                    collider.gameObject.GetComponent<RangedEnemy>().UpgradeAttackSpeed();
+                } else if (collider.gameObject.GetComponent<WorkerBehavior>() != null) {
+                    // Worker
+                    collider.gameObject.GetComponent<WorkerBehavior>().UpgradeAttackSpeed();
+                }
+            }
+        }
     }
-    private void CastOwnCure() { 
-
+    public void CastOwnCure() {
+        m_prospectorHealth.Heal(100);
     }
-    private void CastAreaCure() { 
+    public void CastAreaCure() {
+        Collider[] hitColliders = m_outerRing.GetEnemiesInRange();
+        foreach (Collider eC in hitColliders)
+        {
+            EnemyHealth eH = eC.gameObject.GetComponent<EnemyHealth>();
+            if (eH.enemyType != EnemyHealth.EnemyType.FOREMAN) {
+                eH.Heal(20);
+            }
+        }
+    }
 
+    public void ResetCasting() {
+        Debug.Log("LLEGA");
+        casting = false;
+        currentState = State.CHASING;
     }
 
 }

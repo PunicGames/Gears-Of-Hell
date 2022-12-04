@@ -90,4 +90,9 @@ public class RangedEnemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
+    public void UpgradeAttackSpeed()
+    {
+        attackSpeed = 1.6f;
+    }
 }

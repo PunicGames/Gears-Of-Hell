@@ -47,7 +47,6 @@ public class outerRing : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
 
         // Checks for number of enemies
-        //Debug.Log("Num enemies in range (counting prospector): " + hitColliders.Length);
         foreach (Collider eC in hitColliders) {
             EnemyHealth eH = eC.gameObject.GetComponent<EnemyHealth>();
             if (eH.enemyType != EnemyHealth.EnemyType.FOREMAN)
@@ -61,10 +60,14 @@ public class outerRing : MonoBehaviour
 
         if(hitColliders.Length > 1)
             healthRatio /= (float)(hitColliders.Length - 1);
+        else
+            healthRatio = 1.0f; // 1 is returned in case no enemies in Foremans range for the mathematical function in ProspectorBehavour when calculating VU.
         Debug.Log("HealthRatio: " + healthRatio);
-        //else
-        //    healthRatio = 1.0f; // 1 is returned in case no enemies in Foremans range for the mathematical function in ProspectorBehavour when calculating VU.
 
         return healthRatio;
+    }
+
+    public Collider[] GetEnemiesInRange() { 
+        return Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
     }
 }
