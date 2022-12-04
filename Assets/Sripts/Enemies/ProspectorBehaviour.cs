@@ -34,7 +34,12 @@ public class ProspectorBehaviour : MonoBehaviour
     private float currentPlayerHealthRate;
     private int numEnemiesInRange;
 
-
+    // Hiding variables
+    [SerializeField] private bool ableToHide;
+    [SerializeField] private Transform[] HidingSpots;
+    private Transform targetHideSpot;
+    private bool hiden = false;
+    private bool hiding = false;
 
     private void Start()
     {
@@ -60,14 +65,27 @@ public class ProspectorBehaviour : MonoBehaviour
             case State.CHASING:
                 if (!insideOuterRing || (insideOuterRing && !insideInnerRing && fromOutside))
                 {
-                    Chase();
+                    Chase(player.position);
                 }
                 else {
                     animator.SetBool("isMoving", false);
-                    currentState = State.CASTING;
+                    if(ableToHide) currentState = State.HIDING;
+                    else currentState = State.CASTING;
                 }
                 break;
             case State.HIDING:
+
+                if (!hiding)
+                {
+                    targetHideSpot = CheckForAvailableHidenSpot();
+                    Chase(targetHideSpot.position);
+                    hiding = true;
+                }
+
+                if (transform.position == targetHideSpot.position) {
+                    hiding = false;
+                }
+                
                 break;
             case State.CASTING:
                 transform.LookAt(player.position);
@@ -77,30 +95,6 @@ public class ProspectorBehaviour : MonoBehaviour
                     UtilityCasting();
                 }
                 
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void CP_FSM()
-    {
-        switch (currentState)
-        {
-            case State.CHASING:
-                if (!insideOuterRing || (insideOuterRing && !insideInnerRing && fromOutside))
-                {
-                    Chase();
-                }
-                else
-                {
-                    animator.SetBool("isMoving", false);
-                    currentState = State.HIDING;
-                }
-                break;
-            case State.HIDING:
-                break;
-            case State.CASTING:
                 break;
             default:
                 break;
@@ -151,9 +145,9 @@ public class ProspectorBehaviour : MonoBehaviour
         
     }
 
-    private void Chase()
+    private void Chase(Vector3 position)
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(position);
         animator.SetBool("isMoving", true);
     }
 
@@ -195,4 +189,17 @@ public class ProspectorBehaviour : MonoBehaviour
         currentState = State.CHASING;
     }
 
+    private Transform CheckForAvailableHidenSpot() {
+        // Check distance
+        float distanceToPlayer = 0.0f;
+        float distanceToForeman = 0.0f;
+
+        foreach (Transform hideSpot in HidingSpots) {
+            distanceToPlayer = Vector3.Distance(hideSpot.position, player.position);
+            distanceToForeman = Vector3.Distance(hideSpot.position, transform.position);
+            Debug.Log("DistanceToPlayer: " + distanceToPlayer + ". DistanceToForeman: " + distanceToForeman);
+        }
+
+        return  HidingSpots[Random.RandomRange(0, 9)];
+    }
 }
