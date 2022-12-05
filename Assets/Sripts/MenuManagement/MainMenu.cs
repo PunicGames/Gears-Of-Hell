@@ -64,7 +64,8 @@ public class MainMenu : MonoBehaviour
         progressSlider.value = 0;
         loaderUI.SetActive(true);
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("MainScene");
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Additive);
+       
         asyncOperation.allowSceneActivation = false;
         float progress = 0;
         while (!asyncOperation.isDone) {
@@ -76,6 +77,8 @@ public class MainMenu : MonoBehaviour
             }
             yield return null;
         }
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainScene"));
+        SceneManager.UnloadSceneAsync("Menu", UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
     }
 
 
