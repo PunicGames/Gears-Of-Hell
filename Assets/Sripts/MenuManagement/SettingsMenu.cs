@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     private bool desktop = true;
+    [SerializeField]GameManager gm;
 
     public AudioMixer audioMixer;
 
@@ -117,6 +119,12 @@ public class SettingsMenu : MonoBehaviour
 
 
         GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateColorGrading(option);
+
+    }
+    public void SetAntialiassing(int option)
+    {
+        PlayerPrefs.SetInt("antialiasing", option);
+        gm.SetAntialiassing(option);
 
     }
 

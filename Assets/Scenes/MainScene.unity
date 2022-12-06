@@ -632,7 +632,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -682,8 +682,8 @@ MonoBehaviour:
   volumeTrigger: {fileID: 859768317}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 1025
-  stopNaNPropagation: 1
+    m_Bits: 1024
+  stopNaNPropagation: 0
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
   temporalAntialiasing:
