@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     public static bool TriggerPause = false; 
 
     public GameObject PauseMenuUI;
+    public GameObject OptionsMenu;
 
     // Cursor
     [SerializeField] private Texture2D cursorSprite;
@@ -70,6 +71,7 @@ public class PauseMenu : MonoBehaviour
         //if (desktop)
         //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
+
 
     public void LoadMenu()
     {

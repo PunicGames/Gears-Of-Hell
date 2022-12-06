@@ -22,6 +22,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Toggle bloomToggle;
     [SerializeField] private Toggle colorGradingToggle;
 
+    [SerializeField] private PostProcessingControler ppController;
+
     private void Awake()
     {
         if (Application.isMobilePlatform)
@@ -106,7 +108,7 @@ public class SettingsMenu : MonoBehaviour
             PlayerPrefs.SetInt("bloomEffect", 0);
 
 
-            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateBloom(option);
+            ppController.UpdateBloom(option);
 
     }
 
@@ -118,7 +120,7 @@ public class SettingsMenu : MonoBehaviour
             PlayerPrefs.SetInt("colorGrading", 0);
 
 
-        GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateColorGrading(option);
+        ppController.UpdateColorGrading(option);
 
     }
     public void SetAntialiassing(int option)
