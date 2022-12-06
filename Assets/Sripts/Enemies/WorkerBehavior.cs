@@ -18,14 +18,19 @@ public class WorkerBehavior : MonoBehaviour
     private Animator animator;
     private GameObject player;
     NavMeshAgent agent;
-    bool canAttack = true;
-    bool attackRange = false;
+    bool canAttack = false;
+    bool alreadyAttacked = false;
     [SerializeField] public float attackType = 0;
     [SerializeField] bool randomAttack = false;
 
     public AudioClip attackAudioClip;
     [HideInInspector]
     private AudioSource attackAudioSource;
+
+    //Maquina de estados
+    private enum state { IDLE, PURSUE, ATTACK };
+    private state currentLocomotionState = state.PURSUE;
+    private state currentActionState = state.IDLE;
 
     private void Start()
     {
@@ -47,27 +52,49 @@ public class WorkerBehavior : MonoBehaviour
     }
     private void Update()
     {
-
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-
-        transform.LookAt(player.transform.position);
-
-        if (distance > agent.stoppingDistance)
-        {
-            animator.SetBool("Moving", true);
-        }
-        else
-        {
-            animator.SetBool("Moving", false);
-
-        }
-        Chase();
+        LocomotionFSM();
+        ActionFSM();
     }
-    private void Chase()
+    private void LocomotionFSM()
     {
+        float distance = Vector3.Distance(player.transform.position, transform.position);
         agent.SetDestination(player.transform.position);
 
+        switch (currentLocomotionState)
+        {
+            case state.IDLE:
+                animator.SetBool("Moving", false);
+                transform.LookAt(player.transform.position);
+                if (distance > agent.stoppingDistance)
+                {
+                    currentLocomotionState = state.PURSUE;
+                }
+                break;
+            case state.PURSUE:
+                animator.SetBool("Moving", true);
+                if (distance <= agent.stoppingDistance)
+                {
+                    currentLocomotionState = state.IDLE;
+                }
+                break;
+        }
+
     }
+    private void ActionFSM()
+    {
+        switch (currentActionState)
+        {
+            case state.IDLE:
+                //Do nothing
+                break;
+
+            case state.ATTACK:
+                if (!alreadyAttacked) Attack();
+                break;
+
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -75,13 +102,7 @@ public class WorkerBehavior : MonoBehaviour
         {
             if (other.gameObject == player)
             {
-                attackRange = true;
-                if (canAttack)
-                {
-                    canAttack = false;
-                    //animator.SetTrigger("Attack");
-                    StartCoroutine(AttackCooldown());
-                }
+                currentActionState = state.ATTACK;
 
             }
         }
@@ -97,7 +118,7 @@ public class WorkerBehavior : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            attackRange = false;
+            currentActionState = state.IDLE;
         }
     }
     public void ActivateWeaponCollider()
@@ -109,48 +130,49 @@ public class WorkerBehavior : MonoBehaviour
     {
         weaponCollider.enabled = false;
     }
-    public void ResetAnimatorSpeed()
+    public void ResetParameters()
     {
-        animator.speed = 1;
+        Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
-
-    IEnumerator AttackCooldown()
+    public void Attack()
     {
-        while (attackRange)
+        if (randomAttack)
         {
-            if (randomAttack)
+            int r = Random.Range(0, numberOfAttacks);
+            //Randomly choose death animation type
+            switch (r)
             {
-                int r = Random.Range(0, numberOfAttacks);
-                //Randomly choose death animation type
-                switch (r)
-                {
-                    case 0:
-                        animator.speed = attack1Speed;
-                        animator.SetFloat("attack_type", 0);
-                        break;
-                    case 1:
-                        animator.speed = attack2Speed;
-                        animator.SetFloat("attack_type", 0.5f);
-                        break;
-                    case 2:
-                        animator.speed = attack3Speed;
-                        animator.SetFloat("attack_type", 1);
-                        break;
+                case 0:
+                    animator.SetFloat("attack_speed", attack1Speed);
+                    animator.SetFloat("attack_type", 0);
+                    break;
+                case 1:
+                    animator.SetFloat("attack_speed", attack2Speed);
+                    animator.SetFloat("attack_type", 0.5f);
+                    break;
+                case 2:
+                    animator.SetFloat("attack_speed", attack3Speed);
+                    animator.SetFloat("attack_type", 1);
+                    break;
 
-                }
             }
-            else
-                animator.speed = attack1Speed;
-            animator.SetTrigger("Attack");
-            PlayHit();
-            yield return new WaitForSeconds(timeBetweenAttacks);
         }
-        canAttack = true;
-        yield return 0;
+        else
+            animator.SetFloat("attack_speed", attack1Speed);
+        alreadyAttacked = true;
+        animator.SetTrigger("Attack");
+        PlayHit();
+
 
     }
 
-    public void UpgradeAttackSpeed() {
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
+    public void UpgradeAttackSpeed()
+    {
         attack1Speed = 2.5f;
         attack2Speed = 1.5f;
         attack3Speed = 1.2f;
