@@ -36,6 +36,7 @@ public class Shop : MonoBehaviour
             psPlaying = true;
             spining = true;
             gameObject.GetComponent<AudioSource>().Play();
+            GetComponent<Animator>().SetBool("isOpen", true);
         }
 
         if(!active && psPlaying)
@@ -44,6 +45,7 @@ public class Shop : MonoBehaviour
             psPlaying = false;
             spining = true;
             gameObject.GetComponent<AudioSource>().Stop();
+            GetComponent<Animator>().SetBool("isOpen", false);
         }
 
         // Animacion de rotacion
