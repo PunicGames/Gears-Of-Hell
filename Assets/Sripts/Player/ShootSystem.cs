@@ -19,6 +19,8 @@ public class ShootSystem : MonoBehaviour
     [HideInInspector] public int selectedGun = 0;
     public bool[] availableGuns;
 
+    [SerializeField] private Sprite[] weaponSprites;
+
     // Guns in Order: pistol, subfusil, rifle, sniper, shotgun
 
 
@@ -39,6 +41,7 @@ public class ShootSystem : MonoBehaviour
     // Display
     private TextMeshProUGUI ammunitionDisplay;
     private GameObject rechargingDisplay;
+    private Image weaponDisplay;
 
     //Perks Modifies
     //[HideInInspector]
@@ -111,7 +114,7 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
-
+        weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
 
         // Display cursor
         //if (desktop) { 
@@ -137,6 +140,11 @@ public class ShootSystem : MonoBehaviour
                 ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/" + guns.getGuns()[selectedGun].totalBullets);
             else // En caso de ser la pistola
                 ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/9999";
+        }
+
+        if (weaponDisplay != null)
+        {
+            weaponDisplay.sprite = weaponSprites[selectedGun];
         }
 
     }
