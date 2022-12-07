@@ -35,6 +35,9 @@ public class EnemyHealth : MonoBehaviour
     public enum EnemyType { WORKER, GUNSLINGER, GUNNER, EXPLOSIVE_SPIDERBOT, WORKER_SPIDERBOT, ATTACK_SPIDERBOT, FOREMAN }
     public EnemyType enemyType;
 
+    // Player reference
+    private GameObject playerRef;
+
     //private int timeAnimationDead = 1;
     private void Awake()
     {
@@ -45,6 +48,10 @@ public class EnemyHealth : MonoBehaviour
 
         popup = GetComponent<PopUp>();
     }
+    private void Start()
+    {
+        playerRef = GameObject.FindGameObjectWithTag("Player");
+    }
 
     public void TakeDamage(int amount)
     {
@@ -53,7 +60,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= amount;
         Debug.Log("Vida enemigo: " + currentHealth);
 
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().PlayHitMarker();
+        playerRef.GetComponent<Player>().PlayHitMarker();
 
         if (takeDamage != null)
             takeDamage();
@@ -131,7 +138,8 @@ public class EnemyHealth : MonoBehaviour
             GameObject item = Instantiate(items[index], transform.position + new Vector3(0.8f, 0f, -0.8f), Quaternion.identity);
         }
 
-
+        // Add stats to player
+        playerRef.GetComponent<PlayerStats>().numDefeatedEnemies++;
     }
     //Autamitacally call when death animation ended
     public void DestroyCallback()

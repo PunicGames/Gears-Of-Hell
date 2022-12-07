@@ -58,11 +58,6 @@ public class ShootSystem : MonoBehaviour
     // Platform control
     private bool desktop;
 
-    // Bullets record
-    [HideInInspector] public float precision = 0f;
-    [HideInInspector] public int numBulletsHit = 0;
-    [HideInInspector] public int numBulletsMissed = 0;
-
     // Bullet colors
     [SerializeField] private Color albedo;
     [SerializeField] private Color emissive;
@@ -73,6 +68,9 @@ public class ShootSystem : MonoBehaviour
 
     public delegate void OnSwapWeapon(Vector3 p);
     public OnSwapWeapon onSwapWeapon;
+
+    // Player Statistics
+    [SerializeField] private PlayerStats playerStats;
 
     private void Awake()
     {
@@ -188,7 +186,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
                     bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
                     bulletParams.SetLaser(true);
-                    bulletParams.SetShootSystem(this);
+                    bulletParams.SetPlayerStats(playerStats);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     //bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;
@@ -203,7 +201,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
                     bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
                     bulletParams.SetLaser(false);
-                    bulletParams.SetShootSystem(this);
+                    bulletParams.SetPlayerStats(playerStats);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;

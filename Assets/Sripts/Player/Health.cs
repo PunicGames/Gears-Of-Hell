@@ -39,6 +39,9 @@ public class Health : MonoBehaviour
     public delegate void OnDeath(bool t);
     public OnDeath onDeath;
 
+    // Player Stats
+    [SerializeField] private PlayerStats playerStats;
+
     private void Awake()
     {
         playerMovement = GetComponent<Player>();
@@ -146,9 +149,11 @@ public class Health : MonoBehaviour
         Debug.Log("LLEGA 2 ");
         int minutes = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().minutes;
         int seconds = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().seconds;
-        int bulletsHit = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().numBulletsHit;
-        int bulletsMissed = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().numBulletsMissed;
-        GameObject.Find("InGameUI").GetComponent<GestorUIinGame>().FinishGame(minutes, seconds, bulletsHit, bulletsMissed);
+        int bulletsHit = playerStats.numBulletsHit;
+        int bulletsMissed = playerStats.numBulletsMissed;
+        int goldEarned = playerStats.numGoldEarned;
+        int defeatedEnemies = playerStats.numDefeatedEnemies;
+        GameObject.Find("InGameUI").GetComponent<GestorUIinGame>().FinishGame(minutes, seconds, bulletsHit, bulletsMissed, goldEarned, defeatedEnemies);
         GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().SetGameOverMusic();
         //Destroy(gameObject);
     }

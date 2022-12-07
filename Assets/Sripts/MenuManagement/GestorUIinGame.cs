@@ -33,6 +33,9 @@ public class GestorUIinGame : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bulletsHit;
     [SerializeField] private TextMeshProUGUI bulletsMissed;
     [SerializeField] private TextMeshProUGUI accuracy;
+    [SerializeField] private TextMeshProUGUI totalTime;
+    [SerializeField] private TextMeshProUGUI goldEarnedT;
+    [SerializeField] private TextMeshProUGUI defeatedEnemiesT;
 
     private void Awake()
     {
@@ -100,7 +103,7 @@ public class GestorUIinGame : MonoBehaviour
         //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }
 
-    public void FinishGame(int min, int secs, int bHit, int bMissed) {
+    public void FinishGame(int min, int secs, int bHit, int bMissed, int goldEarned, int defeatedEnemies) {
         Time.timeScale = 0.0f;
 
         if (desktop)
@@ -112,13 +115,15 @@ public class GestorUIinGame : MonoBehaviour
 
         // Display resume values
         if(secs < 10)
-            GameObject.Find("TotalTime").GetComponent<TextMeshProUGUI>().text = min + " : 0" + secs;
+            totalTime.text = min + " : 0" + secs;
         else
-            GameObject.Find("TotalTime").GetComponent<TextMeshProUGUI>().text = min + " : " + secs;
+            totalTime.text = min + " : " + secs;
 
         bulletsHit.text = bHit.ToString();
         bulletsMissed.text = bMissed.ToString();
         float acc = ((float)bHit/((float)bHit + (float)bMissed))*100;
         accuracy.text = System.Math.Round(acc, 2) + "%";
+        goldEarnedT.text = goldEarned.ToString();
+        defeatedEnemiesT.text = defeatedEnemies.ToString();
     }
 }
