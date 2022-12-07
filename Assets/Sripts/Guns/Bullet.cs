@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     [HideInInspector] public bool laserShot;
 
     // Shoot System reference to update bullets record from player
-    private ShootSystem sS = null;
+    private PlayerStats pS = null;
 
     // Bullet Shooted by
     public enum BulletOwner { PLAYER, ENEMY}
@@ -43,8 +43,8 @@ public class Bullet : MonoBehaviour
         laserShot = option;
     }
 
-    public void SetShootSystem(ShootSystem ss) {
-        sS = ss;
+    public void SetPlayerStats(PlayerStats ps) {
+        pS = ps;
     }
 
     public void SetBulletColors(Color albedo, Color emissive) {
@@ -63,7 +63,7 @@ public class Bullet : MonoBehaviour
                     if ((enemyHealth != null) && (!alreadyHitted.Contains(other.gameObject)))
                     {
                         enemyHealth.TakeDamage((int)damage);
-                        sS.numBulletsHit++;
+                        pS.numBulletsHit++;
                         if (!laserShot)
                         {
                             Destroy(gameObject);
@@ -74,7 +74,7 @@ public class Bullet : MonoBehaviour
 
                 }
                 else {
-                    sS.numBulletsMissed++;
+                    pS.numBulletsMissed++;
                 }
                 break;
             case BulletOwner.ENEMY:

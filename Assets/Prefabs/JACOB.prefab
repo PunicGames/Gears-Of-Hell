@@ -171,11 +171,9 @@ MonoBehaviour:
   - {fileID: 2800000, guid: eaea3979495c15d4f9d14e104c2a4e58, type: 3}
   - {fileID: 2800000, guid: eaea3979495c15d4f9d14e104c2a4e58, type: 3}
   - {fileID: 2800000, guid: eaea3979495c15d4f9d14e104c2a4e58, type: 3}
-  precision: 0
-  numBulletsHit: 0
-  numBulletsMissed: 0
   albedo: {r: 1, g: 0.4481132, b: 0.4481132, a: 0}
   emissive: {r: 1, g: 0.009791835, b: 0, a: 0.94509804}
+  playerStats: {fileID: 1118668819512385046}
 --- !u!114 &1417841220658975163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,6 +555,7 @@ GameObject:
   - component: {fileID: 3597798663532466692}
   - component: {fileID: 3209731723266497721}
   - component: {fileID: 4693440988594534055}
+  - component: {fileID: 1118668819512385046}
   m_Layer: 0
   m_Name: JACOB
   m_TagString: Player
@@ -848,6 +847,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e1929578d31c4f147a2757bc65644f3a, type: 3}
   - {fileID: 8300000, guid: 708a0a6bc8642c74c9fbc4b7b2524001, type: 3}
   - {fileID: 8300000, guid: 61f09c3f84e487747b4e7a7ba6830c41, type: 3}
+  playerStats: {fileID: 1118668819512385046}
 --- !u!82 &5627487524776717408
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1078,6 +1078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalCoinsInGame: 0
   popupPosition: {fileID: 3209184924289274629}
+  playerStats: {fileID: 1118668819512385046}
 --- !u!114 &3209731723266497721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1106,6 +1107,23 @@ MonoBehaviour:
   renderers:
   - {fileID: 6290385385806560542}
   - {fileID: 5907095846821129218}
+--- !u!114 &1118668819512385046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919294009874013116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f352d49469cd11a498095ea300f4fc4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  precision: 0
+  numBulletsHit: 0
+  numBulletsMissed: 0
+  numGoldEarned: 0
+  numDefeatedEnemies: 0
 --- !u!1 &935098715315494881
 GameObject:
   m_ObjectHideFlags: 0
