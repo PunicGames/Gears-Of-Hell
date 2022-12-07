@@ -94,8 +94,6 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-       
-
     }
 
     private void Start()
@@ -115,6 +113,7 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay.SetActive(false);
 
         weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
+        weaponDisplay.sprite = weaponSprites[0];
 
         // Display cursor
         //if (desktop) { 
@@ -140,11 +139,6 @@ public class ShootSystem : MonoBehaviour
                 ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/" + guns.getGuns()[selectedGun].totalBullets);
             else // En caso de ser la pistola
                 ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/9999";
-        }
-
-        if (weaponDisplay != null)
-        {
-            weaponDisplay.sprite = weaponSprites[selectedGun];
         }
 
     }
@@ -302,7 +296,7 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[i].SetActive(true);
 
                 selectedGun = i;
-
+                weaponDisplay.sprite = weaponSprites[selectedGun];
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
 
@@ -336,6 +330,7 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
                 selectedGun = i;
+                weaponDisplay.sprite = weaponSprites[selectedGun];
 
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
