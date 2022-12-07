@@ -240,7 +240,7 @@ public class ShootSystem : MonoBehaviour
 
     public void Reload()
     { // Llamar función cuando jugador pulsa R
-        Debug.Log("Intenta recargar");
+        //Debug.Log("Intenta recargar");
         if ((guns.getGuns()[selectedGun].bulletsLeftInMagazine < guns.getGuns()[selectedGun].magazineSize) && !reloading && guns.getGuns()[selectedGun].totalBullets > 0)
         {
             shooting = false;
