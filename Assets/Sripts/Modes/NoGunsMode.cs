@@ -9,11 +9,17 @@ public class NoGunsMode : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponentInChildren<ShootSystem>().guns.getGuns()[0].maxTotalBullets = 0;
-        player.GetComponentInChildren<ShootSystem>().guns.getGuns()[0].totalBullets = 0;
-        player.GetComponentInChildren<ShootSystem>().guns.getGuns()[0].bulletsLeftInMagazine = 0;
-        player.GetComponentInChildren<ShootSystem>().guns.getGuns()[0].magazineSize = 0;
-        player.GetComponentInChildren<ShootSystem>().guns.getGuns()[0].bulletDamage = 0;
+        ShootSystem sS = player.GetComponentInChildren<ShootSystem>();
+
+        for (int i = 0; i < sS.guns.getGuns().Length; i++)
+        { 
+            sS.guns.getGuns()[i].maxTotalBullets = 0;
+            sS.guns.getGuns()[i].totalBullets = 0;
+            sS.guns.getGuns()[i].bulletsLeftInMagazine = 0;
+            sS.guns.getGuns()[i].magazineSize = 0;
+            sS.guns.getGuns()[i].bulletDamage = 0;
+        }
+
         Invoke("AddCoins", 10);
     }
 
