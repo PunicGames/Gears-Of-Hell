@@ -91,7 +91,7 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-       
+
 
     }
 
@@ -252,7 +252,8 @@ public class ShootSystem : MonoBehaviour
             rig.ActivateRRig(false);
             rig.ActivateLRig(false);
             if (selectedGun == 0)
-                anim.SetBool("isPistol", true); else anim.SetBool("isPistol", false);
+                anim.SetBool("isPistol", true);
+            else anim.SetBool("isPistol", false);
             anim.SetTrigger("Reload");
 
             Invoke("ReloadFinished", guns.getGuns()[selectedGun].reloadTime);
@@ -274,8 +275,12 @@ public class ShootSystem : MonoBehaviour
             guns.getGuns()[selectedGun].totalBullets = 0;
         }
         if (selectedGun > 1)
-            rig.ActivateLRig(true,1);
-        rig.ActivateRRig(true,1);
+        {
+            rig.ActivateLRig(true, 1);
+            rig.ActivateRRig(true, 0.8f, 1);
+        }
+        else
+            rig.ActivateRRig(true, 0.4f, 0.6f);
         reloading = false;
         rechargingDisplay.SetActive(false);
         Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
@@ -304,12 +309,14 @@ public class ShootSystem : MonoBehaviour
                 if (selectedGun > 1)
                 {
                     anim.SetBool("isRifle", true);
+                    rig.SetRWeight(1);
                     rig.ChangeRightTargetRigPos(1);
                     rig.ActivateLRig(true);
                 }
                 else
                 {
                     anim.SetBool("isRifle", false);
+                    rig.SetRWeight(0.6f);
                     rig.ChangeRightTargetRigPos(0);
                     rig.ActivateLRig(false);
 
@@ -337,14 +344,16 @@ public class ShootSystem : MonoBehaviour
                 if (selectedGun > 1)
                 {
                     anim.SetBool("isRifle", true);
+                    rig.SetRWeight(1);
                     rig.ChangeRightTargetRigPos(1);
                     rig.ActivateLRig(true);
                 }
                 else
                 {
                     anim.SetBool("isRifle", false);
+                    rig.SetRWeight(0.6f);
                     rig.ChangeRightTargetRigPos(0);
-                    rig.ActivateLRig(true);
+                    rig.ActivateLRig(false);
                 }
 
                 onSwapWeapon.Invoke(weapon_origins[selectedGun].localPosition);
