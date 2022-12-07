@@ -362,6 +362,7 @@ MonoBehaviour:
   currentHealth: 0
   flashSpeed: 5
   damageColor: {r: 1, g: 0, b: 0, a: 0.1}
+  invincibilityTime: 1
   electricBarrier: 0
   popupPosition: {fileID: 0}
   healClip: {fileID: 0}
@@ -1087,7 +1088,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: gameRegistry
@@ -1544,10 +1545,10 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478084025}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.252, y: 0.252, z: 0.252}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.25193533, y: 0.25193533, z: 0.25193533}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1195514530}
   m_Father: {fileID: 796224739}
@@ -1555,7 +1556,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -88, y: -88}
+  m_AnchoredPosition: {x: -101.70001, y: -100}
   m_SizeDelta: {x: 693, y: 692.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1478084027

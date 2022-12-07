@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,10 @@ public class Health : MonoBehaviour
     public float flashSpeed = 5f;
     public Color damageColor = new Color(1.0f, 0.0f, 0.0f, 0.1f);
 
+    // Inincibility
+    private bool canBeHurt = true;
+    [SerializeField] private float invincibilityTime = 1.0f;
+
     Player playerMovement; // Referencia a dicho script para desactivarlo si el jugador muere para que no se pueda mover.
     bool isDead;
 
@@ -20,6 +25,8 @@ public class Health : MonoBehaviour
     // Display health
     private RectTransform lifeScaler;
     private TextMeshProUGUI lifeText;
+    private Color lifeColorNormal;
+    private Color lifeColorTransparency;
 
     // PopUp
     private PopUp popup;
@@ -56,35 +63,43 @@ public class Health : MonoBehaviour
         lifeScaler = GameObject.Find("LifeScaler").GetComponent<RectTransform>();
         lifeText = GameObject.Find("LifeCounter").GetComponent<TextMeshProUGUI>();
         UpdateLifeUI();
-    }
 
-
-    private void Update()
-    {
-        //Debug.Log("Vida actual: " + currentHealth);
+        // Set colors for life displayer
+        lifeColorNormal = lifeScaler.GetComponent<Image>().color;
+        Color auxColor = lifeColorNormal;
+        auxColor.a = 0.5f;
+        lifeColorTransparency = auxColor;
     }
 
     public void TakeDamage(float amount)
     {
-        popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
-        if (takeDamage != null)
-            takeDamage();
+        if (canBeHurt) { 
+            canBeHurt = false;
 
-        if (currentHealth > amount)
-            currentHealth -= amount;
-        else
-            currentHealth = 0;
+            popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
+            if (takeDamage != null)
+                takeDamage();
+
+            if (currentHealth > amount)
+                currentHealth -= amount;
+            else
+                currentHealth = 0;
 
 
-        UpdateLifeUI();
+            UpdateLifeUI();
 
-        if (currentHealth <= 0 && !isDead)
-        {
-            PlaySound(deathClip);
-            Death();
-        } else if (!isDead)
-        {
-            PlaySound(hurtClips[Random.Range(0, hurtClips.Length)]);
+            if (currentHealth < 1 && !isDead)
+            {
+                PlaySound(deathClip);
+                Death();
+            } else if (!isDead)
+            {
+                PlaySound(hurtClips[Random.Range(0, hurtClips.Length)]);
+            }
+
+            // Invincibility
+            lifeScaler.GetComponent<Image>().color = lifeColorTransparency;
+            Invoke("ResetInivincibility", invincibilityTime);
         }
     }
 
@@ -162,5 +177,10 @@ public class Health : MonoBehaviour
     public void UpdateLifeUI() {
         lifeScaler.localScale = new Vector3(currentHealth / maxHealth, 1, 1);
         lifeText.text = (int)currentHealth + " / " + maxHealth;
+    }
+
+    private void ResetInivincibility() {
+        canBeHurt = true;
+        lifeScaler.GetComponent<Image>().color = lifeColorNormal;
     }
 }

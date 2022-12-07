@@ -48,21 +48,21 @@ public class PlayerRigBehaviour : MonoBehaviour
     {
         if (t) StartCoroutine(LLerping(time)); else StartCoroutine(LLerping(time));
     }
-    public void ActivateRRig(bool t, float time)
+    public void ActivateRRig(float w,bool t, float time)
     {
-        if (t) StartCoroutine(RLerping(time)); else StartCoroutine(RLerping(time));
+        if (t) StartCoroutine(RLerping(time,w)); else StartCoroutine(RLerping(time,w));
     }
-    IEnumerator RLerping(float t)
+    IEnumerator RLerping(float t,float w)
     {
        
         float timeElapsed = 0;
         while (timeElapsed < t)
         {
-            r_rig.weight = Mathf.Lerp(0, 1, timeElapsed / t);
+            r_rig.weight = Mathf.Lerp(0, w, timeElapsed / t);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        r_rig.weight = 1;
+        r_rig.weight = w;
     }
     IEnumerator LLerping(float t)
     {
@@ -75,4 +75,13 @@ public class PlayerRigBehaviour : MonoBehaviour
         }
         l_rig.weight = 1;
     }
+    public void setRRigWeight(float w)
+    {
+        r_rig.weight = w;
+    }
+    public void setLRigWeight(float w)
+    {
+        l_rig.weight = w;
+    }
+
 }
