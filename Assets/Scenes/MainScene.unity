@@ -640,7 +640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3339265591684085194, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3361484928890113172, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1094,6 +1094,50 @@ PrefabInstance:
       propertyPath: gameRegistry
       value: 
       objectReference: {fileID: 1418230371}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[1]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[2]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[3]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[4]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[5]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[6]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[7]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[8]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: maxEnemiesAtTier.Array.data[9]
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[1].enemies.Array.data[0].prob
       value: 0.5
