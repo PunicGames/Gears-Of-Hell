@@ -886,7 +886,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: gameRegistry
@@ -996,6 +996,10 @@ PrefabInstance:
     - target: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
       propertyPath: m_Name
       value: Tier1_Worker
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
@@ -1796,6 +1800,106 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 379920589, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 67117566413272825, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 67117566413272825, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 270729166612913369, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81
+      objectReference: {fileID: 0}
+    - target: {fileID: 315407889582933946, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 315407889582933946, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 362121489729184785, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1026
+      objectReference: {fileID: 0}
+    - target: {fileID: 362121489729184785, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036757543307047789, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439793519876709718, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860503112108392631, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989285814662220548, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_text
+      value: "Missed \nShots"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989285814662220548, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989285814662220548, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3075486428082867854, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1025
+      objectReference: {fileID: 0}
+    - target: {fileID: 3075486428082867854, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3395803246787080627, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3395803246787080627, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266833587139619190, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5048725444850633134, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247436529176911354, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295140879777919682, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81
+      objectReference: {fileID: 0}
+    - target: {fileID: 7388537348747863381, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219723555319899017, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219723555319899017, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 8607388110424686180, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_Name
       value: InGameUI
@@ -2295,6 +2399,10 @@ PrefabInstance:
     - target: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
       propertyPath: m_Name
       value: Tier1_Gunslinger
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169398, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
       propertyPath: m_RootOrder
@@ -4118,11 +4226,9 @@ MonoBehaviour:
   bigShot: 0
   scaleFactor: 1
   cursorSprites: []
-  precision: 0
-  numBulletsHit: 0
-  numBulletsMissed: 0
   albedo: {r: 0, g: 0, b: 0, a: 0}
   emissive: {r: 0, g: 0, b: 0, a: 0}
+  playerStats: {fileID: 0}
 --- !u!4 &7548470674204276466
 Transform:
   m_ObjectHideFlags: 0
@@ -4211,11 +4317,13 @@ MonoBehaviour:
   currentHealth: 0
   flashSpeed: 5
   damageColor: {r: 1, g: 0, b: 0, a: 0.1}
+  invincibilityTime: 1
   electricBarrier: 0
   popupPosition: {fileID: 0}
   healClip: {fileID: 0}
   deathClip: {fileID: 0}
   hurtClips: []
+  playerStats: {fileID: 0}
 --- !u!4 &7736355888692817724
 Transform:
   m_ObjectHideFlags: 0

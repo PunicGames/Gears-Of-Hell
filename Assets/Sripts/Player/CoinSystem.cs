@@ -15,6 +15,9 @@ public class CoinSystem : MonoBehaviour
     private PopUp popup;
     [SerializeField] private Transform popupPosition;
 
+    // Player Stats
+    [SerializeField] private PlayerStats playerStats;
+
     void Start()
     {
         totalCoinsInGame = 0;
@@ -26,6 +29,7 @@ public class CoinSystem : MonoBehaviour
         totalCoinsInGame += newCoin;
         coinDisplay.text = totalCoinsInGame.ToString();
         popup.Create(popupPosition.position, newCoin, PopUp.TypePopUp.MONEY, true, 0.5f);
+        playerStats.numGoldEarned += newCoin;
     }
 
     public void SpendCoin(int newCoin)

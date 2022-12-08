@@ -684,8 +684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beea883880f7a1b4fba245b950953459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 2.5
-  attackDamage: 50
+  timeBetweenAttacks: 0.8
+  attackDamage: 80
   numberOfAttacks: 3
   attack1Speed: 1.6
   attack2Speed: 1.8
@@ -704,7 +704,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.2
+  m_Radius: 0.5
   m_Height: 1.3337569
   m_Direction: 1
   m_Center: {x: 0, y: 0.621878, z: 0}
@@ -2204,7 +2204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3603720825505649390}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: PopUpPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}

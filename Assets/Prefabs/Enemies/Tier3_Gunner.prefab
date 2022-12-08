@@ -404,7 +404,7 @@ NavMeshAgent:
   m_Speed: 5
   m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 250
   m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -463,7 +463,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.2
+  m_Radius: 0.35
   m_Height: 1.45
   m_Direction: 1
   m_Center: {x: 0, y: 0.68, z: 0}
@@ -497,7 +497,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
-  m_audioClip: {fileID: 8300000, guid: caa189c813819b74b8a25c5b4de998c0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5f01aa28591e64d499f42da942d80321, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1.05
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cadenceTime: 0.3
   reloadTime: 3
-  bulletSpeed: 9
+  bulletSpeed: 15
   damage: 10
   bulletsPerMag: 30
   SemiAuto: 0
@@ -640,9 +640,9 @@ MonoBehaviour:
   SemiAutoTime: 2
   shootOrigin: {fileID: 6642612286602488106}
   muzzleVFX: {fileID: 3321965668770009367}
-  bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
-  albedo: {r: 1, g: 1, b: 1, a: 0}
-  emissive: {r: 1, g: 0.48235294, b: 0, a: 0}
+  bullet: {fileID: 441659958780119776, guid: d03a14b63de73eb448fd800ca229b0ef, type: 3}
+  albedo: {r: 0.7957217, g: 0.7311321, b: 1, a: 0}
+  emissive: {r: 0.34384346, g: 0, b: 1, a: 0}
 --- !u!1 &1639239646711664052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,7 +1249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8301514096023091357}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: PopUpPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1316,7 +1316,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6642612286602488106}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: ShootOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1331,7 +1331,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4643763080605605513}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.13241197, y: 0.7652379, z: 0.68402445}
+  m_LocalPosition: {x: 0.13241197, y: 0.7652379, z: 0.817}
   m_LocalScale: {x: 0.8598179, y: 0.8598179, z: 0.8598179}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2576,6 +2576,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6642612286602488106}
     m_Modifications:
+    - target: {fileID: 3485992973400504630, guid: e60aa851cc5a8634cbbac99ba6bf3086, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3485992973400504630, guid: e60aa851cc5a8634cbbac99ba6bf3086, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.015686274
+      objectReference: {fileID: 0}
+    - target: {fileID: 3485992973400504630, guid: e60aa851cc5a8634cbbac99ba6bf3086, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.15630057
+      objectReference: {fileID: 0}
+    - target: {fileID: 3485992973400504630, guid: e60aa851cc5a8634cbbac99ba6bf3086, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.9137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 3485992973400504630, guid: e60aa851cc5a8634cbbac99ba6bf3086, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3485992973400504630, guid: e60aa851cc5a8634cbbac99ba6bf3086, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 0.2780378
+      objectReference: {fileID: 0}
     - target: {fileID: 3485992973400504631, guid: e60aa851cc5a8634cbbac99ba6bf3086, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -58,11 +58,6 @@ public class ShootSystem : MonoBehaviour
     // Platform control
     private bool desktop;
 
-    // Bullets record
-    [HideInInspector] public float precision = 0f;
-    [HideInInspector] public int numBulletsHit = 0;
-    [HideInInspector] public int numBulletsMissed = 0;
-
     // Bullet colors
     [SerializeField] private Color albedo;
     [SerializeField] private Color emissive;
@@ -73,6 +68,9 @@ public class ShootSystem : MonoBehaviour
 
     public delegate void OnSwapWeapon(Vector3 p);
     public OnSwapWeapon onSwapWeapon;
+
+    // Player Statistics
+    [SerializeField] private PlayerStats playerStats;
 
     private void Awake()
     {
@@ -93,7 +91,9 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
-       
+        availableGuns[1] = true;
+        availableGuns[2] = true;
+
 
     }
 
@@ -188,7 +188,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
                     bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
                     bulletParams.SetLaser(true);
-                    bulletParams.SetShootSystem(this);
+                    bulletParams.SetPlayerStats(playerStats);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     //bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;
@@ -203,7 +203,7 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
                     bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
                     bulletParams.SetLaser(false);
-                    bulletParams.SetShootSystem(this);
+                    bulletParams.SetPlayerStats(playerStats);
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;
@@ -242,7 +242,7 @@ public class ShootSystem : MonoBehaviour
 
     public void Reload()
     { // Llamar función cuando jugador pulsa R
-        Debug.Log("Intenta recargar");
+        //Debug.Log("Intenta recargar");
         if ((guns.getGuns()[selectedGun].bulletsLeftInMagazine < guns.getGuns()[selectedGun].magazineSize) && !reloading && guns.getGuns()[selectedGun].totalBullets > 0)
         {
             shooting = false;
@@ -254,7 +254,8 @@ public class ShootSystem : MonoBehaviour
             rig.ActivateRRig(false);
             rig.ActivateLRig(false);
             if (selectedGun == 0)
-                anim.SetBool("isPistol", true); else anim.SetBool("isPistol", false);
+                anim.SetBool("isPistol", true);
+            else anim.SetBool("isPistol", false);
             anim.SetTrigger("Reload");
 
             Invoke("ReloadFinished", guns.getGuns()[selectedGun].reloadTime);
@@ -276,8 +277,12 @@ public class ShootSystem : MonoBehaviour
             guns.getGuns()[selectedGun].totalBullets = 0;
         }
         if (selectedGun > 1)
-            rig.ActivateLRig(true,1);
-        rig.ActivateRRig(true,1);
+        {
+            rig.ActivateLRig(true, 1);
+            rig.ActivateRRig(1,true, 1);
+        }
+        else
+            rig.ActivateRRig(0.6f,true, 0.5f);
         reloading = false;
         rechargingDisplay.SetActive(false);
         Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
@@ -307,12 +312,14 @@ public class ShootSystem : MonoBehaviour
                 {
                     anim.SetBool("isRifle", true);
                     rig.ChangeRightTargetRigPos(1);
+                    rig.setRRigWeight(1);
                     rig.ActivateLRig(true);
                 }
                 else
                 {
                     anim.SetBool("isRifle", false);
                     rig.ChangeRightTargetRigPos(0);
+                    rig.setRRigWeight(0.6f);
                     rig.ActivateLRig(false);
 
                 }
@@ -340,13 +347,15 @@ public class ShootSystem : MonoBehaviour
                 {
                     anim.SetBool("isRifle", true);
                     rig.ChangeRightTargetRigPos(1);
+                    rig.setRRigWeight(1);
                     rig.ActivateLRig(true);
                 }
                 else
                 {
                     anim.SetBool("isRifle", false);
                     rig.ChangeRightTargetRigPos(0);
-                    rig.ActivateLRig(true);
+                    rig.setRRigWeight(0.6f);
+                    rig.ActivateLRig(false);
                 }
 
                 onSwapWeapon.Invoke(weapon_origins[selectedGun].localPosition);

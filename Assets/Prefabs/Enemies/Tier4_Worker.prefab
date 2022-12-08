@@ -807,8 +807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
-  currentHealth: 100
+  startingHealth: 180
+  currentHealth: 180
   scoreValue: 5
   minScoreValue: 18
   maxScoreValue: 22
@@ -831,8 +831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beea883880f7a1b4fba245b950953459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 2
-  attackDamage: 45
+  timeBetweenAttacks: 0.5
+  attackDamage: 50
   numberOfAttacks: 2
   attack1Speed: 1.5
   attack2Speed: 1.5
@@ -851,7 +851,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.2
+  m_Radius: 0.5
   m_Height: 1.3337569
   m_Direction: 1
   m_Center: {x: 0, y: 0.621878, z: 0}
@@ -2300,7 +2300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3603720825505649390}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: PopUpPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}

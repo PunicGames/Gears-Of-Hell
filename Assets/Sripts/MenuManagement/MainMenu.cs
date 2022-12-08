@@ -33,11 +33,14 @@ public class MainMenu : MonoBehaviour
         //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
-    public void PlayGame() {
-        StartCoroutine(LoadScene_Coroutine());
+    public void PlayNormalGame() {
+        StartCoroutine(LoadScene_Coroutine("MainScene"));
     }
 
-    
+    public void PlayNoGunsGame()
+    {
+        StartCoroutine(LoadScene_Coroutine("NoGunsMode"));
+    }
 
     public void MenuToSelector() {
         //characters[selectedCharacter].SetActive(true);
@@ -60,12 +63,11 @@ public class MainMenu : MonoBehaviour
         //characters[selectedCharacter].SetActive(true);
     }
 
-    private IEnumerator LoadScene_Coroutine() {
+    private IEnumerator LoadScene_Coroutine(string sceneName) {
         progressSlider.value = 0;
         loaderUI.SetActive(true);
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Additive);
-       
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         asyncOperation.allowSceneActivation = false;
         float progress = 0;
         while (!asyncOperation.isDone) {
@@ -77,8 +79,6 @@ public class MainMenu : MonoBehaviour
             }
             yield return null;
         }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainScene"));
-        SceneManager.UnloadSceneAsync("Menu", UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
     }
 
 

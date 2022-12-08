@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     private bool desktop = true;
+    [SerializeField]GameManager gm;
 
     public AudioMixer audioMixer;
 
@@ -19,6 +21,8 @@ public class SettingsMenu : MonoBehaviour
     // Toggles
     [SerializeField] private Toggle bloomToggle;
     [SerializeField] private Toggle colorGradingToggle;
+
+    [SerializeField] private PostProcessingControler ppController;
 
     private void Awake()
     {
@@ -104,7 +108,7 @@ public class SettingsMenu : MonoBehaviour
             PlayerPrefs.SetInt("bloomEffect", 0);
 
 
-            GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateBloom(option);
+            ppController.UpdateBloom(option);
 
     }
 
@@ -116,7 +120,13 @@ public class SettingsMenu : MonoBehaviour
             PlayerPrefs.SetInt("colorGrading", 0);
 
 
-        GameObject.Find("PostProcessVolume").GetComponent<PostProcessingControler>().UpdateColorGrading(option);
+        ppController.UpdateColorGrading(option);
+
+    }
+    public void SetAntialiassing(int option)
+    {
+        PlayerPrefs.SetInt("antialiasing", option);
+        gm.SetAntialiassing(option);
 
     }
 

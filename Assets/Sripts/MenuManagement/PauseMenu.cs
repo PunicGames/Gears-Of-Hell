@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     public static bool TriggerPause = false; 
 
     public GameObject PauseMenuUI;
+    public GameObject OptionsMenu;
 
     // Cursor
     [SerializeField] private Texture2D cursorSprite;
@@ -54,10 +55,13 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Resume() {
-        PauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
 
+        if (!OptionsMenu.activeSelf)
+        {
+            PauseMenuUI.SetActive(false);
+            Time.timeScale = 1f;
+            GameIsPaused = false;
+        }
         //if(desktop)
         //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }
@@ -70,6 +74,7 @@ public class PauseMenu : MonoBehaviour
         //if (desktop)
         //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
+
 
     public void LoadMenu()
     {
