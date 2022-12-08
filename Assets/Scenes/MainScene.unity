@@ -358,6 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4135c722bdb0d4891a358134ba40cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalMode: 1
   maxHealth: 100
   currentHealth: 0
   flashSpeed: 5
@@ -650,9 +651,23 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 541442378192647455, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_text
+      value: kill, obtain gears, and look for the open shop.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204964074892942984, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 71.21
+      objectReference: {fileID: 0}
     - target: {fileID: 3339265591684085194, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753454841369738365, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_text
+      value: 'If you want to survive  in this hell of a factory...
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 7943282192639027792, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: gm
@@ -1039,7 +1054,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: gameRegistry
@@ -1321,7 +1336,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1394454252
 PrefabInstance:
@@ -1501,7 +1516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3775608413403033294, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3775608413403033294, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
       propertyPath: m_LocalPosition.x
