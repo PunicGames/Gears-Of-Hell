@@ -379,7 +379,7 @@ public class AuthManager : MonoBehaviour
 
                 //Instantiate new scoreboard elements
                 GameObject scoreboardElement = Instantiate(scoreElement, scoreboardContent);
-                scoreboardElement.GetComponent<ScoreElement>().NewScoreElement(username, time, xp);
+                scoreboardElement.GetComponent<ScoreElement>().NewScoreElement("#1", username, time.ToString(), xp);
             }
 
             //Go to scoareboard screen
