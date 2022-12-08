@@ -19,6 +19,8 @@ public class ShootSystem : MonoBehaviour
     [HideInInspector] public int selectedGun = 0;
     public bool[] availableGuns;
 
+    [SerializeField] private Sprite[] weaponSprites;
+
     // Guns in Order: pistol, subfusil, rifle, sniper, shotgun
 
 
@@ -39,6 +41,7 @@ public class ShootSystem : MonoBehaviour
     // Display
     private TextMeshProUGUI ammunitionDisplay;
     private GameObject rechargingDisplay;
+    private Image weaponDisplay;
 
     //Perks Modifies
     //[HideInInspector]
@@ -89,11 +92,10 @@ public class ShootSystem : MonoBehaviour
         // Guns initialization
         guns = new PlayerGuns();
         availableGuns = new bool[guns.getGuns().Length];
-        // La pistola, que ocupa la primera posiciÛn, siempre podr· ser accesible.
+        // La pistola, que ocupa la primera posici√≥n, siempre podr√° ser accesible.
         availableGuns[0] = true;
         availableGuns[1] = true;
         availableGuns[2] = true;
-
 
     }
 
@@ -113,7 +115,8 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
-
+        weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
+        weaponDisplay.sprite = weaponSprites[0];
 
         // Display cursor
         //if (desktop) { 
@@ -130,7 +133,7 @@ public class ShootSystem : MonoBehaviour
 
     void Update()
     {
-        // Recarga autom·ticamente si no quedan balas
+        // Recarga autom√°ticamente si no quedan balas
         if (readyToShoot && shooting && !reloading && guns.getGuns()[selectedGun].bulletsLeftInMagazine <= 0) Reload();
 
         if (ammunitionDisplay != null)
@@ -157,11 +160,11 @@ public class ShootSystem : MonoBehaviour
     private void Shoot()
     {
         if (shooting)
-        { // Shooting ayuda para controlar las balas de las armas autom·ticas de la funciÛn Invoke del final de este mÈtodo. Evita que se disparen balas indeseadas
+        { // Shooting ayuda para controlar las balas de las armas autom√°ticas de la funci√≥n Invoke del final de este m√©todo. Evita que se disparen balas indeseadas
             readyToShoot = false;
 
 
-            // Se calcula la direcciÛn y origen del disparo
+            // Se calcula la direcci√≥n y origen del disparo
             Vector3 origin = weapon_origins[selectedGun].position;
             //Vector3 direction = (directionAim - origin).normalized;// weapon_origins[selectedGun].forward;
             Vector3 direction = weapon_origins[selectedGun].forward;
@@ -174,12 +177,12 @@ public class ShootSystem : MonoBehaviour
 
             for (int i = 0; i < numBulletsAtTime; i++)
             {
-                // C·lculo de spread
+                // C√°lculo de spread
                 float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
-                // C·lculo de la nueva direcciÛn con spread
+                // C√°lculo de la nueva direcci√≥n con spread
                 Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
 
-                // InstanciaciÛn de la bala en funcion de las perks
+                // Instanciaci√≥n de la bala en funcion de las perks
                 if (laserShot)
                 {
                     GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
@@ -218,7 +221,7 @@ public class ShootSystem : MonoBehaviour
 
             if (allowInvoke)
             {
-                Invoke("ResetShot", guns.getGuns()[selectedGun].timeBetweenShooting); // Llama a la funciÛn despuÈs de timeBetweenShooting segundos
+                Invoke("ResetShot", guns.getGuns()[selectedGun].timeBetweenShooting); // Llama a la funci√≥n despu√©s de timeBetweenShooting segundos
                 allowInvoke = false;
             }
 
@@ -228,7 +231,7 @@ public class ShootSystem : MonoBehaviour
                 Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
             }
             if ((guns.getGuns()[selectedGun].automaticGun && shooting && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0)))
-            { // Si es un arma autom·tica, sigue disparando
+            { // Si es un arma autom√°tica, sigue disparando
                 Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
             }
         }
@@ -241,7 +244,7 @@ public class ShootSystem : MonoBehaviour
     }
 
     public void Reload()
-    { // Llamar funciÛn cuando jugador pulsa R
+    { // Llamar funci√≥n cuando jugador pulsa R
         //Debug.Log("Intenta recargar");
         if ((guns.getGuns()[selectedGun].bulletsLeftInMagazine < guns.getGuns()[selectedGun].magazineSize) && !reloading && guns.getGuns()[selectedGun].totalBullets > 0)
         {
@@ -285,13 +288,13 @@ public class ShootSystem : MonoBehaviour
             rig.ActivateRRig(0.6f,true, 0.5f);
         reloading = false;
         rechargingDisplay.SetActive(false);
-        Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratÛn pulsado, empiece a disparar
+        Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de rat√≥n pulsado, empiece a disparar
     }
 
     public void SwapGun()
     {
-        // Explora las opciones de armas en orden. Hay dos bucles ya que podriamos estar posicionados en el arma n˙mero 1,
-        // por lo que explora primero hacia arriba y luego da la vuelta y explora las que jer·rquicamente est·n por debajo
+        // Explora las opciones de armas en orden. Hay dos bucles ya que podriamos estar posicionados en el arma n√∫mero 1,
+        // por lo que explora primero hacia arriba y luego da la vuelta y explora las que jer√°rquicamente est√°n por debajo
 
         for (int i = selectedGun + 1; i < availableGuns.Length; i++)
         {
@@ -301,16 +304,17 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[i].SetActive(true);
 
                 selectedGun = i;
-
+                weaponDisplay.sprite = weaponSprites[selectedGun];
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
 
-                // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque deberÌa llamarse mejor al finalizar la animaciÛn)
+                // Se resetea el disparo para quitar el enfriamiento del anterior arma y poder disparar de inmediato (aunque deber√≠a llamarse mejor al finalizar la animaci√≥n)
                 ResetShot();
-                // AQUI VA LA ANIMACI”N DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS M¡S ARRIBA)
+                // AQUI VA LA ANIMACI√ìN DE CAMBIO DE ARMA (TENER EN CUENTA LO QUE PONE 2 LINEAS M√ÅS ARRIBA)
                 if (selectedGun > 1)
                 {
                     anim.SetBool("isRifle", true);
+                    rig.SetRWeight(1);
                     rig.ChangeRightTargetRigPos(1);
                     rig.setRRigWeight(1);
                     rig.ActivateLRig(true);
@@ -318,6 +322,7 @@ public class ShootSystem : MonoBehaviour
                 else
                 {
                     anim.SetBool("isRifle", false);
+                    rig.SetRWeight(0.6f);
                     rig.ChangeRightTargetRigPos(0);
                     rig.setRRigWeight(0.6f);
                     rig.ActivateLRig(false);
@@ -337,15 +342,17 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
                 selectedGun = i;
+                weaponDisplay.sprite = weaponSprites[selectedGun];
 
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
 
                 ResetShot();
-                // AQUI VA LA ANIMACI”N DE CAMBIO DE ARMA
+                // AQUI VA LA ANIMACI√ìN DE CAMBIO DE ARMA
                 if (selectedGun > 1)
                 {
                     anim.SetBool("isRifle", true);
+                    rig.SetRWeight(1);
                     rig.ChangeRightTargetRigPos(1);
                     rig.setRRigWeight(1);
                     rig.ActivateLRig(true);
@@ -353,6 +360,7 @@ public class ShootSystem : MonoBehaviour
                 else
                 {
                     anim.SetBool("isRifle", false);
+                    rig.SetRWeight(0.6f);
                     rig.ChangeRightTargetRigPos(0);
                     rig.setRRigWeight(0.6f);
                     rig.ActivateLRig(false);

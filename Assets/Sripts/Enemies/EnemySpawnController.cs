@@ -15,6 +15,7 @@ public class EnemySpawnController : MonoBehaviour
     private int tierCounter= 0;
     private Tier tierAtUse;
     public Tier[] tierList;
+    [SerializeField] private int[] maxEnemiesAtTier;
 
     private float spawnTime;
     private bool spawning;
@@ -153,6 +154,7 @@ public class EnemySpawnController : MonoBehaviour
             tierCounter = aux;
 
         tierAtUse = tierList[tierCounter];
+        maxEnemiesAtSameTime = maxEnemiesAtTier[tierCounter];
     }
 
     // Return the cell where the player is

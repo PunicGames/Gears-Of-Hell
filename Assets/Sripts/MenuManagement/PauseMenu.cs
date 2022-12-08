@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    
+
     // Variable a usar en otros scripts como para bajar el volumen o algo asi. Accesible desde otros scripts con PauseMenu.GameIsPaused;
-    public static bool GameIsPaused = false; 
-    public static bool TriggerPause = false; 
+    public static bool GameIsPaused = false;
+    public static bool TriggerPause = false;
 
     public GameObject PauseMenuUI;
     public GameObject OptionsMenu;
@@ -42,20 +42,22 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         // Poner con el Input System si se pulsa una tecla o no para lanzar el menu
-        if (TriggerPause) { 
+        if (TriggerPause)
+        {
             TriggerPause = false;
             if (GameIsPaused)
             {
                 Resume();
             }
-            else {
+            else
+            {
                 Pause();
             }
         }
     }
 
-    public void Resume() {
-
+    public void Resume()
+    {
         if (!OptionsMenu.activeSelf)
         {
             PauseMenuUI.SetActive(false);
