@@ -113,8 +113,10 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
-        weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
-        weaponDisplay.sprite = weaponSprites[0];
+        if (weaponDisplay != null) { 
+            weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
+            weaponDisplay.sprite = weaponSprites[0];
+        }
 
         // Display cursor
         //if (desktop) { 
@@ -302,7 +304,7 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[i].SetActive(true);
 
                 selectedGun = i;
-                weaponDisplay.sprite = weaponSprites[selectedGun];
+                if (weaponDisplay != null) weaponDisplay.sprite = weaponSprites[selectedGun];
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
 
@@ -338,7 +340,7 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
                 selectedGun = i;
-                weaponDisplay.sprite = weaponSprites[selectedGun];
+                if (weaponDisplay != null) weaponDisplay.sprite = weaponSprites[selectedGun];
 
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
