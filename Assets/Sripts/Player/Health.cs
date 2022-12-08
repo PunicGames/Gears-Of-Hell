@@ -161,6 +161,7 @@ public class Health : MonoBehaviour
 
     public void LoadResume()
     {
+        SceneManager.GetSceneByName("SampleScene").GetRootGameObjects()[0].GetComponent<AuthManager>().ScoreboardButton();
         Debug.Log("LLEGA 2 ");
         int minutes = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().minutes;
         int seconds = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().seconds;

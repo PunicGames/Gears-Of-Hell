@@ -94,6 +94,8 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
+        availableGuns[1] = true;
+        availableGuns[2] = true;
 
     }
 
@@ -280,10 +282,10 @@ public class ShootSystem : MonoBehaviour
         if (selectedGun > 1)
         {
             rig.ActivateLRig(true, 1);
-            rig.ActivateRRig(true, 0.8f, 1);
+            rig.ActivateRRig(1,true, 1);
         }
         else
-            rig.ActivateRRig(true, 0.4f, 0.6f);
+            rig.ActivateRRig(0.6f,true, 0.5f);
         reloading = false;
         rechargingDisplay.SetActive(false);
         Shooting(); // Llamamos a esta funcion en caso de que el jugador siga con el click de ratón pulsado, empiece a disparar
@@ -314,6 +316,7 @@ public class ShootSystem : MonoBehaviour
                     anim.SetBool("isRifle", true);
                     rig.SetRWeight(1);
                     rig.ChangeRightTargetRigPos(1);
+                    rig.setRRigWeight(1);
                     rig.ActivateLRig(true);
                 }
                 else
@@ -321,6 +324,7 @@ public class ShootSystem : MonoBehaviour
                     anim.SetBool("isRifle", false);
                     rig.SetRWeight(0.6f);
                     rig.ChangeRightTargetRigPos(0);
+                    rig.setRRigWeight(0.6f);
                     rig.ActivateLRig(false);
 
                 }
@@ -350,6 +354,7 @@ public class ShootSystem : MonoBehaviour
                     anim.SetBool("isRifle", true);
                     rig.SetRWeight(1);
                     rig.ChangeRightTargetRigPos(1);
+                    rig.setRRigWeight(1);
                     rig.ActivateLRig(true);
                 }
                 else
@@ -357,6 +362,7 @@ public class ShootSystem : MonoBehaviour
                     anim.SetBool("isRifle", false);
                     rig.SetRWeight(0.6f);
                     rig.ChangeRightTargetRigPos(0);
+                    rig.setRRigWeight(0.6f);
                     rig.ActivateLRig(false);
                 }
 

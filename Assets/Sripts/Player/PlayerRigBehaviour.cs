@@ -48,7 +48,8 @@ public class PlayerRigBehaviour : MonoBehaviour
     {
         if (t) StartCoroutine(LLerping(time)); else StartCoroutine(LLerping(time));
     }
-    public void ActivateRRig(bool t, float time, float w)
+
+    public void ActivateRRig(float w,bool t, float time)
     {
         if (t) StartCoroutine(RLerping(time,w)); else StartCoroutine(RLerping(time,w));
     }
@@ -75,6 +76,7 @@ public class PlayerRigBehaviour : MonoBehaviour
         }
         l_rig.weight = 1;
     }
+
     public void SetRWeight(float w)
     {
         r_rig.weight = w;
