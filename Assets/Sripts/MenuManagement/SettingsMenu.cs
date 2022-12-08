@@ -12,12 +12,6 @@ public class SettingsMenu : MonoBehaviour
 
     public AudioMixer audioMixer;
 
-    [SerializeField] private GameObject PcControls;
-    [SerializeField] private GameObject MobileControls;
-
-    [SerializeField] private GameObject PcGameplay;
-    [SerializeField] private GameObject MobileGameplay;
-
     // Toggles
     [SerializeField] private Toggle bloomToggle;
     [SerializeField] private Toggle colorGradingToggle;
@@ -53,53 +47,7 @@ public class SettingsMenu : MonoBehaviour
         QualitySettings.SetQualityLevel(qualityIndex);
     }
 
-    public void ActivateControlsScreen()
-    {
-        if (desktop)
-        {
-            PcControls.SetActive(true);
-        }
-        else
-        {
-            MobileControls.SetActive(true);
-        }
-    }
-
-    public void DeactivateControlsScreen()
-    {
-        if (desktop)
-        {
-            PcControls.SetActive(false);
-        }
-        else
-        {
-            MobileControls.SetActive(false);
-        }
-    }
-
-    public void ActivateGameplayScreen()
-    {
-        if (desktop)
-        {
-            PcGameplay.SetActive(true);
-        }
-        else
-        {
-            MobileGameplay.SetActive(true);
-        }
-    }
-
-    public void DeactivateGameplayScreen()
-    {
-        if (desktop)
-        {
-            PcGameplay.SetActive(false);
-        }
-        else
-        {
-            MobileGameplay.SetActive(false);
-        }
-    }
+   
 
     public void SetBloom(bool option) {
         if (option)
