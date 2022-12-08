@@ -82,20 +82,6 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         GameIsPaused = false;
-        //SceneManager.LoadScene("Menu");
-        StartCoroutine(LoadScene_Coroutine());
+        SceneManager.LoadScene("Menu");
     }
-
-    private IEnumerator LoadScene_Coroutine()
-    {
-
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Additive);
-        while (!asyncOperation.isDone)
-        {
-            yield return null;
-        }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
-        SceneManager.UnloadSceneAsync("MainScene", UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
-    }
-
 }

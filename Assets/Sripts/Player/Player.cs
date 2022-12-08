@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     private GestorUIinGame uiGestor;
 
     //Camera reference
-    public Transform cam;
+    private Transform cam;
 
     //Joysticks reference
     private VariableJoystick leftJoystick;
@@ -78,13 +78,15 @@ public class Player : MonoBehaviour
     {
         //playerAnimator.SetBool("isRifle", true);
         footSteps.volume *= AudioManager.getGeneralVolume();
+
+        cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
         if (!desktop)
         {
             leftJoystick = GameObject.Find("LeftJoystick").GetComponent<VariableJoystick>();
             rightJoystick = GameObject.Find("RightJoystick").GetComponent<VariableJoystick>();
         }
-        cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
-
+        
     }
     private void Update()
     {
