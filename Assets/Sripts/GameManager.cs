@@ -1,3 +1,4 @@
+using LootLocker.Requests;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             Debug.Log("Creando...");
             OptionsInitilizer_DefaultValues();
+            StartCoroutine(InitializeLootLocker());
         }
 
         SetAntialiassing(PlayerPrefs.GetInt("antialiasing"));
@@ -84,5 +86,24 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("colorGrading", 1);
             PlayerPrefs.SetInt("antialiasing", 2);
         }
+    }
+
+    public IEnumerator InitializeLootLocker()
+    {
+        bool done = false;
+        LootLockerSDKManager.StartGuestSession((response) =>
+        {
+            if (response.success)
+            {
+                print("Setting up LootLocker");
+                done = true;
+            }
+            else
+            {
+                print(response.Error);
+                done = true;
+            }
+        });
+        yield return new WaitWhile(() => done == false);
     }
 }

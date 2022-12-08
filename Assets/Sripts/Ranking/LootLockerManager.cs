@@ -5,9 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeatherboardManager : MonoBehaviour
+public class LootLockerManager : MonoBehaviour
 {
-
+    public TMP_InputField memberID, playerScore;
     private readonly int id = 9400;
     private readonly int maxScores = 10;
 
@@ -15,13 +15,64 @@ public class LeatherboardManager : MonoBehaviour
     public GameObject scoreElement;
     public Transform scoreboardContent;
 
-    public void OnEnable()
+
+    // Start is called before the first frame update
+    void Awake()
     {
-        StartCoroutine(GetScores());
+        StartCoroutine(InitializeLootLocker());
     }
+
+    public void SubmitData()
+    {
+        StartCoroutine(SubmitScore());
+    }
+
     public void UpdateData()
     {
         StartCoroutine(GetScores());
+    }
+
+    public IEnumerator InitializeLootLocker()
+    {
+        bool done = false;
+        LootLockerSDKManager.StartGuestSession((response) =>
+        {
+            if (response.success)
+            {
+                print("Setting up LootLocker");
+                done = true;
+            }
+            else
+            {
+                print(response.Error);
+                done = true;
+            }
+        });
+        yield return new WaitWhile(() => done == false);
+    }
+
+    [System.Obsolete]
+    public IEnumerator SubmitScore()
+    {
+        bool done = false;
+        LootLockerSDKManager.SubmitScore(memberID.text, int.Parse(playerScore.text), id, (response) =>
+        {
+            if (response.statusCode == 200)
+            {
+                print("Score submitted successfull");
+                done = true;
+            }
+            else
+            {
+                print(response.Error);
+                done = true;
+            }
+        });
+
+        memberID.text = "";
+        playerScore.text = "";
+
+        yield return new WaitWhile(() => done == false);
     }
 
     [System.Obsolete]
@@ -67,5 +118,6 @@ public class LeatherboardManager : MonoBehaviour
 
         return minutes + ":" + seconds;
     }
+
 
 }
