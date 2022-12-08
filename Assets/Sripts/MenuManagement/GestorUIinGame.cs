@@ -119,17 +119,21 @@ public class GestorUIinGame : MonoBehaviour
         else
             totalTime.text = min + " : " + secs;
 
-        bulletsHit.text = bHit.ToString();
-        bulletsMissed.text = bMissed.ToString();
-        if (bHit + bMissed == 0)
+        if (bulletsHit)
         {
-            accuracy.text = "00.00%";
+            bulletsHit.text = bHit.ToString();
+            bulletsMissed.text = bMissed.ToString();
+            if (bHit + bMissed == 0)
+            {
+                accuracy.text = "00.00%";
+            }
+            else
+            {
+                float acc = ((float)bHit / ((float)bHit + (float)bMissed)) * 100;
+                accuracy.text = System.Math.Round(acc, 2) + "%";
+            }
+            goldEarnedT.text = goldEarned.ToString();
+            defeatedEnemiesT.text = defeatedEnemies.ToString();
         }
-        else { 
-            float acc = ((float)bHit/((float)bHit + (float)bMissed))*100;
-            accuracy.text = System.Math.Round(acc, 2) + "%";
-        }
-        goldEarnedT.text = goldEarned.ToString();
-        defeatedEnemiesT.text = defeatedEnemies.ToString();
     }
 }
