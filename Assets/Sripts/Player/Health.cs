@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] bool normalMode = true;
     public float maxHealth = 100;
     public float currentHealth;
     public float flashSpeed = 5f;
@@ -73,7 +74,8 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (canBeHurt) { 
+        if (canBeHurt)
+        {
             canBeHurt = false;
 
             popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
@@ -92,7 +94,8 @@ public class Health : MonoBehaviour
             {
                 PlaySound(deathClip);
                 Death();
-            } else if (!isDead)
+            }
+            else if (!isDead)
             {
                 PlaySound(hurtClips[Random.Range(0, hurtClips.Length)]);
             }
@@ -103,7 +106,8 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void Heal(float amount) {
+    public void Heal(float amount)
+    {
         currentHealth += amount;
         if (currentHealth > maxHealth)
         {
@@ -116,7 +120,7 @@ public class Health : MonoBehaviour
         }
         //Particle effect activation
         playerMovement.onItemTaken.Invoke(effect.HEAL);
-        
+
         UpdateLifeUI();
     }
 
@@ -135,7 +139,7 @@ public class Health : MonoBehaviour
         switch (r)
         {
             case 0:
-                playerMovement.playerAnimator.SetFloat("death_type",0);
+                playerMovement.playerAnimator.SetFloat("death_type", 0);
                 break;
             case 1:
                 playerMovement.playerAnimator.SetFloat("death_type", .5f);
@@ -148,7 +152,8 @@ public class Health : MonoBehaviour
         playerMovement.playerAnimator.SetTrigger("death");
         playerMovement.enabled = false;
 
-        onDeath.Invoke(false);
+        if (normalMode)
+            onDeath.Invoke(false);
 
         // Faltaría poner sistema de animaciones o audios, etc. Por eso está esto en un método a parte
 
@@ -172,14 +177,16 @@ public class Health : MonoBehaviour
         GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().SetGameOverMusic();
         //Destroy(gameObject);
     }
-    
 
-    public void UpdateLifeUI() {
+
+    public void UpdateLifeUI()
+    {
         lifeScaler.localScale = new Vector3(currentHealth / maxHealth, 1, 1);
         lifeText.text = (int)currentHealth + " / " + maxHealth;
     }
 
-    private void ResetInivincibility() {
+    private void ResetInivincibility()
+    {
         canBeHurt = true;
         lifeScaler.GetComponent<Image>().color = lifeColorNormal;
     }
