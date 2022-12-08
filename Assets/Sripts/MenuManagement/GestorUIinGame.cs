@@ -106,7 +106,7 @@ public class GestorUIinGame : MonoBehaviour
     public void FinishGame(int min, int secs, int bHit, int bMissed, int goldEarned, int defeatedEnemies) {
         Time.timeScale = 0.0f;
 
-        if (desktop)
+        if (!desktop)
             mobileUI.SetActive(false);
         else
             desktopUI.SetActive(false);
