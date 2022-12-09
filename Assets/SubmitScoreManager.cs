@@ -55,9 +55,9 @@ public class SubmitScoreManager : MonoBehaviour
             }
         });
 
+        yield return new WaitWhile(() => done == false);
+
         submit.active = false;
         ranking.active = true;
-
-        yield return new WaitWhile(() => done == false);
     }
 }
