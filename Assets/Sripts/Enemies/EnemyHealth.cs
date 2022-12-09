@@ -38,6 +38,10 @@ public class EnemyHealth : MonoBehaviour
     // Player reference
     private GameObject playerRef;
 
+    //Delegates
+    public delegate void OnDeath();
+    public event OnDeath onDeath;
+
     //private int timeAnimationDead = 1;
     private void Awake()
     {
@@ -69,7 +73,19 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Death();
+            NavMeshAgent navMov = GetComponent<NavMeshAgent>();
+            if (navMov != null)
+                navMov.enabled = false;
+
+            if(enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
+            {
+                onDeath();
+            }
+            else
+            {
+                Death();
+            }
+            
         }
     }
 
@@ -84,19 +100,22 @@ public class EnemyHealth : MonoBehaviour
             coll.enabled = false;
 
 
-        NavMeshAgent navMov = GetComponent<NavMeshAgent>();
+        //NavMeshAgent navMov = GetComponent<NavMeshAgent>();
         EnemyMovement eM = GetComponent<EnemyMovement>();
         WorkerBehavior mE = GetComponent<WorkerBehavior>();
         GunnerBehaviour gb = GetComponent<GunnerBehaviour>();
         RangedEnemy rE = GetComponent<RangedEnemy>();
+        ProspectorBehaviour pb = GetComponent<ProspectorBehaviour>();
         if (eM != null)
             eM.enabled = false;
         if (rE != null)
             rE.enabled = false;
         if (mE != null)
             mE.enabled = false;
-        if (navMov != null)
-            navMov.enabled = false;
+        //if (navMov != null)
+        //   navMov.enabled = false;
+        if (pb != null)
+            pb.enabled = false;
         if (gb)
         {
             
