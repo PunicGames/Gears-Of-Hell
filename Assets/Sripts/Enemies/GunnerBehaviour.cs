@@ -13,6 +13,7 @@ public class GunnerBehaviour : MonoBehaviour
     public bool SemiAuto = false;
     public int bulletsPerBurst = 5;
     public float SemiAutoTime = 2f;
+    public float bulletLifetime = 3f;
 
     public Transform shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
@@ -22,6 +23,7 @@ public class GunnerBehaviour : MonoBehaviour
 
 
     private bool alreadyAttacked = false;
+    private bool alreadyRecharged = false;
     private bool inAttackRange = false;
 
     public GameObject bullet;
@@ -30,6 +32,10 @@ public class GunnerBehaviour : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
     AudioSource gunAudio;
+
+    private enum gunnerState { IDLE, PURSUE, ATTACK, RECHARGE };
+    private gunnerState currentState = gunnerState.IDLE;
+
 
     // Bullet colors
     [SerializeField] private Color albedo;
@@ -44,29 +50,76 @@ public class GunnerBehaviour : MonoBehaviour
         gunAudio = GetComponent<AudioSource>();
         bulletsInMag = bulletsPerMag;
         bulletsInBurst = bulletsPerBurst;
+
     }
 
     private void Update()
     {
-        float distance = Vector3.Distance(player.position, transform.position);
-        transform.LookAt(player.position);
-
-        if (distance <= agent.stoppingDistance)
-        {
-            if (!alreadyAttacked)
-            {
-                Attack();
-
-            }
-            animator.SetBool("Moving", false);
-        }
-        else
-        {
-            Chase();
-            animator.SetBool("Moving", true);
-        }
+        FSM();
     }
-    void Attack()
+
+    private void FSM()
+    {
+        float distance = Vector3.Distance(player.position, transform.position);
+
+
+        switch (currentState)
+        {
+            case gunnerState.IDLE:
+                transform.LookAt(player.position);
+                if (distance > agent.stoppingDistance)
+                {
+                    inAttackRange = false;
+                    currentState = gunnerState.PURSUE;
+                    animator.SetBool("Moving", true);
+                    agent.isStopped = false;
+                }
+                else if (!alreadyAttacked)
+                    currentState = gunnerState.ATTACK;
+
+                break;
+            case gunnerState.PURSUE:
+                agent.SetDestination(player.position);
+                if (distance <= agent.stoppingDistance)
+                {
+                    inAttackRange = true;
+                    currentState = gunnerState.IDLE;
+                    animator.SetBool("Moving", false);
+                    agent.isStopped = true;
+                }
+                break;
+
+            case gunnerState.ATTACK:
+                transform.LookAt(player.position);
+                if (Attack())
+                {
+                    animator.SetTrigger("reload");
+                    Invoke(nameof(ResetAttack), reloadTime);
+                    bulletsInMag = bulletsPerMag;
+                    currentState = gunnerState.RECHARGE;
+                }
+                else
+                {
+                    currentState = gunnerState.IDLE;
+
+                }
+                break;
+            case gunnerState.RECHARGE:
+                //Recargando
+                if (alreadyRecharged)
+                {
+                    currentState = gunnerState.IDLE;
+                    alreadyRecharged = false;
+                }
+                break;
+            default:
+                break;
+        }
+
+
+
+    }
+    bool Attack()
     {
 
         gunAudio.Play();
@@ -78,9 +131,13 @@ public class GunnerBehaviour : MonoBehaviour
         bulletParams.SetDamage(damage);
         bulletParams.SetLaser(false);
         bulletParams.owner = Bullet.BulletOwner.ENEMY;
+        bulletParams.timeToDestroy = bulletLifetime;
         bulletParams.SetBulletColors(albedo, emissive);
+
+        
         bulletsInMag--;
         alreadyAttacked = true;
+        muzzleVFX.Play();
         if (SemiAuto)
         {
             bulletsInBurst--;
@@ -94,63 +151,30 @@ public class GunnerBehaviour : MonoBehaviour
                 }
             else
             {
-                animator.SetTrigger("reload");
-                Invoke(nameof(ResetAttack), reloadTime);
-                bulletsInMag = bulletsPerMag;
+                return true;
             }
         }
         else
         {
-
             if (bulletsInMag > 0)
                 Invoke(nameof(ResetAttack), cadenceTime);
             else
             {
-                animator.SetTrigger("reload");
-                Invoke(nameof(ResetAttack), reloadTime);
-                bulletsInMag = bulletsPerMag;
+                return true;
             }
         }
-        muzzleVFX.Play();
 
-
-
+        return false;
 
 
     }
     private void ResetAttack()
     {
         alreadyAttacked = false;
+        if (currentState == gunnerState.RECHARGE) alreadyRecharged = true;
+
     }
 
-    private void Chase()
-    {
-        agent.SetDestination(player.position);
-    }
-
-    //IEnumerator Attack()
-    //{
-    //    while (inAttackRange)
-    //    {
-    //        int count = bulletsPerMag;
-    //        while (count > 0)
-    //        {
-    //            gunAudio.Play();
-    //            GameObject b = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
-    //            b.transform.LookAt(player.transform);
-    //            Bullet bulletParams = b.GetComponent<Bullet>();
-    //            bulletParams.SetForce(bulletSpeed);
-    //            bulletParams.SetDamage(damage);
-    //            bulletParams.SetLaser(false);
-    //            bulletParams.owner = Bullet.BulletOwner.ENEMY;
-    //            count--;
-    //            yield return new WaitForSeconds(cadenceTime);
-    //        }
-
-    //        yield return new WaitForSeconds(reloadTime);
-    //    }
-    //    alreadyAttack = false;
-    //    yield return 0;
-    //}
+   
 
 }
