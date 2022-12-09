@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class ProspectorBehaviour : MonoBehaviour
 {
     // TODO: Arreglar colisionadores al morir
-
+    // TODO: Mirar si después de hacer la habilidad sigue escondido que haga otra habilidad en vez de pasar a estado CHASING.
 
     Transform player;
     NavMeshAgent agent;
@@ -29,7 +29,6 @@ public class ProspectorBehaviour : MonoBehaviour
     // Utility system variables
     private EnemyHealth m_prospectorHealth;
     private Health m_playerHealth;
-    private float currentProspectorHealthRate;
     private float enemiesHealthStatus;
     private float currentPlayerHealthRate;
     private int numEnemiesInRange;
@@ -112,7 +111,6 @@ public class ProspectorBehaviour : MonoBehaviour
         numEnemiesInRange = m_outerRing.checkNumEnemiesInRange();
         enemiesHealthStatus = m_outerRing.checkEnemiesHealthStatus();
         currentPlayerHealthRate = (float)m_playerHealth.currentHealth / (float)m_playerHealth.maxHealth;
-        currentProspectorHealthRate = m_prospectorHealth.startingHealth / m_prospectorHealth.startingHealth; // No se usa. Probablemente hay que borrarla.
 
         // DECISION BASED ON VARIABLES
         // -------- Functions --------
@@ -121,19 +119,19 @@ public class ProspectorBehaviour : MonoBehaviour
         float VP = (Mathf.Pow(m_prospectorHealth.startingHealth, 3f) - Mathf.Pow(m_prospectorHealth.currentHealth, 3f)) / (Mathf.Pow(m_prospectorHealth.startingHealth, 3f));
         float VU = 1 - enemiesHealthStatus;
 
-        Debug.Log("VJ: " + VJ);
-        Debug.Log("NW: " + NW);
-        Debug.Log("VP: " + VP);
-        Debug.Log("VU: " + VU);
-
         // Utility system
         float castVelocityValue = 0.3f * VJ + 0.7f * NW;
         float castOwnCure = VP;
         float castAreaCure = 0.85f * VU + 0.15f * VP;
 
-        Debug.Log("CastVelocityValue: " + castVelocityValue);
-        Debug.Log("CastOwnCure: " + castOwnCure);
-        Debug.Log("CastAreaCure: " + castAreaCure);
+        // ------ Utility System Values ------ Check documentation to know what these variables stand for.
+        //Debug.Log("VJ: " + VJ);
+        //Debug.Log("NW: " + NW);
+        //Debug.Log("VP: " + VP);
+        //Debug.Log("VU: " + VU);
+        //Debug.Log("CastVelocityValue: " + castVelocityValue);
+        //Debug.Log("CastOwnCure: " + castOwnCure);
+        //Debug.Log("CastAreaCure: " + castAreaCure);
 
         // Decision maker
         if (castVelocityValue >= castOwnCure && castVelocityValue >= castAreaCure)
@@ -189,9 +187,13 @@ public class ProspectorBehaviour : MonoBehaviour
     }
 
     public void ResetCasting() {
-        Debug.Log("LLEGA");
+        //Debug.Log("Ability cast finished");
         casting = false;
-        currentState = State.CHASING;
+
+        if(CheckCanCastAgain())
+            currentState = State.CASTING;
+        else
+            currentState = State.CHASING;
     }
 
     private Transform CheckForAvailableHidenSpot() {
@@ -201,30 +203,52 @@ public class ProspectorBehaviour : MonoBehaviour
         float distanceToPlayer = 0.0f;
         float distanceToForeman = 0.0f;
         bool hidenSpot = false;
-        Transform nextPosition = HidingSpots[0]; // Se inicializa para evitar errores pero no tiene relevancia
+        Transform nextPosition = HidingSpots[0]; // Initialized to avoid errors but lacks of relevance
 
-        foreach (Transform hideSpot in HidingSpots) {
-            distanceToPlayer = Vector3.Distance(hideSpot.position, player.position);
-            distanceToForeman = Vector3.Distance(hideSpot.position, transform.position);
+        // Give randomness the way hidingSpots are checked
+        HashSet<int> indexes = new HashSet<int>();
+        for (int i = 0; i < HidingSpots.Length; i++) {
+            indexes.Add(i);
+        }
+
+        // Get new valid spot
+        for (int i = 0; i < HidingSpots.Length; i++) {
+
+            // Get random index
+            int idx = Random.Range(0, indexes.Count);
+            // Take it out from set
+            indexes.Remove(idx);
+
+            distanceToPlayer = Vector3.Distance(HidingSpots[idx].position, player.position);
+            distanceToForeman = Vector3.Distance(HidingSpots[idx].position, transform.position);
             hidenSpot = false;
-            
+
             RaycastHit hit;
-            if (Physics.Raycast(hideSpot.position, (player.position - hideSpot.position).normalized, out hit, Mathf.Infinity, obstacleMask))
+            if (Physics.Raycast(HidingSpots[idx].position, (player.position - HidingSpots[idx].position).normalized, out hit, Mathf.Infinity, obstacleMask))
             {
-                Debug.Log("SÍ");
                 hidenSpot = true;
             }
-            else {
-                Debug.Log("NO");
+
+            if ((distanceToPlayer >= minDistanceToPlayer) && (distanceToForeman >= minDistanceToForeman) && (hidenSpot))
+            {
+                //Debug.Log("Valid Hiding Spot");
+                nextPosition = HidingSpots[idx];
+                break;
             }
 
-            if ((distanceToPlayer >= minDistanceToPlayer) && (distanceToForeman >= minDistanceToForeman) && (hidenSpot)) {
-                //Debug.Log("Escondite válido");
-                nextPosition = hideSpot;
-                //break;
-            }
         }
 
         return nextPosition;
+    }
+
+    private bool CheckCanCastAgain() {
+        RaycastHit hit;
+        if (Physics.Raycast(targetHideSpot.position, (player.position - targetHideSpot.position).normalized, out hit, Mathf.Infinity, obstacleMask))
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
