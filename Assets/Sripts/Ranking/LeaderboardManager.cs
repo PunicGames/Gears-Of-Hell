@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeatherboardManager : MonoBehaviour
+public class LeaderboardManager : MonoBehaviour
 {
 
     public static readonly int id = 9400;
