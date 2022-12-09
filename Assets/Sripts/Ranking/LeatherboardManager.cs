@@ -9,7 +9,7 @@ public class LeatherboardManager : MonoBehaviour
 {
 
     private readonly int id = 9400;
-    private readonly int maxScores = 10;
+   public int maxScores = 10;
 
 
     public GameObject scoreElement;
