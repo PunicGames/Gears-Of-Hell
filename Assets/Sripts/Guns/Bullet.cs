@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     private Rigidbody rb;
     private float damage;
-    private int timeToDestroy = 3;
+    public float timeToDestroy = 3;
     [HideInInspector] public bool laserShot;
 
     // Shoot System reference to update bullets record from player
