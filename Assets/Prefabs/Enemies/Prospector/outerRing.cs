@@ -41,8 +41,6 @@ public class outerRing : MonoBehaviour
     }
 
     public float checkEnemiesHealthStatus() {
-        // TODO: Arreglar el número de colisionadores
-
         float healthRatio = 0.0f;
         Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
 
@@ -69,5 +67,9 @@ public class outerRing : MonoBehaviour
 
     public Collider[] GetEnemiesInRange() { 
         return Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
+    }
+
+    public float GetRadius() {
+        return sC.radius;
     }
 }
