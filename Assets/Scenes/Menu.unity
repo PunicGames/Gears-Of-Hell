@@ -13790,6 +13790,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerSelectorMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 2950329543875201238, guid: de9f76029c1b1a04eaa16c77aefd2bf4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2950329543875201241, guid: de9f76029c1b1a04eaa16c77aefd2bf4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -15095,9 +15099,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f14b784956770458605f143406deb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScores: 10
-  scoreElement: {fileID: 5865473378321022820, guid: 77c0cce415c17bb4e817acf4d3609b64, type: 3}
-  scoreboardContent: {fileID: 4126908345633145235}
 --- !u!1 &4238174695584626954
 GameObject:
   m_ObjectHideFlags: 0
@@ -17081,6 +17082,10 @@ PrefabInstance:
     - target: {fileID: 7347503040607930540, guid: 54a824d5653c6d246bfcc4206af5e219, type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347503040607930540, guid: 54a824d5653c6d246bfcc4206af5e219, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7347503040607930541, guid: 54a824d5653c6d246bfcc4206af5e219, type: 3}
       propertyPath: m_Pivot.x
