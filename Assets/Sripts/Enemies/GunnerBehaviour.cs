@@ -15,12 +15,17 @@ public class GunnerBehaviour : MonoBehaviour
     public float SemiAutoTime = 2f;
     public float bulletLifetime = 3f;
 
+    public bool hasToSeeYouToShoot = false;
+    public bool canLaunchGrenade = false;
+    public float spotDistance = 57f;
+
     public Transform shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
 
     private int bulletsInMag;
     private int bulletsInBurst;
 
+    private bool playerOnSight = false;
 
     private bool alreadyAttacked = false;
     private bool alreadyRecharged = false;
@@ -61,31 +66,41 @@ public class GunnerBehaviour : MonoBehaviour
     private void FSM()
     {
         float distance = Vector3.Distance(player.position, transform.position);
+        if (distance <= spotDistance)
+            inAttackRange = true;
+        else
+            inAttackRange = false;
+
 
 
         switch (currentState)
         {
             case gunnerState.IDLE:
                 transform.LookAt(player.position);
-                if (distance > agent.stoppingDistance)
+                if (hasToSeeYouToShoot)
                 {
-                    inAttackRange = false;
-                    currentState = gunnerState.PURSUE;
-                    animator.SetBool("Moving", true);
-                    agent.isStopped = false;
+                    CheckPlayerSighted();
+                    transitionFromIdle(!playerOnSight || !inAttackRange);
+
                 }
-                else if (!alreadyAttacked)
-                    currentState = gunnerState.ATTACK;
+                else
+                {
+                    transitionFromIdle(!inAttackRange);
+                }
 
                 break;
             case gunnerState.PURSUE:
                 agent.SetDestination(player.position);
-                if (distance <= agent.stoppingDistance)
+                if (inAttackRange)
+                    transform.LookAt(player.position);
+                if (hasToSeeYouToShoot)
                 {
-                    inAttackRange = true;
-                    currentState = gunnerState.IDLE;
-                    animator.SetBool("Moving", false);
-                    agent.isStopped = true;
+                    CheckPlayerSighted();
+                    transitionFromPursue(inAttackRange && playerOnSight);
+                }
+                else
+                {
+                    transitionFromPursue(inAttackRange);
                 }
                 break;
 
@@ -105,6 +120,8 @@ public class GunnerBehaviour : MonoBehaviour
                 }
                 break;
             case gunnerState.RECHARGE:
+                if (inAttackRange)
+                    transform.LookAt(player.position);
                 //Recargando
                 if (alreadyRecharged)
                 {
@@ -134,7 +151,7 @@ public class GunnerBehaviour : MonoBehaviour
         bulletParams.timeToDestroy = bulletLifetime;
         bulletParams.SetBulletColors(albedo, emissive);
 
-        
+
         bulletsInMag--;
         alreadyAttacked = true;
         muzzleVFX.Play();
@@ -168,6 +185,42 @@ public class GunnerBehaviour : MonoBehaviour
 
 
     }
+    private void CheckPlayerSighted()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, (player.position - transform.position).normalized);
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.gameObject.tag == "Player")
+                playerOnSight = true;
+            else
+                playerOnSight = false;
+        }
+    }
+
+    private void transitionFromIdle(bool condition)
+    {
+        if (condition)
+        {
+            currentState = gunnerState.PURSUE;
+            animator.SetBool("Moving", true);
+            agent.isStopped = false;
+        }
+        else if (!alreadyAttacked)
+            currentState = gunnerState.ATTACK;
+    }
+    private void transitionFromPursue(bool condition)
+    {
+        if (condition)
+        {
+            currentState = gunnerState.IDLE;
+            animator.SetBool("Moving", false);
+            agent.isStopped = true;
+        }
+
+    }
+
+
     private void ResetAttack()
     {
         alreadyAttacked = false;
@@ -175,6 +228,6 @@ public class GunnerBehaviour : MonoBehaviour
 
     }
 
-   
+
 
 }

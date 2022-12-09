@@ -319,7 +319,7 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 7
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -363,6 +363,10 @@ MonoBehaviour:
   SemiAuto: 1
   bulletsPerBurst: 5
   SemiAutoTime: 2
+  bulletLifetime: 3
+  hasToSeeYouToShoot: 1
+  canLaunchGrenade: 0
+  spotDistance: 7
   shootOrigin: {fileID: 8195484144544881401}
   muzzleVFX: {fileID: 3404689519454124730}
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
