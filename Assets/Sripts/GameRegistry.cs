@@ -88,4 +88,9 @@ public class GameRegistry : MonoBehaviour
         shopManager.GetComponent<ManageShops>().RefreshShop();
         GameObject.Find("WorldGenerator").GetComponent<EnemySpawnController>().TierIncrement();
     }
+
+    public int GetScore()
+    {
+        return (minutes * 60) + seconds;
+    }
 }
