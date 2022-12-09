@@ -40,11 +40,12 @@ public class ProspectorBehaviour : MonoBehaviour
     private Transform targetHideSpot;
     private bool hiden = false;
     private bool hiding = false;
+    [SerializeField] private LayerMask obstacleMask;
 
     private void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
-        player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         m_prospectorHealth = GetComponent<EnemyHealth>();
@@ -78,14 +79,18 @@ public class ProspectorBehaviour : MonoBehaviour
                 if (!hiding)
                 {
                     targetHideSpot = CheckForAvailableHidenSpot();
-                    Chase(targetHideSpot.position);
                     hiding = true;
                 }
+                else {
+                    Chase(targetHideSpot.position);
 
-                if (transform.position == targetHideSpot.position) {
-                    hiding = false;
+                    if (Vector3.Distance(transform.position, targetHideSpot.position)  < 0.1)
+                    {
+                        hiding = false;
+                        currentState = State.CASTING;
+                    }
                 }
-                
+
                 break;
             case State.CASTING:
                 transform.LookAt(player.position);
@@ -191,15 +196,35 @@ public class ProspectorBehaviour : MonoBehaviour
 
     private Transform CheckForAvailableHidenSpot() {
         // Check distance
+        float minDistanceToPlayer = 2.0f;
+        float minDistanceToForeman = 1.0f;
         float distanceToPlayer = 0.0f;
         float distanceToForeman = 0.0f;
+        bool hidenSpot = false;
+        Transform nextPosition = HidingSpots[0]; // Se inicializa para evitar errores pero no tiene relevancia
 
         foreach (Transform hideSpot in HidingSpots) {
             distanceToPlayer = Vector3.Distance(hideSpot.position, player.position);
             distanceToForeman = Vector3.Distance(hideSpot.position, transform.position);
-            Debug.Log("DistanceToPlayer: " + distanceToPlayer + ". DistanceToForeman: " + distanceToForeman);
+            hidenSpot = false;
+            
+            RaycastHit hit;
+            if (Physics.Raycast(hideSpot.position, (player.position - hideSpot.position).normalized, out hit, Mathf.Infinity, obstacleMask))
+            {
+                Debug.Log("SÍ");
+                hidenSpot = true;
+            }
+            else {
+                Debug.Log("NO");
+            }
+
+            if ((distanceToPlayer >= minDistanceToPlayer) && (distanceToForeman >= minDistanceToForeman) && (hidenSpot)) {
+                //Debug.Log("Escondite válido");
+                nextPosition = hideSpot;
+                //break;
+            }
         }
 
-        return  HidingSpots[Random.RandomRange(0, 9)];
+        return nextPosition;
     }
 }
