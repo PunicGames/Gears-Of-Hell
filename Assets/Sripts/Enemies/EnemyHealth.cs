@@ -62,7 +62,7 @@ public class EnemyHealth : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
-        Debug.Log("Vida enemigo: " + currentHealth);
+        //Debug.Log("Vida enemigo: " + currentHealth);
 
         playerRef.GetComponent<Player>().PlayHitMarker();
 
@@ -170,5 +170,17 @@ public class EnemyHealth : MonoBehaviour
         int hpHealed = (hp > startingHealth - currentHealth) ? startingHealth - currentHealth : hp;
         popup.Create(popupPosition.position, hpHealed, PopUp.TypePopUp.LIFE, true, 0.5f);
         currentHealth += hpHealed;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // En caso de error si el enemigo aparece dentro de una tienda o un objeto. No debería de ocurrir igualmente.
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Shop") {
+            Debug.Log("ENEMIGO APARECE DENTRO DE OBJETO. ELIMINADO");
+            Destroy(gameObject);
+        } else if (collision.gameObject.tag == "DeathPlane") {
+            Debug.Log("ENEMIGO CAE AL VACÍO. ELIMINADO");
+            Destroy(gameObject);
+        }
     }
 }

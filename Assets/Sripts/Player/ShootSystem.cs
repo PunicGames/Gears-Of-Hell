@@ -257,7 +257,6 @@ public class ShootSystem : MonoBehaviour
         if ((guns.getGuns()[selectedGun].bulletsLeftInMagazine < guns.getGuns()[selectedGun].magazineSize) && !reloading && guns.getGuns()[selectedGun].totalBullets > 0)
         {
             shooting = false;
-            Debug.Log("Pasa");
             audioManager.PlaySecundary(selectedGun);
             reloading = true;
             rechargingDisplay.SetActive(true);
