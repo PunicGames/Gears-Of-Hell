@@ -11,6 +11,8 @@ public class RapidFire : MonoBehaviour
     [SerializeField] private GameObject shootObject;
     private ShootSystem shootScript;
 
+ 
+
     private void Start()
     {
         shootScript = shootObject.GetComponent<ShootSystem>();
@@ -26,6 +28,7 @@ public class RapidFire : MonoBehaviour
 
             var aux = shootScript.guns.getGuns();
 
+           
             foreach (Gun g in aux)
             {
                 g.timeBetweenShots /= bufAttackSpeed;
@@ -42,6 +45,7 @@ public class RapidFire : MonoBehaviour
 
             var aux = shootScript.guns.getGuns();
 
+         
             foreach (Gun g in aux)
             {
                 g.timeBetweenShots = defAttackSpeed;

@@ -36,7 +36,7 @@ public class GameRegistry : MonoBehaviour
         timeDisplay = GameObject.Find("GameTimer").GetComponent<TextMeshProUGUI>();
 
         //shopManager.GetComponent<ManageShops>().RefreshShop();
-        InvokeRepeating("ChangeShop", firstShopTime, shopActivationTime);
+        Invoke("ChangeShop", firstShopTime);
     }
 
 
@@ -87,6 +87,8 @@ public class GameRegistry : MonoBehaviour
         }
         shopManager.GetComponent<ManageShops>().RefreshShop();
         GameObject.Find("WorldGenerator").GetComponent<EnemySpawnController>().TierIncrement();
+
+        Invoke("ChangeShop", Random.Range(75, 106));
     }
 
     public int GetScore()
