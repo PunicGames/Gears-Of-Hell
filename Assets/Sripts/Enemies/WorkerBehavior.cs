@@ -23,9 +23,7 @@ public class WorkerBehavior : MonoBehaviour
     [SerializeField] public float attackType = 0;
     [SerializeField] bool randomAttack = false;
 
-    public AudioClip attackAudioClip;
-    [HideInInspector]
-    private AudioSource attackAudioSource;
+    [HideInInspector] EnemySoundManager enemySoundManager;
 
     //Maquina de estados
     private enum state { IDLE, PURSUE, ATTACK };
@@ -39,7 +37,7 @@ public class WorkerBehavior : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
 
-        attackAudioSource = gameObject.GetComponent<AudioSource>();
+        enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
 
         weaponCollider.player = player;
         weaponCollider.health = GetComponent<EnemyHealth>();
@@ -64,6 +62,7 @@ public class WorkerBehavior : MonoBehaviour
         {
             case state.IDLE:
                 animator.SetBool("Moving", false);
+                enemySoundManager.PauseSound("walk");
                 transform.LookAt(player.transform.position);
                 if (distance > agent.stoppingDistance)
                 {
@@ -72,6 +71,7 @@ public class WorkerBehavior : MonoBehaviour
                 break;
             case state.PURSUE:
                 animator.SetBool("Moving", true);
+                enemySoundManager.PlaySound("walk");
                 if (distance <= agent.stoppingDistance)
                 {
                     currentLocomotionState = state.IDLE;
@@ -106,12 +106,6 @@ public class WorkerBehavior : MonoBehaviour
 
             }
         }
-    }
-
-    private void PlayHit()
-    {
-        attackAudioSource.clip = attackAudioClip;
-        attackAudioSource.Play();
     }
 
     private void OnTriggerExit(Collider other)
@@ -161,7 +155,7 @@ public class WorkerBehavior : MonoBehaviour
             animator.SetFloat("attack_speed", attack1Speed);
         alreadyAttacked = true;
         animator.SetTrigger("Attack");
-        PlayHit();
+        enemySoundManager.PlaySound("hit");
 
 
     }
