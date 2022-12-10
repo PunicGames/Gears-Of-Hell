@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour
 {
     private bool desktop = true;
-    [SerializeField]GameManager gm;
+    [SerializeField] GameManager gm;
 
     public AudioMixer audioMixer;
 
@@ -38,25 +38,33 @@ public class SettingsMenu : MonoBehaviour
     {
         UpdateToggles();
     }
+    private void OnEnable()
+    {
+        UpdateToggles();
 
-    public void SetVolume(float volume) {
+    }
+
+    public void SetVolume(float volume)
+    {
         audioMixer.SetFloat("volume", volume);
     }
 
-    public void SetQuality(int qualityIndex) {
+    public void SetQuality(int qualityIndex)
+    {
         QualitySettings.SetQualityLevel(qualityIndex);
     }
 
-   
 
-    public void SetBloom(bool option) {
+
+    public void SetBloom(bool option)
+    {
         if (option)
             PlayerPrefs.SetInt("bloomEffect", 1);
         else
             PlayerPrefs.SetInt("bloomEffect", 0);
 
 
-            ppController.UpdateBloom(option);
+        ppController.UpdateBloom(option);
 
     }
 
@@ -78,7 +86,8 @@ public class SettingsMenu : MonoBehaviour
 
     }
 
-    private void UpdateToggles() {
+    private void UpdateToggles()
+    {
         bloomToggle.isOn = PlayerPrefs.GetInt("bloomEffect") == 0 ? false : true;
         colorGradingToggle.isOn = PlayerPrefs.GetInt("colorGrading") == 0 ? false : true;
     }
