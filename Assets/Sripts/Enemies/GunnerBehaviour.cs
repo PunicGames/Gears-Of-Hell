@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class GunnerBehaviour : MonoBehaviour
 {
+
     public float cadenceTime = 1f;
     public float reloadTime = 2f;
     public float bulletSpeed = 2;
@@ -17,6 +18,14 @@ public class GunnerBehaviour : MonoBehaviour
 
     public bool hasToSeeYouToShoot = false;
     public bool canLaunchGrenade = false;
+    public int numberOfGrenades = 3;
+    public bool useShield = false;
+    [SerializeField] GameObject shield;
+    public int shieldLife = 30;
+
+
+
+
     public float spotDistance = 57f;
 
     public Transform shootOrigin;
@@ -32,13 +41,14 @@ public class GunnerBehaviour : MonoBehaviour
     private bool inAttackRange = false;
 
     public GameObject bullet;
+    public GameObject grenade;
 
     Transform player;
     NavMeshAgent agent;
     Animator animator;
     AudioSource gunAudio;
 
-    private enum gunnerState { IDLE, PURSUE, ATTACK, RECHARGE };
+    private enum gunnerState { IDLE, PURSUE, ATTACK, RECHARGE, GRENADE };
     private gunnerState currentState = gunnerState.IDLE;
 
 
@@ -80,12 +90,12 @@ public class GunnerBehaviour : MonoBehaviour
                 if (hasToSeeYouToShoot)
                 {
                     CheckPlayerSighted();
-                    transitionFromIdle(!playerOnSight || !inAttackRange);
+                    TransitionFromIdle(!playerOnSight || !inAttackRange);
 
                 }
                 else
                 {
-                    transitionFromIdle(!inAttackRange);
+                    TransitionFromIdle(!inAttackRange);
                 }
 
                 break;
@@ -96,11 +106,11 @@ public class GunnerBehaviour : MonoBehaviour
                 if (hasToSeeYouToShoot)
                 {
                     CheckPlayerSighted();
-                    transitionFromPursue(inAttackRange && playerOnSight);
+                    TransitionFromPursue(inAttackRange && playerOnSight);
                 }
                 else
                 {
-                    transitionFromPursue(inAttackRange);
+                    TransitionFromPursue(inAttackRange);
                 }
                 break;
 
@@ -128,6 +138,10 @@ public class GunnerBehaviour : MonoBehaviour
                     currentState = gunnerState.IDLE;
                     alreadyRecharged = false;
                 }
+                break;
+            case gunnerState.GRENADE:
+                transform.LookAt(player.position);
+                //Callback return to idle AfterAnim
                 break;
             default:
                 break;
@@ -185,6 +199,27 @@ public class GunnerBehaviour : MonoBehaviour
 
 
     }
+
+    public void LaunchGrenade()
+    {
+        //Create grenade an launch
+        //Animation
+        GameObject g = Instantiate(grenade, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
+        g.transform.LookAt(player.transform);
+        Grenade grenadeParams = g.GetComponent<Grenade>();
+        grenadeParams.SetForce(1);
+        /*
+        grenadeParams.SetDamage(damage);
+        grenadeParams.SetLaser(false);
+        grenadeParams.owner = Bullet.BulletOwner.ENEMY;
+        grenadeParams.timeToDestroy = bulletLifetime;
+        grenadeParams.SetBulletColors(albedo, emissive);
+        */
+
+
+        numberOfGrenades--;
+
+    }
     private void CheckPlayerSighted()
     {
         RaycastHit hit;
@@ -198,7 +233,28 @@ public class GunnerBehaviour : MonoBehaviour
         }
     }
 
-    private void transitionFromIdle(bool condition)
+    private void TransitionFromIdle(bool condition)
+    {
+        if (!canLaunchGrenade)
+        {
+            AuxTransitionFromIdle(condition);
+        }
+        else
+        {
+
+            if (Random.Range(0, 10) == 2 && inAttackRange)
+            {
+                animator.SetTrigger("grenade");
+                currentState = gunnerState.GRENADE;
+            }
+            else
+            {
+                AuxTransitionFromIdle(condition);
+            }
+
+        }
+    }
+    private void AuxTransitionFromIdle(bool condition)
     {
         if (condition)
         {
@@ -209,7 +265,7 @@ public class GunnerBehaviour : MonoBehaviour
         else if (!alreadyAttacked)
             currentState = gunnerState.ATTACK;
     }
-    private void transitionFromPursue(bool condition)
+    private void TransitionFromPursue(bool condition)
     {
         if (condition)
         {
@@ -228,6 +284,10 @@ public class GunnerBehaviour : MonoBehaviour
 
     }
 
+    public void GrenadeLaunched()
+    {
+        currentState = gunnerState.IDLE;
+    }
 
 
 }
