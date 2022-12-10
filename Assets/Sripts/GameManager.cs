@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
             StartCoroutine(InitializeLootLocker());
         }
 
-        SetAntialiassing(PlayerPrefs.GetInt("antialiasing"));
-        DeviceDetection();
+        
+        //DeviceDetection();
     }
 
     private void DeviceDetection() { 
@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
     }
     public void OptionsInitilizer_DefaultValues()
     {
+        //Modify prederences
         if (Application.isMobilePlatform)
         {
             PlayerPrefs.SetInt("bloomEffect", 1);
@@ -85,7 +86,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("bloomEffect", 1);
             PlayerPrefs.SetInt("colorGrading", 1);
             PlayerPrefs.SetInt("antialiasing", 2);
+            QualitySettings.SetQualityLevel(2);
         }
+
+        
+        SetAntialiassing(PlayerPrefs.GetInt("antialiasing"));
     }
 
     public IEnumerator InitializeLootLocker()

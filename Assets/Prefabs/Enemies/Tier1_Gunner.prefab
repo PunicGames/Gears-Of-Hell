@@ -314,7 +314,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1362870519766169385}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3
   m_Acceleration: 20
   avoidancePriority: 50
@@ -366,7 +366,7 @@ MonoBehaviour:
   bulletLifetime: 3
   hasToSeeYouToShoot: 1
   canLaunchGrenade: 0
-  spotDistance: 7
+  spotDistance: 6
   shootOrigin: {fileID: 8195484144544881401}
   muzzleVFX: {fileID: 3404689519454124730}
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}

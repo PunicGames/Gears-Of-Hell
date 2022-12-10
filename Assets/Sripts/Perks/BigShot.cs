@@ -6,6 +6,7 @@ public class BigShot : MonoBehaviour
 {
     private float defScaleFactor;
     public float bufScaleFactor;
+    public float bufDamageFactor = 0.1f;
 
     [SerializeField] private GameObject shootObject;
     private ShootSystem shootScript;
@@ -23,6 +24,14 @@ public class BigShot : MonoBehaviour
         {
             shootScript.bigShot = true;
             shootScript.scaleFactor *= bufScaleFactor;
+
+            var aux = shootScript.guns.getGuns();
+
+
+            foreach (Gun g in aux)
+            {
+                g.bulletDamage = (int)(g.bulletDamage+g.bulletDamage* bufDamageFactor);
+            }
         }
     }
 
