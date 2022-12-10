@@ -9,6 +9,7 @@ public class NoGunsMode : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<Health>().SetInvincibilityTime(0.5f);
         ShootSystem sS = player.GetComponentInChildren<ShootSystem>();
 
         for (int i = 0; i < sS.guns.getGuns().Length; i++)
