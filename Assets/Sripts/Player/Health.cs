@@ -190,4 +190,8 @@ public class Health : MonoBehaviour
         canBeHurt = true;
         lifeScaler.GetComponent<Image>().color = lifeColorNormal;
     }
+
+    public void SetInvincibilityTime(float time) {
+        invincibilityTime = time;
+    }
 }
