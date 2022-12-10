@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 9166247000190160914}
   - component: {fileID: 9166247000190160913}
   - component: {fileID: 9166247000190160912}
+  - component: {fileID: 284480179685610055}
   m_Layer: 7
   m_Name: Bomb_Spiderbot
   m_TagString: Enemy
@@ -272,8 +273,8 @@ Transform:
   m_GameObject: {fileID: 1441535349942549436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.31, y: 0, z: 2.84}
-  m_LocalScale: {x: 0.052425604, y: 0.052425604, z: 0.052425604}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.04315781, y: 0.04315781, z: 0.04315781}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2928991099541369526}
   - {fileID: 6413572525365842007}
@@ -438,8 +439,8 @@ MonoBehaviour:
   smr2: {fileID: 5164795412292014475}
   explosionVfx: {fileID: 1684378968598263263}
   explosionColl: {fileID: 1684378967701420284}
-  timeUntilExplosion: 1
-  bombDamage: 20
+  timeUntilExplosion: 0.5
+  bombDamage: 40
 --- !u!114 &9166247000190160913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,6 +478,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUpObject: {fileID: 7578110236925590997, guid: 82e6bf8e920b7514fb13d6adf4019ed6, type: 3}
+--- !u!114 &284480179685610055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441535349942549436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc563e538ce06c418e43f9ed2ca9ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 666182782494668045}
+  - {fileID: 5164795412292014475}
 --- !u!1 &1462028462351012292
 GameObject:
   m_ObjectHideFlags: 0
@@ -10248,8 +10264,8 @@ Transform:
   m_GameObject: {fileID: 1684378967701420286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 13.51, z: -5.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1684378968598263257}
   m_Father: {fileID: 2254768976029425926}
@@ -10266,7 +10282,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1684378968355031214
 GameObject:
@@ -15177,11 +15193,11 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684378968490943448}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7843514, b: 0.08018869, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30

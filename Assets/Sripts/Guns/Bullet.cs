@@ -7,13 +7,16 @@ public class Bullet : MonoBehaviour
     private Rigidbody rb;
     private float damage;
     public float timeToDestroy = 3;
+    public int numberOfCollisions = 0;
+    public bool stoppedByWalls = true;
+
     [HideInInspector] public bool laserShot;
 
     // Shoot System reference to update bullets record from player
     private PlayerStats pS = null;
 
     // Bullet Shooted by
-    public enum BulletOwner { PLAYER, ENEMY}
+    public enum BulletOwner { PLAYER, ENEMY }
     public BulletOwner owner;
 
     private List<GameObject> alreadyHitted = new List<GameObject>();
@@ -39,22 +42,26 @@ public class Bullet : MonoBehaviour
         damage = d;
     }
 
-    public void SetLaser(bool option) { 
+    public void SetLaser(bool option)
+    {
         laserShot = option;
     }
 
-    public void SetPlayerStats(PlayerStats ps) {
+    public void SetPlayerStats(PlayerStats ps)
+    {
         pS = ps;
     }
 
-    public void SetBulletColors(Color albedo, Color emissive) {
+    public void SetBulletColors(Color albedo, Color emissive)
+    {
         this.GetComponent<Renderer>().material.SetColor("_Color", albedo);
         this.GetComponent<Renderer>().material.SetColor("_EmissionColor", emissive);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        switch (owner) {
+        switch (owner)
+        {
             case BulletOwner.PLAYER:
                 if (other.gameObject.tag == "Enemy")
                 {
@@ -68,12 +75,20 @@ public class Bullet : MonoBehaviour
                         {
                             Destroy(gameObject);
                         }
+                        else
+                        {
+                            numberOfCollisions--;
+                            if (numberOfCollisions == 0)
+                                Destroy(gameObject);
+
+                        }
                     }
 
                     alreadyHitted.Add(other.gameObject);
 
                 }
-                else {
+                else
+                {
                     pS.numBulletsMissed++;
                 }
                 break;
@@ -84,7 +99,7 @@ public class Bullet : MonoBehaviour
                     // Quitamos vida al jugador
                     Health playerHealth = other.gameObject.GetComponent<Health>();
 
-                    if((playerHealth != null) && (!alreadyHitted.Contains(other.gameObject)))
+                    if ((playerHealth != null) && (!alreadyHitted.Contains(other.gameObject)))
                     {
                         if (playerHealth.electricBarrier)
                         {
@@ -107,6 +122,16 @@ public class Bullet : MonoBehaviour
 
 
         if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Shop")
-            Destroy(gameObject);
+        {
+            if (stoppedByWalls)
+                Destroy(gameObject);
+            else
+            {
+                numberOfCollisions--;
+                if (numberOfCollisions == 0)
+                    Destroy(gameObject);
+            }
+
+        }
     }
 }

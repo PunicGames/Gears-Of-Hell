@@ -7,6 +7,8 @@ public class PerksManager : MonoBehaviour
     int totalPerks;
     private int maxPerksLevel;
 
+    [SerializeField] PlayerVFXsManager vfx;
+
     ////////////////////////Perks index////////////////////////
     /*
     rapid fire          -> 0
@@ -257,6 +259,8 @@ public class PerksManager : MonoBehaviour
         sc_rapidFire.bufAttackSpeed = rapidFireFactor[perkLevels[0]];
         sc_rapidFire.gameObject.SetActive(true);
         availablePerks[0] = true;
+
+        vfx.startVFX(effect.RAPID);
     }
 
     //Laser shot
@@ -273,6 +277,7 @@ public class PerksManager : MonoBehaviour
         sc_bigShot.bufScaleFactor = bigShotFactor[perkLevels[2]];
         sc_bigShot.gameObject.SetActive(true);
         availablePerks[2] = true;
+        vfx.startVFX(effect.BIG);
     }
 
     //Tactic vest
@@ -281,6 +286,7 @@ public class PerksManager : MonoBehaviour
         sc_tacticVest.bufHealth = tacticVestFactor[perkLevels[3]];
         sc_tacticVest.gameObject.SetActive(true);
         availablePerks[3] = true;
+        vfx.startVFX(effect.VEST);
     }
 
     //Tactical boots
@@ -289,6 +295,7 @@ public class PerksManager : MonoBehaviour
         sc_tacticalBoots.bufSpeed = tacticalBootsFactor[perkLevels[4]];
         sc_tacticalBoots.gameObject.SetActive(true);
         availablePerks[4] = true;
+        vfx.startVFX(effect.FAST);
     }
 
     //Medic
@@ -297,6 +304,7 @@ public class PerksManager : MonoBehaviour
         sc_medic.healRate = medicFactor[perkLevels[5]];
         sc_medic.gameObject.SetActive(true);
         availablePerks[5] = true;
+        vfx.startVFX(effect.MEDIC);
     }
 
     //Electrical barrier
@@ -313,6 +321,7 @@ public class PerksManager : MonoBehaviour
         sc_gunsmith.ammoRegenRate = gunsmithFactor[perkLevels[7]];
         sc_gunsmith.gameObject.SetActive(true);
         availablePerks[7] = true;
+        vfx.startVFX(effect.REPLENISH);
     }
 
 

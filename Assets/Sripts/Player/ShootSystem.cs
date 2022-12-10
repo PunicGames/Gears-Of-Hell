@@ -28,6 +28,12 @@ public class ShootSystem : MonoBehaviour
     public GameObject bullet;
     public GameObject laserBullet;
 
+    //LaserBullet
+    public bool canBeStoppedByWalls= true;
+    public int numberOfCollisions = 1;
+
+
+
     // Action control
     public bool shooting;
     bool readyToShoot, reloading;
@@ -192,6 +198,8 @@ public class ShootSystem : MonoBehaviour
                     bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
                     bulletParams.SetLaser(true);
                     bulletParams.SetPlayerStats(playerStats);
+                    bulletParams.numberOfCollisions = numberOfCollisions;
+                    bulletParams.stoppedByWalls = canBeStoppedByWalls;
                     bulletParams.owner = Bullet.BulletOwner.PLAYER;
                     //bulletParams.SetBulletColors(albedo, emissive);
                     currentBullet.transform.localScale *= scaleFactor;

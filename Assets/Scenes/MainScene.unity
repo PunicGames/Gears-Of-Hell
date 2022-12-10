@@ -2137,7 +2137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6752494730495819223, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7388537348747863381, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2659,16 +2659,44 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[1].enemies.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.data[0].prob
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.data[1].prob
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.data[2].prob
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.data[3].prob
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[1].enemies.Array.data[0].prob
-      value: 0.5
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[1].enemies.Array.data[1].prob
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[1].enemies.Array.data[2].prob
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[1].enemies.Array.data[3].prob
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[2].enemies.Array.data[0].prob
@@ -2750,6 +2778,14 @@ PrefabInstance:
       propertyPath: tierList.Array.data[7].enemies.Array.data[2].prob
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[0].enemies.Array.data[3].prefab
+      value: 
+      objectReference: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[1].enemies.Array.data[3].prefab
+      value: 
+      objectReference: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
     - target: {fileID: 7912361067319672372, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Name
       value: WorldGenerator
@@ -4476,12 +4512,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosionVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 4804349929949325959, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
       propertyPath: looping
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
       propertyPath: LightsModule.ratio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}

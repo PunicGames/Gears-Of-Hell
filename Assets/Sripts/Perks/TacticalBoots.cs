@@ -7,6 +7,7 @@ public class TacticalBoots : MonoBehaviour
     private float defSpeed;
     public float bufSpeed;
 
+
     private Player playerScript;
 
     private void Start()
