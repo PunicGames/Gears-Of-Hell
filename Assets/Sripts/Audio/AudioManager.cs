@@ -15,12 +15,12 @@ public class AudioManager : MonoBehaviour
         float value;
         bool result = audioMixer.GetFloat("volume", out value);
         if (result) generalVolume = (value + 80) / 80; // 80 tiene que ver con el audio mixer
-
+        var source = gameObject.GetComponent<AudioSource>();
         foreach (Sound s in sounds)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
+            s.source = source;
             s.source.clip = s.clips[0];
-            s.source.volume = s.volume * getGeneralVolume();
+            s.source.volume = s.volume ;
             s.source.pitch = s.pitch;
         }
     }
