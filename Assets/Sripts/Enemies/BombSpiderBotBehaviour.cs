@@ -24,9 +24,14 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private GameObject currentTarget;
 
+    [Space]
+    public AudioClip tictac, boom;
+    private AudioSource audioSource;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         currentTarget = player;
 
@@ -74,8 +79,10 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
         explosionRange.SetActive(true);
 
-        //AudioClip
-        //Tic tac, sonido de relojeria al activar la bomba
+        //Playing 'tictac'
+        audioSource.clip = tictac;
+        audioSource.loop = true;
+        audioSource.Play();
 
         Invoke("Explode", timeUntilExplosion);
         enabled = false;
@@ -96,8 +103,10 @@ public class BombSpiderBotBehaviour : MonoBehaviour
         }
         explosionRange.SetActive(false);
 
-        //AudioClip
-        //Booom, explosion de bombeta
+        //Playing Booom
+        audioSource.clip = boom;
+        audioSource.loop = false;
+        audioSource.Play();
 
         explosionVfx.Play();
         smr1.enabled = false;
