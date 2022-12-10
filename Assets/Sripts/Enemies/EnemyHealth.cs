@@ -143,6 +143,11 @@ public class EnemyHealth : MonoBehaviour
         animator.SetTrigger("death");
 
 
+        var enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
+        enemySoundManager.PauseSound("walk");
+        enemySoundManager.PlaySound("death");
+
+
         // Suelta moneda
         GameObject moneda = Instantiate(coin, transform.position, Quaternion.identity);
         //moneda.gameObject.GetComponent<Moneda>().value = scoreValue;
@@ -159,6 +164,8 @@ public class EnemyHealth : MonoBehaviour
 
         // Add stats to player
         playerRef.GetComponent<PlayerStats>().numDefeatedEnemies++;
+
+        
     }
     //Autamitacally call when death animation ended
     public void DestroyCallback()
