@@ -6,27 +6,51 @@ public class Grenade : MonoBehaviour
 {
 
     Rigidbody rb;
+    public Vector3 target;
+    public Vector3 origin;
+    public float timeUntilExplosion = 0.5f;
+    public int damage = 40;
+    private float anim;
 
-    int damage = 40;
-    // Start is called before the first frame update
+    private float speed = 1.8f;
+    private bool animEnded = false;
+
+    [SerializeField] ParticleSystem vfx;
+
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        origin = transform.position;
+        target = new Vector3(target.x, target.y+0.1f, target.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-    }
-    public void SetForce(float force)
-    {
-        rb.AddForce(transform.forward.normalized * force, ForceMode.Impulse);
+        if (animEnded)
+            return;
+        anim += Time.deltaTime;
+        transform.position = MathParabola.Parabola(origin, target, 3.8f, anim / speed);
+
+        if (!animEnded)
+            if (transform.position.y <= target.y+0.1f)
+            {
+                Debug.Log("reached");
+                animEnded = true;
+                Invoke(nameof(Explode), timeUntilExplosion);
+            }
     }
 
-    public void SetForce(Vector3 direction, float force)
+    private void Explode()
     {
-        rb.AddForce(direction * force, ForceMode.Impulse);
+        //vfx.Play();
+
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        vfx.Play();
     }
 
 }
