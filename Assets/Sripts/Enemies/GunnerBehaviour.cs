@@ -5,28 +5,35 @@ using UnityEngine.AI;
 
 public class GunnerBehaviour : MonoBehaviour
 {
-
+    [Header("SHOOTING")]
     public float cadenceTime = 1f;
     public float reloadTime = 2f;
     public float bulletSpeed = 2;
     public float damage = 10;
     public int bulletsPerMag = 5;
-    public bool SemiAuto = false;
     public int bulletsPerBurst = 5;
     public float SemiAutoTime = 2f;
     public float bulletLifetime = 3f;
-
+    [Space]
     public bool hasToSeeYouToShoot = false;
+    public bool SemiAuto = false;
+
+    [Header("GRENADE")]
     public bool canLaunchGrenade = false;
+    [Tooltip("The higher the less probability")]
+    [SerializeField] [Range(1, 10)] int grenadeProbabilityRatio;
     public int numberOfGrenades = 3;
+    public float launchDistance = 7f;
+
+    [Header("SHIELD")]
     public bool useShield = false;
     [SerializeField] GameObject shield;
     public int shieldLife = 30;
 
 
+    [Header("GENERAL")]
 
-
-    public float spotDistance = 57f;
+    public float spotDistance = 7f;
 
     public Transform shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
@@ -39,6 +46,8 @@ public class GunnerBehaviour : MonoBehaviour
     private bool alreadyAttacked = false;
     private bool alreadyRecharged = false;
     private bool inAttackRange = false;
+
+    private float distance;
 
     public GameObject bullet;
     public GameObject grenade;
@@ -71,11 +80,15 @@ public class GunnerBehaviour : MonoBehaviour
     private void Update()
     {
         FSM();
+        //if (currentState == gunnerState.GRENADE)
+        //{
+        //    Debug.Log("Launching");
+        //}
     }
 
     private void FSM()
     {
-        float distance = Vector3.Distance(player.position, transform.position);
+        distance = Vector3.Distance(player.position, transform.position);
         if (distance <= spotDistance)
             inAttackRange = true;
         else
@@ -101,8 +114,7 @@ public class GunnerBehaviour : MonoBehaviour
                 break;
             case gunnerState.PURSUE:
                 agent.SetDestination(player.position);
-                if (inAttackRange)
-                    transform.LookAt(player.position);
+                transform.LookAt(player.position);
                 if (hasToSeeYouToShoot)
                 {
                     CheckPlayerSighted();
@@ -135,7 +147,7 @@ public class GunnerBehaviour : MonoBehaviour
                 //Recargando
                 if (alreadyRecharged)
                 {
-                    currentState = gunnerState.IDLE;
+                    TransitionToIdle();
                     alreadyRecharged = false;
                 }
                 break;
@@ -202,6 +214,7 @@ public class GunnerBehaviour : MonoBehaviour
 
     public void LaunchGrenade()
     {
+        /*
         //Create grenade an launch
         //Animation
         GameObject g = Instantiate(grenade, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
@@ -218,6 +231,7 @@ public class GunnerBehaviour : MonoBehaviour
 
 
         numberOfGrenades--;
+        if (numberOfGrenades <= 0) canLaunchGrenade = false;
 
     }
     private void CheckPlayerSighted()
@@ -235,15 +249,18 @@ public class GunnerBehaviour : MonoBehaviour
 
     private void TransitionFromIdle(bool condition)
     {
+
         if (!canLaunchGrenade)
         {
             AuxTransitionFromIdle(condition);
         }
         else
         {
-
-            if (Random.Range(0, 10) == 2 && inAttackRange)
+            int number = Random.Range(0, grenadeProbabilityRatio);
+            Debug.Log(number);
+            if (inAttackRange && number == 0)
             {
+                 Debug.Log("hA ENTRADO Y EL NUMERO VALE ;"+number);  
                 animator.SetTrigger("grenade");
                 currentState = gunnerState.GRENADE;
             }
@@ -269,24 +286,34 @@ public class GunnerBehaviour : MonoBehaviour
     {
         if (condition)
         {
-            currentState = gunnerState.IDLE;
-            animator.SetBool("Moving", false);
-            agent.isStopped = true;
+            TransitionToIdle();
         }
 
     }
+    private void TransitionToIdle()
+    {
+        currentState = gunnerState.IDLE;
+        animator.SetBool("Moving", false);
+        agent.isStopped = true;
+    }
+
 
 
     private void ResetAttack()
     {
         alreadyAttacked = false;
-        if (currentState == gunnerState.RECHARGE) alreadyRecharged = true;
+        if (currentState == gunnerState.RECHARGE)
+        {
+            alreadyRecharged = true;
+            bulletsInBurst = bulletsPerBurst;
+        }
 
-    }
+        }
 
     public void GrenadeLaunched()
     {
-        currentState = gunnerState.IDLE;
+        TransitionToIdle();
+        Debug.Log("finished");
     }
 
 
