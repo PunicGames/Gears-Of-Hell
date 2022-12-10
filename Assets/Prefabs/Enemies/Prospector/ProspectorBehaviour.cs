@@ -41,6 +41,10 @@ public class ProspectorBehaviour : MonoBehaviour
     private bool hiding = false;
     [SerializeField] private LayerMask obstacleMask;
 
+    // Sounds
+    [SerializeField] private AudioSource[] sounds;
+    [HideInInspector] private AudioSource footSteps, powerUpUnits;
+
     private void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -49,6 +53,7 @@ public class ProspectorBehaviour : MonoBehaviour
         animator = GetComponent<Animator>();
         m_prospectorHealth = GetComponent<EnemyHealth>();
         m_playerHealth = player.GetComponent<Health>();
+        InitSounds();
 
         currentState = State.CHASING;
     }
@@ -69,7 +74,9 @@ public class ProspectorBehaviour : MonoBehaviour
                 }
                 else {
                     animator.SetBool("isMoving", false);
-                    if(ableToHide) currentState = State.HIDING;
+                    footSteps.Stop();
+
+                    if (ableToHide) currentState = State.HIDING;
                     else currentState = State.CASTING;
                 }
                 break;
@@ -83,10 +90,12 @@ public class ProspectorBehaviour : MonoBehaviour
                 else {
                     Chase(targetHideSpot.position);
 
+
                     if (Vector3.Distance(transform.position, targetHideSpot.position)  < 0.1)
                     {
                         hiding = false;
                         currentState = State.CASTING;
+                        footSteps.Stop();
                     }
                 }
 
@@ -125,13 +134,13 @@ public class ProspectorBehaviour : MonoBehaviour
         float castAreaCure = 0.85f * VU + 0.15f * VP;
 
         // ------ Utility System Values ------ Check documentation to know what these variables stand for.
-        //Debug.Log("VJ: " + VJ);
-        //Debug.Log("NW: " + NW);
-        //Debug.Log("VP: " + VP);
-        //Debug.Log("VU: " + VU);
-        //Debug.Log("CastVelocityValue: " + castVelocityValue);
-        //Debug.Log("CastOwnCure: " + castOwnCure);
-        //Debug.Log("CastAreaCure: " + castAreaCure);
+        Debug.Log("VJ: " + VJ);
+        Debug.Log("NW: " + NW);
+        Debug.Log("VP: " + VP);
+        Debug.Log("VU: " + VU);
+        Debug.Log("CastVelocityValue: " + castVelocityValue);
+        Debug.Log("CastOwnCure: " + castOwnCure);
+        Debug.Log("CastAreaCure: " + castAreaCure);
 
         // Decision maker
         if (castVelocityValue >= castOwnCure && castVelocityValue >= castAreaCure)
@@ -152,6 +161,7 @@ public class ProspectorBehaviour : MonoBehaviour
     {
         agent.SetDestination(position);
         animator.SetBool("isMoving", true);
+        if (!footSteps.isPlaying) { footSteps.Play(); }
     }
 
     public void CastVelocityUpgrade() {
@@ -250,5 +260,19 @@ public class ProspectorBehaviour : MonoBehaviour
         else {
             return false;
         }
+    }
+
+    private void InitSounds() {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            sounds[i].volume *= AudioManager.getGeneralVolume();
+        }
+
+        footSteps = sounds[0];
+        powerUpUnits = sounds[1];
+    }
+
+    public void PlayCastPowerUpSound() {
+        powerUpUnits.Play();
     }
 }

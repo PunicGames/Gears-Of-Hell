@@ -7,8 +7,8 @@ public class Sound
 {
     public string name;
     public AudioClip[] clips;
-    public AudioClip secundary;
-    public AudioClip laser;
+    public AudioClip secundary; // XD
+    public AudioClip laser; // XD
 
     [Range(0f, 1f)]
     public float volume;
@@ -24,13 +24,13 @@ public class Sound
         source.Play();
     }
 
-    public void PlaySecundary() 
+    public void PlaySecundary() // XD  Play()?????????????   Crear Play(AudioClip c){} no?????????????? XDDD
     {
         source.clip = secundary;
         source.Play();
     }
 
-    public void PlayLaser() 
+    public void PlayLaser() // XD Play()?????????????
     {
         source.clip = laser;
         source.Play();
