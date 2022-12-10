@@ -13,7 +13,8 @@ public class BombSpiderBotBehaviour : MonoBehaviour
     [SerializeField] private MeshRenderer smr2;
 
     [SerializeField] private ParticleSystem explosionVfx;
-    [SerializeField] private SphereCollider explosionColl;
+    [SerializeField] private GameObject explosionColl;
+    [SerializeField] private GameObject explosionRange;
 
     public float timeUntilExplosion;
 
@@ -21,17 +22,26 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private bool alreadyExploding = false;
 
+    private GameObject currentTarget;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        currentTarget = player;
 
         eh.onDeath += Death;
     }
 
     private void Update()
     {
-        agent.SetDestination(player.transform.position);
+        agent.SetDestination(currentTarget.transform.position);
         
+    }
+
+    public void SetTarget(GameObject go)
+    {
+        currentTarget = go;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,10 +68,14 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private void TriggerExplosion()
     {
-        //print("morido");
         agent.enabled = false;
         eh.enabled = false;
         enemyColl.enabled = false;
+
+        explosionRange.SetActive(true);
+
+        //AudioClip
+        //Tic tac, sonido de relojeria al activar la bomba
 
         Invoke("Explode", timeUntilExplosion);
         enabled = false;
@@ -69,7 +83,7 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private void Explode()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.center, explosionColl.radius);
+        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x);
         foreach(var hc in hitColliders)
         {
             if(hc.tag == "Enemy")
@@ -80,6 +94,11 @@ public class BombSpiderBotBehaviour : MonoBehaviour
                 hc.GetComponent<Health>().TakeDamage(bombDamage);
             }
         }
+        explosionRange.SetActive(false);
+
+        //AudioClip
+        //Booom, explosion de bombeta
+
         explosionVfx.Play();
         smr1.enabled = false;
         smr2.enabled = false;
