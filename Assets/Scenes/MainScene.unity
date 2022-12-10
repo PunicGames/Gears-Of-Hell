@@ -197,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169398, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
       propertyPath: m_RootOrder
@@ -242,6 +242,10 @@ PrefabInstance:
     - target: {fileID: 1362870519766169398, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3345213123412382656, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
+      propertyPath: enableGrenades
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
@@ -1442,7 +1446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169385, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169394, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       propertyPath: m_AutoBraking
@@ -1738,7 +1742,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4517237625516955829, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       propertyPath: bulletsPerMag
-      value: 10
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517237625516955829, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
+      propertyPath: launchDistance
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4517237625516955829, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       propertyPath: canLaunchGrenade
@@ -1746,7 +1754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4517237625516955829, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       propertyPath: grenadeProbabilityRatio
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4661949681634337493, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
