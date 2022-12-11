@@ -46,6 +46,7 @@ public class ProspectorBehaviour : MonoBehaviour
     [HideInInspector] private AudioSource footStepsSound, powerUpUnitsSound, healAreaSound;
 
     // Habilities visuals
+    [SerializeField] private ParticleSystem CureSelf;
     [SerializeField] private GameObject areaHealVisuals;
 
     private void Start()
@@ -134,7 +135,7 @@ public class ProspectorBehaviour : MonoBehaviour
         // Utility system
         float castVelocityValue = 0.3f * VJ + 0.7f * NW;
         float castOwnCure = VP;
-        float castAreaCure = 0.85f * VU + 0.15f * VP;
+        float castAreaCure = 0.9f * VU + 0.1f * VP;
 
         // ------ Utility System Values ------ Check documentation to know what these variables stand for.
         Debug.Log("VJ: " + VJ);
@@ -204,6 +205,7 @@ public class ProspectorBehaviour : MonoBehaviour
         }
     }
     public void CastOwnCure() {
+        CureSelf.Play();
         m_prospectorHealth.Heal(100);
     }
     public void CastAreaCure() {
