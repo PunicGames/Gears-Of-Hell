@@ -24,7 +24,11 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = transform.GetComponent<Rigidbody>();
+    }
+    private void Start()
+    {
         Destroy(gameObject, timeToDestroy);
+        
     }
 
     public void SetForce(float force)
