@@ -489,6 +489,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tier2_Gunslinger
       objectReference: {fileID: 0}
+    - target: {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169398, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1540,7 +1544,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929371160498100697, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+      propertyPath: sounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 10c5383785b1e6343a0e5874225a198c, type: 3}
+    - target: {fileID: 3929371160498100697, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+      propertyPath: sounds.Array.data[0].volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929371160498100697, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+      propertyPath: sounds.Array.data[1].volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929371160498100697, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
+      propertyPath: sounds.Array.data[2].volume
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
@@ -2059,6 +2079,14 @@ PrefabInstance:
     - target: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
       propertyPath: m_Name
       value: Tier1_Gunslinger
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362870519766169392, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169398, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
       propertyPath: m_RootOrder
