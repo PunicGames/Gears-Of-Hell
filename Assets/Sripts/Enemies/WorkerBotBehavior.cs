@@ -34,7 +34,10 @@ public class WorkerBotBehavior : MonoBehaviour
     private GameObject player;
     NavMeshAgent agent;
 
+    //dependecias del comportamiento
     int currentGears = 0; //monedas que lleva recogidas
+    public bool isRecolecting = false;
+    public Transform gearObjetive; //variable en la que se guarda la posicion de la moneda a recoger
     bool alreadyAttacked = false;
 
     private enum FSM2_states { 
@@ -73,8 +76,36 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private void Update()
     {
-        FSM_LVL_2();
-        ActionFSM();
+        if (isRecolecting)
+        {
+            FSM_LVL_1();
+        }
+        else
+        {
+            FSM_LVL_2();
+            ActionFSM();
+        }
+    }
+    private void FSM_LVL_1() //{ IDLE, PURSUE, ATTACK }
+    {
+        float distance = Vector3.Distance(gearObjetive.position, transform.position);
+        agent.SetDestination(gearObjetive.transform.position);
+
+        switch (currentFSM1State)
+        {
+            case FSM1_states.SEARCH:
+                animator.SetBool("isMoving", true); //variable del animator
+                if (distance <= 0.3)
+                {
+                    currentFSM1State = FSM1_states.RECOLECT;
+                }
+                break;
+
+            case FSM1_states.RECOLECT:
+                animator.SetBool("isMoving", false); //variable que este en el animator
+
+                break;
+        }
     }
     private void FSM_LVL_2() //{ IDLE, PURSUE, ATTACK }
     {

@@ -10492,12 +10492,14 @@ MonoBehaviour:
   minScoreValue: 5
   maxScoreValue: 15
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  isDead: 0
   popupPosition: {fileID: 7189349792040978552}
   itemsRatio: 0.05
   items:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 3
+  Cure: {fileID: 0}
 --- !u!136 &6725989799163533673
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15846,6 +15848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498351673547680471}
   - component: {fileID: 914724966859505850}
+  - component: {fileID: 4290113168052167465}
   m_Layer: 0
   m_Name: recolectRangeCollider
   m_TagString: Untagged
@@ -15881,6 +15884,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4290113168052167465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6985600532543780879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e0851a5d5598842abb3384eec04b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workerBot: {fileID: 2299684632936711966}
 --- !u!1 &7450363428090277621
 GameObject:
   m_ObjectHideFlags: 0
