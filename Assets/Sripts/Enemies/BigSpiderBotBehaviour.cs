@@ -195,12 +195,10 @@ public class BigSpiderBotBehaviour : MonoBehaviour
 
         if(grenadeAction >= shootAction)
         {
-            print("grenade");
             LaunchGrenade();
         }
         else
         {
-            print("shoot");
             ShootMinigun();
         }
     }
