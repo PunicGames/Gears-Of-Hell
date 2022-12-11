@@ -7,20 +7,34 @@ using UnityEngine.Events;
 public class WorkerBotBehavior : MonoBehaviour
 {
 
-    [SerializeField] int attackDamage = 10;
-    [SerializeField] float rollSpeed = 10.0f;
-    [SerializeField] int maxCapacity = 5;
-    [SerializeField] private Collider weaponCollider;
+    [SerializeField] int MAXGEARSCAPACITY = 10; //capacidad maxima de monedas que puede recoger
+
+    [SerializeField] int attackDamage = 10; //daño por cada golpe
+    [SerializeField] float rollSpeed = 10.0f; //velocidad a la que gira atacando
+    [SerializeField] private MeleeWeaponBehaviour weaponCollider;
+    [SerializeField] Collider recolectRangeCollider;
 
     private Animator animator;
     private GameObject player;
     NavMeshAgent agent;
-    
-    bool canAttack = false;
 
-    private enum state { IDLE, PURSUE, ATTACK };
-    private state currentLocomotionState = state.PURSUE; //la fsm 1
-    private state currentActionState = state.IDLE; //la fsm 2
+    int currentGears = 0; //monedas que lleva recogidas
+    bool attacking = false;
+
+    private enum FSM2_states { 
+        IDLE, 
+        PURSUE,
+        ATTACK,
+    };
+
+    private enum FSM1_states
+    {
+        RECOLECT,
+        SEARCH,
+    };
+
+    private FSM1_states currentFSM1State = FSM1_states.SEARCH; //la fsm 1
+    private FSM2_states currentFSM2State = FSM2_states.PURSUE; //la fsm 2
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +42,103 @@ public class WorkerBotBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
+
+        weaponCollider.player = player;
+        weaponCollider.health = GetComponent<EnemyHealth>();
+        weaponCollider.playerHealth = player.GetComponent<Health>();
+        weaponCollider.attackDamage = attackDamage;
+        weaponCollider.enabled = false;
+
+        animator.SetBool("isMoving", true);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        FSM_LVL_2();
     }
+    private void FSM_LVL_2() //{ IDLE, PURSUE, ATTACK }
+    {
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        agent.SetDestination(player.transform.position);
+
+        switch (currentFSM2State)
+        {
+            
+            case FSM2_states.IDLE:
+                animator.SetBool("isMoving", false); //variable que este en el animator
+                transform.LookAt(player.transform.position); //miramos al player
+
+                if (distance > agent.stoppingDistance) 
+                {
+                    //si la distancia es mayor a la asignada a detenerse comenzamos a perseguir
+                    currentFSM2State = FSM2_states.PURSUE;
+                }
+                break;
+
+            case FSM2_states.PURSUE:
+                animator.SetBool("isMoving", true); //variable del animator
+                if (distance <= agent.stoppingDistance)
+                {
+                    currentFSM2State = FSM2_states.IDLE;
+                }
+                break;
+
+            case FSM2_states.ATTACK:
+                animator.SetBool("isAttacking", true);
+                //activamos la animacion de mitad del cuerpo atacando
+
+
+                break;
+        }
+    }
+
+    private void FSM_LVL_1() //{ IDLE, PURSUE, ATTACK }
+    {
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        agent.SetDestination(player.transform.position);
+
+        switch (currentFSM1State)
+        {
+            //FSM grande
+        }
+    }
+
+    public void ActivateWeaponCollider()
+    {
+        weaponCollider.enabled = true;
+    }
+
+    public void DeactivateWeaponCollider()
+    {
+        weaponCollider.enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (enabled)
+        {
+            if (other.gameObject == player)
+            {
+                ActivateWeaponCollider();
+                currentFSM2State = FSM2_states.ATTACK;
+                Invoke(nameof(ResetParameters),5);
+            }
+        }
+    }
+    public void ResetParameters()
+    {
+        DeactivateWeaponCollider();
+        animator.SetBool("isAttacking", false);
+        currentFSM2State = FSM2_states.IDLE;
+    }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject == player)
+    //    {
+    //        DeactivateWeaponCollider();
+    //        currentFSM2State = FSM2_states.IDLE;
+    //    }
+    //}
+
 }
