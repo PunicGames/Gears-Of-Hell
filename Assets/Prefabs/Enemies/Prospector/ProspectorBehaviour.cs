@@ -20,7 +20,7 @@ public class ProspectorBehaviour : MonoBehaviour
     [SerializeField] private outerRing m_outerRing;
 
     // FSM STATES
-    private enum State { CHASING, HIDING, CASTING}
+    private enum State { CHASING, HIDING, CASTING, RESTING}
     private State currentState;
 
     // Variables
@@ -42,8 +42,7 @@ public class ProspectorBehaviour : MonoBehaviour
     [SerializeField] private LayerMask obstacleMask;
 
     // Sounds
-    [SerializeField] private AudioSource[] sounds;
-    [HideInInspector] private AudioSource footStepsSound, powerUpUnitsSound, healAreaSound;
+    private EnemySoundManager enemySoundManager;
 
     // Habilities visuals
     [SerializeField] private ParticleSystem CureSelf;
@@ -57,7 +56,7 @@ public class ProspectorBehaviour : MonoBehaviour
         animator = GetComponent<Animator>();
         m_prospectorHealth = GetComponent<EnemyHealth>();
         m_playerHealth = player.GetComponent<Health>();
-        InitSounds();
+        enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
 
         currentState = State.CHASING;
     }
@@ -78,7 +77,7 @@ public class ProspectorBehaviour : MonoBehaviour
                 }
                 else {
                     animator.SetBool("isMoving", false);
-                    footStepsSound.Stop();
+                    enemySoundManager.PauseSound("footsteps");
 
                     if (ableToHide) currentState = State.HIDING;
                     else currentState = State.CASTING;
@@ -99,7 +98,7 @@ public class ProspectorBehaviour : MonoBehaviour
                     {
                         hiding = false;
                         currentState = State.CASTING;
-                        footStepsSound.Stop();
+                        enemySoundManager.PauseSound("footsteps");
                     }
                 }
 
@@ -114,7 +113,11 @@ public class ProspectorBehaviour : MonoBehaviour
                 }
                 
                 break;
-            default:
+
+            case State.RESTING:
+                transform.LookAt(player.position);
+                break;
+            default: 
                 break;
         }
     }
@@ -168,7 +171,7 @@ public class ProspectorBehaviour : MonoBehaviour
         agent.SetDestination(position);
         agent.isStopped = false;
         animator.SetBool("isMoving", true);
-        if (!footStepsSound.isPlaying) { footStepsSound.Play(); }
+        enemySoundManager.PlaySound("footsteps");
     }
 
     public void CastVelocityUpgrade() {
@@ -208,7 +211,8 @@ public class ProspectorBehaviour : MonoBehaviour
     }
     public void CastOwnCure() {
         CureSelf.Play();
-        m_prospectorHealth.Heal(100);
+        enemySoundManager.PlaySound("ownHeal");
+        m_prospectorHealth.Heal(40);
     }
     public void CastAreaCure() {
         Collider[] hitColliders = m_outerRing.GetEnemiesInRange();
@@ -222,20 +226,14 @@ public class ProspectorBehaviour : MonoBehaviour
         }
 
         areaHealVisuals.SetActive(false);
-        healAreaSound.Play();
+        enemySoundManager.PlaySound("areaHeal");
     }
 
     public void ResetCasting() {
         //Debug.Log("Ability cast finished");
         casting = false;
-        if (ableToHide) { 
-            if(CheckCanCastAgain())
-                currentState = State.CASTING;
-            else
-                currentState = State.CHASING;
-        }
-        else
-            currentState = State.CHASING;
+        currentState = State.RESTING;
+        Invoke("StopResting", 2);
     }
 
     private Transform CheckForAvailableHidenSpot() {
@@ -294,18 +292,19 @@ public class ProspectorBehaviour : MonoBehaviour
         }
     }
 
-    private void InitSounds() {
-        for (int i = 0; i < sounds.Length; i++)
-        {
-            sounds[i].volume *= AudioManager.getGeneralVolume();
-        }
-
-        footStepsSound = sounds[0];
-        powerUpUnitsSound = sounds[1];
-        healAreaSound = sounds[2];
+    public void PlayCastPowerUpSound() {
+        enemySoundManager.PlaySound("getHim");
     }
 
-    public void PlayCastPowerUpSound() {
-        powerUpUnitsSound.Play();
+    private void StopResting() {
+        if (ableToHide)
+        {
+            if (CheckCanCastAgain())
+                currentState = State.CASTING;
+            else
+                currentState = State.CHASING;
+        }
+        else
+            currentState = State.CHASING;
     }
 }
