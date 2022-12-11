@@ -42,6 +42,9 @@ public class EnemyHealth : MonoBehaviour
     public delegate void OnDeath();
     public event OnDeath onDeath;
 
+    // Particles
+    [SerializeField] private ParticleSystem Cure;
+
     //private int timeAnimationDead = 1;
     private void Awake()
     {
@@ -182,6 +185,9 @@ public class EnemyHealth : MonoBehaviour
         int hpHealed = (hp > startingHealth - currentHealth) ? startingHealth - currentHealth : hp;
         popup.Create(popupPosition.position, hpHealed, PopUp.TypePopUp.LIFE, true, 0.5f);
         currentHealth += hpHealed;
+        if (Cure != null) { 
+            Cure.Play();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

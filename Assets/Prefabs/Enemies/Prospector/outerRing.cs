@@ -36,7 +36,7 @@ public class outerRing : MonoBehaviour
     public int checkNumEnemiesInRange()
     {
         // Checks for number of enemies
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask, QueryTriggerInteraction.Ignore);
         return hitColliders.Length;
     }
 
@@ -47,7 +47,7 @@ public class outerRing : MonoBehaviour
         // Checks for number of enemies
         foreach (Collider eC in hitColliders) {
             EnemyHealth eH = eC.gameObject.GetComponent<EnemyHealth>();
-            if (eH.enemyType != EnemyHealth.EnemyType.FOREMAN)
+            if (eH.enemyType != EnemyHealth.EnemyType.FOREMAN && eH.enemyType != EnemyHealth.EnemyType.EXPLOSIVE_SPIDERBOT)
             {
                 // Health ratio only based on surrounding enemies
                 healthRatio += ((float)eH.currentHealth / (float)eH.startingHealth);
