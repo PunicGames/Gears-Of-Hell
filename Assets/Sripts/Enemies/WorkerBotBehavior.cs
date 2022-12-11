@@ -20,6 +20,7 @@ public class WorkerBotBehavior : MonoBehaviour
     [SerializeField] private GameObject explosionRange;
     [SerializeField] private SkinnedMeshRenderer workerBotMesh;
     [SerializeField] private MeshRenderer weaponMesh;
+    [SerializeField] private EnemySoundManager enemySoundManager;
 
     public float timeUntilExplosion;
     public int bombDamage;
@@ -63,6 +64,7 @@ public class WorkerBotBehavior : MonoBehaviour
         weaponCollider.player = player;
         weaponCollider.health = GetComponent<EnemyHealth>();
         weaponCollider.playerHealth = player.GetComponent<Health>();
+        enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
         weaponCollider.attackDamage = attackDamage;
         weaponCollider.enabled = false;
 
@@ -84,6 +86,7 @@ public class WorkerBotBehavior : MonoBehaviour
         switch (currentFSM2State)
         {
             case FSM2_states.IDLE:
+                enemySoundManager.PauseSound("walk");
                 animator.SetBool("isMoving", false); //variable que este en el animator
                 transform.LookAt(player.transform.position); //miramos al player
 
@@ -95,6 +98,7 @@ public class WorkerBotBehavior : MonoBehaviour
                 break;
 
             case FSM2_states.PURSUE:
+                enemySoundManager.PlaySound("walk");
                 animator.SetBool("isMoving", true); //variable del animator
                 if (distance <= agent.stoppingDistance)
                 {
@@ -122,6 +126,7 @@ public class WorkerBotBehavior : MonoBehaviour
     public void Attack()
     {
         alreadyAttacked = true;
+        enemySoundManager.PlaySound("attack");
         animator.SetBool("isAttacking", true);
         particleEffect.SetActive(true);
         particleEffect.GetComponent<ParticleSystem>().Play();
@@ -148,6 +153,7 @@ public class WorkerBotBehavior : MonoBehaviour
     public void ResetParameters()
     {
         DeactivateWeaponCollider();
+        enemySoundManager.PauseSound("attack");
         alreadyAttacked = false;
         animator.SetBool("isAttacking", false);
         particleEffect.SetActive(false);
