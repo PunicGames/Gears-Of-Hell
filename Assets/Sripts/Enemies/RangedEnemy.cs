@@ -18,8 +18,7 @@ public class RangedEnemy : MonoBehaviour
     Transform player;
     NavMeshAgent agent;
     Animator animator;
-    AudioSource gunAudio;
-
+    EnemySoundManager enemySoundManager;
     public Transform shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
 
@@ -27,13 +26,16 @@ public class RangedEnemy : MonoBehaviour
     [SerializeField] private Color albedo;
     [SerializeField] private Color emissive;
 
+    // Upgrade
+    bool upgraded = false;
+
     private void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        gunAudio = GetComponent<AudioSource>();
+        enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
 
     }
 
@@ -60,7 +62,7 @@ public class RangedEnemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            gunAudio.Play();
+            enemySoundManager.PlaySound("shoot");
             GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
             b.transform.LookAt(player.transform);
             Bullet bulletParams = b.GetComponent<Bullet>();
@@ -93,6 +95,10 @@ public class RangedEnemy : MonoBehaviour
 
     public void UpgradeAttackSpeed()
     {
-        attackSpeed = 1.6f;
+        if (!upgraded)
+        {
+            // TODO: Modify variable values to get enhanced version.
+            upgraded = true;
+        }
     }
 }
