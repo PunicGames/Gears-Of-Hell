@@ -61,17 +61,7 @@ public class Grenade : MonoBehaviour
         audioSource.loop = true;
         audioSource.Play();
         
-        enemiesAware = Physics.OverlapSphere(explosionRange.transform.position, explosionRange.GetComponent<SphereCollider>().radius+0.3f * explosionRange.transform.localScale.x * transform.localScale.x);
-        foreach (var hc in enemiesAware)
-        {
-
-            if (hc.tag == "Enemy")
-            {
-                hc.GetComponent<NavMeshAgent>().enabled = false;
-            }
-           
-
-        }
+      
 
         Invoke("Explode", timeUntilExplosion);
         enabled = false;
@@ -105,16 +95,16 @@ public class Grenade : MonoBehaviour
         audioSource.Play();
 
         vfx.Play();
-        foreach (var hc in enemiesAware)
-        {
+        //foreach (var hc in enemiesAware)
+        //{
 
-            if (hc.tag == "Enemy")
-            {
-                hc.GetComponent<NavMeshAgent>().enabled = true;
-            }
+        //    if (hc.tag == "Enemy")
+        //    {
+        //        hc.GetComponent<NavMeshAgent>().enabled = true;
+        //    }
 
 
-        }
+        //}
         Destroy(gameObject, vfx.main.duration);
     }
     public void setExplosionRatio(float r)
