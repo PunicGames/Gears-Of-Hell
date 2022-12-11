@@ -825,27 +825,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a978ee5ee11f41140ba9d3c2e61fd656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cadenceTime: 0.3
+  cadenceTime: 0.2
   reloadTime: 3
   bulletSpeed: 15
   damage: 10
-  bulletsPerMag: 30
-  bulletsPerBurst: 5
-  SemiAutoTime: 2
+
+  bulletsPerMag: 20
+  bulletsPerBurst: 3
+  SemiAutoTime: 0.5
   bulletLifetime: 3
   hasToSeeYouToShoot: 1
-  SemiAuto: 0
   canMoveWhileShooting: 0
-  enableGrenades: 0
-  grenadeProbabilityRatio: 0
-  numberOfGrenades: 3
-  grenadeThrowPoint: {fileID: 0}
-  grenadeDamage: 30
+  enableGrenades: 1
+  grenadeProbabilityRatio: 3
+  numberOfGrenades: 6
+  grenadeThrowPoint: {fileID: 3391525501013516748}
+  grenadeDamage: 60
+  explosionRatio: 1
+  timeUntilExplosion: 0.5
+  failOffset: 4
+
   spotDistance: 6
   shootOrigin: {fileID: 6642612286602488106}
   muzzleVFX: {fileID: 3321965668770009367}
   bullet: {fileID: 441659958780119776, guid: d03a14b63de73eb448fd800ca229b0ef, type: 3}
-  grenade: {fileID: 0}
+
+  grenade: {fileID: 53655109027075921, guid: 2c8ec62a2e749f54faa0d9e34813caca, type: 3}
+
   albedo: {r: 0.7957217, g: 0.7311321, b: 1, a: 0}
   emissive: {r: 0.34384346, g: 0, b: 1, a: 0}
 --- !u!114 &714371807
@@ -1121,6 +1127,37 @@ Transform:
   m_Father: {fileID: 4201054014796657477}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0.015214561, y: -7.9225297, z: -0.044720624}
+--- !u!1 &3029138844989027196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3391525501013516748}
+  m_Layer: 0
+  m_Name: GrenadeThrowPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3391525501013516748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3029138844989027196}
+  m_LocalRotation: {x: 0.7125301, y: -0.13748397, z: 0.047866337, w: 0.68637294}
+  m_LocalPosition: {x: -0.33797973, y: 0.27149478, z: -0.03580791}
+  m_LocalScale: {x: 0.9293805, y: 0.92937946, z: 0.92937976}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5969571849167539557}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3139777542020167775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,6 +1187,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6635932734930573315}
+  - {fileID: 3391525501013516748}
   m_Father: {fileID: 6186497605853092685}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 4.8380513, y: -10.841006, z: -39.521782}

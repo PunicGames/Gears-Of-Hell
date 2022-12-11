@@ -16,7 +16,6 @@ public class GunnerBehaviour : MonoBehaviour
     public float bulletLifetime = 3f;
     [Space]
     public bool hasToSeeYouToShoot = false;
-    public bool SemiAuto = false;
     public bool canMoveWhileShooting;
 
     [Header("GRENADE")]
@@ -27,6 +26,11 @@ public class GunnerBehaviour : MonoBehaviour
     public int numberOfGrenades = 3;
     [SerializeField] Transform grenadeThrowPoint;
     public int grenadeDamage = 30;
+    public float explosionRatio = 1;
+    public float timeUntilExplosion = 1f;
+    private float throwDistance = 4f;
+
+    public int failOffset = 3;
 
 
 
@@ -66,8 +70,6 @@ public class GunnerBehaviour : MonoBehaviour
     // Bullet colors
     [SerializeField] private Color albedo;
     [SerializeField] private Color emissive;
-
-
 
     private void Start()
     {
@@ -123,6 +125,18 @@ public class GunnerBehaviour : MonoBehaviour
                 if (hasToSeeYouToShoot)
                 {
                     CheckPlayerSighted();
+                    if (enableGrenades)
+                    {
+                        if(!playerOnSight && canLaunchGrenade)
+                        {
+                            animator.SetTrigger("grenade");
+                            canLaunchGrenade = false;
+                            animator.SetBool("Moving", false);
+                            agent.isStopped = true;
+                            currentState = gunnerState.GRENADE;
+
+                        }
+                    }
                     TransitionFromPursue(inAttackRange && playerOnSight);
                 }
                 else
@@ -201,9 +215,21 @@ public class GunnerBehaviour : MonoBehaviour
                 Invoke(nameof(ResetAttack), SemiAutoTime);
                 bulletsInBurst = bulletsPerBurst;
                 if (enableGrenades)
-                    if (Random.Range(0, grenadeProbabilityRatio) == 0 && numberOfGrenades > 0)
+                    if (Random.Range(0, grenadeProbabilityRatio) == 0 && numberOfGrenades > 0 && distance > throwDistance)
                     {
-                        canLaunchGrenade = true;
+                        if (!hasToSeeYouToShoot)
+                        {
+                            CheckPlayerSighted();
+                            if (!playerOnSight)
+                            {
+                                playerOnSight = true;
+                                canLaunchGrenade = true;
+                            }
+                        }
+                        else
+                        {
+                            canLaunchGrenade = true;
+                        }
                     }
                 TransitionToIdle();
             }
@@ -223,8 +249,12 @@ public class GunnerBehaviour : MonoBehaviour
         GameObject g = Instantiate(grenade, new Vector3(grenadeThrowPoint.position.x, grenadeThrowPoint.position.y, grenadeThrowPoint.position.z), Quaternion.identity);
 
         Grenade grenadeParams = g.GetComponent<Grenade>();
-        grenadeParams.target = player.transform.position;
+        //Compose target
+        Vector3 target = new Vector3(Random.Range(player.transform.position.x - failOffset, player.transform.position.x + failOffset), player.transform.position.y, Random.Range(player.transform.position.z - failOffset, player.transform.position.z + failOffset));
+        grenadeParams.target = target;
         grenadeParams.damage = grenadeDamage;
+        grenadeParams.setExplosionRatio(explosionRatio);
+        grenadeParams.timeUntilExplosion = timeUntilExplosion;
 
 
         Invoke(nameof(ResetAttack), SemiAutoTime);
