@@ -20,6 +20,7 @@ public class EnemySoundManager : MonoBehaviour
         { 
             var source = gameObject.AddComponent<AudioSource>();
             source.outputAudioMixerGroup = mixer;
+            source.dopplerLevel = 0.0f;
             sound.SetSource(source, range);
             soundsDictionary[sound.id] = sound;
         }
