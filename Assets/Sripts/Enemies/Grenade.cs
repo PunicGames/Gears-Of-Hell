@@ -10,7 +10,6 @@ public class Grenade : MonoBehaviour
     public Vector3 origin;
     public float timeUntilExplosion = 1f;
     public int damage = 40;
-    public float ExplosionRatio;
     private float anim;
 
     private float speed = 0.6f;
@@ -28,6 +27,8 @@ public class Grenade : MonoBehaviour
     public AudioClip tictac;
     public AudioClip boom;
     private AudioSource audioSource;
+
+    [SerializeField] private LayerMask layerMask;
 
     void Start()
     {
@@ -49,7 +50,9 @@ public class Grenade : MonoBehaviour
         {
             Debug.Log("reached");
             animEnded = true;
+            transform.position = new Vector3(transform.position.x, 0.08f, transform.position.z);
             TriggerExplosion();
+
         }
     }
     private void TriggerExplosion()
@@ -70,7 +73,7 @@ public class Grenade : MonoBehaviour
     private void Explode()
     {
 
-        Collider[] hitColliders = Physics.OverlapSphere(explosionRange.transform.position, explosionRange.GetComponent<SphereCollider>().radius * explosionRange.transform.localScale.x * transform.localScale.x);
+        Collider[] hitColliders = Physics.OverlapSphere(explosionRange.transform.position, explosionRange.GetComponent<SphereCollider>().radius * explosionRange.transform.localScale.x * transform.localScale.x, layerMask, QueryTriggerInteraction.Ignore); ;
         foreach (var hc in hitColliders)
         {
 
