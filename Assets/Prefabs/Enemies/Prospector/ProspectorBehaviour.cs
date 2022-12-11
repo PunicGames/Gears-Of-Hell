@@ -168,16 +168,33 @@ public class ProspectorBehaviour : MonoBehaviour
         Collider[] hitColliders = m_outerRing.GetEnemiesInRange();
         foreach(Collider collider in hitColliders) {
 
-            // TODO: Wait for more behaviours
+            // TODO: Wait for more behaviours: WORKER BOT
 
             if (collider != null) { // In case an enemy died while receiving and checking the loop
                 // Increase Attack of different enemies
-                if (collider.gameObject.GetComponent<RangedEnemy>() != null) {
+                if (collider.gameObject.GetComponent<RangedEnemy>() != null)
+                {
                     // RangedEnemy
                     collider.gameObject.GetComponent<RangedEnemy>().UpgradeAttackSpeed();
-                } else if (collider.gameObject.GetComponent<WorkerBehavior>() != null) {
+                }
+                else if (collider.gameObject.GetComponent<WorkerBehavior>() != null)
+                {
                     // Worker
                     collider.gameObject.GetComponent<WorkerBehavior>().UpgradeAttackSpeed();
+                }
+                else if (collider.gameObject.GetComponent<GunnerBehaviour>() != null)
+                {
+                    // Gunner
+                    collider.gameObject.GetComponent<GunnerBehaviour>().UpgradeAttackSpeed();
+                }
+                else if (collider.gameObject.GetComponent<BigSpiderBotBehaviour>() != null)
+                {
+                    // Big Spider Bot
+                    collider.gameObject.GetComponent<BigSpiderBotBehaviour>().UpgradeAttackSpeed();
+                }
+                else if (collider.gameObject.GetComponent<BombSpiderBotBehaviour>() != null) {
+                    // Bomb Spider Bot
+                    collider.gameObject.GetComponent<BombSpiderBotBehaviour>().UpgradeAttackSpeed();
                 }
             }
         }

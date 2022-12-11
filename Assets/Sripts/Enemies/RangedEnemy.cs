@@ -27,6 +27,9 @@ public class RangedEnemy : MonoBehaviour
     [SerializeField] private Color albedo;
     [SerializeField] private Color emissive;
 
+    // Upgrade
+    bool upgraded = false;
+
     private void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -93,6 +96,10 @@ public class RangedEnemy : MonoBehaviour
 
     public void UpgradeAttackSpeed()
     {
-        attackSpeed = 1.6f;
+        if (!upgraded)
+        {
+            // TODO: Modify variable values to get enhanced version.
+            upgraded = true;
+        }
     }
 }
