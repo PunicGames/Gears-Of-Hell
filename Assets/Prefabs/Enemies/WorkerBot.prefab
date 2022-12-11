@@ -10373,6 +10373,7 @@ GameObject:
   - component: {fileID: 2299684632936711966}
   - component: {fileID: 3136179699775887891}
   - component: {fileID: 4209632533022142794}
+  - component: {fileID: 160968176}
   m_Layer: 7
   m_Name: WorkerBot
   m_TagString: Enemy
@@ -10492,12 +10493,14 @@ MonoBehaviour:
   minScoreValue: 5
   maxScoreValue: 15
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  isDead: 0
   popupPosition: {fileID: 7189349792040978552}
   itemsRatio: 0.05
   items:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 3
+  Cure: {fileID: 0}
 --- !u!136 &6725989799163533673
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10548,6 +10551,7 @@ MonoBehaviour:
   explosionRange: {fileID: 3988334386902043401}
   workerBotMesh: {fileID: 619469163596012938}
   weaponMesh: {fileID: 7389642715027751532}
+  enemySoundManager: {fileID: 0}
   timeUntilExplosion: 1
   bombDamage: 40
   tictac: {fileID: 8300000, guid: e120dfcb28aea8b4b862677c94a9e919, type: 3}
@@ -10661,6 +10665,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &160968176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4552707620018680948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63976678225cb084d905c599c5f87195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 15
+  mixer: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
+  sounds:
+  - id: attack
+    clip: {fileID: 8300000, guid: 9f24e8936ac79414496e9f8a787f9b69, type: 3}
+    loop: 1
+    volume: 0.5
+  - id: walk
+    clip: {fileID: 0}
+    loop: 1
+    volume: 0
 --- !u!1 &4582618260464638193
 GameObject:
   m_ObjectHideFlags: 0

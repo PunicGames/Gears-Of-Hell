@@ -184,7 +184,7 @@ public class ProspectorBehaviour : MonoBehaviour
                 // Increase Attack of different enemies
                 if (collider.gameObject.GetComponent<GunslingerBehaviour>() != null)
                 {
-                    // RangedEnemy
+                    // Gunslinger
                     collider.gameObject.GetComponent<GunslingerBehaviour>().UpgradeAttackSpeed();
                 }
                 else if (collider.gameObject.GetComponent<WorkerBehavior>() != null)
@@ -197,15 +197,15 @@ public class ProspectorBehaviour : MonoBehaviour
                     // Gunner
                     collider.gameObject.GetComponent<GunnerBehaviour>().UpgradeAttackSpeed();
                 }
-                else if (collider.gameObject.GetComponent<BigSpiderBotBehaviour>() != null)
-                {
-                    // Big Spider Bot
-                    collider.gameObject.GetComponent<BigSpiderBotBehaviour>().UpgradeAttackSpeed();
-                }
-                else if (collider.gameObject.GetComponent<BombSpiderBotBehaviour>() != null) {
-                    // Bomb Spider Bot
-                    collider.gameObject.GetComponent<BombSpiderBotBehaviour>().UpgradeAttackSpeed();
-                }
+                //else if (collider.gameObject.GetComponent<BigSpiderBotBehaviour>() != null)
+                //{
+                //    // Big Spider Bot
+                //    collider.gameObject.GetComponent<BigSpiderBotBehaviour>().UpgradeAttackSpeed();
+                //}
+                //else if (collider.gameObject.GetComponent<BombSpiderBotBehaviour>() != null) {
+                //    // Bomb Spider Bot
+                //    collider.gameObject.GetComponent<BombSpiderBotBehaviour>().UpgradeAttackSpeed();
+                //}
             }
         }
     }

@@ -51,7 +51,7 @@ public class BigSpiderBotBehaviour : MonoBehaviour
     private bool canAttack = false;
 
     //Estados
-    private enum spiderState { IDLE, PURSUE, ATTACK };
+    private enum spiderState { IDLE, PURSUE, ATTACK, DEAD };
     private spiderState currentState = spiderState.IDLE;
 
     // Bullet colors
@@ -64,6 +64,17 @@ public class BigSpiderBotBehaviour : MonoBehaviour
     // Upgrade
     bool upgraded = false;
 
+    //DeathExplosion
+    [SerializeField] private ParticleSystem explosionVfx;
+    [SerializeField] private GameObject explosionColl;
+    [SerializeField] private GameObject explosionRange;
+
+    [Space]
+    public AudioClip tictac, boom;
+    private AudioSource audioSource;
+
+    [SerializeField] private LayerMask m_LayerMask;
+
     private float distance;
     private float lastGrenadeTime;
     private float maxGrenadesTime = 7f;
@@ -71,6 +82,7 @@ public class BigSpiderBotBehaviour : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         currentTarget = player;
 
@@ -100,7 +112,6 @@ public class BigSpiderBotBehaviour : MonoBehaviour
             canAttack = true;
 
         lastGrenadeTime += Time.deltaTime;
-
 
         switch (currentState)
         {
@@ -148,17 +159,17 @@ public class BigSpiderBotBehaviour : MonoBehaviour
                 }
 
                 break;
+
+            case spiderState.DEAD:
+
+                break;
         }
     }
 
     private void IdleAction()
     {
-        if (!currentlyInBurst)
-        {
-            TrackSpider();
-        }
+        TrackSpider();
         TrackMinigun();
-
     }
 
     private void PursueAction()
@@ -291,13 +302,61 @@ public class BigSpiderBotBehaviour : MonoBehaviour
 
     private void Death()
     {
-        //agent.enabled = false;
-        //eh.enabled = false;
-        //enemyColl.enabled = false;
-        //smr.enabled = false;
-        Destroy(gameObject, 0f);
+        agent.enabled = false;
+        eh.enabled = false;
+        enemyColl.enabled = false;
+
+        currentState = spiderState.DEAD;
+
+        TriggerExplosion();
+
+        print("dead");
+
+        //Destroy(gameObject, 0f);
     }
 
+    private void TriggerExplosion()
+    {
+        agent.enabled = false;
+        eh.enabled = false;
+        enemyColl.enabled = false;
+
+        explosionRange.SetActive(true);
+
+        //Playing 'tictac'
+        audioSource.clip = tictac;
+        audioSource.loop = true;
+        audioSource.Play();
+
+        Invoke("Explode", timeUntilExplosion);
+        enabled = false;
+    }
+
+    private void Explode()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
+        foreach (var hc in hitColliders)
+        {
+            if (hc.tag == "Enemy")
+            {
+                hc.GetComponent<EnemyHealth>().TakeDamage(grenadeDamage);
+            }
+            else if (hc.tag == "Player")
+            {
+                hc.GetComponent<Health>().TakeDamage(grenadeDamage);
+            }
+        }
+        explosionRange.SetActive(false);
+
+        //Playing Booom
+        audioSource.clip = boom;
+        audioSource.loop = false;
+        audioSource.Play();
+
+        explosionVfx.Play();
+        smr.enabled = false;
+        Destroy(gameObject, explosionVfx.main.duration);
+    }
 
     private void OnDrawGizmosSelected()
     {

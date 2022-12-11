@@ -28,6 +28,7 @@ public class GunslingerBehaviour : MonoBehaviour
 
     // Upgrade
     bool upgraded = false;
+    [SerializeField] private ParticleSystem RaiseUnit;
 
     #region MonoBehabiour
     private void Start()
@@ -104,6 +105,8 @@ public class GunslingerBehaviour : MonoBehaviour
         {
             // TODO: Modify variable values to get enhanced version.
             upgraded = true;
+            RaiseUnit.Play();
+            RaiseUnit.loop = true;
         }
     }
     #endregion
