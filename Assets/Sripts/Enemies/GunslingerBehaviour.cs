@@ -13,7 +13,7 @@ public class GunslingerBehaviour : MonoBehaviour
     public float damage = 10;
 
     public GameObject bullet;
-
+    private bool alive = true;
     Transform player;
     NavMeshAgent agent;
     Animator animator;
@@ -32,23 +32,23 @@ public class GunslingerBehaviour : MonoBehaviour
     #region MonoBehabiour
     private void Start()
     {
+        currentState = GunslingerState.IDLE;
         //player = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
         enemyHealth = gameObject.GetComponent<EnemyHealth>();
-
+        enemyHealth.onDeath += Death;
     }
 
     private void Update()
     {
-        
         FSM();
     }
     #endregion
 
-    private enum GunslingerState { IDLE, PURSUE, SHOOT };
+    private enum GunslingerState { IDLE, PURSUE, SHOOT, DEAD };
     private GunslingerState currentState = GunslingerState.IDLE;
 
     #region Perceptions
@@ -69,7 +69,6 @@ public class GunslingerBehaviour : MonoBehaviour
     }
 
     #endregion
-
 
     #region Actions
     private void Shoot()
@@ -169,12 +168,16 @@ public class GunslingerBehaviour : MonoBehaviour
                 else if (InRange && IsAGoodShoot() && !alreadyAttacked)
                     TransitionToShoot();
                 break;
+
+            case GunslingerState.DEAD:
+                break;
+
         }
-
-        // ñapa alert
-        if (enemyHealth.isDead)
-            Destroy(this);
     }
-
     #endregion
+
+    public void Death()
+    { 
+        currentState = GunslingerState.DEAD;
+    }
 }

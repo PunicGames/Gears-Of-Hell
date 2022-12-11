@@ -86,9 +86,13 @@ public class EnemyHealth : MonoBehaviour
                 DropItems();
                 CountStats();
             }
+            else if (enemyType == EnemyType.GUNSLINGER)
+            {
+                onDeath();
+                Death();
+            }
             else
             {
-
                 Death();
             }
 

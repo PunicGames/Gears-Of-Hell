@@ -362,6 +362,7 @@ MonoBehaviour:
   minScoreValue: 8
   maxScoreValue: 13
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  isDead: 0
   popupPosition: {fileID: 2145997274644605940}
   itemsRatio: 0.02
   items:
@@ -450,7 +451,7 @@ MonoBehaviour:
   mixer: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
   sounds:
   - id: death
-    clip: {fileID: 8300000, guid: 91e235bef52b4354d8132f17d01e4496, type: 3}
+    clip: {fileID: 8300000, guid: f43b3f1e4afcf354681c39a1232d2714, type: 3}
     loop: 0
     volume: 0.4
   - id: walk
