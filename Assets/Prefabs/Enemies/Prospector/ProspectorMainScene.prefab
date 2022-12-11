@@ -5451,12 +5451,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
-  currentHealth: 100
+  startingHealth: 80
+  currentHealth: 80
   scoreValue: 5
   minScoreValue: 30
   maxScoreValue: 50
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  isDead: 0
   popupPosition: {fileID: 3810798609309705044}
   itemsRatio: 0.1
   items:
