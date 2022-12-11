@@ -60,6 +60,8 @@ public class GunnerBehaviour : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
     AudioSource gunAudio;
+    AudioSource reloadAudio;
+    AudioSource walkAudio;
 
     private enum gunnerState { IDLE, PURSUE, ATTACK, RECHARGE, GRENADE };
     private gunnerState currentState = gunnerState.IDLE;
@@ -74,7 +76,12 @@ public class GunnerBehaviour : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        gunAudio = GetComponent<AudioSource>();
+
+        var sources = GetComponents<AudioSource>();
+        gunAudio = sources[0];
+        reloadAudio = sources[1];
+        walkAudio = sources[2];
+
         bulletsInMag = bulletsPerMag;
         bulletsInBurst = bulletsPerBurst;
 
@@ -99,6 +106,7 @@ public class GunnerBehaviour : MonoBehaviour
         switch (currentState)
         {
             case gunnerState.IDLE:
+                
                 transform.LookAt(player.position);
                 if (hasToSeeYouToShoot)
                 {
@@ -227,6 +235,7 @@ public class GunnerBehaviour : MonoBehaviour
             }
         else
         {
+            reloadAudio.Play();
             TransitionToRecharge();
         }
 
@@ -292,6 +301,7 @@ public class GunnerBehaviour : MonoBehaviour
     //private void TransitionToAttack();
     private void TransitionToIdle()
     {
+        walkAudio.Pause();
         currentState = gunnerState.IDLE;
         animator.SetBool("Moving", false);
         agent.isStopped = true;
@@ -306,6 +316,7 @@ public class GunnerBehaviour : MonoBehaviour
 
     private void TransitionToPursue()
     {
+        walkAudio.Play();
         currentState = gunnerState.PURSUE;
         animator.SetBool("Moving", true);
         agent.isStopped = false;
