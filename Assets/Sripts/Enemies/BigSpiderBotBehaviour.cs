@@ -10,12 +10,33 @@ public class BigSpiderBotBehaviour : MonoBehaviour
 
     [SerializeField] private NavMeshAgent agent;
 
+    [SerializeField] private EnemyHealth eh;
+    [SerializeField] private CapsuleCollider enemyColl;
+    [SerializeField] private SkinnedMeshRenderer smr;
+
+    [SerializeField] private GameObject miniGun;
+    [SerializeField] private GameObject shootOrigin;
+    [SerializeField] ParticleSystem muzzleVFX;
+
+    public float burstCadence = 1f;
+    public float bulletSpeed = 2;
+    public float damage = 10;
+    public float bulletLifetime = 3f;
+
+    public float timeBetweenBursts = 5f;
+
+    [SerializeField] private int bulletsPerBurst;
+
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject grenade;
 
     [SerializeField] private float attackRange;
 
-    [SerializeField] private GameObject currentTarget;
+    private GameObject currentTarget;
+
+    private int bulletsInBurst;
+
+    private bool currentlyInBurst = false;
 
     //Percepciones
     private bool alreadyAttacked = false;
@@ -26,11 +47,23 @@ public class BigSpiderBotBehaviour : MonoBehaviour
     private enum spiderState { IDLE, PURSUE, ATTACK };
     private spiderState currentState = spiderState.IDLE;
 
+    // Bullet colors
+    [SerializeField] private Color albedo;
+    [SerializeField] private Color emissive;
+
+    //Audio
+    [SerializeField] private AudioSource gunAudio;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
         currentTarget = player;
+
+        eh.onDeath += Death;
+
+        bulletsInBurst = bulletsPerBurst;
+
     }
 
     private void Update()
@@ -46,6 +79,10 @@ public class BigSpiderBotBehaviour : MonoBehaviour
             inRange = true;
         else
             inRange = false;
+
+        if (inRange && !alreadyAttacked)
+            canAttack = true;
+
 
         switch (currentState)
         {
@@ -98,18 +135,84 @@ public class BigSpiderBotBehaviour : MonoBehaviour
 
     private void IdleAction()
     {
+        if (!currentlyInBurst)
+        {
+            TrackSpider();
+        }
+        TrackMinigun();
 
     }
 
     private void PursueAction()
     {
+        agent.isStopped = false;
         agent.SetDestination(currentTarget.transform.position);
+        TrackSpider();
+        TrackMinigun();
     }
 
     private void AttackAction()
     {
-
+        agent.isStopped = true;
+        ShootMinigun();
     }
+
+    private void TrackMinigun()
+    {
+        miniGun.transform.LookAt(player.transform.position + new Vector3(0f,1f,0f));
+    }
+
+    private void TrackSpider()
+    {
+        transform.LookAt(player.transform.position);
+    }
+
+    private void ShootMinigun()
+    {
+        GameObject b = Instantiate(bullet, new Vector3(shootOrigin.transform.position.x, shootOrigin.transform.position.y, shootOrigin.transform.position.z), Quaternion.identity);
+        b.transform.LookAt(player.transform);
+        Bullet bulletParams = b.GetComponent<Bullet>();
+        bulletParams.SetForce(bulletSpeed);
+        bulletParams.SetDamage(damage);
+        bulletParams.SetLaser(false);
+        bulletParams.owner = Bullet.BulletOwner.ENEMY;
+        bulletParams.timeToDestroy = bulletLifetime;
+        bulletParams.SetBulletColors(albedo, emissive);
+
+        alreadyAttacked = true;
+        canAttack = false;
+        currentlyInBurst = true;
+        gunAudio.Play();
+        muzzleVFX.Play();
+
+        bulletsInBurst--;
+
+        if (bulletsInBurst > 0)
+            Invoke(nameof(ResetAttack), burstCadence);
+        else
+        {
+            Invoke(nameof(ResetAttack), timeBetweenBursts);
+            bulletsInBurst = bulletsPerBurst;
+            currentlyInBurst = false;
+            gunAudio.Stop();
+        }
+    }
+
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+        //if (currentState == gunnerState.RECHARGE) alreadyRecharged = true;
+    }
+
+    private void Death()
+    {
+        //agent.enabled = false;
+        //eh.enabled = false;
+        //enemyColl.enabled = false;
+        //smr.enabled = false;
+        Destroy(gameObject, 0f);
+    }
+
 
     private void OnDrawGizmosSelected()
     {
