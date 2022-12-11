@@ -272,13 +272,13 @@ GameObject:
   - component: {fileID: 1362870519766169398}
   - component: {fileID: 1362870519766169394}
   - component: {fileID: 1362870519766169393}
-  - component: {fileID: 1362870519766169392}
   - component: {fileID: 2100687500816879396}
   - component: {fileID: 4597903607373781857}
   - component: {fileID: 805858125500327647}
   - component: {fileID: 6405950787550650569}
   - component: {fileID: 8937590430435411528}
   - component: {fileID: 1281978642}
+  - component: {fileID: 1035957350}
   m_Layer: 7
   m_Name: Tier2_Gunslinger
   m_TagString: Enemy
@@ -344,28 +344,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &1362870519766169392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362870519766169385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8804a87fe7dcb4ba67f48ac8282c61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sightRange: 500
-  attackRange: 15
-  attackSpeed: 1
-  bulletSpeed: 10
-  damage: 10
-  bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
-  shootOrigin: {fileID: 1968640665758156304}
-  muzzleVFX: {fileID: 2413673648375845414}
-  albedo: {r: 1, g: 1, b: 1, a: 0}
-  emissive: {r: 1, g: 0.48235294, b: 0, a: 0}
 --- !u!114 &2100687500816879396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,15 +451,37 @@ MonoBehaviour:
   - id: death
     clip: {fileID: 8300000, guid: 91e235bef52b4354d8132f17d01e4496, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.4
   - id: walk
-    clip: {fileID: 8300000, guid: 10c5383785b1e6343a0e5874225a198c, type: 3}
-    loop: 0
-    volume: 1
+    clip: {fileID: 8300000, guid: db120ef1419d4b64b9d04e6ef329ccd6, type: 3}
+    loop: 1
+    volume: 0.5
   - id: shoot
     clip: {fileID: 8300000, guid: d9c6f6822dd7f614ba8715d91c265c39, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.5
+--- !u!114 &1035957350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362870519766169385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f485d4bbaaa023944b9de7efd8346a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightRange: 500
+  attackRange: 15
+  attackSpeed: 1
+  bulletSpeed: 10
+  damage: 10
+  bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
+  shootOrigin: {fileID: 1968640665758156304}
+  muzzleVFX: {fileID: 2413673648375845414}
+  albedo: {r: 1, g: 1, b: 1, a: 0}
+  emissive: {r: 1, g: 0.48235297, b: 0, a: 0}
 --- !u!1 &1442444808355889375
 GameObject:
   m_ObjectHideFlags: 0
