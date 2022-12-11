@@ -93,12 +93,5 @@ public class RangedEnemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
-    public void UpgradeAttackSpeed()
-    {
-        if (!upgraded)
-        {
-            // TODO: Modify variable values to get enhanced version.
-            upgraded = true;
-        }
-    }
+    
 }

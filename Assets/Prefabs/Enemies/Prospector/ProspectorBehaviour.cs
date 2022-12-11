@@ -179,10 +179,10 @@ public class ProspectorBehaviour : MonoBehaviour
 
             if (collider != null) { // In case an enemy died while receiving and checking the loop
                 // Increase Attack of different enemies
-                if (collider.gameObject.GetComponent<RangedEnemy>() != null)
+                if (collider.gameObject.GetComponent<GunslingerBehaviour>() != null)
                 {
                     // RangedEnemy
-                    collider.gameObject.GetComponent<RangedEnemy>().UpgradeAttackSpeed();
+                    collider.gameObject.GetComponent<GunslingerBehaviour>().UpgradeAttackSpeed();
                 }
                 else if (collider.gameObject.GetComponent<WorkerBehavior>() != null)
                 {
