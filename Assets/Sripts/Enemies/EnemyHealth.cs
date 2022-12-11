@@ -80,8 +80,6 @@ public class EnemyHealth : MonoBehaviour
             if(enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
             {
                 onDeath();
-                DropItems();
-                CountStats();
             }
             else
             {
@@ -185,28 +183,4 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void DropItems()
-    {
-        // Suelta moneda
-        GameObject moneda = Instantiate(coin, transform.position, Quaternion.identity);
-        //moneda.gameObject.GetComponent<Moneda>().value = scoreValue;
-        moneda.gameObject.GetComponent<Moneda>().value = Random.Range(minScoreValue, maxScoreValue);
-
-        //Soltar items consumibles
-
-        float aux = Random.Range(0f, 1f);
-        if (aux <= itemsRatio)
-        {
-            int index = Random.Range(0, items.Length);
-            GameObject item = Instantiate(items[index], transform.position + new Vector3(0.8f, 0f, -0.8f), Quaternion.identity);
-        }
-    }
-
-    private void CountStats()
-    {
-        // Add stats to player
-        playerRef.GetComponent<PlayerStats>().numDefeatedEnemies++;
-    }
-
 }
