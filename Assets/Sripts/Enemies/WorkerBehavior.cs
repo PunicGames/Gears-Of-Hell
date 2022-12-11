@@ -177,6 +177,9 @@ public class WorkerBehavior : MonoBehaviour
             upgraded = true;
             RaiseUnit.Play();
             RaiseUnit.loop = true;
+
+            attackDamage = (int)(attackDamage * 1.2f);
+
         }
     }
 
