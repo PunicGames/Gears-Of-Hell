@@ -12,6 +12,7 @@ public class WorkerBotBehavior : MonoBehaviour
     [SerializeField] int attackDamage = 10; //daño por cada golpe
     [SerializeField] float rollSpeed = 10.0f; //velocidad a la que gira atacando
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
+    [SerializeField] GameObject particleEffect;     
     [SerializeField] Collider recolectRangeCollider;
 
     private Animator animator;
@@ -20,6 +21,7 @@ public class WorkerBotBehavior : MonoBehaviour
 
     int currentGears = 0; //monedas que lleva recogidas
     bool attacking = false;
+    bool alreadyAttacked = false;
 
     private enum FSM2_states { 
         IDLE, 
@@ -55,6 +57,7 @@ public class WorkerBotBehavior : MonoBehaviour
     private void Update()
     {
         FSM_LVL_2();
+        ActionFSM();
     }
     private void FSM_LVL_2() //{ IDLE, PURSUE, ATTACK }
     {
@@ -63,7 +66,6 @@ public class WorkerBotBehavior : MonoBehaviour
 
         switch (currentFSM2State)
         {
-            
             case FSM2_states.IDLE:
                 animator.SetBool("isMoving", false); //variable que este en el animator
                 transform.LookAt(player.transform.position); //miramos al player
@@ -82,25 +84,61 @@ public class WorkerBotBehavior : MonoBehaviour
                     currentFSM2State = FSM2_states.IDLE;
                 }
                 break;
-
-            case FSM2_states.ATTACK:
-                animator.SetBool("isAttacking", true);
-                //activamos la animacion de mitad del cuerpo atacando
-
-
-                break;
         }
     }
 
-    private void FSM_LVL_1() //{ IDLE, PURSUE, ATTACK }
+    private void ActionFSM()
     {
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-        agent.SetDestination(player.transform.position);
-
-        switch (currentFSM1State)
+        switch (currentFSM2State)
         {
-            //FSM grande
+            case FSM2_states.IDLE:
+                //Do nothing
+                break;
+
+            case FSM2_states.ATTACK:
+                //si no ha atacado se pone a atacar
+                if (!alreadyAttacked) Attack();
+                break;
+
         }
+    }
+
+    public void Attack()
+    {
+        alreadyAttacked = true;
+        animator.SetBool("isAttacking", true);
+        particleEffect.SetActive(true);
+        particleEffect.GetComponent<ParticleSystem>().Play();
+        print("particle play");
+
+        Invoke(nameof(ResetParameters), 5);
+        Invoke(nameof(StopParticleEffect), 3);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (enabled)
+        {
+            if (other.gameObject == player)
+            {
+                ActivateWeaponCollider();
+                currentFSM2State = FSM2_states.ATTACK;
+            }
+        }
+    }
+    public void StopParticleEffect()
+    {
+        particleEffect.GetComponent<ParticleSystem>().Play();
+        print("prineto");
+    }
+    public void ResetParameters()
+    {
+        DeactivateWeaponCollider();
+        alreadyAttacked = false;
+        animator.SetBool("isAttacking", false);
+        particleEffect.SetActive(false);
+        print("resetParameters");
+        currentFSM2State = FSM2_states.IDLE;
     }
 
     public void ActivateWeaponCollider()
@@ -113,32 +151,5 @@ public class WorkerBotBehavior : MonoBehaviour
         weaponCollider.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (enabled)
-        {
-            if (other.gameObject == player)
-            {
-                ActivateWeaponCollider();
-                currentFSM2State = FSM2_states.ATTACK;
-                Invoke(nameof(ResetParameters),5);
-            }
-        }
-    }
-    public void ResetParameters()
-    {
-        DeactivateWeaponCollider();
-        animator.SetBool("isAttacking", false);
-        currentFSM2State = FSM2_states.IDLE;
-    }
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject == player)
-    //    {
-    //        DeactivateWeaponCollider();
-    //        currentFSM2State = FSM2_states.IDLE;
-    //    }
-    //}
-
+    
 }
