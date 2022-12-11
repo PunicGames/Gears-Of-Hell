@@ -46,6 +46,7 @@ public class ProspectorBehaviour : MonoBehaviour
     [HideInInspector] private AudioSource footStepsSound, powerUpUnitsSound, healAreaSound;
 
     // Habilities visuals
+    [SerializeField] private ParticleSystem CureSelf;
     [SerializeField] private GameObject areaHealVisuals;
 
     private void Start()
@@ -108,6 +109,7 @@ public class ProspectorBehaviour : MonoBehaviour
 
                 if (!casting) { 
                     casting = true;
+                    agent.isStopped = true;
                     UtilityCasting();
                 }
                 
@@ -134,7 +136,7 @@ public class ProspectorBehaviour : MonoBehaviour
         // Utility system
         float castVelocityValue = 0.3f * VJ + 0.7f * NW;
         float castOwnCure = VP;
-        float castAreaCure = 0.85f * VU + 0.15f * VP;
+        float castAreaCure = 0.9f * VU + 0.1f * VP;
 
         // ------ Utility System Values ------ Check documentation to know what these variables stand for.
         Debug.Log("VJ: " + VJ);
@@ -164,6 +166,7 @@ public class ProspectorBehaviour : MonoBehaviour
     private void Chase(Vector3 position)
     {
         agent.SetDestination(position);
+        agent.isStopped = false;
         animator.SetBool("isMoving", true);
         if (!footStepsSound.isPlaying) { footStepsSound.Play(); }
     }
@@ -204,6 +207,7 @@ public class ProspectorBehaviour : MonoBehaviour
         }
     }
     public void CastOwnCure() {
+        CureSelf.Play();
         m_prospectorHealth.Heal(100);
     }
     public void CastAreaCure() {
@@ -224,9 +228,12 @@ public class ProspectorBehaviour : MonoBehaviour
     public void ResetCasting() {
         //Debug.Log("Ability cast finished");
         casting = false;
-
-        if(CheckCanCastAgain())
-            currentState = State.CASTING;
+        if (ableToHide) { 
+            if(CheckCanCastAgain())
+                currentState = State.CASTING;
+            else
+                currentState = State.CHASING;
+        }
         else
             currentState = State.CHASING;
     }

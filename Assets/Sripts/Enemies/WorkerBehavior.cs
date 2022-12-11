@@ -32,6 +32,7 @@ public class WorkerBehavior : MonoBehaviour
 
     // Upgrade
     bool upgraded = false;
+    [SerializeField] private ParticleSystem RaiseUnit;
 
     private void Start()
     {
@@ -174,6 +175,8 @@ public class WorkerBehavior : MonoBehaviour
         {
             // TODO: Modify variable values to get enhanced version.
             upgraded = true;
+            RaiseUnit.Play();
+            RaiseUnit.loop = true;
         }
     }
 
