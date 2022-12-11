@@ -71,6 +71,8 @@ public class GunnerBehaviour : MonoBehaviour
     [SerializeField] private Color albedo;
     [SerializeField] private Color emissive;
 
+    // Upgrade
+    bool upgraded = false;
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -344,6 +346,15 @@ public class GunnerBehaviour : MonoBehaviour
     private int ComputeGrenadeChance()
     {
         return Random.Range(0, grenadeProbabilityRatio);
+    }
+
+    public void UpgradeAttackSpeed()
+    {
+        if (!upgraded)
+        {
+            // TODO: Modify variable values to get enhanced version.
+            upgraded = true;
+        }
     }
 
 }

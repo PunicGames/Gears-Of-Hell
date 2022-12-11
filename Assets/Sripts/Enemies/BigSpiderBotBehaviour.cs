@@ -54,6 +54,9 @@ public class BigSpiderBotBehaviour : MonoBehaviour
     //Audio
     [SerializeField] private AudioSource gunAudio;
 
+    // Upgrade
+    bool upgraded = false;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -218,5 +221,14 @@ public class BigSpiderBotBehaviour : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    public void UpgradeAttackSpeed()
+    {
+        if (!upgraded)
+        {
+            // TODO: Modify variable values to get enhanced version.
+            upgraded = true;
+        }
     }
 }

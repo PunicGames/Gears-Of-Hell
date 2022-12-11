@@ -30,6 +30,9 @@ public class WorkerBehavior : MonoBehaviour
     private state currentLocomotionState = state.PURSUE;
     private state currentActionState = state.IDLE;
 
+    // Upgrade
+    bool upgraded = false;
+
     private void Start()
     {
 
@@ -167,9 +170,11 @@ public class WorkerBehavior : MonoBehaviour
 
     public void UpgradeAttackSpeed()
     {
-        attack1Speed = 2.5f;
-        attack2Speed = 1.5f;
-        attack3Speed = 1.2f;
+        if (!upgraded)
+        {
+            // TODO: Modify variable values to get enhanced version.
+            upgraded = true;
+        }
     }
 
 }

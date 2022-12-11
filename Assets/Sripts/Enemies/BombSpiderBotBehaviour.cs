@@ -28,6 +28,9 @@ public class BombSpiderBotBehaviour : MonoBehaviour
     public AudioClip tictac, boom;
     private AudioSource audioSource;
 
+    // Upgrade
+    bool upgraded = false;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -112,5 +115,14 @@ public class BombSpiderBotBehaviour : MonoBehaviour
         smr1.enabled = false;
         smr2.enabled = false;
         Destroy(gameObject, explosionVfx.main.duration);
+    }
+
+    public void UpgradeAttackSpeed()
+    {
+        if (!upgraded)
+        {
+            // TODO: Modify variable values to get enhanced version.
+            upgraded = true;
+        }
     }
 }
