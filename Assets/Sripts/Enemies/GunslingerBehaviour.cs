@@ -21,6 +21,7 @@ public class GunslingerBehaviour : MonoBehaviour
     public Transform shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
     EnemyHealth enemyHealth;
+    private int upgradeLifetime = 10;
 
     // Bullet colors
     [SerializeField] private Color albedo;
@@ -49,8 +50,8 @@ public class GunslingerBehaviour : MonoBehaviour
     }
     #endregion
 
-    private enum GunslingerState { IDLE, PURSUE, SHOOT, DEAD };
-    private GunslingerState currentState = GunslingerState.IDLE;
+    public enum GunslingerState { IDLE, PURSUE, SHOOT, DEAD };
+    public GunslingerState currentState = GunslingerState.IDLE;
 
     #region Perceptions
 
@@ -74,7 +75,6 @@ public class GunslingerBehaviour : MonoBehaviour
     #region Actions
     private void Shoot()
     {
-        agent.SetDestination(transform.position);
         if (!alreadyAttacked)
         {
             enemySoundManager.PlaySound("shoot");
@@ -89,24 +89,6 @@ public class GunslingerBehaviour : MonoBehaviour
             alreadyAttacked = true;
             muzzleVFX.Play();
             Invoke(nameof(ResetAttack), attackSpeed);
-        }
-    }
-
-    // Iddle
-
-    private void ResetAttack()
-    {
-        alreadyAttacked = false;
-    }
-
-    public void UpgradeAttackSpeed()
-    {
-        if (!upgraded)
-        {
-            // TODO: Modify variable values to get enhanced version.
-            upgraded = true;
-            RaiseUnit.Play();
-            RaiseUnit.loop = true;
         }
     }
     #endregion
@@ -138,14 +120,26 @@ public class GunslingerBehaviour : MonoBehaviour
     #endregion
 
     #region FSM
+    private void LerpToPlayer()
+    {
+        var dir = player.transform.position - transform.position;
+        Quaternion lookOnLook = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, 6 * Time.deltaTime);
+    }
+
+    private bool isLookingToPlayer() 
+    {
+        Quaternion lookOnLook = Quaternion.LookRotation(player.transform.position - transform.position);
+        var dotResult = Quaternion.Dot(transform.rotation, lookOnLook);
+        return dotResult > 0.9f;
+    }
     private void FSM()
+
     {
         switch (currentState)
         {
             case GunslingerState.IDLE:
-                // Action
-                transform.LookAt(player.position);
-
+                LerpToPlayer();
                 if (InRange && IsAGoodShoot() && !alreadyAttacked)
                     TransitionToShoot();
                 else if (!InRange || !IsAGoodShoot())
@@ -153,7 +147,6 @@ public class GunslingerBehaviour : MonoBehaviour
                 break;
 
             case GunslingerState.SHOOT:
-                //Action
                 Shoot();
 
                 if (!InRange || !IsAGoodShoot())
@@ -166,8 +159,8 @@ public class GunslingerBehaviour : MonoBehaviour
                 // Action
                 agent.SetDestination(player.position);
 
-                if (InRange && IsAGoodShoot())
-                    TransitionToShoot();
+                if (InRange && IsAGoodShoot() && alreadyAttacked)
+                    TransitionToIdle();
                 else if (InRange && IsAGoodShoot() && !alreadyAttacked)
                     TransitionToShoot();
                 break;
@@ -182,5 +175,39 @@ public class GunslingerBehaviour : MonoBehaviour
     public void Death()
     { 
         currentState = GunslingerState.DEAD;
+    }
+
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
+    public void UpgradeAttackSpeed()
+    {
+        if (!upgraded)
+        {
+            attackRange *= 0.25f;
+            sightRange *= 0.25f;
+            attackSpeed *= 0.5f;
+            bulletSpeed *= 0.5f;
+            damage *= 0.5f;
+
+            agent.speed *= 1.5f;
+
+            upgraded = true;
+            Invoke(nameof(ResetUpgrade), upgradeLifetime);
+        }
+    }
+    private void ResetUpgrade()
+    {
+        attackRange *= 4.0f;
+        sightRange *= 4.0f;
+        attackSpeed *= 2.0f;
+        bulletSpeed *= 2.0f;
+        damage *= 2.0f;
+
+        agent.speed *= 1.5f;
+        RaiseUnit.Play();
+        RaiseUnit.loop = true;
     }
 }
