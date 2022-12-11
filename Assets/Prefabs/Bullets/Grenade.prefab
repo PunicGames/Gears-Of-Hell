@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4539131950844814319}
   - component: {fileID: 1341551494076294800}
   - component: {fileID: 4901030430440881779}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,13 +67,15 @@ MonoBehaviour:
   origin: {x: 0, y: 0, z: 0}
   timeUntilExplosion: 0.5
   damage: 40
-  ExplosionRatio: 0
   vfx: {fileID: 3507416471317857458}
   explosionRange: {fileID: 1831356468523932054}
   bombMesh: {fileID: 8625242841661869806}
   Light: {fileID: 5045718685874513150}
   tictac: {fileID: 8300000, guid: 7484e35a51af3224aabd1f7a7ecd723b, type: 3}
   boom: {fileID: 8300000, guid: b9ab9270e1c36d84388c9da3a16c416b, type: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!82 &4901030430440881779
 AudioSource:
   m_ObjectHideFlags: 0
@@ -180,7 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4767948578663952878}
   - component: {fileID: 1407584216101521144}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6066790383008012621, guid: 997fd8e73a51f3745bb84c4edf50c42c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.243
+      value: -0.186
       objectReference: {fileID: 0}
     - target: {fileID: 6066790383008012621, guid: 997fd8e73a51f3745bb84c4edf50c42c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -414,8 +416,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: AreaDanger
       objectReference: {fileID: 0}
+    - target: {fileID: 6160513698327126915, guid: 997fd8e73a51f3745bb84c4edf50c42c, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7647844933435294695, guid: 997fd8e73a51f3745bb84c4edf50c42c, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8850212230212725494, guid: 997fd8e73a51f3745bb84c4edf50c42c, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -472,6 +482,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 322733029494114828, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 322733029494114830, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907268050920805841, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2346753942579842408, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
@@ -534,6 +552,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2825507320182954269, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3857556092653081515, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -558,9 +580,17 @@ PrefabInstance:
       propertyPath: m_BoundingSphereOverride.z
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 4748532573992024811, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4804349929949325959, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
       propertyPath: m_Name
       value: ExplosionVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804349929949325959, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5147682880233041124, guid: 9cfc0e8d4b506284996f2172ef5576b9, type: 3}
       propertyPath: playOnAwake
