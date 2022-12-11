@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviour
     private GameObject coin;
 
     CapsuleCollider collider;
-    bool isDead;
+    public bool isDead;
     private Animator animator;
     private float timeUntilDestroy = 2f;
 

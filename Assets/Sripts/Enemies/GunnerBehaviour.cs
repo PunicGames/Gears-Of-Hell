@@ -92,7 +92,6 @@ public class GunnerBehaviour : MonoBehaviour
     private void Update()
     {
         FSM();
-
     }
 
     private void FSM()
@@ -267,7 +266,7 @@ public class GunnerBehaviour : MonoBehaviour
     }
     private void CheckPlayerSighted()
     {
-        Ray ray = new Ray(transform.position, (player.position - transform.position).normalized);
+        Ray ray = new Ray(transform.position, (player.position - shootOrigin.position).normalized);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (hit.collider.gameObject.tag == "Player")

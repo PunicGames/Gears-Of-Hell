@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-
-
 public class EnemySoundManager : MonoBehaviour
 {
     public float range = 15;
