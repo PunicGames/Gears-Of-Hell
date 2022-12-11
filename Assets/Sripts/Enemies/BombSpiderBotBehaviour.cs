@@ -31,6 +31,8 @@ public class BombSpiderBotBehaviour : MonoBehaviour
     // Upgrade
     bool upgraded = false;
 
+    [SerializeField] private LayerMask m_LayerMask;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -93,7 +95,7 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private void Explode()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x);
+        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
         foreach(var hc in hitColliders)
         {
             if(hc.tag == "Enemy")
