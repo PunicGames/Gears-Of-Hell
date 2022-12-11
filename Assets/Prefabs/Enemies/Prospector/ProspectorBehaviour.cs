@@ -184,7 +184,7 @@ public class ProspectorBehaviour : MonoBehaviour
                 // Increase Attack of different enemies
                 if (collider.gameObject.GetComponent<GunslingerBehaviour>() != null)
                 {
-                    // RangedEnemy
+                    // Gunslinger
                     collider.gameObject.GetComponent<GunslingerBehaviour>().UpgradeAttackSpeed();
                 }
                 else if (collider.gameObject.GetComponent<WorkerBehavior>() != null)

@@ -83,6 +83,8 @@ public class GunnerBehaviour : MonoBehaviour
 
     // Upgrade
     bool upgraded = false;
+    [SerializeField] private ParticleSystem RaiseUnit;
+
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -427,6 +429,8 @@ public class GunnerBehaviour : MonoBehaviour
 
         agent.speed = speed;
         upgraded = false;
+        RaiseUnit.Play();
+        RaiseUnit.loop = true;
     }
 
 }
