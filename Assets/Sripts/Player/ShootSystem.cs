@@ -176,7 +176,6 @@ public class ShootSystem : MonoBehaviour
             Vector3 direction = weapon_origins[selectedGun].forward;
 
 
-
             int numBulletsAtTime = 1; // Cualquier otro arma
             if (selectedGun == 4) // Escopeta
                 numBulletsAtTime = 5;

@@ -641,12 +641,15 @@ MonoBehaviour:
   SemiAutoTime: 0.25
   bulletLifetime: 2
   hasToSeeYouToShoot: 0
-  SemiAuto: 1
   canMoveWhileShooting: 0
-  canLaunchGrenade: 1
-  grenadeProbabilityRatio: 2
+  enableGrenades: 1
+  grenadeProbabilityRatio: 4
   numberOfGrenades: 3
   grenadeThrowPoint: {fileID: 3166432633840567536}
+  grenadeDamage: 30
+  explosionRatio: 1
+  timeUntilExplosion: 1
+  failOffset: 1
   spotDistance: 8
   shootOrigin: {fileID: 2358459560073568465}
   muzzleVFX: {fileID: 6600757436326029665}
