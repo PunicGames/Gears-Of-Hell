@@ -18,8 +18,7 @@ public class RangedEnemy : MonoBehaviour
     Transform player;
     NavMeshAgent agent;
     Animator animator;
-    AudioSource gunAudio;
-
+    EnemySoundManager enemySoundManager;
     public Transform shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
 
@@ -36,7 +35,7 @@ public class RangedEnemy : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        gunAudio = GetComponent<AudioSource>();
+        enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
 
     }
 
@@ -63,7 +62,7 @@ public class RangedEnemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            gunAudio.Play();
+            enemySoundManager.PlaySound("shoot");
             GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
             b.transform.LookAt(player.transform);
             Bullet bulletParams = b.GetComponent<Bullet>();

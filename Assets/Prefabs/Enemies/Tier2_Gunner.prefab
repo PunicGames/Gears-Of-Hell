@@ -503,7 +503,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
   m_audioClip: {fileID: 8300000, guid: caa189c813819b74b8a25c5b4de998c0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -597,10 +597,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
-  m_audioClip: {fileID: 8300000, guid: d505d289730bd844aa1795ee386599bf, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 06014cfd84f995b49bf82ae1954d2097, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
-  m_Pitch: 1
+  m_Volume: 0.5
+  m_Pitch: 1.2
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -695,7 +695,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
   m_audioClip: {fileID: 8300000, guid: 10c5383785b1e6343a0e5874225a198c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -868,9 +868,9 @@ MonoBehaviour:
   mixer: {fileID: 0}
   sounds:
   - id: Death
-    clip: {fileID: 8300000, guid: a36eb5d906a80434eaf6a97537ea6e82, type: 3}
+    clip: {fileID: 8300000, guid: 949b4b1b2d0596846b672da7533c220c, type: 3}
     loop: 0
-    volume: 0.1
+    volume: 0.4
 --- !u!1 &1639239646711664052
 GameObject:
   m_ObjectHideFlags: 0
