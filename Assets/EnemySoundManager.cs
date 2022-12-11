@@ -28,11 +28,15 @@ public class EnemySoundManager : MonoBehaviour
 
     public void PlaySound(string name)
     {
-        soundsDictionary[name].Play();
+        SoundClip aux;
+        soundsDictionary.TryGetValue(name,out  aux);
+        aux?.Play();
     }
 
     public void PauseSound(string name)
     {
-        soundsDictionary[name].Pause();
+        SoundClip aux;
+        var sound = soundsDictionary.TryGetValue(name, out aux);
+        aux?.Pause();
     }
 }
