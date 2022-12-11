@@ -11,7 +11,7 @@ public class WorkerBotBehavior : MonoBehaviour
     [SerializeField] int attackDamage = 10; //daño por cada golpe
     [SerializeField] float rollSpeed = 10.0f; //velocidad a la que gira atacando
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
-    [SerializeField] GameObject particleEffect;     
+    [SerializeField] GameObject particleEffect;
     [SerializeField] Collider recolectRangeCollider;
 
     //cosas para la explosion
@@ -38,8 +38,11 @@ public class WorkerBotBehavior : MonoBehaviour
     int currentGears = 0; //monedas que lleva recogidas
     bool alreadyAttacked = false;
 
-    private enum FSM2_states { 
-        IDLE, 
+    [SerializeField] private LayerMask m_LayerMask;
+
+    private enum FSM2_states
+    {
+        IDLE,
         PURSUE,
         ATTACK,
     };
@@ -52,6 +55,7 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private FSM1_states currentFSM1State = FSM1_states.SEARCH; //la fsm 1
     private FSM2_states currentFSM2State = FSM2_states.PURSUE; //la fsm 2
+    private bool dead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -75,8 +79,17 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private void Update()
     {
-        FSM_LVL_2();
-        ActionFSM();
+        if (!dead)
+        {
+            FSM_LVL_2();
+            ActionFSM();
+        }
+        else
+        {
+            animator.SetBool("isAttacking", false);
+            animator.SetBool("isMoving", false); //variable que este en el animator
+        }
+
     }
     private void FSM_LVL_2() //{ IDLE, PURSUE, ATTACK }
     {
@@ -90,7 +103,7 @@ public class WorkerBotBehavior : MonoBehaviour
                 animator.SetBool("isMoving", false); //variable que este en el animator
                 transform.LookAt(player.transform.position); //miramos al player
 
-                if (distance > agent.stoppingDistance) 
+                if (distance > agent.stoppingDistance)
                 {
                     //si la distancia es mayor a la asignada a detenerse comenzamos a perseguir
                     currentFSM2State = FSM2_states.PURSUE;
@@ -163,18 +176,17 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private void Death()
     {
-        print("death function");
         if (!alreadyExploding)
         {
+            dead = true;
             alreadyExploding = true;
+            DeactivateWeaponCollider();
             TriggerExplosion();
         }
     }
 
     private void TriggerExplosion()
     {
-        print("trigger function");
-        agent.enabled = false;
         GetComponent<EnemyHealth>().enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;
 
@@ -192,7 +204,7 @@ public class WorkerBotBehavior : MonoBehaviour
     private void Explode()
     {
         print("explode function");
-        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x);
+        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
         foreach (var hc in hitColliders)
         {
             if (hc.tag == "Enemy")
@@ -227,5 +239,5 @@ public class WorkerBotBehavior : MonoBehaviour
         weaponCollider.enabled = false;
     }
 
-    
+
 }

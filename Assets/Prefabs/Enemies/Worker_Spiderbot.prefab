@@ -12089,8 +12089,8 @@ MonoBehaviour:
   timeUntilExplosion: 1
   failOffset: 3
   attackRange: 7
-  albedo: {r: 0, g: 0, b: 0, a: 0}
-  emissive: {r: 0, g: 0, b: 0, a: 0}
+  albedo: {r: 1, g: 1, b: 1, a: 0}
+  emissive: {r: 1, g: 0.5820617, b: 0, a: 0}
   gunAudio: {fileID: 864939761538672204}
   explosionVfx: {fileID: 5044256658563650148}
   explosionColl: {fileID: 1490475875410794486}
@@ -12112,8 +12112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 80
-  currentHealth: 80
+  startingHealth: 180
+  currentHealth: 180
   scoreValue: 20
   minScoreValue: 20
   maxScoreValue: 25
