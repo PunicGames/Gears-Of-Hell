@@ -6,21 +6,35 @@ using UnityEngine.Events;
 
 public class WorkerBotBehavior : MonoBehaviour
 {
-
+    //variables parametricas
     [SerializeField] int MAXGEARSCAPACITY = 10; //capacidad maxima de monedas que puede recoger
-
     [SerializeField] int attackDamage = 10; //daño por cada golpe
     [SerializeField] float rollSpeed = 10.0f; //velocidad a la que gira atacando
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
     [SerializeField] GameObject particleEffect;     
     [SerializeField] Collider recolectRangeCollider;
 
+    //cosas para la explosion
+    [SerializeField] private ParticleSystem explosionVfx;
+    [SerializeField] private GameObject explosionColl;
+    [SerializeField] private GameObject explosionRange;
+    [SerializeField] private SkinnedMeshRenderer workerBotMesh;
+    [SerializeField] private MeshRenderer weaponMesh;
+
+    public float timeUntilExplosion;
+    public int bombDamage;
+    private bool alreadyExploding = false;
+
+    [Space]
+    public AudioClip tictac, boom;
+    private AudioSource audioSource;
+
+    //esenciales
     private Animator animator;
     private GameObject player;
     NavMeshAgent agent;
 
     int currentGears = 0; //monedas que lleva recogidas
-    bool attacking = false;
     bool alreadyAttacked = false;
 
     private enum FSM2_states { 
@@ -44,6 +58,7 @@ public class WorkerBotBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         weaponCollider.player = player;
         weaponCollider.health = GetComponent<EnemyHealth>();
@@ -52,6 +67,8 @@ public class WorkerBotBehavior : MonoBehaviour
         weaponCollider.enabled = false;
 
         animator.SetBool("isMoving", true);
+
+        GetComponent<EnemyHealth>().onDeath += Death; //me suscribo a la funcion de muerte
     }
 
     private void Update()
@@ -99,7 +116,6 @@ public class WorkerBotBehavior : MonoBehaviour
                 //si no ha atacado se pone a atacar
                 if (!alreadyAttacked) Attack();
                 break;
-
         }
     }
 
@@ -109,7 +125,6 @@ public class WorkerBotBehavior : MonoBehaviour
         animator.SetBool("isAttacking", true);
         particleEffect.SetActive(true);
         particleEffect.GetComponent<ParticleSystem>().Play();
-        print("particle play");
 
         Invoke(nameof(ResetParameters), 5);
         Invoke(nameof(StopParticleEffect), 3);
@@ -129,7 +144,6 @@ public class WorkerBotBehavior : MonoBehaviour
     public void StopParticleEffect()
     {
         particleEffect.GetComponent<ParticleSystem>().Play();
-        print("prineto");
     }
     public void ResetParameters()
     {
@@ -139,6 +153,62 @@ public class WorkerBotBehavior : MonoBehaviour
         particleEffect.SetActive(false);
         print("resetParameters");
         currentFSM2State = FSM2_states.IDLE;
+    }
+
+    private void Death()
+    {
+        print("death function");
+        if (!alreadyExploding)
+        {
+            alreadyExploding = true;
+            TriggerExplosion();
+        }
+    }
+
+    private void TriggerExplosion()
+    {
+        print("trigger function");
+        agent.enabled = false;
+        GetComponent<EnemyHealth>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+
+        explosionRange.SetActive(true);
+
+        //Playing 'tictac'
+        audioSource.clip = tictac;
+        audioSource.loop = true;
+        audioSource.Play();
+
+        Invoke("Explode", timeUntilExplosion);
+        enabled = false;
+    }
+
+    private void Explode()
+    {
+        print("explode function");
+        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x);
+        foreach (var hc in hitColliders)
+        {
+            if (hc.tag == "Enemy")
+            {
+                hc.GetComponent<EnemyHealth>().TakeDamage(bombDamage);
+            }
+            else if (hc.tag == "Player")
+            {
+                hc.GetComponent<Health>().TakeDamage(bombDamage);
+            }
+        }
+        explosionRange.SetActive(false);
+
+        //Playing Booom
+        audioSource.clip = boom;
+        audioSource.loop = false;
+        audioSource.Play();
+
+        explosionVfx.Play();
+        workerBotMesh.enabled = false;
+        weaponMesh.enabled = false;
+        Destroy(gameObject, explosionVfx.main.duration);
     }
 
     public void ActivateWeaponCollider()
