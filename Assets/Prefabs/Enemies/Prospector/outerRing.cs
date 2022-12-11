@@ -42,7 +42,7 @@ public class outerRing : MonoBehaviour
 
     public float checkEnemiesHealthStatus() {
         float healthRatio = 0.0f;
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask, QueryTriggerInteraction.Ignore);
 
         // Checks for number of enemies
         foreach (Collider eC in hitColliders) {
@@ -66,7 +66,7 @@ public class outerRing : MonoBehaviour
     }
 
     public Collider[] GetEnemiesInRange() { 
-        return Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask);
+        return Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask, QueryTriggerInteraction.Ignore);
     }
 
     public float GetRadius() {

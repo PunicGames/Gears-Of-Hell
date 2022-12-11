@@ -43,7 +43,10 @@ public class ProspectorBehaviour : MonoBehaviour
 
     // Sounds
     [SerializeField] private AudioSource[] sounds;
-    [HideInInspector] private AudioSource footSteps, powerUpUnits;
+    [HideInInspector] private AudioSource footStepsSound, powerUpUnitsSound, healAreaSound;
+
+    // Habilities visuals
+    [SerializeField] private GameObject areaHealVisuals;
 
     private void Start()
     {
@@ -74,7 +77,7 @@ public class ProspectorBehaviour : MonoBehaviour
                 }
                 else {
                     animator.SetBool("isMoving", false);
-                    footSteps.Stop();
+                    footStepsSound.Stop();
 
                     if (ableToHide) currentState = State.HIDING;
                     else currentState = State.CASTING;
@@ -95,7 +98,7 @@ public class ProspectorBehaviour : MonoBehaviour
                     {
                         hiding = false;
                         currentState = State.CASTING;
-                        footSteps.Stop();
+                        footStepsSound.Stop();
                     }
                 }
 
@@ -152,6 +155,7 @@ public class ProspectorBehaviour : MonoBehaviour
             animator.SetTrigger("Heal");
         }
         else {
+            areaHealVisuals.SetActive(true);
             animator.SetTrigger("HealAround");
         }
         
@@ -161,7 +165,7 @@ public class ProspectorBehaviour : MonoBehaviour
     {
         agent.SetDestination(position);
         animator.SetBool("isMoving", true);
-        if (!footSteps.isPlaying) { footSteps.Play(); }
+        if (!footStepsSound.isPlaying) { footStepsSound.Play(); }
     }
 
     public void CastVelocityUpgrade() {
@@ -204,6 +208,7 @@ public class ProspectorBehaviour : MonoBehaviour
     }
     public void CastAreaCure() {
         Collider[] hitColliders = m_outerRing.GetEnemiesInRange();
+        Debug.Log("ENEMIES IN RANGE " + hitColliders.Length);
         foreach (Collider eC in hitColliders)
         {
             EnemyHealth eH = eC.gameObject.GetComponent<EnemyHealth>();
@@ -211,6 +216,9 @@ public class ProspectorBehaviour : MonoBehaviour
                 eH.Heal(20);
             }
         }
+
+        areaHealVisuals.SetActive(false);
+        healAreaSound.Play();
     }
 
     public void ResetCasting() {
@@ -285,11 +293,12 @@ public class ProspectorBehaviour : MonoBehaviour
             sounds[i].volume *= AudioManager.getGeneralVolume();
         }
 
-        footSteps = sounds[0];
-        powerUpUnits = sounds[1];
+        footStepsSound = sounds[0];
+        powerUpUnitsSound = sounds[1];
+        healAreaSound = sounds[2];
     }
 
     public void PlayCastPowerUpSound() {
-        powerUpUnits.Play();
+        powerUpUnitsSound.Play();
     }
 }
