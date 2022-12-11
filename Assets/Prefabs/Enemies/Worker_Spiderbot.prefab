@@ -1599,6 +1599,37 @@ Transform:
   m_Father: {fileID: 8947557601575731453}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4466479355667396739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7887415591616287251}
+  m_Layer: 0
+  m_Name: GrenadeOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7887415591616287251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4466479355667396739}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.01, y: 14.88, z: -2.76}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7818076716601681419}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4666832000945251215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,6 +1939,7 @@ Transform:
   - {fileID: 3382917869703336933}
   - {fileID: 4558449976078949010}
   - {fileID: 864939760773752112}
+  - {fileID: 7887415591616287251}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2161,14 +2193,19 @@ MonoBehaviour:
   miniGun: {fileID: 864939761538672206}
   shootOrigin: {fileID: 864939761873559097}
   muzzleVFX: {fileID: 4350580605427449548}
-  burstCadence: 0.2
+  burstCadence: 0.1
   bulletSpeed: 10
   damage: 5
   bulletLifetime: 3
-  timeBetweenBursts: 5
+  timeBetweenBursts: 2
   bulletsPerBurst: 20
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
   grenade: {fileID: 53655109027075921, guid: 2c8ec62a2e749f54faa0d9e34813caca, type: 3}
+  grenadeThrowPoint: {fileID: 7887415591616287251}
+  grenadeDamage: 30
+  explosionRatio: 1
+  timeUntilExplosion: 1
+  failOffset: 3
   attackRange: 7
   albedo: {r: 0, g: 0, b: 0, a: 0}
   emissive: {r: 0, g: 0, b: 0, a: 0}
@@ -2185,8 +2222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4acc36685bd7e4287ccbf5a4fa532c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 80
-  currentHealth: 80
+  startingHealth: 8000
+  currentHealth: 8000
   scoreValue: 20
   minScoreValue: 20
   maxScoreValue: 25
@@ -2197,6 +2234,7 @@ MonoBehaviour:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 3
+  Cure: {fileID: 0}
 --- !u!114 &7436766756346789039
 MonoBehaviour:
   m_ObjectHideFlags: 0
