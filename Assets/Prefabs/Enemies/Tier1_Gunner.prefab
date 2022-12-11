@@ -363,26 +363,26 @@ MonoBehaviour:
   bulletSpeed: 6
   damage: 5
   bulletsPerMag: 20
-
   bulletsPerBurst: 5
   SemiAutoTime: 2
   bulletLifetime: 3
   hasToSeeYouToShoot: 1
-
-
   canMoveWhileShooting: 0
   enableGrenades: 0
   grenadeProbabilityRatio: 0
   numberOfGrenades: 3
   grenadeThrowPoint: {fileID: 0}
   grenadeDamage: 30
-  spotDistance: 6
+  explosionRatio: 1
+  timeUntilExplosion: 1
+  failOffset: 3
+  spotDistance: 7
   shootOrigin: {fileID: 8195484144544881401}
   muzzleVFX: {fileID: 3404689519454124730}
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
   grenade: {fileID: 0}
-  albedo: {r: 1, g: 1, b: 1, a: 1}
-  emissive: {r: 1, g: 0.4828682, b: 0, a: 1}
+  albedo: {r: 1, g: 1, b: 1, a: 0}
+  emissive: {r: 1, g: 0.48235294, b: 0, a: 0}
 --- !u!114 &2100687500816879396
 MonoBehaviour:
   m_ObjectHideFlags: 0

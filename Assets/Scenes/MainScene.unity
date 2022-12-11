@@ -197,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1362870519766169398, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
       propertyPath: m_RootOrder
@@ -606,7 +606,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &796224738
 PrefabInstance:
@@ -623,7 +623,17 @@ PrefabInstance:
       propertyPath: gameRegistry
       value: 
       objectReference: {fileID: 1418230372}
+    - target: {fileID: 4753454841369738365, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_text
+      value: 'If you want to survive in this hell of a factory...
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 5048725444850633134, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6752494730495819223, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -641,7 +651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8607388110424686181, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8607388110424686181, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -993,6 +1003,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2562267840815062943, guid: 156ab66e3fb4e054ab90e22586be7ffb, type: 3}
+      propertyPath: grenadeProbabilityRatio
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156ab66e3fb4e054ab90e22586be7ffb, type: 3}
 --- !u!1001 &1050793525
@@ -1188,7 +1202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7912361067319672374, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7912361067319672374, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1334,7 +1348,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1394454252
 PrefabInstance:
@@ -2110,7 +2124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3775608413403033294, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 3775608413403033294, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2372,7 +2386,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1549570983
 GameObject:
@@ -2826,7 +2840,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1927899586
 PrefabInstance:
@@ -3339,7 +3353,7 @@ PrefabInstance:
       objectReference: {fileID: 189839487}
     - target: {fileID: 8248383250345981498, guid: 4f2b3a94c63d77e43bc4b2e4ccd9744c, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8248383250345981498, guid: 4f2b3a94c63d77e43bc4b2e4ccd9744c, type: 3}
       propertyPath: m_LocalPosition.x

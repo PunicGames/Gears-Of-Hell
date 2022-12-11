@@ -77,15 +77,18 @@ public class EnemyHealth : MonoBehaviour
             if (navMov != null)
                 navMov.enabled = false;
 
-            if(enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
+            if (enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
             {
                 onDeath();
             }
             else
             {
+
                 Death();
             }
-            
+
+
+
         }
     }
 
@@ -118,7 +121,7 @@ public class EnemyHealth : MonoBehaviour
             pb.enabled = false;
         if (gb)
         {
-            
+
             gb.enabled = false;
 
         }
@@ -142,7 +145,6 @@ public class EnemyHealth : MonoBehaviour
         }
         animator.SetTrigger("death");
 
-
         var enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
         enemySoundManager.PauseSound("walk");
         enemySoundManager.PlaySound("death");
@@ -165,7 +167,7 @@ public class EnemyHealth : MonoBehaviour
         // Add stats to player
         playerRef.GetComponent<PlayerStats>().numDefeatedEnemies++;
 
-        
+
     }
     //Autamitacally call when death animation ended
     public void DestroyCallback()
@@ -173,7 +175,8 @@ public class EnemyHealth : MonoBehaviour
         Destroy(gameObject, timeUntilDestroy);
     }
 
-    public void Heal(int hp) { 
+    public void Heal(int hp)
+    {
         int hpHealed = (hp > startingHealth - currentHealth) ? startingHealth - currentHealth : hp;
         popup.Create(popupPosition.position, hpHealed, PopUp.TypePopUp.LIFE, true, 0.5f);
         currentHealth += hpHealed;
@@ -182,10 +185,13 @@ public class EnemyHealth : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // En caso de error si el enemigo aparece dentro de una tienda o un objeto. No debería de ocurrir igualmente.
-        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Shop") {
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Shop")
+        {
             Debug.Log("ENEMIGO APARECE DENTRO DE OBJETO. ELIMINADO");
             Destroy(gameObject);
-        } else if (collision.gameObject.tag == "DeathPlane") {
+        }
+        else if (collision.gameObject.tag == "DeathPlane")
+        {
             Debug.Log("ENEMIGO CAE AL VACÍO. ELIMINADO");
             Destroy(gameObject);
         }

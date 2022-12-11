@@ -837,17 +837,15 @@ MonoBehaviour:
   bulletLifetime: 2
   hasToSeeYouToShoot: 0
   canMoveWhileShooting: 0
-
   enableGrenades: 1
-  grenadeProbabilityRatio: 4
+  grenadeProbabilityRatio: 5
   numberOfGrenades: 3
   grenadeThrowPoint: {fileID: 3166432633840567536}
   grenadeDamage: 30
   explosionRatio: 1
   timeUntilExplosion: 1
-  failOffset: 1
-
-  spotDistance: 8
+  failOffset: 2
+  spotDistance: 7
   shootOrigin: {fileID: 2358459560073568465}
   muzzleVFX: {fileID: 6600757436326029665}
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
