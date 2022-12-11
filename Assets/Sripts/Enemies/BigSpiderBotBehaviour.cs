@@ -31,7 +31,7 @@ public class BigSpiderBotBehaviour : MonoBehaviour
     [SerializeField] private GameObject grenade;
 
     [SerializeField] Transform grenadeThrowPoint;
-    public int grenadeDamage = 30;
+    public int grenadeDamage = 80;
     public float explosionRatio = 1;
     public float timeUntilExplosion = 1f;
     private float throwDistance = 4f;
