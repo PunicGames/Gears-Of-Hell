@@ -109,6 +109,7 @@ public class ProspectorBehaviour : MonoBehaviour
 
                 if (!casting) { 
                     casting = true;
+                    agent.isStopped = true;
                     UtilityCasting();
                 }
                 
@@ -165,6 +166,7 @@ public class ProspectorBehaviour : MonoBehaviour
     private void Chase(Vector3 position)
     {
         agent.SetDestination(position);
+        agent.isStopped = false;
         animator.SetBool("isMoving", true);
         if (!footStepsSound.isPlaying) { footStepsSound.Play(); }
     }
@@ -226,9 +228,12 @@ public class ProspectorBehaviour : MonoBehaviour
     public void ResetCasting() {
         //Debug.Log("Ability cast finished");
         casting = false;
-
-        if(CheckCanCastAgain())
-            currentState = State.CASTING;
+        if (ableToHide) { 
+            if(CheckCanCastAgain())
+                currentState = State.CASTING;
+            else
+                currentState = State.CHASING;
+        }
         else
             currentState = State.CHASING;
     }
