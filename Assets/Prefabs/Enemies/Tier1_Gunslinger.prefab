@@ -451,7 +451,7 @@ MonoBehaviour:
   mixer: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
   sounds:
   - id: death
-    clip: {fileID: 8300000, guid: f43b3f1e4afcf354681c39a1232d2714, type: 3}
+    clip: {fileID: 8300000, guid: 91e235bef52b4354d8132f17d01e4496, type: 3}
     loop: 0
     volume: 0.4
   - id: walk
@@ -459,7 +459,7 @@ MonoBehaviour:
     loop: 1
     volume: 0.5
   - id: shoot
-    clip: {fileID: 8300000, guid: d9c6f6822dd7f614ba8715d91c265c39, type: 3}
+    clip: {fileID: 8300000, guid: 949b4b1b2d0596846b672da7533c220c, type: 3}
     loop: 0
     volume: 0.5
 --- !u!114 &1645664823
@@ -485,6 +485,7 @@ MonoBehaviour:
   albedo: {r: 1, g: 1, b: 1, a: 0}
   emissive: {r: 1, g: 0.48235297, b: 0, a: 0}
   RaiseUnit: {fileID: 2705576840245500756}
+  currentState: 0
 --- !u!1 &1639239646711664052
 GameObject:
   m_ObjectHideFlags: 0
