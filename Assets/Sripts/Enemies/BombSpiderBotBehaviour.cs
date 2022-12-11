@@ -95,7 +95,7 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private void Explode()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
+        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
         foreach(var hc in hitColliders)
         {
             if(hc.tag == "Enemy")
