@@ -73,7 +73,7 @@ public class Grenade : MonoBehaviour
     private void Explode()
     {
 
-        Collider[] hitColliders = Physics.OverlapSphere(explosionRange.transform.position, explosionRange.GetComponent<SphereCollider>().radius * explosionRange.transform.localScale.x * transform.localScale.x, layerMask, QueryTriggerInteraction.Ignore); ;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, GetComponent<SphereCollider>().radius  * transform.localScale.x, layerMask, QueryTriggerInteraction.Ignore); ;
         foreach (var hc in hitColliders)
         {
 

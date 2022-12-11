@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 53655109027075921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.2198, y: 2.2198, z: 2.2198}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9005180580988245076}
@@ -46,10 +46,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53655109027075921}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.039586104
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1341551494076294800
 MonoBehaviour:
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0, z: 0}
   origin: {x: 0, y: 0, z: 0}
-  timeUntilExplosion: 0.5
+  timeUntilExplosion: 1
   damage: 40
   vfx: {fileID: 3507416471317857458}
   explosionRange: {fileID: 1831356468523932054}
@@ -436,19 +436,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8850212230212725494, guid: 997fd8e73a51f3745bb84c4edf50c42c, type: 3}
   m_PrefabInstance: {fileID: 7185506551474303840}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &6349942950065445354
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1831356468523932054}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 4.7
-  m_Center: {x: 0, y: 0.000000014901161, z: 0}
 --- !u!1 &3946990225811132643 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6160513698327126915, guid: 997fd8e73a51f3745bb84c4edf50c42c, type: 3}
