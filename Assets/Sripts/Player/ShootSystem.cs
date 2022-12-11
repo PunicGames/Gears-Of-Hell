@@ -119,11 +119,9 @@ public class ShootSystem : MonoBehaviour
         rechargingDisplay = GameObject.Find("Recargando");
         rechargingDisplay.SetActive(false);
 
-        if (weaponDisplay != null) { 
-            weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
-            weaponDisplay.sprite = weaponSprites[0];
-        }
-
+        weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
+        weaponDisplay.sprite = weaponSprites[0];
+        
         // Display cursor
         //if (desktop) { 
         //    cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
@@ -148,8 +146,8 @@ public class ShootSystem : MonoBehaviour
                 ammunitionDisplay.text = (guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/" + guns.getGuns()[selectedGun].totalBullets);
             else // En caso de ser la pistola
                 ammunitionDisplay.text = guns.getGuns()[selectedGun].bulletsLeftInMagazine + "/9999";
-        }
 
+        }
     }
 
     public void Shooting()
@@ -309,8 +307,13 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
 
+                
                 selectedGun = i;
-                if (weaponDisplay != null) weaponDisplay.sprite = weaponSprites[selectedGun];
+                if (weaponDisplay != null)
+                {
+                    weaponDisplay.sprite = weaponSprites[selectedGun];
+                }
+
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
 
@@ -346,7 +349,11 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
                 selectedGun = i;
-                if (weaponDisplay != null) weaponDisplay.sprite = weaponSprites[selectedGun];
+                
+                if (weaponDisplay != null)
+                {
+                    weaponDisplay.sprite = weaponSprites[selectedGun];
+                }
 
                 //if (desktop)
                 //    Cursor.SetCursor(cursorSprites[selectedGun], cursorHotSpot, CursorMode.ForceSoftware);
