@@ -36,10 +36,18 @@ public class GunnerBehaviour : MonoBehaviour
 
     [Header("GENERAL")]
 
+    private bool isShotgun = false;
+    public bool enableShotgun = false;
+    public int numBulletsAtTime = 4;
+    [SerializeField] [Range(0, 10)] private float spread = 0.1f;
     public float spotDistance = 7f;
+    public float shotgunSpotDistance = 4f;
+    public float bulletLifetimeShotGun = 0.8f;
 
     public Transform shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
+    [SerializeField] GameObject weapon1;
+    [SerializeField] GameObject weapon2;
 
     private int bulletsInMag;
     private int bulletsInBurst;
@@ -49,9 +57,8 @@ public class GunnerBehaviour : MonoBehaviour
     private bool alreadyAttacked = false;
     private bool inAttackRange = false;
 
-    private bool canComputeGrenadeChance = true;
-
     private float distance;
+    private float speed;
 
     public GameObject bullet;
     public GameObject grenade;
@@ -60,8 +67,11 @@ public class GunnerBehaviour : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
     AudioSource gunAudio;
+    AudioSource shotgunAudio;
     AudioSource reloadAudio;
     AudioSource walkAudio;
+
+    private int upgradeLifetime = 10;
 
     private enum gunnerState { IDLE, PURSUE, ATTACK, RECHARGE, GRENADE };
     private gunnerState currentState = gunnerState.IDLE;
@@ -83,10 +93,32 @@ public class GunnerBehaviour : MonoBehaviour
         gunAudio = sources[0];
         reloadAudio = sources[1];
         walkAudio = sources[2];
+        shotgunAudio = sources[3];
 
+        if (enableShotgun)
+        {
+            if (Random.Range(0, 3) == 0)
+            {
+                isShotgun = true;
+            }
+
+            if (isShotgun)
+            {
+                spotDistance = shotgunSpotDistance;
+                weapon1.SetActive(false);
+                weapon2.SetActive(true);
+                cadenceTime = 1.8f;
+                reloadTime = 3f;
+                SemiAutoTime *= 1.8f;
+                bulletsPerMag = 6;
+                bulletsInBurst = 1;
+
+            }
+        }
         bulletsInMag = bulletsPerMag;
         bulletsInBurst = bulletsPerBurst;
 
+        speed = agent.speed;
     }
 
     private void Update()
@@ -108,7 +140,7 @@ public class GunnerBehaviour : MonoBehaviour
         switch (currentState)
         {
             case gunnerState.IDLE:
-                
+
                 transform.LookAt(player.position);
                 if (hasToSeeYouToShoot)
                 {
@@ -129,7 +161,7 @@ public class GunnerBehaviour : MonoBehaviour
                     CheckPlayerSighted();
                     if (enableGrenades)
                     {
-                        if(!playerOnSight && canLaunchGrenade)
+                        if (!playerOnSight && canLaunchGrenade)
                         {
                             animator.SetTrigger("grenade");
                             canLaunchGrenade = false;
@@ -190,19 +222,45 @@ public class GunnerBehaviour : MonoBehaviour
     #region actions
     void Attack()
     {
+        if (!isShotgun)
+        {
+            gunAudio.Play();
+            animator.SetTrigger("shoot");
+            GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
+            b.transform.LookAt(player.transform);
+            Bullet bulletParams = b.GetComponent<Bullet>();
+            bulletParams.SetForce(bulletSpeed);
+            bulletParams.SetDamage(damage);
+            bulletParams.SetLaser(false);
+            bulletParams.owner = Bullet.BulletOwner.ENEMY;
+            bulletParams.timeToDestroy = bulletLifetime;
+            bulletParams.SetBulletColors(albedo, emissive);
+        }
+        else
+        {
+            shotgunAudio.Play();
+            animator.SetTrigger("shoot");
 
-        gunAudio.Play();
-        animator.SetTrigger("shoot");
-        GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
-        b.transform.LookAt(player.transform);
-        Bullet bulletParams = b.GetComponent<Bullet>();
-        bulletParams.SetForce(bulletSpeed);
-        bulletParams.SetDamage(damage);
-        bulletParams.SetLaser(false);
-        bulletParams.owner = Bullet.BulletOwner.ENEMY;
-        bulletParams.timeToDestroy = bulletLifetime;
-        bulletParams.SetBulletColors(albedo, emissive);
 
+            for (int i = 0; i < numBulletsAtTime; i++)
+            {
+                // Cálculo de spread
+                float spreadRatio = Random.Range(-spread, spread);
+                // Cálculo de la nueva dirección con spread
+                Vector3 directionWithSpread = transform.forward + new Vector3(spreadRatio, spreadRatio * 0.5f, 0);
+                GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
+                b.transform.localScale *= 0.9f;
+                b.transform.forward = directionWithSpread.normalized;
+                Bullet bulletParams = b.GetComponent<Bullet>();
+                bulletParams.SetForce(directionWithSpread.normalized, bulletSpeed * 1.5f);
+                bulletParams.SetDamage(10);
+
+                bulletParams.SetLaser(false);
+                bulletParams.owner = Bullet.BulletOwner.ENEMY;
+                bulletParams.timeToDestroy = bulletLifetimeShotGun;
+                bulletParams.SetBulletColors(albedo, emissive);
+            }
+        }
 
         bulletsInMag--;
         alreadyAttacked = true;
@@ -352,9 +410,24 @@ public class GunnerBehaviour : MonoBehaviour
     {
         if (!upgraded)
         {
-            // TODO: Modify variable values to get enhanced version.
+            cadenceTime *= 0.5f;
+            reloadTime *= 0.5f;
+            SemiAutoTime *= 0.5f;
+
+            agent.speed *= 1.5f;
+
             upgraded = true;
+            Invoke(nameof(ResetAttackSpeed), upgradeLifetime);
         }
+    }
+    private void ResetAttackSpeed()
+    {
+        cadenceTime *= 2;
+        reloadTime *= 2;
+        SemiAutoTime *= 2;
+
+        agent.speed = speed;
+        upgraded = false;
     }
 
 }
