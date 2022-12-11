@@ -17,9 +17,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Texture2D cursorSprite;
     private Vector2 cursorHotSpot;
 
-    public delegate void PauseAllSounds(bool state);
-    public static PauseAllSounds pauseAllSounds;
-
     // Platform control
     private bool desktop;
 
@@ -51,12 +48,10 @@ public class PauseMenu : MonoBehaviour
             if (GameIsPaused)
             {
                 Resume();
-                pauseAllSounds.Invoke(false);
             }
             else
             {
                 Pause();
-                pauseAllSounds.Invoke(true);
             }
         }
     }
