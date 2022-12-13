@@ -38,13 +38,23 @@ public class LeaderboardManager : MonoBehaviour
                 }
 
                 LootLockerLeaderboardMember[] scores = response.items;
-
+                var counter = 1;
                 for (int i = 0; i < scores.Length; i++)
                 {
                     GameObject scoreboardElement = Instantiate(scoreElement, scoreboardContent);
                     scoreboardElement.GetComponent<ScoreElement>().NewScoreElement("#" + scores[i].rank.ToString(), scores[i].member_id, GetHourMinuteSeconds(scores[i].score));
+                    counter++;
                 }
+
+                for (int i = 0; i < maxScores - scores.Length; i++)
+                {
+                    GameObject scoreboardElement = Instantiate(scoreElement, scoreboardContent);
+                    scoreboardElement.GetComponent<ScoreElement>().NewScoreElement("#" + counter.ToString(), "****", "**:**");
+                    counter++;
+                } 
+
                 done = true;
+
             }
             else
             {
