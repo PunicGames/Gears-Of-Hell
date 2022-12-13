@@ -431,8 +431,8 @@ public class ManageShops : MonoBehaviour
                     idxExistentPerks[numPerksGenerated] = idx;
                     generatedExistenPerks[idx] = true;
                     perksNewOldGeneratedIndexes[numPerksGenerated + 1] = idx;
+                    numPerksGenerated++;
                 }
-                numPerksGenerated++;
             }
             
             
