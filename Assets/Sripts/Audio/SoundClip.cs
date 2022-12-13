@@ -10,7 +10,9 @@ public class SoundClip
     [SerializeField] public bool loop;
     [SerializeField] public float volume;
 
+
     [HideInInspector] private AudioSource source;
+    [HideInInspector] private bool muted = false;
 
     public void SetSource(AudioSource source, float range)
     {
@@ -22,23 +24,43 @@ public class SoundClip
         this.source.rolloffMode = AudioRolloffMode.Linear;
         this.source.maxDistance = range;
         this.source.playOnAwake = false;
+        PauseMenu.pauseAllSounds += this.SetMute;
     }
   
 
     public void Play()
     {
-        if(source.enabled && !source.isPlaying )
+        if(!source.isPlaying && !muted)
+            source.Play();
+    }
+
+    public void PlayOverlaped()
+    {
+        if (!muted)
             source.Play();
     }
 
     public void Pause()
     {
-        if (source.enabled && source.isPlaying)
+        if (source.isPlaying)
             source.Pause();
     }
 
     public void SetMute(bool state)
     {
-        this.source.enabled = !state;
+        if (state)
+        {
+            source.Pause();
+        }
+        else
+        {
+            source.UnPause();
+        }
+        muted = state;
+    }
+
+    public void OnDestroy()
+    {
+        PauseMenu.pauseAllSounds -= this.SetMute;
     }
 }

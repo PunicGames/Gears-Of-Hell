@@ -16,10 +16,13 @@ public class Shop : MonoBehaviour
     private ParticleSystem ps;
 
     [SerializeField] private Transform panel;
+    [HideInInspector] AudioSource source;
 
     private void Awake()
     {
         ps = gameObject.GetComponentInChildren<ParticleSystem>();
+        source = gameObject.GetComponent<AudioSource>();
+        PauseMenu.pauseShopMusic += MuteMusic;
     }
 
     private void Start()
@@ -35,7 +38,7 @@ public class Shop : MonoBehaviour
             ps.Play();
             psPlaying = true;
             spining = true;
-            gameObject.GetComponent<AudioSource>().Play();
+            source.Play();
             GetComponent<Animator>().SetBool("isOpen", true);
         }
 
@@ -44,7 +47,7 @@ public class Shop : MonoBehaviour
             ps.Stop();
             psPlaying = false;
             spining = true;
-            gameObject.GetComponent<AudioSource>().Stop();
+            source.Stop();
             GetComponent<Animator>().SetBool("isOpen", false);
         }
 
@@ -58,6 +61,22 @@ public class Shop : MonoBehaviour
                 differenceRotation = 0;
             }
         }
+    }
 
+    private void OnDisable()
+    {
+        PauseMenu.pauseShopMusic -= MuteMusic;
+    }
+
+    public void MuteMusic(bool state)
+    {
+        if (state)
+        {
+            source.Pause();
+        }
+        else
+        {
+            source.UnPause();
+        }
     }
 }

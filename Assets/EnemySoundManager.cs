@@ -23,12 +23,26 @@ public class EnemySoundManager : MonoBehaviour
             soundsDictionary[sound.id] = sound;
         }
     }
+    private void OnDestroy()
+    {
+        foreach(var sound in sounds)
+        {
+            sound.OnDestroy();
+        }
+    }
 
     public void PlaySound(string name)
     {
         SoundClip aux;
         soundsDictionary.TryGetValue(name,out  aux);
         aux?.Play();
+    }
+
+    public void OverlapedPlaySound(string name)
+    {
+        SoundClip aux;
+        soundsDictionary.TryGetValue(name, out aux);
+        aux?.PlayOverlaped();
     }
 
     public void PauseSound(string name)

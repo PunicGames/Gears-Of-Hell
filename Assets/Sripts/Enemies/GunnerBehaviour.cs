@@ -66,10 +66,7 @@ public class GunnerBehaviour : MonoBehaviour
     Transform player;
     NavMeshAgent agent;
     Animator animator;
-    AudioSource gunAudio;
-    AudioSource shotgunAudio;
-    AudioSource reloadAudio;
-    AudioSource walkAudio;
+    EnemySoundManager soundManager;
 
     private int upgradeLifetime = 10;
 
@@ -91,11 +88,7 @@ public class GunnerBehaviour : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        var sources = GetComponents<AudioSource>();
-        gunAudio = sources[0];
-        reloadAudio = sources[1];
-        walkAudio = sources[2];
-        shotgunAudio = sources[3];
+        soundManager = GetComponent<EnemySoundManager>();
 
         if (enableShotgun)
         {
@@ -225,7 +218,7 @@ public class GunnerBehaviour : MonoBehaviour
     {
         if (!isShotgun)
         {
-            gunAudio.Play();
+            soundManager.OverlapedPlaySound("shoot");
             animator.SetTrigger("shoot");
             GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
             b.transform.LookAt(player.transform);
@@ -239,7 +232,7 @@ public class GunnerBehaviour : MonoBehaviour
         }
         else
         {
-            shotgunAudio.Play();
+            soundManager.OverlapedPlaySound("shoot2");
             animator.SetTrigger("shoot");
 
 
@@ -296,7 +289,7 @@ public class GunnerBehaviour : MonoBehaviour
             }
         else
         {
-            reloadAudio.Play();
+            soundManager.PlaySound("reload");
             TransitionToRecharge();
         }
 
@@ -362,7 +355,7 @@ public class GunnerBehaviour : MonoBehaviour
     //private void TransitionToAttack();
     private void TransitionToIdle()
     {
-        walkAudio.Pause();
+        soundManager.PauseSound("walk");
         currentState = gunnerState.IDLE;
         animator.SetBool("Moving", false);
         agent.isStopped = true;
@@ -377,7 +370,7 @@ public class GunnerBehaviour : MonoBehaviour
 
     private void TransitionToPursue()
     {
-        walkAudio.Play();
+        soundManager.PlaySound("walk");
         currentState = gunnerState.PURSUE;
         animator.SetBool("Moving", true);
         agent.isStopped = false;
