@@ -36,12 +36,14 @@ public class InGameMusicManager : MonoBehaviour
 
     public void PlayShopMusic()
     {
+        PauseMenu.pauseAllSounds(true);
         SetMutePlayerSounds(false);
         SetMainMusic(true);
     }
 
     public void StopShopMusic()
     {
+        PauseMenu.pauseAllSounds(false);
         SetMutePlayerSounds(true);
         SetMainMusic(false);
     }

@@ -167,6 +167,8 @@ public class Health : MonoBehaviour
     public void LoadResume()
     {
         Debug.Log("LLEGA 2 ");
+        PauseMenu.pauseAllSounds(true);
+        PauseMenu.pauseShopMusic(true);
         int minutes = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().minutes;
         int seconds = GameObject.Find("GameRegistry").GetComponent<GameRegistry>().seconds;
         int bulletsHit = playerStats.numBulletsHit;
