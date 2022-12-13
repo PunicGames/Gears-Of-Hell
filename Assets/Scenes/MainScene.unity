@@ -872,7 +872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[10].enemies.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[0].enemies.Array.data[0].prob
@@ -1080,7 +1080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[10].enemies.Array.data[2].prob
-      value: 0.15
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[10].enemies.Array.data[3].prob
@@ -1088,10 +1088,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[10].enemies.Array.data[4].prob
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[10].enemies.Array.data[5].prob
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[10].enemies.Array.data[6].prob
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
@@ -1165,7 +1169,7 @@ PrefabInstance:
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[9].enemies.Array.data[3].prefab
       value: 
-      objectReference: {fileID: 7724889248031397008, guid: e481c87be3ba03a4ca42637c5d7cedc3, type: 3}
+      objectReference: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[9].enemies.Array.data[4].prefab
       value: 
@@ -1181,7 +1185,7 @@ PrefabInstance:
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[10].enemies.Array.data[2].prefab
       value: 
-      objectReference: {fileID: 7724889248031397008, guid: e481c87be3ba03a4ca42637c5d7cedc3, type: 3}
+      objectReference: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
     - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: tierList.Array.data[10].enemies.Array.data[3].prefab
       value: 
@@ -1194,6 +1198,10 @@ PrefabInstance:
       propertyPath: tierList.Array.data[10].enemies.Array.data[5].prefab
       value: 
       objectReference: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
+    - target: {fileID: 639656745, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
+      propertyPath: tierList.Array.data[10].enemies.Array.data[6].prefab
+      value: 
+      objectReference: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
     - target: {fileID: 7912361067319672372, guid: e275fde9c5bc2644a8cca3040ef575f2, type: 3}
       propertyPath: m_Name
       value: WorldGenerator

@@ -799,38 +799,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a66c015a8d913d46ae2b405167c0a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameRegistry: {fileID: 1418230371}
+  gameRegistry: {fileID: 0}
   tierList:
   - name: Tier I
     enemies:
     - prefab: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
-      prob: 0.29
+      prob: 0.34
     - prefab: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
-      prob: 0.28
+      prob: 0.33
     - prefab: {fileID: 1362870519766169385, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
-      prob: 0.28
-    - prefab: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
-      prob: 0.15
+      prob: 0.33
   - name: Tier II
     enemies:
     - prefab: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
       prob: 0.4
     - prefab: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
-      prob: 0.25
+      prob: 0.2
     - prefab: {fileID: 1362870519766169385, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       prob: 0.25
     - prefab: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
       prob: 0.1
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
+      prob: 0.05
   - name: Tier III
     enemies:
     - prefab: {fileID: 2140532941445721662, guid: 084dd65c94a52644eb9f741528c61f28, type: 3}
-      prob: 0.3
+      prob: 0.2
     - prefab: {fileID: 1362870519766169385, guid: 2d09e20611c64a3489bae18afb3ef5d1, type: 3}
       prob: 0.2
     - prefab: {fileID: 1362870519766169385, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       prob: 0.2
     - prefab: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
       prob: 0.3
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
+      prob: 0.1
   - name: Tier IV
     enemies:
     - prefab: {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
@@ -838,15 +840,25 @@ MonoBehaviour:
     - prefab: {fileID: 1362870519766169385, guid: 99405591586a8b94e91a0b1083c7d962, type: 3}
       prob: 0.25
     - prefab: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
-      prob: 0.5
+      prob: 0.35
+    - prefab: {fileID: 1969447997244759940, guid: 991c356c9a7083c4d811f3c03bad847e, type: 3}
+      prob: 0.1
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
+      prob: 0.05
   - name: Tier V
     enemies:
     - prefab: {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
-      prob: 0.3
+      prob: 0.2
     - prefab: {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
-      prob: 0.3
+      prob: 0.2
     - prefab: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
-      prob: 0.4
+      prob: 0.35
+    - prefab: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
+      prob: 0.1
+    - prefab: {fileID: 1969447997244759940, guid: 991c356c9a7083c4d811f3c03bad847e, type: 3}
+      prob: 0.1
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
+      prob: 0.05
   - name: Tier VI
     enemies:
     - prefab: {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
@@ -854,9 +866,13 @@ MonoBehaviour:
     - prefab: {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
       prob: 0.2
     - prefab: {fileID: 2140532941445721662, guid: 162bcfee7f05b91448fd4fe1b4095bdd, type: 3}
-      prob: 0.3
+      prob: 0.15
     - prefab: {fileID: 2140532941445721662, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
       prob: 0.3
+    - prefab: {fileID: 7724889248031397008, guid: e481c87be3ba03a4ca42637c5d7cedc3, type: 3}
+      prob: 0.1
+    - prefab: {fileID: 1969447997244759940, guid: 991c356c9a7083c4d811f3c03bad847e, type: 3}
+      prob: 0.05
   - name: Tier VII
     enemies:
     - prefab: {fileID: 1362870519766169385, guid: ad5a5562fe24754458b46eef730dc9f2, type: 3}
@@ -864,8 +880,10 @@ MonoBehaviour:
     - prefab: {fileID: 1362870519766169385, guid: 9a0e691630c7a8a4ebc9407f8f966e37, type: 3}
       prob: 0.27
     - prefab: {fileID: 2140532941445721662, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
-      prob: 0.35
-    - prefab: {fileID: 7436766756346789041, guid: f6710d0be1051c542a88cfed6a30869a, type: 3}
+      prob: 0.3
+    - prefab: {fileID: 1969447997244759940, guid: 991c356c9a7083c4d811f3c03bad847e, type: 3}
+      prob: 0.05
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
       prob: 0.1
   - name: Tier VIII
     enemies:
@@ -874,40 +892,54 @@ MonoBehaviour:
     - prefab: {fileID: 1362870519766169385, guid: 156ab66e3fb4e054ab90e22586be7ffb, type: 3}
       prob: 0.25
     - prefab: {fileID: 2140532941445721662, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
-      prob: 0.15
+      prob: 0.25
     - prefab: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
       prob: 0.2
-    - prefab: {fileID: 7724889248031397008, guid: e481c87be3ba03a4ca42637c5d7cedc3, type: 3}
-      prob: 0.2
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
+      prob: 0.1
   - name: Tier IX
     enemies:
     - prefab: {fileID: 1362870519766169385, guid: 156ab66e3fb4e054ab90e22586be7ffb, type: 3}
-      prob: 0.4
+      prob: 0.3
     - prefab: {fileID: 2140532941445721662, guid: daf2121ebf0fe5846b006f64acf99e7c, type: 3}
-      prob: 0.25
+      prob: 0.1
     - prefab: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
-      prob: 0.25
-    - prefab: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
+      prob: 0.2
+    - prefab: {fileID: 7436766756346789041, guid: f6710d0be1051c542a88cfed6a30869a, type: 3}
+      prob: 0.15
+    - prefab: {fileID: 1969447997244759940, guid: 991c356c9a7083c4d811f3c03bad847e, type: 3}
+      prob: 0.1
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
       prob: 0.1
   - name: Tier X
     enemies:
     - prefab: {fileID: 1362870519766169385, guid: 156ab66e3fb4e054ab90e22586be7ffb, type: 3}
       prob: 0.33
     - prefab: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
-      prob: 0.33
+      prob: 0.13
     - prefab: {fileID: 2140532941445721662, guid: 5e9ada390a3bbc3478f8ac50396d6ba5, type: 3}
       prob: 0.34
+    - prefab: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
+      prob: 0.1
+    - prefab: {fileID: 7436766756346789041, guid: f6710d0be1051c542a88cfed6a30869a, type: 3}
+      prob: 0.1
   - name: Tier XI
     enemies:
     - prefab: {fileID: 1362870519766169385, guid: 156ab66e3fb4e054ab90e22586be7ffb, type: 3}
-      prob: 0.45
+      prob: 0.2
     - prefab: {fileID: 2140532941445721662, guid: 5e9ada390a3bbc3478f8ac50396d6ba5, type: 3}
-      prob: 0.45
-    - prefab: {fileID: 7724889248031397008, guid: e481c87be3ba03a4ca42637c5d7cedc3, type: 3}
-      prob: 0.02
+      prob: 0.2
+    - prefab: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
+      prob: 0.1
     - prefab: {fileID: 7436766756346789041, guid: f6710d0be1051c542a88cfed6a30869a, type: 3}
-      prob: 0.08
-  maxEnemiesAtTier: 140000001e00000028000000320000004600000050000000640000006e0000008200000096000000a0000000aa000000
+      prob: 0.15
+    - prefab: {fileID: 1969447997244759940, guid: 991c356c9a7083c4d811f3c03bad847e, type: 3}
+      prob: 0.15
+    - prefab: {fileID: 4552707620018680948, guid: 5a3231fe1fd9236498ed67e78f8c62f0, type: 3}
+      prob: 0.1
+    - prefab: {fileID: 2140532941445721662, guid: 66d1a10d35e97e942a92290eb29ace8f, type: 3}
+      prob: 0.1
+  maxEnemiesAtTier: 0400000007000000080000000a0000000b0000000c0000000e00000012000000160000002000000025000000
   spawnDistance: 2
   maxEnemiesAtSameTime: 150
   minEnemiesAtSameTime: 1
