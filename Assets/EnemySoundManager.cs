@@ -11,7 +11,7 @@ public class EnemySoundManager : MonoBehaviour
 
     private Dictionary<string,SoundClip> soundsDictionary;
 
-    private void Awake()
+    private void Start()
     {
         soundsDictionary = new Dictionary<string, SoundClip>();
         foreach (var sound in sounds)
