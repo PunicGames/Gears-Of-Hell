@@ -65,7 +65,6 @@ public class EnemyHealth : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
-        //Debug.Log("Vida enemigo: " + currentHealth);
 
         playerRef.GetComponent<Player>().PlayHitMarker();
 
@@ -76,29 +75,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            NavMeshAgent navMov = GetComponent<NavMeshAgent>();
-            if (navMov != null)
-                navMov.enabled = false;
-
-            if (enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
-            {
-                DropItems();
-                CountStats();
-                Debug.Log("aqui si");
-                onDeath();
-            }
-            else if (enemyType == EnemyType.GUNSLINGER)
-            {
-                onDeath();
-                Death();
-            }
-            else
-            {
-                Death();
-            }
-
-
-
+            Death();
         }
     }
 
@@ -106,6 +83,23 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
         collider.enabled = false;
+
+        if (enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
+        {
+            DropItems();
+            CountStats();
+            onDeath();
+            return;
+        }
+        else if (enemyType == EnemyType.GUNSLINGER)
+        {
+            onDeath();
+        }
+        
+
+        NavMeshAgent navMov = GetComponent<NavMeshAgent>();
+        if (navMov != null)
+            navMov.enabled = false;
 
         //Look for a box collider in case its a melee enemy and deactivate
         BoxCollider coll = GetComponent<BoxCollider>();
@@ -161,7 +155,7 @@ public class EnemyHealth : MonoBehaviour
 
         DropItems();
         CountStats();
-       
+
     }
     //Autamitacally call when death animation ended
     public void DestroyCallback()
@@ -174,7 +168,8 @@ public class EnemyHealth : MonoBehaviour
         int hpHealed = (hp > startingHealth - currentHealth) ? startingHealth - currentHealth : hp;
         popup.Create(popupPosition.position, hpHealed, PopUp.TypePopUp.LIFE, true, 0.5f);
         currentHealth += hpHealed;
-        if (Cure != null) { 
+        if (Cure != null)
+        {
             Cure.Play();
         }
     }

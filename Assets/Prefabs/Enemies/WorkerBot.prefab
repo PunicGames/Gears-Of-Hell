@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 24292521125848094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.08632, y: 0.08632, z: 0.08632}
+  m_LocalScale: {x: 0.120000005, y: 0.120000005, z: 0.120000005}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1642978758296870988}
@@ -10288,7 +10288,6 @@ GameObject:
   - component: {fileID: 6725989799163533673}
   - component: {fileID: 7021095839613931400}
   - component: {fileID: 2299684632936711966}
-  - component: {fileID: 3136179699775887891}
   - component: {fileID: 4209632533022142794}
   - component: {fileID: 160968176}
   m_Layer: 7
@@ -10407,8 +10406,8 @@ MonoBehaviour:
   startingHealth: 80
   currentHealth: 80
   scoreValue: 1
-  minScoreValue: 1
-  maxScoreValue: 3
+  minScoreValue: 5
+  maxScoreValue: 20
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
   isDead: 0
   popupPosition: {fileID: 7189349792040978552}
@@ -10469,26 +10468,13 @@ MonoBehaviour:
   workerBotMesh: {fileID: 619469163596012938}
   weaponMesh: {fileID: 7389642715027751532}
   enemySoundManager: {fileID: 0}
-  timeUntilExplosion: 0.75
-  bombDamage: 15
+  timeUntilExplosion: 2
+  bombDamage: 30
   tictac: {fileID: 8300000, guid: e120dfcb28aea8b4b862677c94a9e919, type: 3}
   boom: {fileID: 8300000, guid: b9ab9270e1c36d84388c9da3a16c416b, type: 3}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 0
---- !u!135 &3136179699775887891
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4552707620018680948}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.6
-  m_Center: {x: 0, y: 0.63, z: 0}
+    m_Bits: 192
 --- !u!82 &4209632533022142794
 AudioSource:
   m_ObjectHideFlags: 0
