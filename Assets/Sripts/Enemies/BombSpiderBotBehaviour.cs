@@ -60,8 +60,7 @@ public class BombSpiderBotBehaviour : MonoBehaviour
         {
             if (!alreadyExploding)
             {
-                alreadyExploding = true;
-                TriggerExplosion();
+                eh.Death();
             }
             
         }
@@ -80,8 +79,6 @@ public class BombSpiderBotBehaviour : MonoBehaviour
     {
         agent.enabled = false;
         eh.enabled = false;
-        enemyColl.enabled = false;
-
         explosionRange.SetActive(true);
 
         //Playing 'tictac'

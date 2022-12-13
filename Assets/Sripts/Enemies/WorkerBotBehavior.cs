@@ -86,9 +86,12 @@ public class WorkerBotBehavior : MonoBehaviour
         }
         else
         {
+            animator.SetBool("isMoving", true); //variable que este en el animator
             animator.SetBool("isAttacking", false);
-            animator.SetBool("isMoving", false); //variable que este en el animator
+            if (agent.enabled)
+                agent.SetDestination(player.transform.position);
         }
+
 
     }
     private void FSM_LVL_2() //{ IDLE, PURSUE, ATTACK }
@@ -180,7 +183,6 @@ public class WorkerBotBehavior : MonoBehaviour
         {
             dead = true;
             alreadyExploding = true;
-            DeactivateWeaponCollider();
             TriggerExplosion();
         }
     }
@@ -188,22 +190,25 @@ public class WorkerBotBehavior : MonoBehaviour
     private void TriggerExplosion()
     {
         GetComponent<EnemyHealth>().enabled = false;
-        GetComponent<CapsuleCollider>().enabled = false;
 
+        if (enemySoundManager != null)
+            enemySoundManager.PauseSound("attack");
         explosionRange.SetActive(true);
 
+        agent.speed *= 1.2f;
         //Playing 'tictac'
         audioSource.clip = tictac;
         audioSource.loop = true;
         audioSource.Play();
 
         Invoke("Explode", timeUntilExplosion);
-        enabled = false;
+        //enabled = false;
     }
 
     private void Explode()
     {
-        print("explode function");
+        weaponCollider.gameObject.SetActive(false);
+
         Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
         foreach (var hc in hitColliders)
         {
@@ -226,6 +231,9 @@ public class WorkerBotBehavior : MonoBehaviour
         explosionVfx.Play();
         workerBotMesh.enabled = false;
         weaponMesh.enabled = false;
+
+        agent.enabled = false;
+
         Destroy(gameObject, explosionVfx.main.duration);
     }
 
