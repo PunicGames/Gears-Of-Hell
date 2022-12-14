@@ -23,11 +23,11 @@ public class EnemySoundManager : MonoBehaviour
             soundsDictionary[sound.id] = sound;
         }
     }
-    private void OnDestroy()
+    public void UnSuscribe()
     {
-        foreach(var sound in sounds)
+        foreach(var sound in soundsDictionary)
         {
-            sound.OnDestroy();
+            sound.Value.OnDestroy();
         }
     }
 
