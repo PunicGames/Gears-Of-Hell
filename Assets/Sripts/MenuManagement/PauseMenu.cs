@@ -52,14 +52,10 @@ public class PauseMenu : MonoBehaviour
             if (GameIsPaused)
             {
                 Resume();
-                pauseAllSounds?.Invoke(false);
-                pauseShopMusic?.Invoke(false);
             }
             else
             {
                 Pause();
-                pauseAllSounds?.Invoke(true);
-                pauseShopMusic?.Invoke(true);
             }
         }
     }
@@ -72,6 +68,9 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 1f;
             GameIsPaused = false;
         }
+
+        pauseAllSounds?.Invoke(false);
+        pauseShopMusic?.Invoke(false);
         //if(desktop)
         //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShootSystem>().ChangeCursorBack();
     }
@@ -81,6 +80,8 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        pauseAllSounds?.Invoke(true);
+        pauseShopMusic?.Invoke(true);
         //if (desktop)
         //    Cursor.SetCursor(cursorSprite, cursorHotSpot, CursorMode.ForceSoftware);
     }
