@@ -78,6 +78,7 @@ public class BombSpiderBotBehaviour : MonoBehaviour
     private void TriggerExplosion()
     {
         agent.enabled = false;
+        eh.DropItems();
         eh.enabled = false;
         explosionRange.SetActive(true);
 

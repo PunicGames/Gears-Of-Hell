@@ -86,7 +86,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
         {
-            DropItems();
+            
             CountStats();
             onDeath();
             return;
@@ -189,9 +189,8 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void DropItems()
+    public void DropItems()
     {
-        Debug.Log("hey");
         // Suelta moneda
         GameObject moneda = Instantiate(coin, transform.position, Quaternion.identity);
         //moneda.gameObject.GetComponent<Moneda>().value = scoreValue;

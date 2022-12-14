@@ -16,6 +16,7 @@ public class Health : MonoBehaviour
     // Inincibility
     private bool canBeHurt = true;
     [SerializeField] private float invincibilityTime = 1.0f;
+    [HideInInspector] public bool NoGunsMode = false;
 
     Player playerMovement; // Referencia a dicho script para desactivarlo si el jugador muere para que no se pueda mover.
     bool isDead;
@@ -76,7 +77,7 @@ public class Health : MonoBehaviour
     {
         if (canBeHurt)
         {
-            canBeHurt = false;
+
 
             popup.Create(popupPosition.position, (int)amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
             if (takeDamage != null)
@@ -101,8 +102,11 @@ public class Health : MonoBehaviour
             }
 
             // Invincibility
-            lifeScaler.GetComponent<Image>().color = lifeColorTransparency;
-            Invoke("ResetInivincibility", invincibilityTime);
+            if (NoGunsMode) {
+                canBeHurt = false;
+                lifeScaler.GetComponent<Image>().color = lifeColorTransparency;
+                Invoke("ResetInivincibility", invincibilityTime);
+            } 
         }
     }
 
