@@ -83,8 +83,9 @@ public class EnemyHealth : MonoBehaviour
 
     public void Death()
     {
+
+        enemySoundManager.UnSuscribe();
         isDead = true;
-       
         collider.enabled = false;
 
         if (enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
@@ -152,7 +153,7 @@ public class EnemyHealth : MonoBehaviour
         }
         animator.SetTrigger("death");
 
-        enemySoundManager.UnSuscribe();
+        
         enemySoundManager.PauseSound("walk");
         enemySoundManager.PlaySound("death");
 

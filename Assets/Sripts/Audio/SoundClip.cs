@@ -50,11 +50,14 @@ public class SoundClip
     {
         if (state)
         {
-            this.source?.Pause();
+            if(source) 
+                source?.Pause();
         }
         else
         {
-            this.source?.UnPause();
+            if (source)
+                source?.UnPause();
+
         }
         muted = state;
     }

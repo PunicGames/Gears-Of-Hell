@@ -95,4 +95,12 @@ public class GameRegistry : MonoBehaviour
     {
         return (minutes * 60) + seconds;
     }
+
+    public void UnSuscribeAllShops()
+    {
+        for (int i = 0; i < wgScript.shops.Count; i++)
+        {
+            wgScript.shops[i].GetComponent<Shop>().UnSuscribe();
+        }
+    }
 }
