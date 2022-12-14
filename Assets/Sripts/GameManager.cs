@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
 
     static GameManager instance;
+    [SerializeField] private PostProcessingControler pP_controller;
+
 
     private void Start()
     {
@@ -86,6 +88,9 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("antialiasing", 2);
             QualitySettings.SetQualityLevel(2);
         }
+        // Activate from default both post processing options
+        pP_controller.UpdateBloom(true);
+        pP_controller.UpdateColorGrading(true);
 
         
         SetAntialiassing(PlayerPrefs.GetInt("antialiasing"));

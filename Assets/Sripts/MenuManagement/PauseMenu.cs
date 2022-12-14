@@ -51,14 +51,14 @@ public class PauseMenu : MonoBehaviour
             if (GameIsPaused)
             {
                 Resume();
-                pauseAllSounds.Invoke(false);
-                pauseShopMusic.Invoke(false);
+                pauseAllSounds?.Invoke(false);
+                pauseShopMusic?.Invoke(false);
             }
             else
             {
                 Pause();
-                pauseAllSounds.Invoke(true);
-                pauseShopMusic.Invoke(true);
+                pauseAllSounds?.Invoke(true);
+                pauseShopMusic?.Invoke(true);
             }
         }
     }
