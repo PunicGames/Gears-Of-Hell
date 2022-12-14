@@ -24,7 +24,8 @@ public class SoundClip
         this.source.rolloffMode = AudioRolloffMode.Linear;
         this.source.maxDistance = range;
         this.source.playOnAwake = false;
-        PauseMenu.pauseAllSounds += this.SetMute;
+        Debug.Log("Me SUB");
+        PauseMenu.pauseAllSounds += SetMute;
     }
   
 
@@ -61,6 +62,7 @@ public class SoundClip
 
     public void OnDestroy()
     {
-        PauseMenu.pauseAllSounds -= this.SetMute;
+        Debug.Log("Me DESUB");
+        PauseMenu.pauseAllSounds -= SetMute;
     }
 }

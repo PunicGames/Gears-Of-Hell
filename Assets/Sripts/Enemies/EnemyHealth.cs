@@ -34,6 +34,7 @@ public class EnemyHealth : MonoBehaviour
     // Enemy Type
     public enum EnemyType { WORKER, GUNSLINGER, GUNNER, EXPLOSIVE_SPIDERBOT, WORKER_SPIDERBOT, ATTACK_SPIDERBOT, FOREMAN }
     public EnemyType enemyType;
+    public EnemySoundManager enemySoundManager;
 
     // Player reference
     private GameObject playerRef;
@@ -51,6 +52,7 @@ public class EnemyHealth : MonoBehaviour
         collider = GetComponent<CapsuleCollider>();
         animator = GetComponent<Animator>();
         currentHealth = startingHealth;
+        enemySoundManager = GetComponent<EnemySoundManager>();
         //Debug.Log("Health: " + currentHealth);
 
         popup = GetComponent<PopUp>();
@@ -82,6 +84,7 @@ public class EnemyHealth : MonoBehaviour
     public void Death()
     {
         isDead = true;
+       
         collider.enabled = false;
 
         if (enemyType == EnemyType.EXPLOSIVE_SPIDERBOT)
@@ -149,7 +152,7 @@ public class EnemyHealth : MonoBehaviour
         }
         animator.SetTrigger("death");
 
-        var enemySoundManager = gameObject.GetComponent<EnemySoundManager>();
+        enemySoundManager.UnSuscribe();
         enemySoundManager.PauseSound("walk");
         enemySoundManager.PlaySound("death");
 
