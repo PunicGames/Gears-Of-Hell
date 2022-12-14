@@ -92,12 +92,12 @@ public class EnemyHealth : MonoBehaviour
         {
             
             CountStats();
-            onDeath();
+            onDeath?.Invoke();
             return;
         }
         else if (enemyType == EnemyType.GUNSLINGER)
         {
-            onDeath();
+            onDeath?.Invoke();
         }
         
 

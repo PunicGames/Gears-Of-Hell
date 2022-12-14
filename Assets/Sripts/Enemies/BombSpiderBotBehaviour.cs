@@ -20,6 +20,7 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     public int bombDamage;
 
+
     private bool alreadyExploding = false;
 
     private GameObject currentTarget;
@@ -64,7 +65,7 @@ public class BombSpiderBotBehaviour : MonoBehaviour
                 alreadyExploding = true;
                 agent.speed *= 1.35f;
 
-                Invoke(nameof(Death), timeUntilExplosion * 3);
+                Invoke(nameof(Death), timeUntilExplosion * 2.5f);
 
                 explosionRange.SetActive(true);
 
@@ -87,11 +88,9 @@ public class BombSpiderBotBehaviour : MonoBehaviour
         }
         else
         {
-
             CancelInvoke();
             agent.enabled = false;
             eh.DropItems();
-
             eh.enabled = false;
             Explode();
         }
@@ -108,13 +107,13 @@ public class BombSpiderBotBehaviour : MonoBehaviour
         audioSource.loop = true;
         audioSource.Play();
 
-        Invoke("Explode", timeUntilExplosion);
+        Invoke("Explode", timeUntilExplosion*=0.5f);
         enabled = false;
     }
 
     private void Explode()
     {
-        
+        GetComponent<CapsuleCollider>().enabled = false;
             Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
             foreach (var hc in hitColliders)
             {
