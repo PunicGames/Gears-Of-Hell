@@ -5,7 +5,9 @@ using UnityEngine;
 public class RapidFire : MonoBehaviour
 {
 
-    public float bufAttackSpeed;
+    public float semiBufAttackSpeed = 0.87055f;
+    public float autoAttackSpeed = 0.92f;
+  
 
     [SerializeField] private GameObject shootObject;
     private ShootSystem shootScript;
@@ -37,7 +39,8 @@ public class RapidFire : MonoBehaviour
            
             foreach (Gun g in aux)
             {
-                g.timeBetweenShots *= 0.92f;
+                g.timeBetweenShots *= autoAttackSpeed;
+                g.timeBetweenShooting *= semiBufAttackSpeed;
             }
         }
         

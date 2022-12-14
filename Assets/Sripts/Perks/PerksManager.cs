@@ -256,7 +256,7 @@ public class PerksManager : MonoBehaviour
     //Rapid fire
     public void ActivateRapidFire()
     {
-        sc_rapidFire.bufAttackSpeed = rapidFireFactor[perkLevels[0]];
+        //sc_rapidFire.bufAttackSpeed = rapidFireFactor[perkLevels[0]];
         sc_rapidFire.gameObject.SetActive(true);
         availablePerks[0] = true;
 

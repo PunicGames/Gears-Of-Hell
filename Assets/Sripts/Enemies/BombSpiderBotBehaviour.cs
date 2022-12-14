@@ -45,8 +45,9 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private void Update()
     {
-        agent.SetDestination(currentTarget.transform.position);
-        
+        if (agent.enabled)
+            agent.SetDestination(currentTarget.transform.position);
+
     }
 
     public void SetTarget(GameObject go)
@@ -60,9 +61,19 @@ public class BombSpiderBotBehaviour : MonoBehaviour
         {
             if (!alreadyExploding)
             {
-                eh.Death();
+                alreadyExploding = true;
+                agent.speed *= 1.35f;
+
+                Invoke(nameof(Death), timeUntilExplosion * 3);
+
+                explosionRange.SetActive(true);
+
+                //Playing 'tictac'
+                audioSource.clip = tictac;
+                audioSource.loop = true;
+                audioSource.Play();
             }
-            
+
         }
     }
 
@@ -71,14 +82,24 @@ public class BombSpiderBotBehaviour : MonoBehaviour
         if (!alreadyExploding)
         {
             alreadyExploding = true;
+            eh.DropItems(); 
             TriggerExplosion();
+        }
+        else
+        {
+
+            CancelInvoke();
+            agent.enabled = false;
+            eh.DropItems();
+
+            eh.enabled = false;
+            Explode();
         }
     }
 
     private void TriggerExplosion()
     {
         agent.enabled = false;
-        eh.DropItems();
         eh.enabled = false;
         explosionRange.SetActive(true);
 
@@ -93,28 +114,30 @@ public class BombSpiderBotBehaviour : MonoBehaviour
 
     private void Explode()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
-        foreach(var hc in hitColliders)
-        {
-            if(hc.tag == "Enemy")
+        
+            Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
+            foreach (var hc in hitColliders)
             {
-                hc.GetComponent<EnemyHealth>().TakeDamage(bombDamage);
-            }else if(hc.tag == "Player")
-            {
-                hc.GetComponent<Health>().TakeDamage(bombDamage);
+                if (hc.tag == "Enemy")
+                {
+                    hc.GetComponent<EnemyHealth>().TakeDamage(bombDamage);
+                }
+                else if (hc.tag == "Player")
+                {
+                    hc.GetComponent<Health>().TakeDamage(bombDamage);
+                }
             }
-        }
-        explosionRange.SetActive(false);
+            explosionRange.SetActive(false);
 
-        //Playing Booom
-        audioSource.clip = boom;
-        audioSource.loop = false;
-        audioSource.Play();
+            //Playing Booom
+            audioSource.clip = boom;
+            audioSource.loop = false;
+            audioSource.Play();
 
-        explosionVfx.Play();
-        smr1.enabled = false;
-        smr2.enabled = false;
-        Destroy(gameObject, explosionVfx.main.duration);
+            explosionVfx.Play();
+            smr1.enabled = false;
+            smr2.enabled = false;
+            Destroy(gameObject, explosionVfx.main.duration);
     }
 
     public void UpgradeAttackSpeed()
