@@ -10,9 +10,14 @@ public class WorkerBotBehavior : MonoBehaviour
     [SerializeField] int MAXGEARSCAPACITY = 10; //capacidad maxima de monedas que puede recoger
     [SerializeField] int attackDamage = 10; //daño por cada golpe
     [SerializeField] float rollSpeed = 10.0f; //velocidad a la que gira atacando
+
+    [Space]
+
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
     [SerializeField] GameObject particleEffect;
     [SerializeField] Collider recolectRangeCollider;
+
+    [Space]
 
     //cosas para la explosion
     [SerializeField] private ParticleSystem explosionVfx;
@@ -20,13 +25,17 @@ public class WorkerBotBehavior : MonoBehaviour
     [SerializeField] private GameObject explosionRange;
     [SerializeField] private SkinnedMeshRenderer workerBotMesh;
     [SerializeField] private MeshRenderer weaponMesh;
+    [SerializeField] private GameObject smokeEffect;
     [SerializeField] private EnemySoundManager enemySoundManager;
+
+    [Space]
 
     public float timeUntilExplosion;
     public int bombDamage;
     private bool alreadyExploding = false;
 
     [Space]
+
     public AudioClip tictac, boom;
     private AudioSource audioSource;
 
@@ -37,24 +46,26 @@ public class WorkerBotBehavior : MonoBehaviour
 
     int currentGears = 0; //monedas que lleva recogidas
     bool alreadyAttacked = false;
+    public GameObject itemObject;
 
     [SerializeField] private LayerMask m_LayerMask;
 
-    private enum FSM2_states
+    public enum FSM2_states
     {
         IDLE,
         PURSUE,
         ATTACK,
     };
 
-    private enum FSM1_states
+    public enum FSM1_states
     {
         RECOLECT,
         SEARCH,
+        ATTACKFSM,
     };
 
-    private FSM1_states currentFSM1State = FSM1_states.SEARCH; //la fsm 1
-    private FSM2_states currentFSM2State = FSM2_states.PURSUE; //la fsm 2
+    public FSM1_states currentFSM1State = FSM1_states.ATTACKFSM; //la fsm 1
+    public FSM2_states currentFSM2State = FSM2_states.PURSUE; //la fsm 2
     private bool dead = false;
 
     // Start is called before the first frame update
@@ -82,18 +93,62 @@ public class WorkerBotBehavior : MonoBehaviour
         if (!dead)
         {
             FSM_LVL_2();
-            ActionFSM();
+            //ActionFSM();
         }
         else
         {
             animator.SetBool("isMoving", true); //variable que este en el animator
             animator.SetBool("isAttacking", false);
+            smokeEffect.SetActive(false);
+            ResetParameters();
             if (agent.enabled)
                 agent.SetDestination(player.transform.position);
         }
-
-
     }
+
+    private void FSM_LVL_1() //{ IDLE, PURSUE, ATTACK }
+    {
+        float distance = Vector3.Distance(itemObject.transform.position, transform.position); //distancia entre el item y el workerbot
+        agent.SetDestination(itemObject.transform.position); //se dirige a por el item
+
+        switch (currentFSM1State)
+        {
+            case FSM1_states.RECOLECT:
+                enemySoundManager.PauseSound("walk");
+                animator.SetBool("isMoving", false);
+                transform.LookAt(itemObject.transform.position); //miramos al player
+
+                if (distance > agent.stoppingDistance)
+                {
+                    //si la distancia es mayor a la asignada a detenerse comenzamos a perseguir
+                    currentFSM1State = FSM1_states.SEARCH;
+                }
+                else
+                {
+                    if (itemObject.CompareTag("Gear"))
+                    {
+                        //mejoras al coger moneda
+                    }
+                    if (itemObject.CompareTag("Heal"))
+                    {
+                        //mejoras al coger heal
+                    }
+                    if (itemObject.CompareTag("Ammo"))
+                    {
+                        //mejoras al coger ammo
+                    }
+                }
+                break;
+
+            case FSM1_states.SEARCH:
+
+                break;
+            case FSM1_states.ATTACKFSM:
+
+                break;
+        }
+    }
+
     private void FSM_LVL_2() //{ IDLE, PURSUE, ATTACK }
     {
         float distance = Vector3.Distance(player.transform.position, transform.position);
@@ -103,7 +158,7 @@ public class WorkerBotBehavior : MonoBehaviour
         {
             case FSM2_states.IDLE:
                 enemySoundManager.PauseSound("walk");
-                animator.SetBool("isMoving", false); //variable que este en el animator
+                animator.SetBool("isMoving", false);
                 transform.LookAt(player.transform.position); //miramos al player
 
                 if (distance > agent.stoppingDistance)
@@ -115,11 +170,16 @@ public class WorkerBotBehavior : MonoBehaviour
 
             case FSM2_states.PURSUE:
                 enemySoundManager.PlaySound("walk");
-                animator.SetBool("isMoving", true); //variable del animator
+                animator.SetBool("isMoving", true);
                 if (distance <= agent.stoppingDistance)
                 {
+                    //si la distancia es menor a la asignada a detenerse me detengo
                     currentFSM2State = FSM2_states.IDLE;
                 }
+                break;
+            case FSM2_states.ATTACK:
+                //si no ha atacado se pone a atacar
+                if (!alreadyAttacked) Attack();
                 break;
         }
     }
@@ -139,18 +199,6 @@ public class WorkerBotBehavior : MonoBehaviour
         }
     }
 
-    public void Attack()
-    {
-        alreadyAttacked = true;
-        enemySoundManager.PlaySound("attack");
-        animator.SetBool("isAttacking", true);
-        particleEffect.SetActive(true);
-        particleEffect.GetComponent<ParticleSystem>().Play();
-
-        Invoke(nameof(ResetParameters), 5);
-        Invoke(nameof(StopParticleEffect), 3);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (enabled)
@@ -161,6 +209,18 @@ public class WorkerBotBehavior : MonoBehaviour
                 currentFSM2State = FSM2_states.ATTACK;
             }
         }
+    }
+
+    public void Attack()
+    {
+        alreadyAttacked = true;
+        enemySoundManager.PlaySound("attack");
+        animator.SetBool("isAttacking", true);
+        particleEffect.SetActive(true);
+        particleEffect.GetComponent<ParticleSystem>().Play();
+
+        Invoke(nameof(ResetParameters), 5);
+        Invoke(nameof(StopParticleEffect), 3);
     }
     public void StopParticleEffect()
     {
@@ -176,7 +236,6 @@ public class WorkerBotBehavior : MonoBehaviour
         print("resetParameters");
         currentFSM2State = FSM2_states.IDLE;
     }
-
     private void Death()
     {
         if (!alreadyExploding)
@@ -186,7 +245,6 @@ public class WorkerBotBehavior : MonoBehaviour
             TriggerExplosion();
         }
     }
-
     private void TriggerExplosion()
     {
 
@@ -203,7 +261,6 @@ public class WorkerBotBehavior : MonoBehaviour
         Invoke("Explode", timeUntilExplosion);
         //enabled = false;
     }
-
     private void Explode()
     {
         weaponCollider.gameObject.SetActive(false);
@@ -237,16 +294,12 @@ public class WorkerBotBehavior : MonoBehaviour
 
         Destroy(gameObject, explosionVfx.main.duration);
     }
-
     public void ActivateWeaponCollider()
     {
         weaponCollider.enabled = true;
     }
-
     public void DeactivateWeaponCollider()
     {
         weaponCollider.enabled = false;
     }
-
-
 }

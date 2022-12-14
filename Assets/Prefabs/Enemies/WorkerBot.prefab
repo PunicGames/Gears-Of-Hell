@@ -10416,6 +10416,7 @@ MonoBehaviour:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 3
+  enemySoundManager: {fileID: 0}
   Cure: {fileID: 0}
 --- !u!136 &6725989799163533673
 CapsuleCollider:
@@ -10467,6 +10468,7 @@ MonoBehaviour:
   explosionRange: {fileID: 142468485597358443}
   workerBotMesh: {fileID: 619469163596012938}
   weaponMesh: {fileID: 7389642715027751532}
+  smokeEffect: {fileID: 7601670217087964637}
   enemySoundManager: {fileID: 0}
   timeUntilExplosion: 2
   bombDamage: 30
@@ -21073,6 +21075,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9eb212f5a2eccdf4d878d55349a0db03, type: 3}
+--- !u!1 &7601670217087964637 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1421923398710598297, guid: 9eb212f5a2eccdf4d878d55349a0db03, type: 3}
+  m_PrefabInstance: {fileID: 8846513349887250244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7601670217087964638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1421923398710598298, guid: 9eb212f5a2eccdf4d878d55349a0db03, type: 3}
