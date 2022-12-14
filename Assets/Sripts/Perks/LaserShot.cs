@@ -20,6 +20,7 @@ public class LaserShot : MonoBehaviour
     {
         shootScript = shootObject.GetComponent<ShootSystem>();
         defBulletForce = shootScript.guns.getGuns()[shootScript.selectedGun].shootForce;
+
         defBulletMaxCollisions= shootScript.numberOfCollisions;
         gameObject.SetActive(false);
     }

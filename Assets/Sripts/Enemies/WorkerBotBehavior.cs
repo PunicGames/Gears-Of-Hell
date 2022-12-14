@@ -189,7 +189,6 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private void TriggerExplosion()
     {
-        GetComponent<EnemyHealth>().enabled = false;
 
         if (enemySoundManager != null)
             enemySoundManager.PauseSound("attack");
@@ -208,6 +207,8 @@ public class WorkerBotBehavior : MonoBehaviour
     private void Explode()
     {
         weaponCollider.gameObject.SetActive(false);
+        GetComponent<EnemyHealth>().DropItems();
+        GetComponent<EnemyHealth>().enabled = false;
 
         Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
         foreach (var hc in hitColliders)

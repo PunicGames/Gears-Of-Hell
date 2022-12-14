@@ -38,7 +38,11 @@ public class GunnerBehaviour : MonoBehaviour
 
     private bool isShotgun = false;
     public bool enableShotgun = false;
-    public int numBulletsAtTime = 4;
+    private int numBulletsAtTime = 4;
+    public float timeBetweenShotgunShots = 1.4f;
+    [Range(45, 180)] public float coneApertureInDegrees = 90;
+
+
     [SerializeField] [Range(0, 10)] private float spread = 0.1f;
     public float spotDistance = 7f;
     public float shotgunSpotDistance = 4f;
@@ -102,11 +106,11 @@ public class GunnerBehaviour : MonoBehaviour
                 spotDistance = shotgunSpotDistance;
                 weapon1.SetActive(false);
                 weapon2.SetActive(true);
-                cadenceTime = 1.8f;
+                cadenceTime = timeBetweenShotgunShots;
                 reloadTime = 3f;
-                SemiAutoTime *= 1.8f;
+                SemiAutoTime = timeBetweenShotgunShots;
                 bulletsPerMag = 6;
-                bulletsInBurst = 1;
+                bulletsPerBurst = 1;
 
             }
         }
@@ -235,24 +239,26 @@ public class GunnerBehaviour : MonoBehaviour
             soundManager.OverlapedPlaySound("shoot2");
             animator.SetTrigger("shoot");
 
+            float startAngle = coneApertureInDegrees * 0.5f;
+            float partialAngle = coneApertureInDegrees * 0.33f; //equal as divide by 3 but faster
 
             for (int i = 0; i < numBulletsAtTime; i++)
             {
-                // Cálculo de spread
-                float spreadRatio = Random.Range(-spread, spread);
-                // Cálculo de la nueva dirección con spread
-                Vector3 directionWithSpread = transform.forward + new Vector3(spreadRatio, spreadRatio * 0.5f, 0);
+
+                Vector3 directionWithSpread = Quaternion.AngleAxis(startAngle, transform.up) * transform.forward;
+
                 GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
                 b.transform.localScale *= 0.9f;
                 b.transform.forward = directionWithSpread.normalized;
                 Bullet bulletParams = b.GetComponent<Bullet>();
                 bulletParams.SetForce(directionWithSpread.normalized, bulletSpeed * 1.5f);
-                bulletParams.SetDamage(10);
+                bulletParams.SetDamage(8);
 
                 bulletParams.SetLaser(false);
                 bulletParams.owner = Bullet.BulletOwner.ENEMY;
                 bulletParams.timeToDestroy = bulletLifetimeShotGun;
                 bulletParams.SetBulletColors(albedo, emissive);
+                startAngle -= partialAngle;
             }
         }
 
@@ -358,7 +364,8 @@ public class GunnerBehaviour : MonoBehaviour
         soundManager.PauseSound("walk");
         currentState = gunnerState.IDLE;
         animator.SetBool("Moving", false);
-        agent.isStopped = true;
+        if (agent.enabled)
+            agent.isStopped = true;
     }
     private void TransitionToRecharge()
     {

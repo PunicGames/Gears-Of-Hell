@@ -29,7 +29,7 @@ public class ShootSystem : MonoBehaviour
     public GameObject laserBullet;
 
     //LaserBullet
-    public bool canBeStoppedByWalls= true;
+    public bool canBeStoppedByWalls = true;
     public int numberOfCollisions = 1;
 
 
@@ -81,6 +81,9 @@ public class ShootSystem : MonoBehaviour
     // Player Statistics
     [SerializeField] private PlayerStats playerStats;
 
+    //Perks
+    [SerializeField] private PerksManager perks;
+
     private void Awake()
     {
         // Platform
@@ -100,6 +103,11 @@ public class ShootSystem : MonoBehaviour
         availableGuns = new bool[guns.getGuns().Length];
         // La pistola, que ocupa la primera posición, siempre podrá ser accesible.
         availableGuns[0] = true;
+        availableGuns[1] = true;
+        availableGuns[2] = true;
+        availableGuns[3] = true;
+        availableGuns[4] = true;
+       
 
     }
 
@@ -121,7 +129,7 @@ public class ShootSystem : MonoBehaviour
 
         weaponDisplay = GameObject.Find("CurrentWeapon").GetComponent<Image>();
         weaponDisplay.sprite = weaponSprites[0];
-        
+
         // Display cursor
         //if (desktop) { 
         //    cursorHotSpot = new Vector2(cursorSprites[selectedGun].width / 2, cursorSprites[selectedGun].height / 2);
@@ -133,6 +141,8 @@ public class ShootSystem : MonoBehaviour
         {
             InitGunsMobile();
         }
+       
+
     }
 
     void Update()
@@ -173,55 +183,28 @@ public class ShootSystem : MonoBehaviour
             //Vector3 direction = (directionAim - origin).normalized;// weapon_origins[selectedGun].forward;
             Vector3 direction = weapon_origins[selectedGun].forward;
 
-
-            int numBulletsAtTime = 1; // Cualquier otro arma
-            if (selectedGun == 4) // Escopeta
-                numBulletsAtTime = 5;
-
-            for (int i = 0; i < numBulletsAtTime; i++)
+            if (selectedGun != 4)
             {
-                // Cálculo de spread
-                float x = Random.Range(-guns.getGuns()[selectedGun].spread, guns.getGuns()[selectedGun].spread);
-                // Cálculo de la nueva dirección con spread
-                Vector3 directionWithSpread = direction + new Vector3(x, 0, 0);
-
-                // Instanciación de la bala en funcion de las perks
-                if (laserShot)
-                {
-                    GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
-                    currentBullet.transform.forward = directionWithSpread.normalized;
-                    Bullet bulletParams = currentBullet.GetComponent<Bullet>();
-                    bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
-                    bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
-                    bulletParams.SetLaser(true);
-                    bulletParams.SetPlayerStats(playerStats);
-                    bulletParams.numberOfCollisions = numberOfCollisions;
-                    bulletParams.stoppedByWalls = canBeStoppedByWalls;
-                    bulletParams.owner = Bullet.BulletOwner.PLAYER;
-                    //bulletParams.SetBulletColors(albedo, emissive);
-                    currentBullet.transform.localScale *= scaleFactor;
-                    audioManager.PlayLaser(selectedGun);
-                    onShootWeapon.Invoke(true);
-                }
-                else
-                {
-                    GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
-                    currentBullet.transform.forward = directionWithSpread.normalized;
-                    Bullet bulletParams = currentBullet.GetComponent<Bullet>();
-                    bulletParams.SetForce(directionWithSpread.normalized, guns.getGuns()[selectedGun].shootForce);
-                    bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
-                    bulletParams.SetLaser(false);
-                    bulletParams.SetPlayerStats(playerStats);
-                    bulletParams.owner = Bullet.BulletOwner.PLAYER;
-                    bulletParams.SetBulletColors(albedo, emissive);
-                    currentBullet.transform.localScale *= scaleFactor;
-                    audioManager.Play(selectedGun);
-                    onShootWeapon.Invoke(false);
-                }
-                anim.SetTrigger("shoot");
-                guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
-                guns.getGuns()[selectedGun].bulletsShot++;
+                ShootBullet(origin, direction.normalized);
             }
+            else
+            {
+                //Escopeta
+                int numBulletsAtTime = 8;
+
+                float startAngle = 60 * 0.5f;
+                float partialAngle = 60 * 0.14f; //equal as divide by 3 but faster
+
+                for (int i = 0; i < numBulletsAtTime; i++)
+                {
+                    Vector3 directionWithSpread = Quaternion.AngleAxis(startAngle, transform.up) * transform.forward;
+                    ShootBullet(origin, directionWithSpread.normalized);
+                    startAngle -= partialAngle;
+                }
+            }
+            guns.getGuns()[selectedGun].bulletsLeftInMagazine--;
+            guns.getGuns()[selectedGun].bulletsShot++;
+            anim.SetTrigger("shoot");
 
 
             if (allowInvoke)
@@ -230,13 +213,10 @@ public class ShootSystem : MonoBehaviour
                 allowInvoke = false;
             }
 
-            // Repetimos la funcion de disparo dependiendo de bulletsPerTap
-            if (guns.getGuns()[selectedGun].bulletsShot < guns.getGuns()[selectedGun].bulletsPerTap && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0))
-            {
-                Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
-            }
-            if ((guns.getGuns()[selectedGun].automaticGun && shooting && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0)))
+
+            if ((guns.getGuns()[selectedGun].automaticGun && (guns.getGuns()[selectedGun].bulletsLeftInMagazine > 0)))
             { // Si es un arma automática, sigue disparando
+               
                 Invoke("Shoot", guns.getGuns()[selectedGun].timeBetweenShots);
             }
         }
@@ -307,7 +287,7 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
 
-                
+
                 selectedGun = i;
                 if (weaponDisplay != null)
                 {
@@ -349,7 +329,7 @@ public class ShootSystem : MonoBehaviour
                 weapon_meshes[selectedGun].SetActive(false);
                 weapon_meshes[i].SetActive(true);
                 selectedGun = i;
-                
+
                 if (weaponDisplay != null)
                 {
                     weaponDisplay.sprite = weaponSprites[selectedGun];
@@ -414,9 +394,48 @@ public class ShootSystem : MonoBehaviour
 
             if (availableGuns[i])
             {
-                sg.totalBullets += sg.magazineSize * 3;
+                sg.totalBullets += sg.magazineSize * 2;
 
             }
         }
+    }
+
+    private void ShootBullet(Vector3 origin, Vector3 dir)
+    {
+        if (laserShot)
+        {
+            GameObject currentBullet = Instantiate(laserBullet, origin, Quaternion.identity);
+            currentBullet.transform.forward = dir;
+            Bullet bulletParams = currentBullet.GetComponent<Bullet>();
+            bulletParams.SetForce(dir, guns.getGuns()[selectedGun].shootForce);
+            bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
+            bulletParams.SetLaser(true);
+            bulletParams.SetPlayerStats(playerStats);
+            bulletParams.numberOfCollisions = perks.perkLevels[1] + 2;
+            if (perks.perkLevels[1] == 4) bulletParams.stoppedByWalls = false;
+            bulletParams.timeToDestroy = guns.getGuns()[selectedGun].bulletLifeTime;
+            bulletParams.owner = Bullet.BulletOwner.PLAYER;
+            //bulletParams.SetBulletColors(albedo, emissive);
+            currentBullet.transform.localScale *= scaleFactor;
+            audioManager.PlayLaser(selectedGun);
+            onShootWeapon.Invoke(true);
+        }
+        else
+        {
+            GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
+            currentBullet.transform.forward = dir;
+            Bullet bulletParams = currentBullet.GetComponent<Bullet>();
+            bulletParams.SetForce(dir, guns.getGuns()[selectedGun].shootForce);
+            bulletParams.SetDamage(guns.getGuns()[selectedGun].bulletDamage);
+            bulletParams.SetLaser(false);
+            bulletParams.SetPlayerStats(playerStats);
+            bulletParams.timeToDestroy = guns.getGuns()[selectedGun].bulletLifeTime;
+            bulletParams.owner = Bullet.BulletOwner.PLAYER;
+            bulletParams.SetBulletColors(albedo, emissive);
+            currentBullet.transform.localScale *= scaleFactor;
+            audioManager.Play(selectedGun);
+            onShootWeapon.Invoke(false);
+        }
+
     }
 }

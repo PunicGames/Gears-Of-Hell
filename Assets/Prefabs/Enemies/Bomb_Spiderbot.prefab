@@ -354,7 +354,7 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 200
-  m_StoppingDistance: 2
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -466,12 +466,14 @@ MonoBehaviour:
   minScoreValue: 5
   maxScoreValue: 10
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  isDead: 0
   popupPosition: {fileID: 1684378967667567528}
   itemsRatio: 0.1
   items:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 3
+  Cure: {fileID: 0}
 --- !u!114 &9166247000190160912
 MonoBehaviour:
   m_ObjectHideFlags: 0

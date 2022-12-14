@@ -13,6 +13,7 @@ public class Gun
     public float reloadTime;
     public float timeBetweenShots;    // Tiempo de espera al tener arma automática
     public float timeBetweenShooting; // Tiempo de espera entre disparo y disparo
+    public float bulletLifeTime; 
 
     public bool automaticGun;
 

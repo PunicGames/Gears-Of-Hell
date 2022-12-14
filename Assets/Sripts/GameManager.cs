@@ -14,12 +14,10 @@ public class GameManager : MonoBehaviour
     {
         if (instance != null) { 
             Destroy(gameObject);
-            Debug.Log("Creado.");
         }
         else { 
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("Creando...");
             OptionsInitilizer_DefaultValues();
             StartCoroutine(InitializeLootLocker());
         }
