@@ -63,7 +63,7 @@ public class Shop : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    public void UnSuscribe()
     {
         PauseMenu.pauseShopMusic -= MuteMusic;
     }
@@ -72,11 +72,13 @@ public class Shop : MonoBehaviour
     {
         if (state)
         {
-            source.Pause();
+            if (source)
+                source?.Pause();
         }
         else
         {
-            source.UnPause();
+            if (source)
+                source?.UnPause();
         }
     }
 }

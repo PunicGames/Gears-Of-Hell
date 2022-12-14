@@ -51,7 +51,8 @@ public class SoundClip
     {
         if (state)
         {
-            source.Pause();
+            if(source) 
+                source?.Pause();
         }
         else
         {
