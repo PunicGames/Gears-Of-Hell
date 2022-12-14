@@ -28,7 +28,7 @@ public class PlayerGuns
         pistol.spread = 0;
         pistol.reloadTime = 1;
         pistol.timeBetweenShots = 0.01f;
-        pistol.timeBetweenShooting = 0.2f;
+        pistol.timeBetweenShooting = 0.3f;
         pistol.automaticGun = false;
         pistol.bulletLifeTime = 2f;
         existingGuns[0] = pistol;
@@ -108,7 +108,7 @@ public class PlayerGuns
         shotgun.spread = 0.25f;
         shotgun.reloadTime = 2.0f;
         shotgun.timeBetweenShots = 0.0f;
-        shotgun.timeBetweenShooting = 1.0f;
+        shotgun.timeBetweenShooting = 1.5f;
         shotgun.automaticGun = false;
         shotgun.bulletLifeTime = 0.3f;
         existingGuns[4] = shotgun;
