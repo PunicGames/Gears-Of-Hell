@@ -83,6 +83,9 @@ public class EnemyHealth : MonoBehaviour
 
     public void Death()
     {
+        
+        enemySoundManager.PauseSound("walk");
+        enemySoundManager.PlaySound("death");
 
         enemySoundManager.UnSuscribe();
         isDead = true;
@@ -153,9 +156,6 @@ public class EnemyHealth : MonoBehaviour
         }
         animator.SetTrigger("death");
 
-        
-        enemySoundManager.PauseSound("walk");
-        enemySoundManager.PlaySound("death");
 
         DropItems();
         CountStats();
