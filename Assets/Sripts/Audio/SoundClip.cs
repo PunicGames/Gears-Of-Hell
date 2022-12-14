@@ -56,7 +56,8 @@ public class SoundClip
         }
         else
         {
-            source.UnPause();
+            if (source)
+                source?.UnPause();
         }
         muted = state;
     }
