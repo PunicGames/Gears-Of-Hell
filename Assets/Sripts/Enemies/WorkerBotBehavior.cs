@@ -7,12 +7,12 @@ using UnityEngine.Events;
 public class WorkerBotBehavior : MonoBehaviour
 {
     //variables parametricas
-    [SerializeField] public int MAXGEARSCAPACITY = 4; //capacidad maxima de monedas que puede recoger
-    [SerializeField] public int MAXHEALSCAPACITY = 2; //capacidad maxima de curas que puede recoger
-    [SerializeField] public int MAXAMMOSCAPACITY = 2; //capacidad maxima de ammos que puede recoger
+    public int MAXGEARSCAPACITY = 4; //capacidad maxima de monedas que puede recoger
+    public int MAXHEALSCAPACITY = 2; //capacidad maxima de curas que puede recoger
+    public int MAXAMMOSCAPACITY = 2; //capacidad maxima de ammos que puede recoger
 
     [SerializeField] int attackDamage = 7; //daño por cada golpe
-    [SerializeField] float rollSpeed = 10.0f; //velocidad a la que gira atacando
+    [SerializeField] float rollSpeed = 0.8f; //velocidad a la que gira atacando
 
     [Space]
 
@@ -49,12 +49,11 @@ public class WorkerBotBehavior : MonoBehaviour
     private GameObject player;
     NavMeshAgent agent;
 
-    public int currentGears = 0; //monedas que lleva recogidas
-    public int currentAmmos = 0; //ammos que lleva recogidas
-    public int currentHeals = 0; //heals que lleva recogidas
+    [SerializeField] public int currentGears = 0; //monedas que lleva recogidas
+    [SerializeField] public int currentAmmos = 0; //ammos que lleva recogidas
+    [SerializeField] public int currentHeals = 0; //heals que lleva recogidas
     bool alreadyAttacked = false;
     public GameObject itemObject;
-    Vector3 newScale = new Vector3(0.5f, 0.5f, 0.5f);
 
     [SerializeField] private LayerMask m_LayerMask;
 
@@ -155,7 +154,6 @@ public class WorkerBotBehavior : MonoBehaviour
                 break;
 
             case FSM1_states.SEARCH:
-
                 float distance = Vector3.Distance(itemObject.transform.position, transform.position); //distancia entre el item y el workerbot
                 agent.SetDestination(itemObject.transform.position); //se dirige a por el item
 
@@ -211,21 +209,6 @@ public class WorkerBotBehavior : MonoBehaviour
         }
     }
 
-    private void ActionFSM()
-    {
-        switch (currentFSM2State)
-        {
-            case FSM2_states.IDLE:
-                //Do nothing
-                break;
-
-            case FSM2_states.ATTACK:
-                //si no ha atacado se pone a atacar
-                if (!alreadyAttacked) Attack();
-                break;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (enabled)
@@ -240,27 +223,41 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private void GearUpgrade()
     {
-        weaponColliderPivot.transform.localScale += newScale; //aumenta tamaño del collider
-        weaponMesh.transform.localScale += newScale; //aumenta tamaño del mesh
-        particleEffectPivot.transform.localScale += newScale; //aumenta el tamaño del efecto de particulas
+        Vector3 gearScale = new Vector3(1 + 0.2f * currentGears, 1 + 0.2f * currentGears, 1 + 0.2f * currentGears);
 
-        attackDamage += 2; //aumenta el daño por cada moneda recogida
+        weaponColliderPivot.transform.localScale = gearScale; //aumenta tamaño del collider
+        weaponMesh.transform.localScale = gearScale; //aumenta tamaño del mesh
+        particleEffectPivot.transform.localScale = gearScale; //aumenta el tamaño del efecto de particulas
+
+        attackDamage = 7 + 1 * currentGears; //aumenta el daño por cada moneda recogida
         weaponCollider.attackDamage = attackDamage; //le paso el daño nuevo al script del arma
 
         //activo el efecto de particulas de brillantitos, mas cantidad por cada moneda que tenga
+        print(currentGears);
     }
     private void HealUpgrade()
     {
-        transform.localScale += newScale; //aumenta el tamaño del mesh del pj
-        GetComponent<EnemyHealth>().startingHealth *= 2;
-        GetComponent<EnemyHealth>().currentHealth = GetComponent<EnemyHealth>().startingHealth;
+        Vector3 healScale = new Vector3(1 + 0.25f * currentHeals, 1 + 0.25f * currentHeals, 1 + 0.25f * currentHeals);
+
+        transform.localScale = healScale; //aumenta el tamaño del mesh del pj
+
+        GetComponent<EnemyHealth>().startingHealth *= 2; //duplico vida maxima actual
+        GetComponent<EnemyHealth>().currentHealth = GetComponent<EnemyHealth>().startingHealth; //recupera toda la vida
+
         //activo el efecto de cura en el robot
+        print(currentHeals);
     }
     private void AmmoUpgrade()
     {
-        agent.speed += 1;
-        rollSpeed *= rollSpeed / 2;
+        agent.speed += 0.6f; //aumenta la velocidad de movimiento
+        rollSpeed = 0.8f + currentAmmos * 0.4f; //aumenta la velocidad de ataque
+        animator.SetFloat("rollSpeed", rollSpeed);
+
+        smokeEffect.transform.localScale *= 2f; //aumenta el tamaño del efecto de smoke
+        smokeEffect.GetComponent<ParticleSystem>().playbackSpeed += 5; //aumenta la velocidad del efecto de smoke
+
         //activo efecto de particulas de algo para inficar que ahora tiene esta mejora
+        print(currentAmmos);
     }
 
     public void Attack()

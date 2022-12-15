@@ -6,19 +6,32 @@ public class WorkerBotItemDetector : MonoBehaviour
 {
     [SerializeField] WorkerBotBehavior workerBot;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (workerBot.itemObject == null)
+    //    {
+    //        if (other.CompareTag("Gear") && workerBot.currentGears < workerBot.MAXGEARSCAPACITY)
+    //        {
+    //            print("algo detecto gear");
+    //            workerBot.itemObject = other.gameObject;
+    //            workerBot.currentFSM1State = WorkerBotBehavior.FSM1_states.SEARCH;
+    //        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //        if (other.CompareTag("Heal") && workerBot.currentHeals < workerBot.MAXHEALSCAPACITY)
+    //        {
+    //            workerBot.itemObject = other.gameObject;
+    //            workerBot.currentFSM1State = WorkerBotBehavior.FSM1_states.SEARCH;
+    //        }
 
-    private void OnTriggerEnter(Collider other)
+    //        if (other.CompareTag("Ammo") && workerBot.currentAmmos < workerBot.MAXAMMOSCAPACITY)
+    //        {
+    //            workerBot.itemObject = other.gameObject;
+    //            workerBot.currentFSM1State = WorkerBotBehavior.FSM1_states.SEARCH;
+    //        }
+    //    }
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
         if (workerBot.itemObject == null)
         {
@@ -41,6 +54,5 @@ public class WorkerBotItemDetector : MonoBehaviour
                 workerBot.currentFSM1State = WorkerBotBehavior.FSM1_states.SEARCH;
             }
         }
-        
     }
 }

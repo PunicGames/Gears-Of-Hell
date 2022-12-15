@@ -10363,7 +10363,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.6
+  m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 1000
@@ -10406,8 +10406,8 @@ MonoBehaviour:
   startingHealth: 80
   currentHealth: 80
   scoreValue: 1
-  minScoreValue: 5
-  maxScoreValue: 20
+  minScoreValue: 15
+  maxScoreValue: 30
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
   isDead: 0
   popupPosition: {fileID: 7189349792040978552}
@@ -10457,7 +10457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8452d8d331d1348870c2d918e8229b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAXGEARSCAPACITY: 10
+  MAXGEARSCAPACITY: 5
   MAXHEALSCAPACITY: 2
   MAXAMMOSCAPACITY: 2
   attackDamage: 7
@@ -21036,15 +21036,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6269909456556283590, guid: 54ed9f0067806d849b6f04c6966dd77a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.59
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 6269909456556283590, guid: 54ed9f0067806d849b6f04c6966dd77a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.59
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 6269909456556283590, guid: 54ed9f0067806d849b6f04c6966dd77a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.59
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 6269909456556283590, guid: 54ed9f0067806d849b6f04c6966dd77a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21175,6 +21175,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1421923398710598298, guid: 9eb212f5a2eccdf4d878d55349a0db03, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1421923398710598299, guid: 9eb212f5a2eccdf4d878d55349a0db03, type: 3}
+      propertyPath: simulationSpeed
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
