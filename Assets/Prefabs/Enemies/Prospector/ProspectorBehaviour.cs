@@ -46,6 +46,7 @@ public class ProspectorBehaviour : MonoBehaviour
 
     // Habilities visuals
     [SerializeField] private ParticleSystem CureSelf;
+    [SerializeField] private ParticleSystem exhaustedVisual;
     [SerializeField] private GameObject areaHealVisuals;
 
     private void Start()
@@ -64,6 +65,8 @@ public class ProspectorBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         basic_FSM();
+
+        Debug.Log(currentState);
     }
 
 
@@ -94,10 +97,11 @@ public class ProspectorBehaviour : MonoBehaviour
                     Chase(targetHideSpot.position);
 
 
-                    if (Vector3.Distance(transform.position, targetHideSpot.position)  < 0.1)
+                    if ((Vector3.Distance(transform.position, targetHideSpot.position)  < 0.1))
                     {
                         hiding = false;
                         currentState = State.CASTING;
+                        animator.SetBool("isMoving", false);
                         enemySoundManager.PauseSound("footsteps");
                     }
                 }
@@ -142,13 +146,13 @@ public class ProspectorBehaviour : MonoBehaviour
         float castAreaCure = 0.9f * VU + 0.1f * VP;
 
         // ------ Utility System Values ------ Check documentation to know what these variables stand for.
-        Debug.Log("VJ: " + VJ);
-        Debug.Log("NW: " + NW);
-        Debug.Log("VP: " + VP);
-        Debug.Log("VU: " + VU);
-        Debug.Log("CastVelocityValue: " + castVelocityValue);
-        Debug.Log("CastOwnCure: " + castOwnCure);
-        Debug.Log("CastAreaCure: " + castAreaCure);
+        //Debug.Log("VJ: " + VJ);
+        //Debug.Log("NW: " + NW);
+        //Debug.Log("VP: " + VP);
+        //Debug.Log("VU: " + VU);
+        //Debug.Log("CastVelocityValue: " + castVelocityValue);
+        //Debug.Log("CastOwnCure: " + castOwnCure);
+        //Debug.Log("CastAreaCure: " + castAreaCure);
 
         // Decision maker
         if (castVelocityValue >= castOwnCure && castVelocityValue >= castAreaCure)
@@ -233,7 +237,8 @@ public class ProspectorBehaviour : MonoBehaviour
         //Debug.Log("Ability cast finished");
         casting = false;
         currentState = State.RESTING;
-        Invoke("StopResting", 2);
+        exhaustedVisual.Play();
+        Invoke("StopResting", 2f);
     }
 
     private Transform CheckForAvailableHidenSpot() {
@@ -306,5 +311,7 @@ public class ProspectorBehaviour : MonoBehaviour
         }
         else
             currentState = State.CHASING;
+
+        exhaustedVisual.Stop();
     }
 }

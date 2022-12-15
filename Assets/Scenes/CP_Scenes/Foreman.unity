@@ -425,7 +425,7 @@ Transform:
   m_Children:
   - {fileID: 1001990101}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &182010315
 PrefabInstance:
@@ -517,6 +517,46 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9d1aa22b0dcc44d48bb03abb83c041e4, type: 3}
   m_PrefabInstance: {fileID: 182010315}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &275743090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 275743092}
+  - component: {fileID: 275743091}
+  m_Layer: 0
+  m_Name: Listener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &275743091
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275743090}
+  m_Enabled: 1
+--- !u!4 &275743092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275743090}
+  m_LocalRotation: {x: -0, y: -0, z: 4.5474735e-13, w: 1}
+  m_LocalPosition: {x: 0, y: 2.82, z: 2.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &315531872 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fec29cb711fad474f875375cdcc8266f, type: 3}
@@ -1109,7 +1149,7 @@ Transform:
   m_Children:
   - {fileID: 543296890317008984}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541882997 stripped
 GameObject:
@@ -2314,7 +2354,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1366049422}
   - component: {fileID: 1366049421}
-  - component: {fileID: 1366049420}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2322,14 +2361,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1366049420
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366049419}
-  m_Enabled: 1
 --- !u!20 &1366049421
 Camera:
   m_ObjectHideFlags: 0
@@ -2386,7 +2417,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 118.81, y: -180, z: -180.003}
 --- !u!1001 &1406288456
 PrefabInstance:
@@ -3206,7 +3237,7 @@ Transform:
   - {fileID: 2246539516631557012}
   - {fileID: 1247178627464218081}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1696270001
 PrefabInstance:
@@ -3891,7 +3922,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1957361370 stripped
 GameObject:
@@ -4132,7 +4163,7 @@ Transform:
   - {fileID: 947000193}
   - {fileID: 1002393143275553572}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2131074847
 GameObject:
@@ -4342,6 +4373,7 @@ MonoBehaviour:
   flashSpeed: 5
   damageColor: {r: 1, g: 0, b: 0, a: 0.1}
   invincibilityTime: 0
+  NoGunsMode: 0
   electricBarrier: 0
   popupPosition: {fileID: 3209184924984238683}
   healClip: {fileID: 8300000, guid: 8f94106ebac42d04bba3aaf6423132fb, type: 3}
@@ -9682,7 +9714,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919294010573138658}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.48, y: 0, z: 0.23}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11020,7 +11052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1001 &1258911824415405517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12536,7 +12568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &2261162632712694754
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -27508,6 +27540,7 @@ MonoBehaviour:
   albedo: {r: 1, g: 0.4481132, b: 0.4481132, a: 0}
   emissive: {r: 1, g: 0.009791835, b: 0, a: 0.94509804}
   playerStats: {fileID: 1118668820423323464}
+  perks: {fileID: 0}
 --- !u!1 &6866857667960964196
 GameObject:
   m_ObjectHideFlags: 0
@@ -33286,12 +33319,14 @@ MonoBehaviour:
   minScoreValue: 18
   maxScoreValue: 22
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  isDead: 0
   popupPosition: {fileID: 3502393583961792330}
   itemsRatio: 0.08
   items:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 0
+  enemySoundManager: {fileID: 0}
   Cure: {fileID: 355184427815449523}
 --- !u!4 &7432698397770819194
 Transform:
@@ -33502,12 +33537,14 @@ MonoBehaviour:
   minScoreValue: 3
   maxScoreValue: 8
   coin: {fileID: 4957193066877379442, guid: 50505c784e2c8f741b1ee204f13c953e, type: 3}
+  isDead: 0
   popupPosition: {fileID: 7779669816401791987}
   itemsRatio: 0.02
   items:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 0
+  enemySoundManager: {fileID: 0}
   Cure: {fileID: 6667614403105050910}
 --- !u!1 &7613268357065687459
 GameObject:
@@ -39354,7 +39391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436535276b909d1439823be346aef509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bufAttackSpeed: 2
+  semiBufAttackSpeed: 0.87055
+  autoAttackSpeed: 0.92
   shootObject: {fileID: 163662621349077}
 --- !u!4 &8614240858081359109
 Transform:
