@@ -89,6 +89,8 @@ public class CP_GunnerBehaviour : MonoBehaviour
     private bool inAttackRange = false;
     private float distance;
 
+    private bool hasSpottedPlayer = false;
+
     EnemyVision vision;
     Transform player;
     NavMeshAgent agent;
@@ -102,7 +104,7 @@ public class CP_GunnerBehaviour : MonoBehaviour
     private enum combatState { IDLE, PURSUE, ATTACK, RECHARGE, GRENADE };
     private combatState currenCombatState = combatState.IDLE;
 
-    private enum standardState { IDLE, PATROLLING, COMBAT, ALERTED, ALERTED_IDLE, HQ_CALL };
+    private enum standardState { IDLE, PATROLLING, COMBAT, ALERTED, ALERTED_IDLE, ALERTED_PATROLLING, ASKING_REINFORCEMENTS, SEEK_ALARM };
     private standardState currenState = standardState.IDLE;
     private float speed;
 
@@ -112,7 +114,6 @@ public class CP_GunnerBehaviour : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         animator.SetFloat("walking_speed", patrollingWalkingSpeed);
-        //animator.SetFloat("check_time", patrolIdleTime);
         animator.SetFloat("idleBlend", idleBlend);
 
         vision = GetComponent<EnemyVision>();
@@ -152,6 +153,8 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
         agent.speed = patrollingWalkingSpeed;
         speed = agent.speed;
+
+        Invoke(nameof(PatrolToPoint), 2f);
     }
 
     private void Update()
@@ -257,7 +260,6 @@ public class CP_GunnerBehaviour : MonoBehaviour
         switch (currenState)
         {
             case standardState.IDLE:
-                TransitionToPatrol(patrolIdleTime);
 
                 break;
             case standardState.PATROLLING:
@@ -293,9 +295,20 @@ public class CP_GunnerBehaviour : MonoBehaviour
                 }
                 break;
             case standardState.ALERTED_IDLE:
-                TransitionToPatrol(patrolIdleTime * 1.5f);
                 break;
-            case standardState.HQ_CALL:
+            case standardState.ASKING_REINFORCEMENTS:
+                break;
+            case standardState.ALERTED_PATROLLING:
+                distance = Vector3.Distance(transform.position, patrolPoints[nextPatrolPoint].position);
+                //If reaches point
+                if (distance <= 0.1f)
+                {
+                    TransitionToAlertedIdle();
+                    nextPatrolPoint = Random.Range(0, patrolPoints.Count);
+                }
+                break;
+            case standardState.SEEK_ALARM:
+
                 break;
             default:
                 break;
@@ -531,10 +544,30 @@ public class CP_GunnerBehaviour : MonoBehaviour
         currenState = standardState.IDLE;
         agent.isStopped = true;
         animator.SetBool("Walking", false);
+        animator.SetFloat("check_time", 1f);
+        TransitionToPatrol(patrolIdleTime);
+
+        StartCoroutine(LerpTurnTo(1f, patrolPoints[nextPatrolPoint].forward));
     }
+    void TransitionToAlertedPatrol(float time)
+    {
+        Invoke(nameof(PatrolToPoint), time);
+    }
+
     void TransitionToAlert(Vector3 lastSeenPos)
     {
+
         CancelInvoke(nameof(PatrolToPoint));
+        StopAllCoroutines();
+
+        animator.SetBool("Moving", false);
+
+        if (!hasSpottedPlayer)
+        {
+            vision.perceptionRadius = vision.initialPerceptionRadius;
+            vision.spotRadius = vision.initialSpotRadius;
+        }
+
         animator.SetBool("Walking", true);
         currenState = standardState.ALERTED;
         agent.isStopped = false;
@@ -552,9 +585,22 @@ public class CP_GunnerBehaviour : MonoBehaviour
         animator.SetBool("Walking", false);
         agent.speed = patrollingWalkingSpeed;
         animator.SetFloat("walking_speed", agent.speed);
+        animator.SetFloat("check_time", 0.5f);
+        if (hasSpottedPlayer)
+            TransitionToAlertedPatrol(patrolIdleTime);
+        else
+            TransitionToPatrol(patrolIdleTime);
+
     }
     void TransitionToCombat()
     {
+        hasSpottedPlayer = true;
+        CancelInvoke(nameof(PatrolToPoint));
+        StopAllCoroutines();
+
+        vision.perceptionRadius *= 1.25f;
+        vision.spotRadius = vision.perceptionRadius - 3.5f;
+
         currenState = standardState.COMBAT;
         agent.speed = combatWalkingSpeed;
         animator.SetBool("Walking", false);
@@ -570,17 +616,39 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
     #endregion
     #region utilityPatrolFunctions
+
+    IEnumerator LerpTurnTo(float time, Vector3 lookat)
+    {
+        float timeElapsed = 0;
+        Vector3 origin = transform.forward;
+        while (timeElapsed < time)
+        {
+            transform.forward = Vector3.Lerp(origin, lookat, timeElapsed / time);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+
+        }
+        transform.forward = lookat;
+    }
     void PatrolToPoint()
     {
         CancelInvoke(nameof(PatrolToPoint));
-
-        alertVFX.SetActive(false);
-        currenState = standardState.PATROLLING;
         agent.isStopped = false;
         animator.SetBool("Walking", true);
+
+        if (!hasSpottedPlayer)
+        {
+            alertVFX.SetActive(false);
+            currenState = standardState.PATROLLING;
+        }
+        else
+        {
+            currenState = standardState.ALERTED_PATROLLING;
+
+        }
         agent.SetDestination(patrolPoints[nextPatrolPoint].position);
     }
-   
+
     #endregion
 
 }

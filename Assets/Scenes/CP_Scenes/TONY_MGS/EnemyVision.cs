@@ -22,16 +22,22 @@ public class EnemyVision : MonoBehaviour
     [HideInInspector] public bool playerInReach;
     private bool isAlerted = false;
     private bool isSpotted = false;
+    [HideInInspector] public float initialSpotRadius;
+    [HideInInspector] public float initialPerceptionRadius;
+    private Transform target;
 
     //Delegates
     public delegate void OnAlert(Vector3 targetPos);
     public OnAlert onAlert;
     public delegate void OnSpot();
     public OnSpot onSpot;
+    public delegate void OnLosingSight();
+    public OnLosingSight onLosingSight;
 
     private void Start()
     {
-        playerRef = GameObject.FindGameObjectWithTag("Player");
+        initialSpotRadius = spotRadius;
+        initialPerceptionRadius = perceptionRadius;
         StartCoroutine(FOVRoutine());
     }
 
@@ -48,44 +54,59 @@ public class EnemyVision : MonoBehaviour
 
     private void FieldOfViewCheck()
     {
-        if (!isSpotted)
+
+        Collider[] rangeChecks = Physics.OverlapSphere(parent.position, perceptionRadius, targetMask);
+
+        if (rangeChecks.Length != 0)
         {
-            Collider[] rangeChecks = Physics.OverlapSphere(parent.position, perceptionRadius, targetMask);
+            target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (target.position - parent.position).normalized;
 
-            if (rangeChecks.Length != 0)
+            if (Vector3.Angle(parent.forward, directionToTarget) < angle * .5f)
             {
-                Transform target = rangeChecks[0].transform;
-                Vector3 directionToTarget = (target.position - parent.position).normalized;
+                float distanceToTarget = Vector3.Distance(parent.position, target.position);
 
-                if (Vector3.Angle(parent.forward, directionToTarget) < angle * .5f)
+                if (!Physics.Raycast(parent.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
-                    float distanceToTarget = Vector3.Distance(parent.position, target.position);
-
-                    if (!Physics.Raycast(parent.position, directionToTarget, distanceToTarget, obstructionMask))
+                    playerInReach = true;
+                    if (distanceToTarget <= spotRadius)
                     {
-                        playerInReach = true;
-                        if (distanceToTarget <= spotRadius) { onSpot?.Invoke(); isSpotted = true; return; }
-                        if (!isAlerted)
-                        {
-                            onAlert?.Invoke(target.position);
-                            isAlerted = true;
-                        }
-
-                    }
-                    else
-                    {
+                        if (!isSpotted)
+                            onSpot?.Invoke();
+                        isSpotted = true;
                         isAlerted = false;
-                        playerInReach = false;
+                        return;
                     }
+                    if (!isAlerted)
+                    {
+                        onAlert?.Invoke(target.position);
+                        isAlerted = true;
+                    }
+
                 }
                 else
                 {
-                    playerInReach = false;
                     isAlerted = false;
+                    playerInReach = false;
                 }
             }
-            else if (playerInReach)
+            else
+            {
                 playerInReach = false;
+                isAlerted = false;
+            }
         }
+        else if (playerInReach)
+        {
+            playerInReach = false;
+            if (isSpotted)
+            {
+                isAlerted = true;
+                onAlert?.Invoke(target.position);
+                isSpotted = false;
+            }
+        }
+
     }
+
 }

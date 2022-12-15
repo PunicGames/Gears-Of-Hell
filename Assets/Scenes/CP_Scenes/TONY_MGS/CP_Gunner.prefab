@@ -4885,7 +4885,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6100044842552755524}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WhereShootOringinShouldGo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5019,7 +5019,7 @@ GameObject:
   - component: {fileID: 358070348298908453}
   - component: {fileID: 3699641676918946944}
   - component: {fileID: 1491592840087275594}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SubMachineGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5219,10 +5219,10 @@ NavMeshAgent:
   m_Speed: 3
   m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 300
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1
   m_BaseOffset: 0
@@ -5240,7 +5240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae6b496da9d33848a97ccd6c09f052a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatWalkingSpeed: 4
+  combatWalkingSpeed: 3
   patrollingWalkingSpeed: 1
   patrolIdleTime: 8
   shootOrigin: {fileID: 8875621814255642073}
@@ -5255,13 +5255,13 @@ MonoBehaviour:
   spotVFX: {fileID: 4011444804418516206}
   weapon1: {fileID: 1131476325685832095}
   weapon2: {fileID: 4072170650340736481}
-  bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
+  bullet: {fileID: 441659958780119776, guid: d33d66b69eeca5b4c86137700d144b48, type: 3}
   grenade: {fileID: 0}
   albedo: {r: 1, g: 1, b: 1, a: 0}
   emissive: {r: 1, g: 0.5615012, b: 0, a: 0}
-  cadenceTime: 0.25
+  cadenceTime: 0.15
   reloadTime: 2
-  bulletSpeed: 5
+  bulletSpeed: 25
   damage: 10
   bulletsPerMag: 24
   bulletsPerBurst: 6
@@ -11028,7 +11028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6895107114687496931}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WhereShootOringinShouldGo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11220,7 +11220,7 @@ GameObject:
   - component: {fileID: 6516362753782880999}
   - component: {fileID: 8415667794351445251}
   - component: {fileID: 1676380908309984563}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gas_Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11334,7 +11334,7 @@ GameObject:
   - component: {fileID: 4602722620450909492}
   - component: {fileID: 598974640184795793}
   - component: {fileID: 3434851282332833371}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Helmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11549,7 +11549,7 @@ GameObject:
   - component: {fileID: 3731391776513386331}
   - component: {fileID: 317304316705368318}
   - component: {fileID: 2559097721323199540}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17085,7 +17085,7 @@ GameObject:
   - component: {fileID: 2182563400016926423}
   - component: {fileID: 1512479642214215290}
   - component: {fileID: 638775849136322501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gunman_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
