@@ -11,9 +11,9 @@ public class FieldOfViewEditor : Editor
         Vector3 viewAngle02 = DirectionFromAngle(fov.parent.eulerAngles.y, fov.angle *0.5f);
 
         Handles.color = Color.yellow;
-        Handles.DrawWireArc(fov.transform.position, fov.transform.up, Quaternion.AngleAxis(fov.angle*.5f, fov.transform.up) *fov.parent.forward, -fov.angle, fov.perceptionRadius);
+        Handles.DrawWireArc(fov.transform.position, fov.transform.up, Quaternion.AngleAxis(fov.angle*.5f, fov.transform.up) *new Vector3(fov.parent.forward.x,0, fov.parent.forward.z), -fov.angle, fov.perceptionRadius);
         Handles.color = Color.red;
-        Handles.DrawWireArc(fov.transform.position, fov.transform.up, Quaternion.AngleAxis(fov.angle * .5f, fov.transform.up) * fov.parent.forward, -fov.angle, fov.spotRadius);
+        Handles.DrawWireArc(fov.transform.position, fov.transform.up, Quaternion.AngleAxis(fov.angle * .5f, fov.transform.up) * new Vector3(fov.parent.forward.x, 0, fov.parent.forward.z), -fov.angle, fov.spotRadius);
 
         Handles.color = Color.yellow;
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle01 * fov.perceptionRadius);
