@@ -19,6 +19,7 @@ public class WorkerBotBehavior : MonoBehaviour
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
     [SerializeField] GameObject weaponColliderPivot;
     [SerializeField] GameObject particleEffect;
+    [SerializeField] GameObject particleEffectPivot;
     [SerializeField] Collider recolectRangeCollider;
 
     [Space]
@@ -53,6 +54,7 @@ public class WorkerBotBehavior : MonoBehaviour
     public int currentHeals = 0; //heals que lleva recogidas
     bool alreadyAttacked = false;
     public GameObject itemObject;
+    Vector3 newScale = new Vector3(0.5f, 0.5f, 0.5f);
 
     [SerializeField] private LayerMask m_LayerMask;
 
@@ -238,18 +240,27 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private void GearUpgrade()
     {
-        weaponColliderPivot.transform.localScale += new Vector3(0.5f,0.5f,0.5f); //aumenta tamaño del collider
-        weaponMesh.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f); //aumenta tamaño del mesh
-        attackDamage += 2; //aumenta el daño en 2 por cada moneda recogida
-        weaponCollider.attackDamage = attackDamage; //le paso el daño nuevo al acript del arma
+        weaponColliderPivot.transform.localScale += newScale; //aumenta tamaño del collider
+        weaponMesh.transform.localScale += newScale; //aumenta tamaño del mesh
+        particleEffectPivot.transform.localScale += newScale; //aumenta el tamaño del efecto de particulas
+
+        attackDamage += 2; //aumenta el daño por cada moneda recogida
+        weaponCollider.attackDamage = attackDamage; //le paso el daño nuevo al script del arma
+
+        //activo el efecto de particulas de brillantitos, mas cantidad por cada moneda que tenga
     }
     private void HealUpgrade()
     {
-
+        transform.localScale += newScale; //aumenta el tamaño del mesh del pj
+        GetComponent<EnemyHealth>().startingHealth *= 2;
+        GetComponent<EnemyHealth>().currentHealth = GetComponent<EnemyHealth>().startingHealth;
+        //activo el efecto de cura en el robot
     }
     private void AmmoUpgrade()
     {
-
+        agent.speed += 1;
+        rollSpeed *= rollSpeed / 2;
+        //activo efecto de particulas de algo para inficar que ahora tiene esta mejora
     }
 
     public void Attack()
