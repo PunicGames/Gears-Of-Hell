@@ -8,16 +8,22 @@ public class CP_GunnerBehaviour : MonoBehaviour
     #region inEditorVariables
 
     [Header("GENERAL")]
+
     [Space]
-    public float spotDistance = 7f;
-    public float shotgunSpotDistance = 4f;
-    public float bulletLifetimeShotGun = 0.8f;
+
+    public float combatWalkingSpeed = 4f;
+    public float patrollingWalkingSpeed = 1f;
+    public float patrolIdleTime = 5f;
+
     public Transform shootOrigin;
 
-    [SerializeField] List<Vector3> patrolPoints;
+    [SerializeField] List<Transform> patrolPoints = new List<Transform>();
 
 
     [SerializeField] ParticleSystem muzzleVFX;
+    [SerializeField] private ParticleSystem upgradeVFX;
+    [SerializeField] private GameObject alertVFX;
+    [SerializeField] private GameObject spotVFX;
     [SerializeField] GameObject weapon1;
     [SerializeField] GameObject weapon2;
     [Space]
@@ -30,7 +36,6 @@ public class CP_GunnerBehaviour : MonoBehaviour
     [SerializeField] private Color emissive;
     // Upgrade
     bool upgraded = false;
-    [SerializeField] private ParticleSystem RaiseUnit;
     [Space]
     [Header("COMBAT")]
     [Space]
@@ -56,14 +61,20 @@ public class CP_GunnerBehaviour : MonoBehaviour
     public float timeUntilExplosion = 1f;
     public int failOffset = 3;
 
+    [Space]
 
     public bool enableShotgun = false;
+    public float bulletLifetimeShotGun = 0.8f;
     public float timeBetweenShotgunShots = 1.4f;
     [Range(45, 180)] public float coneApertureInDegrees = 90;
 
     #endregion
+    private float spotDistance;
+    private float shotgunSpotDistance;
 
-    private int nextPatrolPoint =0;
+    private float idleBlend = 1f;
+
+    private int nextPatrolPoint = 0;
     private bool isCalm = true;
     private bool hasReachedPoint = true;
 
@@ -77,31 +88,44 @@ public class CP_GunnerBehaviour : MonoBehaviour
     private bool alreadyAttacked = false;
     private bool inAttackRange = false;
     private float distance;
-    private float speed;
 
+    EnemyVision vision;
     Transform player;
     NavMeshAgent agent;
     Animator animator;
     EnemySoundManager soundManager;
+
+    private Vector3 playerLastSeenPos;
 
     private int upgradeLifetime = 10;
 
     private enum combatState { IDLE, PURSUE, ATTACK, RECHARGE, GRENADE };
     private combatState currenCombatState = combatState.IDLE;
 
-    private enum standardState { IDLE, PATROLLING, COMBAT, INSPECTING, HQ_CALL };
+    private enum standardState { IDLE, PATROLLING, COMBAT, ALERTED, ALERTED_IDLE, HQ_CALL };
     private standardState currenState = standardState.IDLE;
-
-
+    private float speed;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        animator.SetFloat("walking_speed", patrollingWalkingSpeed);
+        //animator.SetFloat("check_time", patrolIdleTime);
+        animator.SetFloat("idleBlend", idleBlend);
+
+        vision = GetComponent<EnemyVision>();
+
+        vision.onAlert += TransitionToAlert;
+        vision.onSpot += TransitionToCombat;
+
+        spotDistance = vision.perceptionRadius;
+        shotgunSpotDistance = vision.perceptionRadius * .75f;
 
         soundManager = GetComponent<EnemySoundManager>();
 
+        //IF SHOTGUN CHANCE ENABLED
         if (enableShotgun)
         {
             if (Random.Range(0, 3) == 0)
@@ -122,16 +146,16 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
             }
         }
+
         bulletsInMag = bulletsPerMag;
         bulletsInBurst = bulletsPerBurst;
 
+        agent.speed = patrollingWalkingSpeed;
         speed = agent.speed;
     }
 
     private void Update()
     {
-
-
         StandardFSM();
     }
 
@@ -229,22 +253,47 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
     private void StandardFSM()
     {
+
         switch (currenState)
         {
             case standardState.IDLE:
-              
-                    TransitionToPatrol(5);
-                //si ve o escucha algo mientras transiciona a patrol que cancele el inboke y pase a inspecting
+                TransitionToPatrol(patrolIdleTime);
 
                 break;
             case standardState.PATROLLING:
-                //si la distancia entre patrol point y posicion es 0 o menor que pase a idle
-                //si ve o escucha algo que pase a inspecting
+                distance = Vector3.Distance(transform.position, patrolPoints[nextPatrolPoint].position);
+                //If reaches point
+                if (distance <= 0.1f)
+                {
+                    TransitionToPatrolIdle();
+                    nextPatrolPoint++;
+                    nextPatrolPoint = nextPatrolPoint % patrolPoints.Count;
+                }
+
                 break;
             case standardState.COMBAT:
                 CombatFSM();
                 break;
-            case standardState.INSPECTING:
+            case standardState.ALERTED:
+                distance = Vector3.Distance(transform.position, playerLastSeenPos);
+                Debug.Log(distance);
+                if (distance <= 0.1f)
+                {
+                    float nearest = 999f;
+                    int index = 0;
+                    int nearestIndex = index;
+                    foreach (var p in patrolPoints)
+                    {
+                        float dist = Vector3.Distance(transform.position, p.position);
+                        if (dist < nearest) { nearest = dist; nearestIndex = index; }
+                        index++;
+                    }
+                    TransitionToAlertedIdle();
+                    nextPatrolPoint = nearestIndex;
+                }
+                break;
+            case standardState.ALERTED_IDLE:
+                TransitionToPatrol(patrolIdleTime * 1.5f);
                 break;
             case standardState.HQ_CALL:
                 break;
@@ -467,25 +516,71 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
         agent.speed = speed;
         upgraded = false;
-        RaiseUnit.Play();
-        RaiseUnit.loop = true;
+        upgradeVFX.Play();
+        upgradeVFX.loop = true;
     }
     #endregion
     #region standardTransitions
-    void TransitionToPatrol(int time)
+    void TransitionToPatrol(float time)
     {
-        Invoke(nameof(PatrolToPoint),time);
+        Invoke(nameof(PatrolToPoint), time);
+    }
+    void TransitionToPatrolIdle()
+    {
+
+        currenState = standardState.IDLE;
+        agent.isStopped = true;
+        animator.SetBool("Walking", false);
+    }
+    void TransitionToAlert(Vector3 lastSeenPos)
+    {
+        CancelInvoke(nameof(PatrolToPoint));
+        animator.SetBool("Walking", true);
+        currenState = standardState.ALERTED;
+        agent.isStopped = false;
+        agent.speed = patrollingWalkingSpeed * 1.5f;
+        animator.SetFloat("walking_speed", agent.speed);
+        playerLastSeenPos = lastSeenPos;
+        agent.SetDestination(playerLastSeenPos);
+
+        alertVFX.SetActive(true);
+    }
+    void TransitionToAlertedIdle()
+    {
+        currenState = standardState.ALERTED_IDLE;
+        agent.isStopped = true;
+        animator.SetBool("Walking", false);
+        agent.speed = patrollingWalkingSpeed;
+        animator.SetFloat("walking_speed", agent.speed);
+    }
+    void TransitionToCombat()
+    {
+        currenState = standardState.COMBAT;
+        agent.speed = combatWalkingSpeed;
+        animator.SetBool("Walking", false);
+        idleBlend = 0f;
+        animator.SetFloat("idleBlend", idleBlend);
+
+
+        alertVFX.SetActive(false);
+
+        spotVFX.SetActive(true);
+        //Invoke(nameof(StopSpotVFX), 2f);
     }
 
     #endregion
+    #region utilityPatrolFunctions
     void PatrolToPoint()
     {
-        
+        CancelInvoke(nameof(PatrolToPoint));
+
+        alertVFX.SetActive(false);
         currenState = standardState.PATROLLING;
-        agent.SetDestination(patrolPoints[nextPatrolPoint]);
-        nextPatrolPoint++;
+        agent.isStopped = false;
+        animator.SetBool("Walking", true);
+        agent.SetDestination(patrolPoints[nextPatrolPoint].position);
     }
-
-
+   
+    #endregion
 
 }
