@@ -7,13 +7,17 @@ using UnityEngine.Events;
 public class WorkerBotBehavior : MonoBehaviour
 {
     //variables parametricas
-    [SerializeField] int MAXGEARSCAPACITY = 10; //capacidad maxima de monedas que puede recoger
-    [SerializeField] int attackDamage = 10; //daño por cada golpe
+    [SerializeField] public int MAXGEARSCAPACITY = 4; //capacidad maxima de monedas que puede recoger
+    [SerializeField] public int MAXHEALSCAPACITY = 2; //capacidad maxima de curas que puede recoger
+    [SerializeField] public int MAXAMMOSCAPACITY = 2; //capacidad maxima de ammos que puede recoger
+
+    [SerializeField] int attackDamage = 7; //daño por cada golpe
     [SerializeField] float rollSpeed = 10.0f; //velocidad a la que gira atacando
 
     [Space]
 
     [SerializeField] private MeleeWeaponBehaviour weaponCollider;
+    [SerializeField] GameObject weaponColliderPivot;
     [SerializeField] GameObject particleEffect;
     [SerializeField] Collider recolectRangeCollider;
 
@@ -44,7 +48,9 @@ public class WorkerBotBehavior : MonoBehaviour
     private GameObject player;
     NavMeshAgent agent;
 
-    int currentGears = 0; //monedas que lleva recogidas
+    public int currentGears = 0; //monedas que lleva recogidas
+    public int currentAmmos = 0; //ammos que lleva recogidas
+    public int currentHeals = 0; //heals que lleva recogidas
     bool alreadyAttacked = false;
     public GameObject itemObject;
 
@@ -64,8 +70,10 @@ public class WorkerBotBehavior : MonoBehaviour
         ATTACKFSM,
     };
 
-    public FSM1_states currentFSM1State = FSM1_states.ATTACKFSM; //la fsm 1
-    public FSM2_states currentFSM2State = FSM2_states.PURSUE; //la fsm 2
+    [Space]
+
+    [SerializeField] public FSM1_states currentFSM1State = FSM1_states.ATTACKFSM; //la fsm 1
+    [SerializeField] public FSM2_states currentFSM2State = FSM2_states.PURSUE; //la fsm 2
     private bool dead = false;
 
     // Start is called before the first frame update
@@ -92,7 +100,7 @@ public class WorkerBotBehavior : MonoBehaviour
     {
         if (!dead)
         {
-            FSM_LVL_2();
+            FSM_LVL_1();
             //ActionFSM();
         }
         else
@@ -106,11 +114,8 @@ public class WorkerBotBehavior : MonoBehaviour
         }
     }
 
-    private void FSM_LVL_1() //{ IDLE, PURSUE, ATTACK }
+    private void FSM_LVL_1()
     {
-        float distance = Vector3.Distance(itemObject.transform.position, transform.position); //distancia entre el item y el workerbot
-        agent.SetDestination(itemObject.transform.position); //se dirige a por el item
-
         switch (currentFSM1State)
         {
             case FSM1_states.RECOLECT:
@@ -118,33 +123,53 @@ public class WorkerBotBehavior : MonoBehaviour
                 animator.SetBool("isMoving", false);
                 transform.LookAt(itemObject.transform.position); //miramos al player
 
-                if (distance > agent.stoppingDistance)
+                if (itemObject.CompareTag("Gear"))
                 {
-                    //si la distancia es mayor a la asignada a detenerse comenzamos a perseguir
-                    currentFSM1State = FSM1_states.SEARCH;
+                    print("recolectamos gear");
+
+                    currentGears += 1;
+                    GearUpgrade(); //mejoras al coger moneda
+                    Destroy(itemObject);
                 }
-                else
+                if (itemObject.CompareTag("Heal"))
                 {
-                    if (itemObject.CompareTag("Gear"))
-                    {
-                        //mejoras al coger moneda
-                    }
-                    if (itemObject.CompareTag("Heal"))
-                    {
-                        //mejoras al coger heal
-                    }
-                    if (itemObject.CompareTag("Ammo"))
-                    {
-                        //mejoras al coger ammo
-                    }
+                    print("recolectamos heal");
+
+                    currentHeals += 1;
+                    HealUpgrade(); //mejoras al coger moneda
+                    Destroy(itemObject);
                 }
+                if (itemObject.CompareTag("Ammo"))
+                {
+                    print("recolectamos ammo");
+
+                    currentAmmos += 1;
+                    AmmoUpgrade(); //mejoras al coger moneda
+                    Destroy(itemObject);
+                }
+
+                currentFSM1State = FSM1_states.ATTACKFSM;
+
                 break;
 
             case FSM1_states.SEARCH:
 
-                break;
-            case FSM1_states.ATTACKFSM:
+                float distance = Vector3.Distance(itemObject.transform.position, transform.position); //distancia entre el item y el workerbot
+                agent.SetDestination(itemObject.transform.position); //se dirige a por el item
 
+                enemySoundManager.PlaySound("walk");
+                animator.SetBool("isMoving", true);
+
+                if (distance <= agent.stoppingDistance)
+                {
+                    //si la distancia es menor a la asignada a detenerse me detengo
+                    currentFSM1State = FSM1_states.RECOLECT;
+                }
+
+                break;
+
+            case FSM1_states.ATTACKFSM:
+                FSM_LVL_2();
                 break;
         }
     }
@@ -211,6 +236,22 @@ public class WorkerBotBehavior : MonoBehaviour
         }
     }
 
+    private void GearUpgrade()
+    {
+        weaponColliderPivot.transform.localScale += new Vector3(0.5f,0.5f,0.5f); //aumenta tamaño del collider
+        weaponMesh.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f); //aumenta tamaño del mesh
+        attackDamage += 2; //aumenta el daño en 2 por cada moneda recogida
+        weaponCollider.attackDamage = attackDamage; //le paso el daño nuevo al acript del arma
+    }
+    private void HealUpgrade()
+    {
+
+    }
+    private void AmmoUpgrade()
+    {
+
+    }
+
     public void Attack()
     {
         alreadyAttacked = true;
@@ -233,7 +274,7 @@ public class WorkerBotBehavior : MonoBehaviour
         alreadyAttacked = false;
         animator.SetBool("isAttacking", false);
         particleEffect.SetActive(false);
-        print("resetParameters");
+
         currentFSM2State = FSM2_states.IDLE;
     }
     private void Death()
