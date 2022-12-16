@@ -11841,7 +11841,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6954202007441050494}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.85, y: 0, z: 11.3}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
@@ -12150,10 +12150,11 @@ MonoBehaviour:
   bulletSpeed: 10
   damage: 5
   bulletLifetime: 3
-  timeBetweenBursts: 2
-  bulletsPerBurst: 20
+  timeBetweenBursts: 0.5
+  bulletsPerBurst: 50
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
   grenade: {fileID: 53655109027075921, guid: 2c8ec62a2e749f54faa0d9e34813caca, type: 3}
+  missile: {fileID: 8840309410092667684, guid: 40495b3235dbe864292c01ca35804141, type: 3}
   grenadeThrowPoint: {fileID: 7693063674994648540}
   grenadeDamage: 80
   explosionRatio: 1
