@@ -7,6 +7,7 @@ public class ScheneryBehaviour: MonoBehaviour
     [SerializeField] GameObject floor;
     [SerializeField] Color[] colors;
     [HideInInspector] Material materialBckUp;
+    [HideInInspector] GameObject player;
 
     [SerializeField] bool transitionTrigger = false;
     private bool lerping = false;
@@ -17,6 +18,9 @@ public class ScheneryBehaviour: MonoBehaviour
     // stores the hp at we want to change the phase
     [SerializeField] int[] phases;
 
+    [SerializeField] List<Vector3> spawnPoints;
+    [SerializeField] float spawnLimit;
+
     // phase index
     private int phase = 0;
     private Vector2Int fromTo = Vector2Int.zero;
@@ -25,13 +29,15 @@ public class ScheneryBehaviour: MonoBehaviour
     
     private void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         InitializeNewMaterial();
+        InitializeSpawnPoints();
     }
 
     private void Start()
     {
         CheckPhase(100);
-        CheckPhase(100);
+        //CheckPhase(100);
     }
 
     // Update is called once per frame
@@ -43,6 +49,31 @@ public class ScheneryBehaviour: MonoBehaviour
     #endregion
 
     #region Functionality
+
+    private Vector3 GetSpawnPoint()
+    {
+        var playerPos = player.transform.position;
+        var spwnPntsCopy = new List<Vector3>(spawnPoints);
+
+        spawnPoints.RemoveAll(x => 
+        {
+            var dist = Vector3.Distance(playerPos, x);
+            return dist <= spawnLimit;
+        });
+
+        return spawnPoints[Random.Range(0, spawnPoints.Count)];
+    }
+
+    private void InitializeSpawnPoints()
+    {
+        spawnPoints = new List<Vector3>();
+        foreach (Transform child in transform)
+        {
+            spawnPoints.Add(child.position);
+            Destroy(child.gameObject);
+        }
+    }
+
     public void CheckPhase(int hp)
     {
         for (int i = phase; i < phases.Length; i++)
