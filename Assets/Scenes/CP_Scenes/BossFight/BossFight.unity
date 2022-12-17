@@ -2012,7 +2012,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 127c197e2b17d2e4b8b136daaa5834e0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 814a5eb761fd8354ea7ffb8aff6647f5, type: 2}
+      objectReference: {fileID: 2100000, guid: 90139afa93afef34d962d77c759704f0, type: 2}
     - target: {fileID: 919132149155446097, guid: 127c197e2b17d2e4b8b136daaa5834e0, type: 3}
       propertyPath: m_Name
       value: HexFloor
@@ -4756,6 +4756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1891867474}
   - component: {fileID: 1891867473}
+  - component: {fileID: 1891867475}
   m_Layer: 0
   m_Name: ScheneryAgent
   m_TagString: Untagged
@@ -4808,6 +4809,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1891867475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891867472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4468fca4e8910904db7dff985ace21c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 90139afa93afef34d962d77c759704f0, type: 2}
+  colors:
+  - {r: 1, g: 1, b: 0, a: 0}
+  - {r: 0.00081014633, g: 0, b: 1, a: 0}
+  transitionTrigger: 0
+  duration: 1
 --- !u!1 &1892299599
 GameObject:
   m_ObjectHideFlags: 0
