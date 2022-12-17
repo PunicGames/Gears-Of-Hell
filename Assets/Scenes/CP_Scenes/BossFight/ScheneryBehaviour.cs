@@ -4,21 +4,65 @@ using UnityEngine;
 
 public class ScheneryBehaviour: MonoBehaviour
 {
-    [SerializeField] Material material;
+    [SerializeField] GameObject floor;
     [SerializeField] Color[] colors;
+    [HideInInspector] Material materialBckUp;
 
     [SerializeField] bool transitionTrigger = false;
-    bool lerping = false;
+    private bool lerping = false;
     [SerializeField] float duration = 1.0f;
     private float speed = 0.02f;
     private float value = 0;
 
+    // stores the hp at we want to change the phase
+    [SerializeField] int[] phases;
+
+    // phase index
+    private int phase = 0;
+    private Vector2Int fromTo = Vector2Int.zero;
+
+    #region MonoBehaviour
+    
     private void Awake()
     {
-        SetColor(colors[0]);
+        InitializeNewMaterial();
     }
+
+    private void Start()
+    {
+        CheckPhase(100);
+        CheckPhase(100);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
+    {
+        PhaseTransition();
+    }
+
+    #endregion
+
+    #region Functionality
+    public void CheckPhase(int hp)
+    {
+        for (int i = phase; i < phases.Length; i++)
+        {
+            if (hp <= phases[i])
+            {
+                GoToPhase(i+1);
+                return;
+            }
+        }
+    }
+
+    private void GoToPhase(int i)
+    {
+        phase = i;
+        fromTo = new Vector2Int(i-1,i);
+        transitionTrigger = true;
+    }
+
+    private void PhaseTransition()
     {
         if (transitionTrigger)
         {
@@ -28,7 +72,7 @@ public class ScheneryBehaviour: MonoBehaviour
         }
 
         if (lerping)
-            FadeColor(0, 1);
+            FadeColor(fromTo.x, fromTo.y);
     }
 
     private void FadeColor(int from, int to)
@@ -45,6 +89,15 @@ public class ScheneryBehaviour: MonoBehaviour
 
     private void SetColor(Color color)
     {
-        material.SetColor("_EmissionColor", color);
+        materialBckUp.SetColor("_EmissionColor", color);
     }
+
+    private void InitializeNewMaterial()
+    {
+        materialBckUp = new Material(floor.GetComponent<MeshRenderer>().material);
+        SetColor(colors[0]);
+        floor.GetComponent<MeshRenderer>().material = materialBckUp;
+    }
+
+    #endregion
 }
