@@ -4948,8 +4948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {x: 0.41116536, y: 0.03507781, z: 5.1408596}
   origin: {x: 0, y: 0, z: 0}
-  damage: 80
-  rotSpeed: 1.8
+  damage: 50
+  flySpeed: 0.5
   vfx: {fileID: 8064307483207533320}
   rangeObject: {fileID: 4041772214107726067}
   missileMesh: {fileID: 7610442863684583183}
@@ -5271,7 +5271,7 @@ PrefabInstance:
     - target: {fileID: 432342453153516422, guid: 0de08c1a0f06e744eb25b03f745ebc2a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 92930fafae9e30f448ec258cb475748d, type: 2}
+      objectReference: {fileID: 2100000, guid: 452cc711f6c205749adb7aa44ab670cd, type: 2}
     - target: {fileID: 919132149155446097, guid: 0de08c1a0f06e744eb25b03f745ebc2a, type: 3}
       propertyPath: m_Name
       value: rocket

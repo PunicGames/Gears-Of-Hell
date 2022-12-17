@@ -7,13 +7,13 @@ public class Missile : MonoBehaviour
     public Vector3 target;
     public Vector3 origin;
 
-    public int damage = 80;
+    public int damage;
 
-    public float rotSpeed;
+    public float flySpeed;
+
+    private float rotSpeed;
 
     private float anim;
-
-    private float speed = 0.5f;
 
     private bool alreadyExploding = false;
 
@@ -29,7 +29,9 @@ public class Missile : MonoBehaviour
     void Start()
     {
         origin = transform.position;
-        
+
+        rotSpeed = flySpeed * 3.8f;
+
         target = GameObject.FindGameObjectWithTag("Player").transform.position;
         audioSource = gameObject.GetComponent<AudioSource>();
 
@@ -48,7 +50,7 @@ public class Missile : MonoBehaviour
         }
         //rangeObject.transform.position = target;
         anim += Time.deltaTime;
-        transform.position = MathParabola.Parabola(origin, target, 3.8f, anim * speed);
+        transform.position = MathParabola.Parabola(origin, target, 3.8f, anim * flySpeed);
         MissileFly();
 
         if (transform.position.y <= target.y)
