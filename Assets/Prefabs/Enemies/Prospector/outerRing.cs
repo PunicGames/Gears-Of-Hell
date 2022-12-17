@@ -36,13 +36,13 @@ public class outerRing : MonoBehaviour
     public int checkNumEnemiesInRange()
     {
         // Checks for number of enemies
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask, QueryTriggerInteraction.Ignore);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius + 3, m_LayerMask, QueryTriggerInteraction.Ignore);
         return hitColliders.Length;
     }
 
     public float checkEnemiesHealthStatus() {
         float healthRatio = 0.0f;
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask, QueryTriggerInteraction.Ignore);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, sC.radius + 3, m_LayerMask, QueryTriggerInteraction.Ignore);
 
         // Checks for number of enemies
         foreach (Collider eC in hitColliders) {
@@ -51,7 +51,6 @@ public class outerRing : MonoBehaviour
             {
                 // Health ratio only based on surrounding enemies
                 healthRatio += ((float)eH.currentHealth / (float)eH.startingHealth);
-                //Debug.Log("Current Health: " + eH.currentHealth + ". Max Health: " + eH.startingHealth+ ". HealthRatio: " + healthRatio);
             }
         }
 
@@ -65,8 +64,8 @@ public class outerRing : MonoBehaviour
         return healthRatio;
     }
 
-    public Collider[] GetEnemiesInRange() { 
-        return Physics.OverlapSphere(gameObject.transform.position, sC.radius, m_LayerMask, QueryTriggerInteraction.Ignore);
+    public Collider[] GetEnemiesInRange() {
+        return Physics.OverlapSphere(gameObject.transform.position, sC.radius + 3, m_LayerMask, QueryTriggerInteraction.Ignore);
     }
 
     public float GetRadius() {
