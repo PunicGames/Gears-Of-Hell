@@ -310,6 +310,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: attackRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: burstCadence
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: timeBetweenBursts
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6954202007441050494, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
       propertyPath: m_Name
       value: CP_MediumSpider
@@ -4732,7 +4744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2965399309383992566, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7
+      value: -6.999939
       objectReference: {fileID: 0}
     - target: {fileID: 6752494730495819223, guid: 71b7e1e3f0af4db4da97b983d87288d6, type: 3}
       propertyPath: m_IsActive
@@ -5702,11 +5714,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355441674960582989, guid: 40495b3235dbe864292c01ca35804141, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.53807265
+      value: 4.98
       objectReference: {fileID: 0}
     - target: {fileID: 3355441674960582989, guid: 40495b3235dbe864292c01ca35804141, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2535896
+      value: 4.51
       objectReference: {fileID: 0}
     - target: {fileID: 3355441674960582989, guid: 40495b3235dbe864292c01ca35804141, type: 3}
       propertyPath: m_LocalRotation.w

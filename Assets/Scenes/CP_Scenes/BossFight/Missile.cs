@@ -9,6 +9,8 @@ public class Missile : MonoBehaviour
 
     public int damage = 80;
 
+    public float rotSpeed;
+
     private float anim;
 
     private float speed = 0.5f;
@@ -60,7 +62,7 @@ public class Missile : MonoBehaviour
     {
         var dir = target - transform.position;
         Quaternion lookOnLook = Quaternion.LookRotation(dir);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, 1 * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, rotSpeed * Time.deltaTime);
     }
 
     private void Explode()
