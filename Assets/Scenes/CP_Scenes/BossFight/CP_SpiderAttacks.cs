@@ -8,43 +8,66 @@ public class CP_SpiderAttacks : MonoBehaviour
 
     private GameObject player;
 
-    [SerializeField] private NavMeshAgent agent;
+    [Header("Components")]
 
+    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private EnemyHealth eh;
     [SerializeField] private CapsuleCollider enemyColl;
     [SerializeField] private SkinnedMeshRenderer smr;
-
     [SerializeField] private GameObject miniGun;
     [SerializeField] private GameObject shootOrigin;
     [SerializeField] ParticleSystem muzzleVFX;
 
-    public float burstCadence = 1f;
-    public float bulletSpeed = 2;
-    public float damage = 10;
-    public float bulletLifetime = 3f;
+    [Header("Stats")]
 
-    public float timeBetweenBursts = 2f;
+    public float timeBetweenAttacks;
+    public float attackRange;
 
-    [SerializeField] private int bulletsPerBurst;
+    [Header("Minigun")]
 
+    public int mg_damage;
+    public float mg_burstCadence;
+    public float mg_bulletSpeed;
+    public int mg_bulletsPerBurst;
     [SerializeField] private GameObject bullet;
+    // Bullet colors
+    [SerializeField] private Color albedo;
+    [SerializeField] private Color emissive;
+    private float bulletLifetime = 3f;
+    //Audio
+    [SerializeField] private AudioSource gunAudio;
+
+    [Header("Grenade")]
+
+    public int gr_damage;
+    public float gr_burstCadence;
+    public int gr_bulletsPerBurst;
+    public float gr_timeUntilExplosion;
+    public int gr_failOffset;
+    private float explosionRatio = 1;
     [SerializeField] private GameObject grenade;
+    [SerializeField] Transform gr_ThrowPoint;
+
+    [Header("Missile")]
+
+    public int mi_damage;
+    public float mi_burstCadence;
+    public float mi_bulletSpeed;
+    public int mi_bulletsPerBurst;
+    public int mi_failOffset;
     [SerializeField] private GameObject missile;
+    [SerializeField] Transform mi_ThrowPoint;
 
-    [SerializeField] Transform grenadeThrowPoint;
-    public int grenadeDamage = 80;
-    public float explosionRatio = 1;
-    public float timeUntilExplosion = 1f;
-    private float throwDistance = 4f;
-    public int failOffset = 3;
-
-    [SerializeField] private float attackRange;
 
     private GameObject currentTarget;
 
-    private int bulletsInBurst;
+    private int bulletsInMgBurst;
+    private int bulletsInGrBurst;
+    private int bulletsInMiBurst;
 
-    private bool currentlyInBurst = false;
+    private bool currentlyInMgBurst = false;
+    private bool currentlyInGrBurst = false;
+    private bool currentlyInMiBurst = false;
 
     //Percepciones
     private bool alreadyAttacked = false;
@@ -55,15 +78,15 @@ public class CP_SpiderAttacks : MonoBehaviour
     private enum spiderState { IDLE, PURSUE, ATTACK, DEAD };
     private spiderState currentState = spiderState.IDLE;
 
-    // Bullet colors
-    [SerializeField] private Color albedo;
-    [SerializeField] private Color emissive;
+    
+    
 
-    //Audio
-    [SerializeField] private AudioSource gunAudio;
+    
 
     // Upgrade
     bool upgraded = false;
+
+    [Header("Death")]
 
     //DeathExplosion
     [SerializeField] private ParticleSystem explosionVfx;
@@ -89,7 +112,9 @@ public class CP_SpiderAttacks : MonoBehaviour
 
         eh.onDeath += Death;
 
-        bulletsInBurst = bulletsPerBurst;
+        bulletsInMgBurst = mg_bulletsPerBurst;
+        bulletsInGrBurst = gr_bulletsPerBurst;
+        bulletsInMiBurst = mi_bulletsPerBurst;
 
         lastGrenadeTime = 0;
 
@@ -119,6 +144,15 @@ public class CP_SpiderAttacks : MonoBehaviour
             case spiderState.IDLE:
 
                 IdleAction();
+
+                if(currentlyInMgBurst || currentlyInGrBurst || currentlyInMiBurst)
+                {
+                    if (!alreadyAttacked)
+                    {
+                        currentState = spiderState.ATTACK;
+                    }
+                    break;
+                }
 
                 if (canAttack && inRange)
                 {
@@ -150,6 +184,12 @@ public class CP_SpiderAttacks : MonoBehaviour
 
                 AttackAction();
 
+                if (currentlyInMgBurst || currentlyInGrBurst || currentlyInMiBurst)
+                {
+                    currentState = spiderState.IDLE;
+                    break;
+                }
+
                 if (alreadyAttacked && inRange)
                 {
                     currentState = spiderState.IDLE;
@@ -157,6 +197,7 @@ public class CP_SpiderAttacks : MonoBehaviour
                 else if (alreadyAttacked && !inRange)
                 {
                     currentState = spiderState.PURSUE;
+                    print("a pursue");
                 }
 
                 break;
@@ -185,9 +226,19 @@ public class CP_SpiderAttacks : MonoBehaviour
     {
         agent.isStopped = true;
 
-        if (currentlyInBurst)
+        if (currentlyInMgBurst)
         {
             ShootMinigun();
+            return;
+        }
+        else if (currentlyInGrBurst)
+        {
+            LaunchGrenade();
+            return;
+        }
+        else if (currentlyInMiBurst)
+        {
+            LaunchMissile();
             return;
         }
 
@@ -207,13 +258,13 @@ public class CP_SpiderAttacks : MonoBehaviour
 
         if (grenadeAction >= shootAction)
         {
-            //LaunchGrenade();
-            LaunchMissile();
+            LaunchGrenade();
+            //LaunchMissile();
         }
         else
         {
-            //ShootMinigun();
-            LaunchMissile();
+            ShootMinigun();
+            //LaunchMissile();
         }
     }
 
@@ -229,71 +280,108 @@ public class CP_SpiderAttacks : MonoBehaviour
 
     private void ShootMinigun()
     {
-        GameObject b = Instantiate(bullet, new Vector3(shootOrigin.transform.position.x, shootOrigin.transform.position.y, shootOrigin.transform.position.z), Quaternion.identity);
-        b.transform.LookAt(player.transform);
-        Bullet bulletParams = b.GetComponent<Bullet>();
-        bulletParams.SetForce(bulletSpeed);
-        bulletParams.SetDamage(damage);
-        bulletParams.SetLaser(false);
-        bulletParams.owner = Bullet.BulletOwner.ENEMY;
-        bulletParams.timeToDestroy = bulletLifetime;
-        bulletParams.SetBulletColors(albedo, emissive);
+        CreateBullet();
 
         alreadyAttacked = true;
         canAttack = false;
-        currentlyInBurst = true;
+        currentlyInMgBurst = true;
+
         gunAudio.Play();
         muzzleVFX.Play();
 
-        bulletsInBurst--;
+        bulletsInMgBurst--;
 
-        if (bulletsInBurst > 0)
-            Invoke(nameof(ResetAttack), burstCadence);
+        if (bulletsInMgBurst > 0)
+            Invoke(nameof(ResetAttack), mg_burstCadence);
         else
         {
-            Invoke(nameof(ResetAttack), timeBetweenBursts);
-            bulletsInBurst = bulletsPerBurst;
-            currentlyInBurst = false;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            bulletsInMgBurst = mg_bulletsPerBurst;
+            currentlyInMgBurst = false;
             gunAudio.Stop();
         }
     }
 
+    private void CreateBullet()
+    {
+        GameObject b = Instantiate(bullet, new Vector3(shootOrigin.transform.position.x, shootOrigin.transform.position.y, shootOrigin.transform.position.z), Quaternion.identity);
+        b.transform.LookAt(player.transform);
+        Bullet bulletParams = b.GetComponent<Bullet>();
+        bulletParams.SetForce(mg_bulletSpeed);
+        bulletParams.SetDamage(mg_damage);
+        bulletParams.SetLaser(false);
+        bulletParams.owner = Bullet.BulletOwner.ENEMY;
+        bulletParams.timeToDestroy = bulletLifetime;
+        bulletParams.SetBulletColors(albedo, emissive);
+    }
+
     public void LaunchGrenade()
     {
-
-        GameObject g = Instantiate(grenade, new Vector3(grenadeThrowPoint.position.x, grenadeThrowPoint.position.y, grenadeThrowPoint.position.z), Quaternion.identity);
-
-        Grenade grenadeParams = g.GetComponent<Grenade>();
-        //Compose target
-        Vector3 target = new Vector3(Random.Range(player.transform.position.x - failOffset, player.transform.position.x + failOffset), player.transform.position.y, Random.Range(player.transform.position.z - failOffset, player.transform.position.z + failOffset));
-        grenadeParams.target = target;
-        grenadeParams.damage = grenadeDamage;
-        grenadeParams.setExplosionRatio(explosionRatio);
-        grenadeParams.timeUntilExplosion = timeUntilExplosion;
+        CreateGrenade();
 
         alreadyAttacked = true;
         canAttack = false;
+        currentlyInGrBurst = true;
 
         lastGrenadeTime = 0;
 
-        Invoke(nameof(ResetAttack), timeBetweenBursts);
+        bulletsInGrBurst--;
 
+        if (bulletsInGrBurst > 0)
+            Invoke(nameof(ResetAttack), gr_burstCadence);
+        else
+        {
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            bulletsInGrBurst = gr_bulletsPerBurst;
+            currentlyInGrBurst = false;
+        }
+    }
+
+    private void CreateGrenade()
+    {
+        GameObject g = Instantiate(grenade, new Vector3(gr_ThrowPoint.position.x, gr_ThrowPoint.position.y, gr_ThrowPoint.position.z), Quaternion.identity);
+
+        Grenade grenadeParams = g.GetComponent<Grenade>();
+        //Compose target
+        Vector3 target = new Vector3(Random.Range(player.transform.position.x - gr_failOffset, player.transform.position.x + gr_failOffset), player.transform.position.y, Random.Range(player.transform.position.z - gr_failOffset, player.transform.position.z + gr_failOffset));
+        grenadeParams.target = target;
+        grenadeParams.damage = gr_damage;
+        grenadeParams.setExplosionRatio(explosionRatio);
+        grenadeParams.timeUntilExplosion = gr_timeUntilExplosion;
     }
 
     public void LaunchMissile()
     {
-        GameObject g = Instantiate(missile, new Vector3(grenadeThrowPoint.position.x, grenadeThrowPoint.position.y, grenadeThrowPoint.position.z), Quaternion.identity);
+        CreateMissile();
 
-        //Missile missileParams = missile.GetComponent<Missile>();
-
-        //missileParams.target = player.transform.position;
-
-
-        /////////////////////////////////////
         alreadyAttacked = true;
         canAttack = false;
+        currentlyInMiBurst = true;
 
-        Invoke(nameof(ResetAttack), timeBetweenBursts);
+        bulletsInMiBurst--;
+
+        if (bulletsInMiBurst > 0)
+            Invoke(nameof(ResetAttack), mi_burstCadence);
+        else
+        {
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            bulletsInMiBurst = mi_bulletsPerBurst;
+            currentlyInMiBurst = false;
+        }
+
+        //Invoke(nameof(ResetAttack), timeBetweenAttacks);
+    }
+
+    private void CreateMissile()
+    {
+        GameObject g = Instantiate(missile, new Vector3(mi_ThrowPoint.position.x, mi_ThrowPoint.position.y, mi_ThrowPoint.position.z), Quaternion.identity);
+
+        Missile missileParams = g.GetComponent<Missile>();
+        //Compose target
+        Vector3 target = new Vector3(Random.Range(player.transform.position.x - mi_failOffset, player.transform.position.x + mi_failOffset), player.transform.position.y, Random.Range(player.transform.position.z - mi_failOffset, player.transform.position.z + mi_failOffset));
+        missileParams.target = target;
+        missileParams.damage = mi_damage;
+        missileParams.flySpeed = mi_bulletSpeed;
     }
 
     private void ResetAttack()
@@ -347,7 +435,7 @@ public class CP_SpiderAttacks : MonoBehaviour
         audioSource.loop = true;
         audioSource.Play();
 
-        Invoke("Explode", timeUntilExplosion);
+        Invoke("Explode", gr_timeUntilExplosion);
         enabled = false;
     }
 
@@ -358,11 +446,11 @@ public class CP_SpiderAttacks : MonoBehaviour
         {
             if (hc.tag == "Enemy")
             {
-                hc.GetComponent<EnemyHealth>().TakeDamage(grenadeDamage);
+                hc.GetComponent<EnemyHealth>().TakeDamage(gr_damage);
             }
             else if (hc.tag == "Player")
             {
-                hc.GetComponent<Health>().TakeDamage(grenadeDamage);
+                hc.GetComponent<Health>().TakeDamage(gr_damage);
             }
         }
         explosionRange.SetActive(false);
@@ -383,14 +471,4 @@ public class CP_SpiderAttacks : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
-    public void UpgradeAttackSpeed()
-    {
-        if (!upgraded)
-        {
-            burstCadence /= 2;
-            timeBetweenBursts /= 2;
-            // TODO: Modify variable values to get enhanced version.
-            upgraded = true;
-        }
-    }
 }

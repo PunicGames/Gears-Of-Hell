@@ -1624,7 +1624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7693063674994648540}
   m_Layer: 0
-  m_Name: GrenadeOrigin
+  m_Name: ProjectilesOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12146,24 +12146,30 @@ MonoBehaviour:
   miniGun: {fileID: 843888602771444097}
   shootOrigin: {fileID: 843888602839214582}
   muzzleVFX: {fileID: 4311814104589928707}
-  burstCadence: 0.1
-  bulletSpeed: 10
-  damage: 5
-  bulletLifetime: 3
-  timeBetweenBursts: 0.5
-  bulletsPerBurst: 50
+  timeBetweenAttacks: 2
+  attackRange: 7
+  mg_damage: 5
+  mg_burstCadence: 0.1
+  mg_bulletSpeed: 20
+  mg_bulletsPerBurst: 50
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
-  grenade: {fileID: 53655109027075921, guid: 2c8ec62a2e749f54faa0d9e34813caca, type: 3}
-  missile: {fileID: 8840309410092667684, guid: 40495b3235dbe864292c01ca35804141, type: 3}
-  grenadeThrowPoint: {fileID: 7693063674994648540}
-  grenadeDamage: 80
-  explosionRatio: 1
-  timeUntilExplosion: 1
-  failOffset: 3
-  attackRange: 12
   albedo: {r: 1, g: 1, b: 1, a: 0}
   emissive: {r: 1, g: 0.582, b: 0, a: 0}
   gunAudio: {fileID: 843888602771444099}
+  gr_damage: 30
+  gr_burstCadence: 0.3
+  gr_bulletsPerBurst: 10
+  gr_timeUntilExplosion: 0.5
+  gr_failOffset: 3
+  grenade: {fileID: 53655109027075921, guid: 2c8ec62a2e749f54faa0d9e34813caca, type: 3}
+  gr_ThrowPoint: {fileID: 7693063674994648540}
+  mi_damage: 5
+  mi_burstCadence: 0.5
+  mi_bulletSpeed: 0.5
+  mi_bulletsPerBurst: 3
+  mi_failOffset: 2
+  missile: {fileID: 8840309410092667684, guid: 40495b3235dbe864292c01ca35804141, type: 3}
+  mi_ThrowPoint: {fileID: 7693063674994648540}
   explosionVfx: {fileID: 4735032133968143787}
   explosionColl: {fileID: 1376344460027797561}
   explosionRange: {fileID: 1818500897946429707}

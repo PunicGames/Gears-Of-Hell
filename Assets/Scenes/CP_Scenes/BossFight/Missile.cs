@@ -32,7 +32,6 @@ public class Missile : MonoBehaviour
 
         rotSpeed = flySpeed * 3.8f;
 
-        target = GameObject.FindGameObjectWithTag("Player").transform.position;
         audioSource = gameObject.GetComponent<AudioSource>();
 
         rangeObject.transform.parent = null;
