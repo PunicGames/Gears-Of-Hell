@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class ProspectorBehaviour : MonoBehaviour
 {
-    // TODO: Arreglar colisionadores al morir
-    // TODO: Mirar si después de hacer la habilidad sigue escondido que haga otra habilidad en vez de pasar a estado CHASING.
 
     Transform player;
     NavMeshAgent agent;
@@ -65,8 +63,6 @@ public class ProspectorBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         basic_FSM();
-
-        Debug.Log(currentState);
     }
 
 
@@ -99,15 +95,22 @@ public class ProspectorBehaviour : MonoBehaviour
 
                     if ((Vector3.Distance(transform.position, targetHideSpot.position)  < 0.1))
                     {
-                        hiding = false;
-                        currentState = State.CASTING;
-                        animator.SetBool("isMoving", false);
-                        enemySoundManager.PauseSound("footsteps");
+                        if (CheckCurrentSpot())
+                        {
+                            hiding = false;
+                            currentState = State.CASTING;
+                            animator.SetBool("isMoving", false);
+                            enemySoundManager.PauseSound("footsteps");
+                        }
+                        else {
+                            hiding = false;
+                        }
                     }
                 }
 
                 break;
             case State.CASTING:
+
                 transform.LookAt(player.position);
 
                 if (!casting) { 
@@ -119,6 +122,7 @@ public class ProspectorBehaviour : MonoBehaviour
                 break;
 
             case State.RESTING:
+
                 transform.LookAt(player.position);
                 break;
             default: 
@@ -182,8 +186,6 @@ public class ProspectorBehaviour : MonoBehaviour
         Collider[] hitColliders = m_outerRing.GetEnemiesInRange();
         foreach(Collider collider in hitColliders) {
 
-            // TODO: Wait for more behaviours: WORKER BOT
-
             if (collider != null) { // In case an enemy died while receiving and checking the loop
                 // Increase Attack of different enemies
                 if (collider.gameObject.GetComponent<GunslingerBehaviour>() != null)
@@ -201,15 +203,6 @@ public class ProspectorBehaviour : MonoBehaviour
                     // Gunner
                     collider.gameObject.GetComponent<GunnerBehaviour>().UpgradeAttackSpeed();
                 }
-                //else if (collider.gameObject.GetComponent<BigSpiderBotBehaviour>() != null)
-                //{
-                //    // Big Spider Bot
-                //    collider.gameObject.GetComponent<BigSpiderBotBehaviour>().UpgradeAttackSpeed();
-                //}
-                //else if (collider.gameObject.GetComponent<BombSpiderBotBehaviour>() != null) {
-                //    // Bomb Spider Bot
-                //    collider.gameObject.GetComponent<BombSpiderBotBehaviour>().UpgradeAttackSpeed();
-                //}
             }
         }
     }
@@ -236,9 +229,14 @@ public class ProspectorBehaviour : MonoBehaviour
     public void ResetCasting() {
         //Debug.Log("Ability cast finished");
         casting = false;
-        currentState = State.RESTING;
-        exhaustedVisual.Play();
-        Invoke("StopResting", 2f);
+        if (CheckCurrentSpot()) { 
+            currentState = State.RESTING;
+            exhaustedVisual.Play();
+            Invoke("StopResting", 2f);
+        }
+        else{
+            currentState = State.HIDING;
+        }
     }
 
     private Transform CheckForAvailableHidenSpot() {
@@ -247,6 +245,7 @@ public class ProspectorBehaviour : MonoBehaviour
         float minDistanceToForeman = 1.0f;
         float distanceToPlayer = 0.0f;
         float distanceToForeman = 0.0f;
+        float distanceSpotToPlayer = 0.0f;
         bool hidenSpot = false;
         Transform nextPosition = HidingSpots[0]; // Initialized to avoid errors but lacks of relevance
 
@@ -274,7 +273,7 @@ public class ProspectorBehaviour : MonoBehaviour
                 hidenSpot = true;
             }
 
-            if ((distanceToPlayer >= minDistanceToPlayer) && (distanceToForeman >= minDistanceToForeman) && (hidenSpot))
+            if ((distanceToPlayer >= minDistanceToPlayer) && (distanceToForeman >= minDistanceToForeman) && (hidenSpot) && (distanceToPlayer <= m_outerRing.GetRadius()))
             {
                 //Debug.Log("Valid Hiding Spot");
                 nextPosition = HidingSpots[idx];
@@ -286,7 +285,7 @@ public class ProspectorBehaviour : MonoBehaviour
         return nextPosition;
     }
 
-    private bool CheckCanCastAgain() {
+    private bool CheckCurrentSpot() {
         RaycastHit hit;
         if (Physics.Raycast(targetHideSpot.position, (player.position - targetHideSpot.position).normalized, out hit, Mathf.Infinity, obstacleMask))
         {
@@ -304,7 +303,7 @@ public class ProspectorBehaviour : MonoBehaviour
     private void StopResting() {
         if (ableToHide)
         {
-            if (CheckCanCastAgain())
+            if (CheckCurrentSpot() && !(!insideOuterRing || (insideOuterRing && !insideInnerRing && fromOutside)))
                 currentState = State.CASTING;
             else
                 currentState = State.CHASING;

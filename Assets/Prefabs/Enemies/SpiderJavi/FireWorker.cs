@@ -124,11 +124,11 @@ public class FireWorker : MonoBehaviour
             {
                 currentActionState = WorkerFireState.ATTACK;
             } else if (other.gameObject.tag == "Fire") {
+                goFire = false;
                 currentActionState = WorkerFireState.ATTACK;
                 if (fireBehavior != null) { 
                     fireBehavior.Die();
                 }
-                goFire = false;
             }
         }
     }
