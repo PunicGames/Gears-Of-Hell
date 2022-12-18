@@ -102,6 +102,8 @@ public class CP_SpiderAttacks : MonoBehaviour
     private float distance;
     private float lastGrenadeTime;
     private float maxGrenadesTime = 7f;
+    private float lastMissileTime;
+    private float maxMissileTime = 30f;
 
     private void Start()
     {
@@ -116,8 +118,8 @@ public class CP_SpiderAttacks : MonoBehaviour
         bulletsInGrBurst = gr_bulletsPerBurst;
         bulletsInMiBurst = mi_bulletsPerBurst;
 
-        lastGrenadeTime = 0;
-
+        lastGrenadeTime = 0f;
+        lastMissileTime = 0f;
     }
 
     private void Update()
@@ -138,6 +140,7 @@ public class CP_SpiderAttacks : MonoBehaviour
             canAttack = true;
 
         lastGrenadeTime += Time.deltaTime;
+        lastMissileTime += Time.deltaTime;
 
         switch (currentState)
         {
@@ -197,7 +200,6 @@ public class CP_SpiderAttacks : MonoBehaviour
                 else if (alreadyAttacked && !inRange)
                 {
                     currentState = spiderState.PURSUE;
-                    print("a pursue");
                 }
 
                 break;
@@ -252,25 +254,34 @@ public class CP_SpiderAttacks : MonoBehaviour
 
         float TGRA = ComputeTimeSinceLastGrenade();
 
+        float TMIS = ComputeTimeSinceLastMissile();
+
         float shootAction = DIST;
 
-        float grenadeAction = 0.7f * DIST + 0.3f * TGRA;
+        float grenadeAction = 0.95f * DIST + 0.05f * TGRA;
 
-        if (grenadeAction >= shootAction)
+        float missileAction = 0.95f * DIST + 0.05f * TMIS;
+
+        if (missileAction >= shootAction && missileAction >= grenadeAction)
+        {
+            LaunchMissile();
+        }
+        else if(grenadeAction >= shootAction && grenadeAction >= missileAction)
         {
             LaunchGrenade();
-            //LaunchMissile();
         }
         else
         {
             ShootMinigun();
-            //LaunchMissile();
         }
+        print("Minigun: " + shootAction);
+        print("Granada: " + grenadeAction);
+        print("Misil: " + missileAction);
     }
 
     private void TrackMinigun()
     {
-        miniGun.transform.LookAt(player.transform.position + new Vector3(0f, 1f, 0f));
+        miniGun.transform.LookAt(player.transform.position + Vector3.up * 0.5f);
     }
 
     private void TrackSpider()
@@ -305,7 +316,8 @@ public class CP_SpiderAttacks : MonoBehaviour
     private void CreateBullet()
     {
         GameObject b = Instantiate(bullet, new Vector3(shootOrigin.transform.position.x, shootOrigin.transform.position.y, shootOrigin.transform.position.z), Quaternion.identity);
-        b.transform.LookAt(player.transform);
+        b.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        b.transform.forward = miniGun.transform.forward;
         Bullet bulletParams = b.GetComponent<Bullet>();
         bulletParams.SetForce(mg_bulletSpeed);
         bulletParams.SetDamage(mg_damage);
@@ -323,7 +335,7 @@ public class CP_SpiderAttacks : MonoBehaviour
         canAttack = false;
         currentlyInGrBurst = true;
 
-        lastGrenadeTime = 0;
+        lastGrenadeTime = 0f;
 
         bulletsInGrBurst--;
 
@@ -357,6 +369,8 @@ public class CP_SpiderAttacks : MonoBehaviour
         alreadyAttacked = true;
         canAttack = false;
         currentlyInMiBurst = true;
+
+        lastMissileTime = 0f;
 
         bulletsInMiBurst--;
 
@@ -401,6 +415,15 @@ public class CP_SpiderAttacks : MonoBehaviour
     private float ComputeTimeSinceLastGrenade()
     {
         float x = Mathf.InverseLerp(0, maxGrenadesTime, lastGrenadeTime);
+
+        float y = Mathf.Pow(x, 8);
+
+        return y;
+    }
+
+    private float ComputeTimeSinceLastMissile()
+    {
+        float x = Mathf.InverseLerp(0, maxMissileTime, lastMissileTime);
 
         float y = Mathf.Pow(x, 8);
 

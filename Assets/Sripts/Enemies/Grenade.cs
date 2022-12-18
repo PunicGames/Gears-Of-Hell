@@ -48,7 +48,7 @@ public class Grenade : MonoBehaviour
 
         if (transform.position.y <= target.y + 0.1f)
         {
-            Debug.Log("reached");
+            //Debug.Log("reached");
             animEnded = true;
             transform.position = new Vector3(transform.position.x, 0.08f, transform.position.z);
             TriggerExplosion();

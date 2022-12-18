@@ -248,8 +248,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843888603903365884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 11.4, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7766907592250839492}
@@ -11613,12 +11613,12 @@ MonoBehaviour:
   enableBodyRotation: 0
   enableMovementRotation: 1
   rigidBodyController: 1
-  moveDistance: 0.8
-  stepHeight: 0.6
+  moveDistance: 3
+  stepHeight: 3
   spiderJitterCutOff: 0
   waitTimeBetweenEveryStep: 0
-  LegSmoothness: 8
-  BodySmoothness: 8
+  LegSmoothness: 15
+  BodySmoothness: 15
   OverStepMultiplier: 4
 --- !u!1 &5866718947970647917
 GameObject:
@@ -11843,7 +11843,7 @@ Transform:
   m_GameObject: {fileID: 6954202007441050494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.85, y: 0, z: 11.3}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.30506, y: 0.30506, z: 0.30506}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8906684291508500274}
@@ -11919,7 +11919,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6954202007441050494}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 10
+  m_Radius: 12.31
   m_Speed: 2
   m_Acceleration: 20
   avoidancePriority: 50
@@ -12147,27 +12147,27 @@ MonoBehaviour:
   shootOrigin: {fileID: 843888602839214582}
   muzzleVFX: {fileID: 4311814104589928707}
   timeBetweenAttacks: 2
-  attackRange: 7
-  mg_damage: 5
-  mg_burstCadence: 0.1
-  mg_bulletSpeed: 20
-  mg_bulletsPerBurst: 50
+  attackRange: 10
+  mg_damage: 1
+  mg_burstCadence: 0.05
+  mg_bulletSpeed: 50
+  mg_bulletsPerBurst: 30
   bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
   albedo: {r: 1, g: 1, b: 1, a: 0}
   emissive: {r: 1, g: 0.582, b: 0, a: 0}
   gunAudio: {fileID: 843888602771444099}
-  gr_damage: 30
-  gr_burstCadence: 0.3
+  gr_damage: 1
+  gr_burstCadence: 0.1
   gr_bulletsPerBurst: 10
-  gr_timeUntilExplosion: 0.5
-  gr_failOffset: 3
+  gr_timeUntilExplosion: 0.1
+  gr_failOffset: 1
   grenade: {fileID: 53655109027075921, guid: 2c8ec62a2e749f54faa0d9e34813caca, type: 3}
   gr_ThrowPoint: {fileID: 7693063674994648540}
-  mi_damage: 5
-  mi_burstCadence: 0.5
+  mi_damage: 1
+  mi_burstCadence: 0.1
   mi_bulletSpeed: 0.5
-  mi_bulletsPerBurst: 3
-  mi_failOffset: 2
+  mi_bulletsPerBurst: 20
+  mi_failOffset: 1
   missile: {fileID: 8840309410092667684, guid: 40495b3235dbe864292c01ca35804141, type: 3}
   mi_ThrowPoint: {fileID: 7693063674994648540}
   explosionVfx: {fileID: 4735032133968143787}
