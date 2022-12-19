@@ -264,10 +264,8 @@ public class WorkerBotBehavior : MonoBehaviour
 
         attackDamage = 7 + 1 * currentGears; //aumenta el daño por cada moneda recogida
         weaponCollider.attackDamage = attackDamage; //le paso el daño nuevo al script del arma
-
-        //activo el efecto de particulas de brillantitos, mas cantidad por cada moneda que tenga
-        print(currentGears);
     }
+
     private void HealUpgrade()
     {
         //mejora aplicada al coger una cura
