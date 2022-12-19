@@ -1,32 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CP_JacobExtended : MonoBehaviour
 {
-    [SerializeField] ShootSystem shoot_sys;
-
-    public float shootSoundRadio = 5;
-
+    private PlayerInputActions playerInputActions;
     private SoundEmitter emitter;
+
+
+    [SerializeField] Tonys_ShootSystem shoot_sys;
+    [SerializeField] AudioSource crouch_steps;
+
+    public float shootSoundRadius = 4;
+    public float crouchSoundRadius =1.5f;
+    public float walkSoundRadius = 6;
+    private bool isCrouching;
 
     void Start()
     {
+        playerInputActions = GetComponent<Player>().playerInputActions;
+        playerInputActions.Player.Shoot.performed += Shoot;
+        playerInputActions.Player.Shoot.canceled += ResetShoot;
+        playerInputActions.Player.Crouch.performed += Crouch;
+        playerInputActions.Player.Crouch.canceled += Crouch;
+
+
         shoot_sys.onShootWeapon += ShootSound;
         emitter = GetComponent<SoundEmitter>();
-        emitter.radius = shootSoundRadio;
+        emitter.radius = shootSoundRadius;
+    }
+
+    private void Update()
+    {
+        if (GetComponent<Player>().isMoving)
+        {
+            if (isCrouching)
+
+                emitter.MakeSound(crouchSoundRadius);
+            else
+                emitter.MakeSound(walkSoundRadius);
+        }
+        
     }
 
     private void ShootSound(bool t)
     {
-        emitter.MakeSound(shootSoundRadio);
+        emitter.MakeSound(shootSoundRadius);
 
     }
-    private void Walk()
+   
+
+    public void Shoot(InputAction.CallbackContext context)
     {
+        if (!PauseMenu.GameIsPaused)
+        {
 
-        //make sound
-        // depending if crouched or not
+            shoot_sys.shooting = true;
+            shoot_sys.Shooting();
+
+        }
     }
+
+    public void ResetShoot(InputAction.CallbackContext context)
+    {
+        if (!PauseMenu.GameIsPaused)
+        {
+
+            shoot_sys.shooting = false;
+        }
+    }
+    public void Crouch(InputAction.CallbackContext context)
+    {
+        if (!isCrouching)
+        {
+            GetComponent<Player>().footSteps.volume = 0.25f;
+            GetComponent<Player>().footSteps.pitch = .69f;
+            GetComponent<Player>().speed *= .5f;
+            isCrouching = true;
+            GetComponent<Animator>().SetBool("isCrouching", true);
+        }
+        else
+        {
+            GetComponent<Player>().footSteps.volume = 1f;
+            GetComponent<Player>().footSteps.pitch = 1;
+            GetComponent<Player>().speed *= 2f;
+            isCrouching = false;
+            GetComponent<Animator>().SetBool("isCrouching", false);
+        }
+
+    }
+
 
 }

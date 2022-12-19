@@ -21,6 +21,9 @@ public class Health : MonoBehaviour
     Player playerMovement; // Referencia a dicho script para desactivarlo si el jugador muere para que no se pueda mover.
     bool isDead;
 
+
+    public bool isTonyScene = false;
+
     //Perks barriers
     public bool electricBarrier;
 
@@ -102,11 +105,12 @@ public class Health : MonoBehaviour
             }
 
             // Invincibility
-            if (NoGunsMode) {
+            if (NoGunsMode)
+            {
                 canBeHurt = false;
                 lifeScaler.GetComponent<Image>().color = lifeColorTransparency;
                 Invoke("ResetInivincibility", invincibilityTime);
-            } 
+            }
         }
     }
 
@@ -164,8 +168,9 @@ public class Health : MonoBehaviour
         // Finish walking sound
         playerMovement.footSteps.Stop();
 
-        // Tiempo de espera para el menú de resumen
-        Invoke("LoadResume", 3);
+        if (!isTonyScene)
+            // Tiempo de espera para el menú de resumen
+            Invoke(nameof(LoadResume), 3);
     }
 
     public void LoadResume()
@@ -197,7 +202,8 @@ public class Health : MonoBehaviour
         lifeScaler.GetComponent<Image>().color = lifeColorNormal;
     }
 
-    public void SetInvincibilityTime(float time) {
+    public void SetInvincibilityTime(float time)
+    {
         invincibilityTime = time;
     }
 }

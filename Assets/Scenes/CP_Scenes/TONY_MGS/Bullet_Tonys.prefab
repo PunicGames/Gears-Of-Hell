@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3702241883107564652}
   - component: {fileID: 1741612438815416436}
   - component: {fileID: 8257990454626169503}
-  - component: {fileID: 1188682443600615783}
+  - component: {fileID: 85512356585842359}
   m_Layer: 10
   m_Name: Bullet_Tonys
   m_TagString: Untagged
@@ -115,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &1188682443600615783
+--- !u!114 &85512356585842359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,10 +124,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 441659958780119776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6becb86832459d64c935f440e864c5a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 24708a9482410cf46b7e425c47479284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroy: 0.5
   numberOfCollisions: 0
   stoppedByWalls: 1
   laserShot: 0
