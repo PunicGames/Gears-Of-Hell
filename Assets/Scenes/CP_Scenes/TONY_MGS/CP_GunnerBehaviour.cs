@@ -15,9 +15,15 @@ public class CP_GunnerBehaviour : MonoBehaviour
     public float patrollingWalkingSpeed = 1f;
     public float patrolIdleTime = 5f;
 
+    public float soundReach = 15f;
+
     public Transform shootOrigin;
 
+
     [SerializeField] List<Transform> patrolPoints = new List<Transform>();
+    [SerializeField] List<Transform> alarms = new List<Transform>();
+    [SerializeField] Alarm alarmDevice;
+    public bool isReinforcement = false;
 
 
     [SerializeField] ParticleSystem muzzleVFX;
@@ -96,6 +102,7 @@ public class CP_GunnerBehaviour : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
     EnemySoundManager soundManager;
+    SoundEmitter soundEmitter;
 
     private Vector3 playerLastSeenPos;
 
@@ -104,12 +111,15 @@ public class CP_GunnerBehaviour : MonoBehaviour
     private enum combatState { IDLE, PURSUE, ATTACK, RECHARGE, GRENADE };
     private combatState currenCombatState = combatState.IDLE;
 
-    private enum standardState { IDLE, PATROLLING, COMBAT, ALERTED, ALERTED_IDLE, ALERTED_PATROLLING, ASKING_REINFORCEMENTS, SEEK_ALARM };
-    private standardState currenState = standardState.IDLE;
+    private enum standardState { IDLE, PATROLLING, COMBAT, ALERTED, ALERTED_IDLE, SEEK_ALARM };
+    private standardState currentState = standardState.IDLE;
     private float speed;
+    private int targetMask;
 
     private void Start()
     {
+        //patrollingWalkingSpeed = Random.Range(patrollingWalkingSpeed - 0.2f, patrollingWalkingSpeed + 0.2f);
+
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -117,14 +127,23 @@ public class CP_GunnerBehaviour : MonoBehaviour
         animator.SetFloat("idleBlend", idleBlend);
 
         vision = GetComponent<EnemyVision>();
+        soundEmitter = GetComponent<SoundEmitter>();
 
         vision.onAlert += TransitionToAlert;
         vision.onSpot += TransitionToCombat;
+        //vision.onLostingSight += () => { CancelInvoke(nameof(ForgetHeSawPlayer)); Invoke(nameof(ForgetHeSawPlayer), forgetTime); Debug.Log("w"); };
 
         spotDistance = vision.perceptionRadius;
         shotgunSpotDistance = vision.perceptionRadius * .75f;
 
         soundManager = GetComponent<EnemySoundManager>();
+
+        alarmDevice = (Alarm)FindObjectOfType(typeof(Alarm));
+        alarmDevice.onStartAlarm += ReinforcePosition;
+        if (isReinforcement)
+        {
+            alarmDevice.onStopAlarm += ReturnToPost;
+        }
 
         //IF SHOTGUN CHANCE ENABLED
         if (enableShotgun)
@@ -154,12 +173,14 @@ public class CP_GunnerBehaviour : MonoBehaviour
         agent.speed = patrollingWalkingSpeed;
         speed = agent.speed;
 
-        Invoke(nameof(PatrolToPoint), 2f);
+        if (!isReinforcement)
+            Invoke(nameof(PatrolToPoint), 2f);
     }
 
     private void Update()
     {
         StandardFSM();
+        Debug.Log(currentState);
     }
 
     private void CombatFSM()
@@ -257,7 +278,7 @@ public class CP_GunnerBehaviour : MonoBehaviour
     private void StandardFSM()
     {
 
-        switch (currenState)
+        switch (currentState)
         {
             case standardState.IDLE:
 
@@ -278,37 +299,34 @@ public class CP_GunnerBehaviour : MonoBehaviour
                 break;
             case standardState.ALERTED:
                 distance = Vector3.Distance(transform.position, playerLastSeenPos);
-                Debug.Log(distance);
                 if (distance <= 0.1f)
                 {
-                    float nearest = 999f;
-                    int index = 0;
-                    int nearestIndex = index;
-                    foreach (var p in patrolPoints)
+                    if (!isReinforcement)
                     {
-                        float dist = Vector3.Distance(transform.position, p.position);
-                        if (dist < nearest) { nearest = dist; nearestIndex = index; }
-                        index++;
+                        float nearest = 999f;
+                        int index = 0;
+                        int nearestIndex = index;
+                        foreach (var p in patrolPoints)
+                        {
+                            float dist = Vector3.Distance(transform.position, p.position);
+                            if (dist < nearest) { nearest = dist; nearestIndex = index; }
+                            index++;
+                        }
+                        nextPatrolPoint = nearestIndex;
                     }
                     TransitionToAlertedIdle();
-                    nextPatrolPoint = nearestIndex;
                 }
                 break;
             case standardState.ALERTED_IDLE:
                 break;
-            case standardState.ASKING_REINFORCEMENTS:
-                break;
-            case standardState.ALERTED_PATROLLING:
-                distance = Vector3.Distance(transform.position, patrolPoints[nextPatrolPoint].position);
-                //If reaches point
-                if (distance <= 0.1f)
-                {
-                    TransitionToAlertedIdle();
-                    nextPatrolPoint = Random.Range(0, patrolPoints.Count);
-                }
-                break;
-            case standardState.SEEK_ALARM:
 
+            case standardState.SEEK_ALARM:
+                distance = Vector3.Distance(transform.position, agent.destination);
+                if (distance <= 0.2f)
+                {
+                    alarmDevice.SoundAlarm(playerLastSeenPos);
+                    TransitionToAlert(playerLastSeenPos, true);
+                }
                 break;
             default:
                 break;
@@ -319,6 +337,8 @@ public class CP_GunnerBehaviour : MonoBehaviour
     #region actions
     void Attack()
     {
+        soundEmitter.MakeSound(15f);
+
         if (!isShotgun)
         {
             soundManager.OverlapedPlaySound("shoot");
@@ -460,7 +480,7 @@ public class CP_GunnerBehaviour : MonoBehaviour
     //private void TransitionToAttack();
     private void TransitionToIdle()
     {
-        soundManager.PauseSound("walk");
+        soundManager.PauseSound("run");
         currenCombatState = combatState.IDLE;
         animator.SetBool("Moving", false);
         if (agent.enabled)
@@ -476,7 +496,7 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
     private void TransitionToPursue()
     {
-        soundManager.PlaySound("walk");
+        soundManager.PlaySound("run");
         currenCombatState = combatState.PURSUE;
         animator.SetBool("Moving", true);
         agent.isStopped = false;
@@ -536,12 +556,13 @@ public class CP_GunnerBehaviour : MonoBehaviour
     #region standardTransitions
     void TransitionToPatrol(float time)
     {
+
         Invoke(nameof(PatrolToPoint), time);
     }
     void TransitionToPatrolIdle()
     {
 
-        currenState = standardState.IDLE;
+        currentState = standardState.IDLE;
         agent.isStopped = true;
         animator.SetBool("Walking", false);
         animator.SetFloat("check_time", 1f);
@@ -549,59 +570,111 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
         StartCoroutine(LerpTurnTo(1f, patrolPoints[nextPatrolPoint].forward));
     }
-    void TransitionToAlertedPatrol(float time)
-    {
-        Invoke(nameof(PatrolToPoint), time);
-    }
 
-    void TransitionToAlert(Vector3 lastSeenPos)
+    public void TransitionToAlert(Vector3 lastSeenPos, bool t)
     {
 
         CancelInvoke(nameof(PatrolToPoint));
+        CancelInvoke(nameof(TransitionToSeekAlarm));
         StopAllCoroutines();
 
-        animator.SetBool("Moving", false);
-
-        if (!hasSpottedPlayer)
-        {
-            vision.perceptionRadius = vision.initialPerceptionRadius;
-            vision.spotRadius = vision.initialSpotRadius;
-        }
-
-        animator.SetBool("Walking", true);
-        currenState = standardState.ALERTED;
-        agent.isStopped = false;
         agent.speed = patrollingWalkingSpeed * 1.5f;
+        if (t)
+        {
+            if (isReinforcement && alarmDevice.isActive)
+            {
+                animator.SetBool("Moving", true);
+                animator.SetBool("Walking", false);
+                agent.speed = patrollingWalkingSpeed * 2f;
+            }
+            else
+            {
+                animator.SetBool("Moving", false);
+                animator.SetBool("Walking", true);
+            }
+            int r = Random.Range(0, 2);
+            //Randomly choose sound
+            switch (r)
+            {
+                case 0:
+                    soundManager.OverlapedPlaySound("alert1");
+                    break;
+                case 1:
+                    soundManager.OverlapedPlaySound("alert3");
+                    break;
+                case 2:
+                    soundManager.OverlapedPlaySound("alert2");
+                    break;
+
+            }
+        }
+        else
+        {
+            animator.SetBool("Moving", true);
+            animator.SetBool("Walking", false);
+            hasSpottedPlayer = true;
+
+            //Where did he go sound
+        }
+        idleBlend = 1f;
+        animator.SetFloat("idleBlend", idleBlend);
+
+
+        currentState = standardState.ALERTED;
         animator.SetFloat("walking_speed", agent.speed);
         playerLastSeenPos = lastSeenPos;
         agent.SetDestination(playerLastSeenPos);
+        agent.isStopped = false;
 
+        spotVFX.SetActive(false);
         alertVFX.SetActive(true);
     }
     void TransitionToAlertedIdle()
     {
-        currenState = standardState.ALERTED_IDLE;
+
+        animator.SetFloat("check_time", 2f);
+        currentState = standardState.ALERTED_IDLE;
         agent.isStopped = true;
+
         animator.SetBool("Walking", false);
-        agent.speed = patrollingWalkingSpeed;
-        animator.SetFloat("walking_speed", agent.speed);
-        animator.SetFloat("check_time", 0.5f);
-        if (hasSpottedPlayer)
-            TransitionToAlertedPatrol(patrolIdleTime);
+        animator.SetBool("Moving", false);
+
+
+
+        if (hasSpottedPlayer && !alarmDevice.isActive) //y alarma desactivada
+        {
+            Invoke(nameof(TransitionToSeekAlarm), patrolIdleTime);
+        }
         else
-            TransitionToPatrol(patrolIdleTime);
+        {
+            agent.speed = patrollingWalkingSpeed;
+            animator.SetFloat("walking_speed", agent.speed);
+
+            if (isReinforcement && alarmDevice.isActive)
+                return;
+            else
+                TransitionToPatrol(patrolIdleTime);
+
+        }
 
     }
     void TransitionToCombat()
     {
-        hasSpottedPlayer = true;
         CancelInvoke(nameof(PatrolToPoint));
+        CancelInvoke(nameof(TransitionToSeekAlarm));
         StopAllCoroutines();
 
-        vision.perceptionRadius *= 1.25f;
-        vision.spotRadius = vision.perceptionRadius - 3.5f;
+        soundManager.OverlapedPlaySound("!");
+        int r = Random.Range(0, 3);
+        //Randomly choose sound
+        switch (r)
+        {
+            case 0:
+                soundManager.OverlapedPlaySound("intruder");
+                break;
+        }
 
-        currenState = standardState.COMBAT;
+        currentState = standardState.COMBAT;
         agent.speed = combatWalkingSpeed;
         animator.SetBool("Walking", false);
         idleBlend = 0f;
@@ -609,11 +682,31 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
 
         alertVFX.SetActive(false);
-
         spotVFX.SetActive(true);
-        //Invoke(nameof(StopSpotVFX), 2f);
     }
 
+    void TransitionToSeekAlarm()
+    {
+        //si alarma desactivada
+        agent.speed = patrollingWalkingSpeed * 2f;
+        agent.isStopped = false;
+        animator.SetFloat("walking_speed", agent.speed);
+        animator.SetBool("Moving", true);
+        animator.SetBool("Walking", false);
+        hasSpottedPlayer = false;
+        float nearest = 999f;
+        int index = 0;
+        int nearestIndex = index;
+        foreach (var p in alarms)
+        {
+            float dist = Vector3.Distance(transform.position, p.position);
+            if (dist < nearest) { nearest = dist; nearestIndex = index; }
+            index++;
+        }
+        agent.SetDestination(alarms[nearestIndex].position);
+        currentState = standardState.SEEK_ALARM;
+
+    }
     #endregion
     #region utilityPatrolFunctions
 
@@ -633,22 +726,56 @@ public class CP_GunnerBehaviour : MonoBehaviour
     void PatrolToPoint()
     {
         CancelInvoke(nameof(PatrolToPoint));
+        if (currentState == standardState.ALERTED_IDLE)
+        {
+            soundManager.OverlapedPlaySound("clear");
+        }
         agent.isStopped = false;
         animator.SetBool("Walking", true);
-
-        if (!hasSpottedPlayer)
+        alertVFX.SetActive(false);
+        currentState = standardState.PATROLLING;
+        agent.SetDestination(patrolPoints[nextPatrolPoint].position);
+    }
+    public void ListenToSound(Vector3 soundOrigin)
+    {
+        if (currentState != standardState.COMBAT)
         {
-            alertVFX.SetActive(false);
-            currenState = standardState.PATROLLING;
+            if (currentState != standardState.ALERTED)
+                TransitionToAlert(soundOrigin, true);
+            else
+            {
+                playerLastSeenPos = soundOrigin;
+                agent.SetDestination(playerLastSeenPos);
+            }
+        }
+
+    }
+
+    private void ReinforcePosition(Vector3 lastSeenPos)
+    {
+        if (isReinforcement)
+        {
+            if (currentState != standardState.COMBAT && currentState != standardState.ALERTED)
+            {
+                TransitionToAlert(lastSeenPos, true);
+            }
         }
         else
         {
-            currenState = standardState.ALERTED_PATROLLING;
-
+            if (currentState == standardState.SEEK_ALARM)
+            {
+                TransitionToAlert(lastSeenPos, true);
+            }
         }
-        agent.SetDestination(patrolPoints[nextPatrolPoint].position);
     }
+    private void ReturnToPost()
+    {
+        if (currentState != standardState.COMBAT && currentState != standardState.ALERTED)
+        {
 
+            PatrolToPoint();
+        }
+
+    }
     #endregion
-
 }
