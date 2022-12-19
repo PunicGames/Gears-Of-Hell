@@ -153,6 +153,12 @@ public class WorkerBotBehavior : MonoBehaviour
                 break;
 
             case FSM1_states.SEARCH:
+                if (itemObject == null)
+                {
+                    print("null");
+                    currentFSM1State = FSM1_states.ATTACKFSM;
+                }
+
                 float distance = Vector3.Distance(itemObject.transform.position, transform.position); //distancia entre el item y el workerbot
                 agent.SetDestination(itemObject.transform.position); //se dirige a por el item
 
