@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 7232696170139482}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.91112, y: 0.61771, z: 0.30885}
+  m_LocalScale: {x: 1, y: 0.61771, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 765301134188717525}
@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -98.35538, y: 6.199997}
-  m_SizeDelta: {x: 215.9, y: 15.6}
+  m_SizeDelta: {x: 197, y: 15.6}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &868576397397710053
 CanvasRenderer:
@@ -11811,6 +11811,7 @@ MonoBehaviour:
   eh: {fileID: 2215004872682193072}
   startingHealth: 0
   currentHealth: 0
+  sb: {fileID: 0}
   lifeScaler: {fileID: 7350251540777088763}
   lifeText: {fileID: 1755171460202863057}
 --- !u!1 &5731398220886573968
@@ -12235,6 +12236,7 @@ GameObject:
   - component: {fileID: 6954202007441050464}
   - component: {fileID: 6954202007441050466}
   - component: {fileID: 2215004872682193072}
+  - component: {fileID: 1642529138212041289}
   m_Layer: 7
   m_Name: CP_MediumSpider
   m_TagString: Enemy
@@ -12339,7 +12341,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!114 &7147553846948892022
 MonoBehaviour:
@@ -12492,7 +12494,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 10.584083
+  m_Radius: 4.78
   m_Height: 24.632969
   m_Direction: 1
   m_Center: {x: 0.12928724, y: 8.455112, z: 0.5429864}
@@ -12523,6 +12525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 843888604353159215}
   eh: {fileID: 2215004872682193072}
+  bfm: {fileID: 0}
   enemyColl: {fileID: 2306976117482667697}
   smr: {fileID: 1942028463187869691}
   miniGun: {fileID: 843888602771444097}
@@ -12531,25 +12534,25 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   attackRange: 10
   mg_damage: 1
-  mg_burstCadence: 0.05
-  mg_bulletSpeed: 50
-  mg_bulletsPerBurst: 30
-  bullet: {fileID: 441659958780119776, guid: e25142ffbebe67342ba05e5646701212, type: 3}
+  mg_burstCadence: 0.1
+  mg_bulletSpeed: 30
+  mg_bulletsPerBurst: 10
+  bullet: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
   albedo: {r: 1, g: 1, b: 1, a: 0}
   emissive: {r: 1, g: 0.582, b: 0, a: 0}
   gunAudio: {fileID: 843888602771444099}
   gr_damage: 1
-  gr_burstCadence: 0.1
-  gr_bulletsPerBurst: 10
+  gr_burstCadence: 0.3
+  gr_bulletsPerBurst: 4
   gr_timeUntilExplosion: 0.1
-  gr_failOffset: 1
+  gr_failOffset: 2
   grenade: {fileID: 53655109027075921, guid: 2c8ec62a2e749f54faa0d9e34813caca, type: 3}
   gr_ThrowPoint: {fileID: 7693063674994648540}
   mi_damage: 1
-  mi_burstCadence: 0.1
+  mi_burstCadence: 0.3
   mi_bulletSpeed: 0.5
-  mi_bulletsPerBurst: 20
-  mi_failOffset: 1
+  mi_bulletsPerBurst: 3
+  mi_failOffset: 2
   missile: {fileID: 8840309410092667684, guid: 40495b3235dbe864292c01ca35804141, type: 3}
   mi_ThrowPoint: {fileID: 7693063674994648540}
   explosionVfx: {fileID: 4735032133968143787}
@@ -12587,6 +12590,21 @@ MonoBehaviour:
   enemyType: 3
   enemySoundManager: {fileID: 0}
   Cure: {fileID: 0}
+--- !u!114 &1642529138212041289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6954202007441050494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63976678225cb084d905c599c5f87195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 15
+  mixer: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
+  sounds: []
 --- !u!1 &7544082776977627755
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ScheneryBehaviour : MonoBehaviour
 {
+    [SerializeField] CP_SpiderAttacks spiderBoss;
     [SerializeField] GameObject floor;
     [SerializeField] Color[] colors;
     [HideInInspector] Material materialBckUp;
@@ -111,6 +112,7 @@ public class ScheneryBehaviour : MonoBehaviour
         fromTo = new Vector2Int(i - 1, i);
         bossPhasesMusic[i].Play();
         transitionTrigger = true;
+        spiderBoss.SetPhase(i);
     }
 
     private void SetPhase(int i)
