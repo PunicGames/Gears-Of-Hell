@@ -2024,6 +2024,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 843888604353159215, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: m_BaseOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 843888604353159215, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: m_WalkableMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6954202007441050494, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
       propertyPath: m_Name
       value: CP_MediumSpider
@@ -5084,7 +5092,9 @@ MonoBehaviour:
   duration: 1
   phases: ee020000f4010000
   spawnPoints: []
-  spawnLimit: 0
+  spawnLimit: 10
+  littleSpider: {fileID: 1441535349942549436, guid: 866c846cb82d5da4f913275fbbd6d493, type: 3}
+  waitTimeSinceNextSpider: 20
 --- !u!1 &1892299599
 GameObject:
   m_ObjectHideFlags: 0

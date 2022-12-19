@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 9166247000190160912}
   - component: {fileID: 284480179685610055}
   - component: {fileID: 3939009752589308932}
+  - component: {fileID: 8016532783759172787}
   m_Layer: 7
   m_Name: Bomb_Spiderbot
   m_TagString: Enemy
@@ -473,6 +474,7 @@ MonoBehaviour:
   - {fileID: 5657288391255139002, guid: 1d748a7501c03fb43b4752e7e04a6166, type: 3}
   - {fileID: 103044764036731035, guid: d6488be642a6cd64f84f290dd598341e, type: 3}
   enemyType: 3
+  enemySoundManager: {fileID: 0}
   Cure: {fileID: 0}
 --- !u!114 &9166247000190160912
 MonoBehaviour:
@@ -598,6 +600,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8016532783759172787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441535349942549436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63976678225cb084d905c599c5f87195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 15
+  mixer: {fileID: 24300002, guid: da771ec059f5b114fa931904e073ac87, type: 2}
+  sounds: []
 --- !u!1 &1462028462351012292
 GameObject:
   m_ObjectHideFlags: 0

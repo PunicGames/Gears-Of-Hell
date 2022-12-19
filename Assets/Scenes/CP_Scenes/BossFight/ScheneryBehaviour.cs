@@ -19,7 +19,9 @@ public class ScheneryBehaviour: MonoBehaviour
     [SerializeField] int[] phases;
 
     [SerializeField] List<Vector3> spawnPoints;
-    [SerializeField] float spawnLimit;
+    [SerializeField] float spawnLimit = 10.0f;
+    [SerializeField] GameObject littleSpider;
+    [SerializeField] public float waitTimeSinceNextSpider = 30.0f;
 
     // phase index
     private int phase = 0;
@@ -36,8 +38,7 @@ public class ScheneryBehaviour: MonoBehaviour
 
     private void Start()
     {
-        CheckPhase(100);
-        //CheckPhase(100);
+        Invoke("SpawnLittleSpider", GetRandomTime(waitTimeSinceNextSpider));
     }
 
     // Update is called once per frame
@@ -46,9 +47,28 @@ public class ScheneryBehaviour: MonoBehaviour
         PhaseTransition();
     }
 
+    private void Update()
+    {
+        
+    }
+
     #endregion
 
     #region Functionality
+
+    private void SpawnLittleSpider()
+    {
+        Instantiate(littleSpider, GetSpawnPoint(), Quaternion.identity);
+        Invoke("SpawnLittleSpider", GetRandomTime(waitTimeSinceNextSpider));
+    }
+
+
+    private float GetRandomTime(float k)
+    {
+        var max = k * 1.05f;
+        var min = k * 0.95f;
+        return Random.Range(min, max);
+    }
 
     private Vector3 GetSpawnPoint()
     {
