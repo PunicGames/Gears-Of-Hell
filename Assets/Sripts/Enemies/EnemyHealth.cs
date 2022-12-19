@@ -70,8 +70,7 @@ public class EnemyHealth : MonoBehaviour
 
         playerRef.GetComponent<Player>().PlayHitMarker();
 
-        if (takeDamage != null)
-            takeDamage();
+        takeDamage?.Invoke();
 
         popup.Create(popupPosition.position, amount, PopUp.TypePopUp.DAMAGE, false, 0.5f);
 

@@ -6,7 +6,8 @@ public class SoundEmitter : MonoBehaviour
 {
 
     public LayerMask targetMask;
-    [HideInInspector] public float radius = 0;
+    public LayerMask obstructionMask;
+     public float radius = 0;
 
     private delegate void OnMakeSound(Vector3 pos);
     private OnMakeSound onMakeSound;
@@ -17,8 +18,21 @@ public class SoundEmitter : MonoBehaviour
 
         foreach (var colleage in soundRangeChecks)
         {
-            CP_GunnerBehaviour gunner = colleage.gameObject.GetComponent<CP_GunnerBehaviour>();
-            gunner?.ListenToSound(transform.position);
+            Vector3 directionToTarget = (colleage.gameObject.transform.position - transform.position).normalized;
+            float distanceToTarget = Vector3.Distance(transform.position, colleage.gameObject.transform.position);
+            if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+            {
+                CP_GunnerBehaviour gunner = colleage.gameObject.GetComponent<CP_GunnerBehaviour>();
+                gunner?.ListenToSound(transform.position);
+            }
+            else
+            {
+                if (distanceToTarget < radius * .5f)
+                {
+                    CP_GunnerBehaviour gunner = colleage.gameObject.GetComponent<CP_GunnerBehaviour>();
+                    gunner?.ListenToSound(transform.position);
+                }
+            }
         }
 
     }
