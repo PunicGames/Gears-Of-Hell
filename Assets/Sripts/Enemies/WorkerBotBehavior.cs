@@ -16,66 +16,66 @@ public class WorkerBotBehavior : MonoBehaviour
 
     [Space]
 
-    [SerializeField] private MeleeWeaponBehaviour weaponCollider;
+    [SerializeField] private MeleeWeaponBehaviour weaponCollider; //comportamiento del arma
     [SerializeField] GameObject weaponColliderPivot;
-    [SerializeField] GameObject particleEffect;
+    [SerializeField] GameObject particleEffect; //efecto de particulas usado al atacar
     [SerializeField] GameObject particleEffectPivot;
-    [SerializeField] Collider recolectRangeCollider;
+    [SerializeField] Collider recolectRangeCollider; //collider que tiene el script para detectar los objetos
 
     [Space]
 
     //cosas para la explosion
-    [SerializeField] private ParticleSystem explosionVfx;
-    [SerializeField] private GameObject explosionColl;
-    [SerializeField] private GameObject explosionRange;
-    [SerializeField] private SkinnedMeshRenderer workerBotMesh;
-    [SerializeField] private MeshRenderer weaponMesh;
-    [SerializeField] private GameObject smokeEffect;
-    [SerializeField] private EnemySoundManager enemySoundManager;
+    [SerializeField] private ParticleSystem explosionVfx; //efecto de particulas de explosion al morir
+    [SerializeField] private GameObject explosionColl; //gameObject de la explosion
+    [SerializeField] private GameObject explosionRange; //rango de la explosion
+    [SerializeField] private SkinnedMeshRenderer workerBotMesh; //modelo del workerbot
+    [SerializeField] private MeshRenderer weaponMesh; //modelo de la bolsa
+    [SerializeField] private GameObject smokeEffect; //efecto de particulas de vapor
+    [SerializeField] private EnemySoundManager enemySoundManager; //sonidos
 
     [Space]
 
-    public float timeUntilExplosion;
-    public int bombDamage;
-    private bool alreadyExploding = false;
+    public float timeUntilExplosion; //tiempo que tarda entre morir y explotar
+    public int bombDamage; //daño que hace al todos los enemigos al explotar
+    private bool alreadyExploding = false; //indica si esta explotando en ese momento
 
     [Space]
 
-    public AudioClip tictac, boom;
+    public AudioClip tictac, boom; //sonidos de la explosion
     private AudioSource audioSource;
 
     //esenciales
-    private Animator animator;
-    private GameObject player;
-    NavMeshAgent agent;
+    private Animator animator; //gestor de animaciones
+    private GameObject player; //personaje que controlamos (el juagdor)
+    NavMeshAgent agent; //navmesh que utiliza para saber por donde puede caminar
 
     [SerializeField] public int currentGears = 0; //monedas que lleva recogidas
-    [SerializeField] public int currentAmmos = 0; //ammos que lleva recogidas
-    [SerializeField] public int currentHeals = 0; //heals que lleva recogidas
-    bool alreadyAttacked = false;
-    public GameObject itemObject;
+    [SerializeField] public int currentAmmos = 0; //cajas de municion que lleva recogidas
+    [SerializeField] public int currentHeals = 0; //curas que lleva recogidas
+    bool alreadyAttacked = false; //indica si el workerbot esta atacando
+    private bool dead = false; //indica si el workerbot ha muerto
+    public GameObject itemObject; //variable en la que almacena el objeto que ha detectado para comenzar a dirigirse hacia el
 
     [SerializeField] private LayerMask m_LayerMask;
 
     public enum FSM2_states
     {
-        IDLE,
-        PURSUE,
-        ATTACK,
+        IDLE, //el workerbot se detiene
+        PURSUE, //el workerbot persigue al jugador
+        ATTACK, //el workerbot ejecuta la funcion de atacar
     };
 
     public enum FSM1_states
     {
-        RECOLECT,
-        SEARCH,
-        ATTACKFSM,
+        RECOLECT, //el workerbot recolecta el objeto almacenado en intemObject y aplica la mejora correspondiente
+        SEARCH, //el workerbot comienda a dirigirse a la posicion del objeto ignorando al jugador
+        ATTACKFSM, //se activa la FSM_LVL_2
     };
 
     [Space]
 
-    [SerializeField] public FSM1_states currentFSM1State = FSM1_states.ATTACKFSM; //la fsm 1
-    [SerializeField] public FSM2_states currentFSM2State = FSM2_states.PURSUE; //la fsm 2
-    private bool dead = false;
+    [SerializeField] public FSM1_states currentFSM1State = FSM1_states.ATTACKFSM; //estado actual de la FSM principal
+    [SerializeField] public FSM2_states currentFSM2State = FSM2_states.PURSUE; //estado actual la FSM cuando no detecta objetos que recoger
 
     // Start is called before the first frame update
     void Start()
@@ -101,11 +101,11 @@ public class WorkerBotBehavior : MonoBehaviour
     {
         if (!dead)
         {
-            FSM_LVL_1();
+            FSM_LVL_1(); //si no esta muerto ejecutara constantemente la FSM 1
         }
         else
         {
-            animator.SetBool("isMoving", true); //variable que este en el animator
+            animator.SetBool("isMoving", true);
             animator.SetBool("isAttacking", false);
             smokeEffect.SetActive(false);
             ResetParameters();
@@ -114,14 +114,17 @@ public class WorkerBotBehavior : MonoBehaviour
         }
     }
 
-    private void FSM_LVL_1()
-    {
+    private void FSM_LVL_1() //{ RECOLECT, SEARCH, ATTACKFSM }
+{
         switch (currentFSM1State)
         {
             case FSM1_states.RECOLECT:
+                
+                //dependiendo del tipo de objeto que haya almacenado en itemObject el workerbot ejecutara una u otra mejora
+
                 enemySoundManager.PauseSound("walk");
                 animator.SetBool("isMoving", false);
-                transform.LookAt(itemObject.transform.position); //miramos al player
+                transform.LookAt(itemObject.transform.position); //miramos al objeto
 
                 if (itemObject.CompareTag("Gear"))
                 {
@@ -153,9 +156,14 @@ public class WorkerBotBehavior : MonoBehaviour
                 break;
 
             case FSM1_states.SEARCH:
+
+                //el workerbot en este estado se dirige hacia el objeto que este almacenado en itemObject
+
                 if (itemObject == null)
                 {
-                    print("null");
+                    //esto evita que el workerbot se quede constantemente buscando el itemObject que tenia almacenado per que ha
+                    //desaparecido porque lo ha recolectado en jugador. Debido a esto pasamos de nuevo al estado de atacar
+
                     currentFSM1State = FSM1_states.ATTACKFSM;
                 }
 
@@ -167,15 +175,19 @@ public class WorkerBotBehavior : MonoBehaviour
 
                 if (distance <= agent.stoppingDistance)
                 {
-                    //si la distancia es menor a la asignada a detenerse me detengo
+                    //si la distancia es menor a la asignada a detenerse se detiene y recolecta
+
                     currentFSM1State = FSM1_states.RECOLECT;
                 }
 
                 break;
 
             case FSM1_states.ATTACKFSM:
+                
+                //este estado se ejcuta cuando no tiene ningun objeto disponible para recoger por lo
+                //que ejecutara el comportamiento correspondiente a la interacion con el jugador
+
                 FSM_LVL_2();
-                //ActionFSM();
                 break;
         }
     }
@@ -188,6 +200,9 @@ public class WorkerBotBehavior : MonoBehaviour
         switch (currentFSM2State)
         {
             case FSM2_states.IDLE:
+
+                //el workerbot se detiene 
+
                 enemySoundManager.PauseSound("walk");
                 animator.SetBool("isMoving", false);
                 transform.LookAt(player.transform.position); //miramos al player
@@ -200,6 +215,9 @@ public class WorkerBotBehavior : MonoBehaviour
                 break;
 
             case FSM2_states.PURSUE:
+
+                //el workerbot persigue al jugador
+
                 enemySoundManager.PlaySound("walk");
                 animator.SetBool("isMoving", true);
                 if (distance <= agent.stoppingDistance)
@@ -210,19 +228,24 @@ public class WorkerBotBehavior : MonoBehaviour
                 break;
 
             case FSM2_states.ATTACK:
+
+                //este estado se activa cuando el jugador entra dentro del collider preparado para ello de manera que
+                //el workerbo puede serguir persiguiendo y atacando ejecutando la animacion combinada correctamente
+                
                 //si no ha atacado se pone a atacar
+
                 if (!alreadyAttacked) Attack();
                 break;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+        //si detecta al jugador activa el collider del arma y comienza a atacar
         if (enabled)
         {
             if (other.gameObject == player)
             {
-                ActivateWeaponCollider();
                 currentFSM2State = FSM2_states.ATTACK;
             }
         }
@@ -230,6 +253,8 @@ public class WorkerBotBehavior : MonoBehaviour
 
     private void GearUpgrade()
     {
+        //mejora aplicada al coger una moneda
+
         Vector3 gearScale = new Vector3(1 + 0.2f * currentGears, 1 + 0.2f * currentGears, 1 + 0.2f * currentGears);
 
         weaponColliderPivot.transform.localScale = gearScale; //aumenta tamaño del collider
@@ -244,6 +269,8 @@ public class WorkerBotBehavior : MonoBehaviour
     }
     private void HealUpgrade()
     {
+        //mejora aplicada al coger una cura
+
         Vector3 healScale = new Vector3(1 + 0.25f * currentHeals, 1 + 0.25f * currentHeals, 1 + 0.25f * currentHeals);
 
         transform.localScale = healScale; //aumenta el tamaño del mesh del pj
@@ -256,6 +283,8 @@ public class WorkerBotBehavior : MonoBehaviour
     }
     private void AmmoUpgrade()
     {
+        //mejora aplicada al coger una caja de municion
+
         agent.speed += 0.6f; //aumenta la velocidad de movimiento
         rollSpeed = 0.8f + currentAmmos * 0.4f; //aumenta la velocidad de ataque
         animator.SetFloat("rollSpeed", rollSpeed);
@@ -271,6 +300,7 @@ public class WorkerBotBehavior : MonoBehaviour
     {
         print("ataca");
 
+        ActivateWeaponCollider();
         alreadyAttacked = true;
         enemySoundManager.PlaySound("attack");
         animator.SetBool("isAttacking", true);
