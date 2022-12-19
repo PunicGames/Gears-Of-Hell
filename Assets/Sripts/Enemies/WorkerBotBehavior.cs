@@ -102,7 +102,6 @@ public class WorkerBotBehavior : MonoBehaviour
         if (!dead)
         {
             FSM_LVL_1();
-            //ActionFSM();
         }
         else
         {
@@ -170,6 +169,7 @@ public class WorkerBotBehavior : MonoBehaviour
 
             case FSM1_states.ATTACKFSM:
                 FSM_LVL_2();
+                //ActionFSM();
                 break;
         }
     }
@@ -202,6 +202,7 @@ public class WorkerBotBehavior : MonoBehaviour
                     currentFSM2State = FSM2_states.IDLE;
                 }
                 break;
+
             case FSM2_states.ATTACK:
                 //si no ha atacado se pone a atacar
                 if (!alreadyAttacked) Attack();
@@ -262,6 +263,8 @@ public class WorkerBotBehavior : MonoBehaviour
 
     public void Attack()
     {
+        print("ataca");
+
         alreadyAttacked = true;
         enemySoundManager.PlaySound("attack");
         animator.SetBool("isAttacking", true);
@@ -287,6 +290,7 @@ public class WorkerBotBehavior : MonoBehaviour
     }
     private void Death()
     {
+        print("ha muerto");
         if (!alreadyExploding)
         {
             dead = true;
@@ -296,6 +300,7 @@ public class WorkerBotBehavior : MonoBehaviour
     }
     private void TriggerExplosion()
     {
+        print("activamos rango de explosion");
 
         if (enemySoundManager != null)
             enemySoundManager.PauseSound("attack");
@@ -312,6 +317,8 @@ public class WorkerBotBehavior : MonoBehaviour
     }
     private void Explode()
     {
+        print("workerbot explota");
+
         weaponCollider.gameObject.SetActive(false);
         GetComponent<EnemyHealth>().DropItems();
         GetComponent<EnemyHealth>().enabled = false;
@@ -345,10 +352,14 @@ public class WorkerBotBehavior : MonoBehaviour
     }
     public void ActivateWeaponCollider()
     {
+        print("Activamos collider del arma");
+
         weaponCollider.enabled = true;
     }
     public void DeactivateWeaponCollider()
     {
+        print("Desactivamos collider del arma");
+
         weaponCollider.enabled = false;
     }
 }
