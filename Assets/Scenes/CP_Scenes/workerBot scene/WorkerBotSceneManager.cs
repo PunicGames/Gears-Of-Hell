@@ -38,7 +38,7 @@ public class WorkerBotSceneManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-
+            workerBot.GetComponent<EnemyHealth>().TakeDamage(15);
         }
     }
 

@@ -277,7 +277,7 @@ public class WorkerBotBehavior : MonoBehaviour
         transform.localScale = healScale; //aumenta el tamaño del mesh del pj
 
         GetComponent<EnemyHealth>().startingHealth *= 2; //duplico vida maxima actual
-        GetComponent<EnemyHealth>().currentHealth = GetComponent<EnemyHealth>().startingHealth; //recupera toda la vida
+        GetComponent<EnemyHealth>().Heal(GetComponent<EnemyHealth>().startingHealth); //recupera toda la vida
 
         //activo el efecto de cura en el robot
         print(currentHeals);
