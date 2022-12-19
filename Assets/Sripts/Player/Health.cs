@@ -157,7 +157,7 @@ public class Health : MonoBehaviour
         playerMovement.enabled = false;
 
         if (normalMode)
-            onDeath.Invoke(false);
+            onDeath?.Invoke(false);
 
         // Faltaría poner sistema de animaciones o audios, etc. Por eso está esto en un método a parte
 

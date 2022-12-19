@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyVision : MonoBehaviour
 {
     #region inEditorVariables
-    [SerializeField] public Transform parent;
+    [SerializeField] public Transform eyes;
     public float perceptionRadius;
     public float spotRadius;
     [Range(0, 360)]
@@ -27,12 +27,12 @@ public class EnemyVision : MonoBehaviour
     private Transform target;
 
     //Delegates
-    public delegate void OnAlert(Vector3 targetPos);
+    public delegate void OnAlert(Vector3 targetPos,bool t);
     public OnAlert onAlert;
     public delegate void OnSpot();
     public OnSpot onSpot;
-    public delegate void OnLosingSight();
-    public OnLosingSight onLosingSight;
+    public delegate void OnLostingSight();
+    public OnLostingSight onLostingSight;
 
     private void Start()
     {
@@ -55,34 +55,38 @@ public class EnemyVision : MonoBehaviour
     private void FieldOfViewCheck()
     {
 
-        Collider[] rangeChecks = Physics.OverlapSphere(parent.position, perceptionRadius, targetMask);
+        Collider[] rangeChecks = Physics.OverlapSphere(eyes.position, perceptionRadius, targetMask);
 
         if (rangeChecks.Length != 0)
         {
             target = rangeChecks[0].transform;
-            Vector3 directionToTarget = (target.position - parent.position).normalized;
+            Vector3 directionToTarget = (target.position - eyes.position).normalized;
 
-            if (Vector3.Angle(parent.forward, directionToTarget) < angle * .5f)
+            if (Vector3.Angle(eyes.forward, directionToTarget) < angle * .5f)
             {
-                float distanceToTarget = Vector3.Distance(parent.position, target.position);
+                float distanceToTarget = Vector3.Distance(eyes.position, target.position);
 
-                if (!Physics.Raycast(parent.position, directionToTarget, distanceToTarget, obstructionMask))
+                if (!Physics.Raycast(eyes.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
                     playerInReach = true;
-                    if (distanceToTarget <= spotRadius)
+                    if (!isSpotted)
                     {
-                        if (!isSpotted)
-                            onSpot?.Invoke();
-                        isSpotted = true;
-                        isAlerted = false;
-                        return;
-                    }
-                    if (!isAlerted)
-                    {
-                        onAlert?.Invoke(target.position);
-                        isAlerted = true;
-                    }
+                        if (!isAlerted)
+                        {
+                            onAlert?.Invoke(target.position,true);
+                            isAlerted = true;
 
+                        }
+
+                        if (distanceToTarget <= spotRadius)
+                        {
+
+                            onSpot?.Invoke();
+                            isSpotted = true;
+                            isAlerted = false;
+                            return;
+                        }
+                    }
                 }
                 else
                 {
@@ -96,14 +100,15 @@ public class EnemyVision : MonoBehaviour
                 isAlerted = false;
             }
         }
-        else if (playerInReach)
+        else
         {
             playerInReach = false;
             if (isSpotted)
             {
+                Debug.Log("WEA");
                 isAlerted = true;
-                onAlert?.Invoke(target.position);
                 isSpotted = false;
+                onAlert?.Invoke(target.position,false);
             }
         }
 
