@@ -129,6 +129,29 @@ public class CP_GunnerBehaviour : MonoBehaviour
         vision = GetComponent<EnemyVision>();
         soundEmitter = GetComponent<SoundEmitter>();
 
+        GetComponent<EnemyHealth>().takeDamage += ()=> {
+            if (currentState != standardState.COMBAT)
+            {
+                if (GetComponent<EnemyHealth>().currentHealth <= 0)
+                {
+
+                    soundEmitter.MakeSound(5f);
+                    enabled = false;
+
+                    return;
+                }
+                soundManager.OverlapedPlaySound("underAttack");
+                TransitionToAlert(RandomNavmeshLocation(4, transform.position), false);
+            }
+            else
+            {
+                if (GetComponent<EnemyHealth>().currentHealth <= 0)
+                {
+                    enabled = false;
+                }
+            }
+        };
+
         vision.onAlert += TransitionToAlert;
         vision.onSpot += TransitionToCombat;
         //vision.onLostingSight += () => { CancelInvoke(nameof(ForgetHeSawPlayer)); Invoke(nameof(ForgetHeSawPlayer), forgetTime); Debug.Log("w"); };
@@ -180,7 +203,6 @@ public class CP_GunnerBehaviour : MonoBehaviour
     private void Update()
     {
         StandardFSM();
-        Debug.Log(currentState);
     }
 
     private void CombatFSM()
@@ -345,11 +367,10 @@ public class CP_GunnerBehaviour : MonoBehaviour
             animator.SetTrigger("shoot");
             GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
             b.transform.LookAt(player.transform);
-            Bullet bulletParams = b.GetComponent<Bullet>();
+            Tonys_Bullet bulletParams = b.GetComponent<Tonys_Bullet>();
             bulletParams.SetForce(bulletSpeed);
-            bulletParams.SetDamage(damage);
-            bulletParams.SetLaser(false);
-            bulletParams.owner = Bullet.BulletOwner.ENEMY;
+            bulletParams.damage = damage;
+            bulletParams.owner = Tonys_Bullet.BulletOwner.ENEMY;
             bulletParams.timeToDestroy = bulletLifetime;
             bulletParams.SetBulletColors(albedo, emissive);
         }
@@ -369,12 +390,11 @@ public class CP_GunnerBehaviour : MonoBehaviour
                 GameObject b = Instantiate(bullet, new Vector3(shootOrigin.position.x, shootOrigin.position.y, shootOrigin.position.z), Quaternion.identity);
                 b.transform.localScale *= 0.9f;
                 b.transform.forward = directionWithSpread.normalized;
-                Bullet bulletParams = b.GetComponent<Bullet>();
+                Tonys_Bullet bulletParams = b.GetComponent<Tonys_Bullet>();
                 bulletParams.SetForce(directionWithSpread.normalized, bulletSpeed * 1.5f);
-                bulletParams.SetDamage(8);
+                bulletParams.damage = 8;
 
-                bulletParams.SetLaser(false);
-                bulletParams.owner = Bullet.BulletOwner.ENEMY;
+                bulletParams.owner = Tonys_Bullet.BulletOwner.ENEMY;
                 bulletParams.timeToDestroy = bulletLifetimeShotGun;
                 bulletParams.SetBulletColors(albedo, emissive);
                 startAngle -= partialAngle;
@@ -427,7 +447,7 @@ public class CP_GunnerBehaviour : MonoBehaviour
 
         GameObject g = Instantiate(grenade, new Vector3(grenadeThrowPoint.position.x, grenadeThrowPoint.position.y, grenadeThrowPoint.position.z), Quaternion.identity);
 
-        Grenade grenadeParams = g.GetComponent<Grenade>();
+        TonysGrenade grenadeParams = g.GetComponent<TonysGrenade>();
         //Compose target
         Vector3 target = new Vector3(Random.Range(player.transform.position.x - failOffset, player.transform.position.x + failOffset), player.transform.position.y, Random.Range(player.transform.position.z - failOffset, player.transform.position.z + failOffset));
         grenadeParams.target = target;
@@ -741,7 +761,7 @@ public class CP_GunnerBehaviour : MonoBehaviour
         if (currentState != standardState.COMBAT)
         {
             if (currentState != standardState.ALERTED)
-                TransitionToAlert(soundOrigin, true);
+                TransitionToAlert(RandomNavmeshLocation(2, soundOrigin), true);
             else
             {
                 playerLastSeenPos = soundOrigin;
@@ -757,14 +777,15 @@ public class CP_GunnerBehaviour : MonoBehaviour
         {
             if (currentState != standardState.COMBAT && currentState != standardState.ALERTED)
             {
-                TransitionToAlert(lastSeenPos, true);
+                //TransitionToAlert(lastSeenPos, true);
+                TransitionToAlert(RandomNavmeshLocation(12,lastSeenPos), true);
             }
         }
         else
         {
             if (currentState == standardState.SEEK_ALARM)
             {
-                TransitionToAlert(lastSeenPos, true);
+                TransitionToAlert(RandomNavmeshLocation(12, lastSeenPos), true);
             }
         }
     }
@@ -776,6 +797,19 @@ public class CP_GunnerBehaviour : MonoBehaviour
             PatrolToPoint();
         }
 
+    }
+
+    public Vector3 RandomNavmeshLocation(float radius, Vector3 targetPosition)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += targetPosition;
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
     #endregion
 }

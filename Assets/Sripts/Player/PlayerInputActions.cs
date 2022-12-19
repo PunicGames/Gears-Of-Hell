@@ -107,6 +107,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""c264054c-27cc-48ce-b5c2-fe98491b3404"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -274,6 +283,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Shop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cae12c3a-59c0-473d-9570-b00991cff837"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -291,6 +311,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_MobileMovement = m_Player.FindAction("MobileMovement", throwIfNotFound: true);
         m_Player_MobileAim = m_Player.FindAction("MobileAim", throwIfNotFound: true);
         m_Player_Shop = m_Player.FindAction("Shop", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -359,6 +380,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MobileMovement;
     private readonly InputAction m_Player_MobileAim;
     private readonly InputAction m_Player_Shop;
+    private readonly InputAction m_Player_Crouch;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -372,6 +394,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @MobileMovement => m_Wrapper.m_Player_MobileMovement;
         public InputAction @MobileAim => m_Wrapper.m_Player_MobileAim;
         public InputAction @Shop => m_Wrapper.m_Player_Shop;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -408,6 +431,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Shop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShop;
                 @Shop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShop;
                 @Shop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShop;
+                @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -439,6 +465,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Shop.started += instance.OnShop;
                 @Shop.performed += instance.OnShop;
                 @Shop.canceled += instance.OnShop;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -454,5 +483,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMobileMovement(InputAction.CallbackContext context);
         void OnMobileAim(InputAction.CallbackContext context);
         void OnShop(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
 }

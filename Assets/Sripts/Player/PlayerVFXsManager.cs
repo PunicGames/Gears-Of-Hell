@@ -26,8 +26,16 @@ public class PlayerVFXsManager : MonoBehaviour
     {
         Player p = GetComponentInParent<Player>();
         p.onItemTaken += ActivateConsumableVFX;
-        p.shootingSystem.onShootWeapon += ActivateMuzzleVFX;
-        p.shootingSystem.onSwapWeapon += ChangeMuzzlePosition;
+        if (p.shootingSystem)
+        {
+            p.shootingSystem.onShootWeapon += ActivateMuzzleVFX;
+            p.shootingSystem.onSwapWeapon += ChangeMuzzlePosition;
+        }
+        else
+        {
+            FindObjectOfType<Tonys_ShootSystem>().onShootWeapon += ActivateMuzzleVFX;
+        }
+        
         
     }
     private void ActivateConsumableVFX(effect vfx)

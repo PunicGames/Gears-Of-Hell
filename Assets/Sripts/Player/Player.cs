@@ -23,7 +23,9 @@ public class Player : MonoBehaviour
 
     private bool desktop = true;
 
-    private PlayerInputActions playerInputActions;
+    public bool isMoving = false;
+
+    public PlayerInputActions playerInputActions;
 
     // Shop system
     private bool shopInRange;
@@ -86,7 +88,7 @@ public class Player : MonoBehaviour
             leftJoystick = GameObject.Find("LeftJoystick").GetComponent<VariableJoystick>();
             rightJoystick = GameObject.Find("RightJoystick").GetComponent<VariableJoystick>();
         }
-        
+
     }
     private void Update()
     {
@@ -142,9 +144,13 @@ public class Player : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.GameIsPaused && !uiGestor.shooping) { 
-            shootingSystem.shooting = true;
-            shootingSystem.Shooting();
+        if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
+        {
+            if (shootingSystem)
+            {
+                shootingSystem.shooting = true;
+                shootingSystem.Shooting();
+            }
         }
     }
 
@@ -152,7 +158,8 @@ public class Player : MonoBehaviour
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
-            shootingSystem.shooting = false;
+            if (shootingSystem)
+                shootingSystem.shooting = false;
         }
     }
 
@@ -160,14 +167,15 @@ public class Player : MonoBehaviour
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
+            isMoving = true;
             playerAnimator.SetBool("isMoving", true);
             CachedMoveInput = context.ReadValue<Vector2>();
-            if (!footSteps.mute && !footSteps.isPlaying )
+            if (!footSteps.mute && !footSteps.isPlaying)
                 footSteps.Play();
         }
     }
 
-    public void PlayHitMarker() 
+    public void PlayHitMarker()
     {
         hitmarker.Play();
     }
@@ -180,7 +188,7 @@ public class Player : MonoBehaviour
             CachedMoveInput = context;
             if (context == Vector2.zero)
                 MobileResetMovement();
-            if (!footSteps.mute && !footSteps.isPlaying && context!=Vector2.zero)
+            if (!footSteps.mute && !footSteps.isPlaying && context != Vector2.zero)
                 footSteps.Play();
         }
     }
@@ -189,13 +197,14 @@ public class Player : MonoBehaviour
     {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
+            isMoving = false;
             playerAnimator.SetBool("isMoving", false);
             CachedMoveInput = new Vector2(0.0f, 0.0f);
             movement = movement * speed * Time.deltaTime;
             if (footSteps.isPlaying)
                 footSteps.Pause();
         }
-        
+
     }
 
     public void MobileResetMovement()
@@ -222,7 +231,8 @@ public class Player : MonoBehaviour
     public void PauseMenuCall(InputAction.CallbackContext context)
     {
         // Solo se puede pausar el juego si el jugador no se encuantra disparando
-        if (!shootingSystem.shooting && !uiGestor.shooping) { 
+        if (!shootingSystem.shooting && !uiGestor.shooping)
+        {
             PauseMenu.TriggerPause = true;
         }
     }
@@ -272,7 +282,7 @@ public class Player : MonoBehaviour
                 rb.MoveRotation(newPlayerRotation);
             }
         }
-        
+
         float aux = CachedAimInput.magnitude;
 
         //print(aux);
@@ -286,7 +296,7 @@ public class Player : MonoBehaviour
         {
             shootingSystem.shooting = false;
         }
-        
+
     }
 
     private void ResetAim(InputAction.CallbackContext context)
@@ -294,21 +304,24 @@ public class Player : MonoBehaviour
         CachedAimInput = Vector2.zero;
     }
 
-    private void ReloadGun(InputAction.CallbackContext context) {
+    private void ReloadGun(InputAction.CallbackContext context)
+    {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             shootingSystem.Reload();
         }
     }
 
-    private void SwapGun(InputAction.CallbackContext context) {
+    private void SwapGun(InputAction.CallbackContext context)
+    {
         if (!PauseMenu.GameIsPaused && !uiGestor.shooping)
         {
             shootingSystem.SwapGun();
         }
     }
 
-    private void OpenShop(InputAction.CallbackContext context) {
+    private void OpenShop(InputAction.CallbackContext context)
+    {
         // Se puede acceder a la tienda si el jugador no se encuentra disparando
         if (!PauseMenu.GameIsPaused && shopInRange && !shootingSystem.shooting && shopActive)
         {
@@ -370,7 +383,8 @@ public class Player : MonoBehaviour
             playerInputActions.Player.SwapGun.performed -= SwapGun;
             playerInputActions.Player.Shop.performed -= OpenShop;
         }
-        else {
+        else
+        {
             //playerInputActions.Player.MobileMovement.performed -= Movement;
             //playerInputActions.Player.MobileMovement.canceled -= ResetMovement;
             //playerInputActions.Player.MobileAim.performed -= MousePosition;
@@ -383,7 +397,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+
     //public void ActivateShootingRigs()
     //{
     //    shootingSystem.rig.ActivateRRig(true);
@@ -394,9 +408,11 @@ public class Player : MonoBehaviour
     // Sistema de tiendas
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Shop") {
+        if (other.gameObject.tag == "Shop")
+        {
             shopInRange = true;
-            if (other.gameObject.GetComponent<Shop>().active) {
+            if (other.gameObject.GetComponent<Shop>().active)
+            {
                 shopActive = true;
                 Debug.Log("Dentro de tienda");
             }
