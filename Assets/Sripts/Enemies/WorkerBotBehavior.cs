@@ -239,13 +239,14 @@ public class WorkerBotBehavior : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         //si detecta al jugador activa el collider del arma y comienza a atacar
         if (enabled)
         {
             if (other.gameObject == player)
             {
+                ActivateWeaponCollider();
                 currentFSM2State = FSM2_states.ATTACK;
             }
         }
@@ -300,7 +301,6 @@ public class WorkerBotBehavior : MonoBehaviour
     {
         print("ataca");
 
-        ActivateWeaponCollider();
         alreadyAttacked = true;
         enemySoundManager.PlaySound("attack");
         animator.SetBool("isAttacking", true);
