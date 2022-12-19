@@ -12,6 +12,7 @@ public class CP_SpiderAttacks : MonoBehaviour
 
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private EnemyHealth eh;
+    [SerializeField] private BossFightManager bfm;
     [SerializeField] private CapsuleCollider enemyColl;
     [SerializeField] private SkinnedMeshRenderer smr;
     [SerializeField] private GameObject miniGun;
@@ -115,12 +116,16 @@ public class CP_SpiderAttacks : MonoBehaviour
 
         eh.onDeath += Death;
 
+        Phase1();
+
         bulletsInMgBurst = mg_bulletsPerBurst;
         bulletsInGrBurst = gr_bulletsPerBurst;
         bulletsInMiBurst = mi_bulletsPerBurst;
 
         lastGrenadeTime = 0f;
         lastMissileTime = 0f;
+
+        
     }
 
     private void Update()
@@ -441,55 +446,11 @@ public class CP_SpiderAttacks : MonoBehaviour
 
         currentState = spiderState.DEAD;
 
-        TriggerExplosion();
+        bfm.WinLevel();
 
-        print("dead");
-
-        //Destroy(gameObject, 0f);
+        Destroy(gameObject, 1f);
     }
 
-    private void TriggerExplosion()
-    {
-        agent.enabled = false;
-        eh.enabled = false;
-        enemyColl.enabled = false;
-
-        explosionRange.SetActive(true);
-
-        //Playing 'tictac'
-        audioSource.clip = tictac;
-        audioSource.loop = true;
-        audioSource.Play();
-
-        Invoke("Explode", gr_timeUntilExplosion);
-        enabled = false;
-    }
-
-    private void Explode()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(explosionColl.transform.position, explosionColl.GetComponent<SphereCollider>().radius * explosionColl.transform.localScale.x * transform.localScale.x, m_LayerMask, QueryTriggerInteraction.Ignore);
-        foreach (var hc in hitColliders)
-        {
-            if (hc.tag == "Enemy")
-            {
-                hc.GetComponent<EnemyHealth>().TakeDamage(gr_damage);
-            }
-            else if (hc.tag == "Player")
-            {
-                hc.GetComponent<Health>().TakeDamage(gr_damage);
-            }
-        }
-        explosionRange.SetActive(false);
-
-        //Playing Booom
-        audioSource.clip = boom;
-        audioSource.loop = false;
-        audioSource.Play();
-
-        explosionVfx.Play();
-        smr.enabled = false;
-        Destroy(gameObject, explosionVfx.main.duration);
-    }
 
     private void OnDrawGizmosSelected()
     {
@@ -507,6 +468,96 @@ public class CP_SpiderAttacks : MonoBehaviour
             else
                 playerOnSight = 0f;
         }
+    }
+
+    public void SetPhase(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                Phase1();
+                break;
+            case 1:
+                Phase2();
+                break;
+            case 2:
+                Phase3();
+                break;
+        }
+            
+    }
+    
+    private void Phase1()
+    {
+        timeBetweenAttacks = 2f;
+
+        //minigun
+        mg_damage = 2;
+        mg_burstCadence = 0.2f;
+        mg_bulletSpeed = 20;
+        mg_bulletsPerBurst = 10;
+
+        //granadas
+        gr_damage = 5;
+        gr_burstCadence = 1;
+        gr_bulletsPerBurst = 1;
+        gr_timeUntilExplosion = 1.5f;
+        gr_failOffset = 4;
+
+        //misiles
+        mi_damage = 10;
+        mi_burstCadence = 1;
+        mi_bulletSpeed = 0.5f;
+        mi_bulletsPerBurst = 1;
+        mi_failOffset = 3;
+    }
+    private void Phase2()
+    {
+        timeBetweenAttacks = 1.5f;
+
+        //minigun
+        mg_damage = 3;
+        mg_burstCadence = 0.1f;
+        mg_bulletSpeed = 30;
+        mg_bulletsPerBurst = 20;
+
+        //granadas
+        gr_damage = 10;
+        gr_burstCadence = 0.6f;
+        gr_bulletsPerBurst = 3;
+        gr_timeUntilExplosion = 1f;
+        gr_failOffset = 3;
+
+        //misiles
+        mi_damage = 15;
+        mi_burstCadence = 0.6f;
+        mi_bulletSpeed = 0.8f;
+        mi_bulletsPerBurst = 2;
+        mi_failOffset = 2;
+    }
+    private void Phase3()
+    {
+        timeBetweenAttacks = 1f;
+
+        //minigun
+        mg_damage = 5;
+        mg_burstCadence = 0.05f;
+        mg_bulletSpeed = 50;
+        mg_bulletsPerBurst = 30;
+
+        //granadas
+        gr_damage = 15;
+        gr_burstCadence = 0.3f;
+        gr_bulletsPerBurst = 7;
+        gr_timeUntilExplosion = 0.5f;
+        gr_failOffset = 1;
+
+        //misiles
+        mi_damage = 20;
+        mi_burstCadence = 0.2f;
+        mi_bulletSpeed = 1.2f;
+        mi_bulletsPerBurst = 5;
+        mi_failOffset = 0;
     }
 
 }
