@@ -3965,6 +3965,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 475923805, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: sb
+      value: 
+      objectReference: {fileID: 1891867475}
     - target: {fileID: 843888604353159215, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
       propertyPath: m_BaseOffset
       value: 0
@@ -3973,9 +3977,65 @@ PrefabInstance:
       propertyPath: m_WalkableMask
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2306976117482667697, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: m_Radius
+      value: 4.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 441659958780119776, guid: eb49dd178ab2ef3458dc07ab4ce116e0, type: 3}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: gr_failOffset
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: mi_failOffset
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: mg_bulletSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: gr_burstCadence
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: mg_burstCadence
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: mi_burstCadence
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: gr_bulletsPerBurst
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: mg_bulletsPerBurst
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954202007441050466, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: mi_bulletsPerBurst
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6954202007441050494, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
       propertyPath: m_Name
       value: CP_MediumSpider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7350251540777088763, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 197
+      objectReference: {fileID: 0}
+    - target: {fileID: 7350251540777088763, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7350251540777088763, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7766907592250839492, guid: 02414857b3dd2a34d9ad493b69bde3fb, type: 3}
       propertyPath: m_RootOrder
@@ -13721,7 +13781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -4, y: -6.999817}
+  m_AnchoredPosition: {x: -4, y: -6.999756}
   m_SizeDelta: {x: 210, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &2968428425698579030

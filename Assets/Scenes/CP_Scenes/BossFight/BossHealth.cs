@@ -9,6 +9,8 @@ public class BossHealth : MonoBehaviour
     public float startingHealth;
     public float currentHealth;
 
+    [SerializeField] ScheneryBehaviour sb;
+
     [SerializeField] private RectTransform lifeScaler;
     [SerializeField] private TextMeshProUGUI lifeText;
 
@@ -32,13 +34,13 @@ public class BossHealth : MonoBehaviour
         {
             currentHealth = eh.currentHealth;
             UpdateLifeUI();
+            sb.CheckPhase((int)currentHealth);
         }
     }
 
     public void UpdateLifeUI()
     {
-        print(currentHealth / startingHealth);
-        lifeScaler.localScale = new Vector3(currentHealth / startingHealth, 1, 1);
+        lifeScaler.localScale = new Vector3(currentHealth / startingHealth, 0.61771f, 1);
         lifeText.text = (int)currentHealth + " / " + startingHealth;
     }
 }

@@ -104,6 +104,7 @@ public class CP_SpiderAttacks : MonoBehaviour
     private float maxGrenadesTime = 7f;
     private float lastMissileTime;
     private float maxMissileTime = 30f;
+    private float playerOnSight = 0f;
 
     private void Start()
     {
@@ -141,6 +142,8 @@ public class CP_SpiderAttacks : MonoBehaviour
 
         lastGrenadeTime += Time.deltaTime;
         lastMissileTime += Time.deltaTime;
+
+        CheckPlayerSighted();
 
         switch (currentState)
         {
@@ -250,13 +253,15 @@ public class CP_SpiderAttacks : MonoBehaviour
 
     private void US()
     {
+        float SGHT = playerOnSight;
+
         float DIST = ComputeDistanceToEnemy();
 
         float TGRA = ComputeTimeSinceLastGrenade();
 
         float TMIS = ComputeTimeSinceLastMissile();
 
-        float shootAction = DIST;
+        float shootAction = DIST * SGHT;
 
         float grenadeAction = 0.95f * DIST + 0.05f * TGRA;
 
@@ -274,9 +279,7 @@ public class CP_SpiderAttacks : MonoBehaviour
         {
             ShootMinigun();
         }
-        print("Minigun: " + shootAction);
-        print("Granada: " + grenadeAction);
-        print("Misil: " + missileAction);
+
     }
 
     private void TrackMinigun()
@@ -492,6 +495,18 @@ public class CP_SpiderAttacks : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    private void CheckPlayerSighted()
+    {
+        Ray ray = new Ray(transform.position, (player.transform.position - transform.position).normalized);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.collider.gameObject.tag == "Player")
+                playerOnSight = 1f;
+            else
+                playerOnSight = 0f;
+        }
     }
 
 }
