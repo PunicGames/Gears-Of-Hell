@@ -102,7 +102,7 @@ public class FireWorker : MonoBehaviour
         switch (currentActionState)
         {
             case WorkerFireState.IDLE:
-                //Do nothing
+                //Do not attack.
                 break;
 
             case WorkerFireState.ATTACK:

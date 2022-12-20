@@ -23,6 +23,7 @@ public class ProspectorBehaviour : MonoBehaviour
 
     // Variables
     private bool casting = false;
+    private float cooldown = 2.0f;
 
     // Utility system variables
     private EnemyHealth m_prospectorHealth;
@@ -232,7 +233,7 @@ public class ProspectorBehaviour : MonoBehaviour
         if (CheckCurrentSpot()) { 
             currentState = State.RESTING;
             exhaustedVisual.Play();
-            Invoke("StopResting", 2f);
+            Invoke("StopResting", cooldown);
         }
         else{
             currentState = State.HIDING;
@@ -243,6 +244,7 @@ public class ProspectorBehaviour : MonoBehaviour
         // Check distance
         float minDistanceToPlayer = 2.0f;
         float minDistanceToForeman = 1.0f;
+        float maxDistanceToForeman = 7.0f;
         float distanceToPlayer = 0.0f;
         float distanceToForeman = 0.0f;
         float distanceSpotToPlayer = 0.0f;
@@ -273,7 +275,7 @@ public class ProspectorBehaviour : MonoBehaviour
                 hidenSpot = true;
             }
 
-            if ((distanceToPlayer >= minDistanceToPlayer) && (distanceToForeman >= minDistanceToForeman) && (hidenSpot) && (distanceToPlayer <= m_outerRing.GetRadius()))
+            if ((distanceToPlayer >= minDistanceToPlayer) && (distanceToForeman >= minDistanceToForeman) && (hidenSpot))
             {
                 //Debug.Log("Valid Hiding Spot");
                 nextPosition = HidingSpots[idx];
