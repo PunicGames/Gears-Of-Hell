@@ -28,7 +28,7 @@ public class WorkerBehavior : MonoBehaviour
     //Maquina de estados
     private enum state { IDLE, PURSUE, ATTACK };
     private state currentLocomotionState = state.PURSUE;
-    private state currentActionState = state.IDLE;
+    private state currentUpperTorsoState = state.IDLE;
 
     // Upgrade
     bool upgraded = false;
@@ -86,7 +86,7 @@ public class WorkerBehavior : MonoBehaviour
     }
     private void ActionFSM()
     {
-        switch (currentActionState)
+        switch (currentUpperTorsoState)
         {
             case state.IDLE:
                 //Do nothing
@@ -106,7 +106,7 @@ public class WorkerBehavior : MonoBehaviour
         {
             if (other.gameObject == player)
             {
-                currentActionState = state.ATTACK;
+                currentUpperTorsoState = state.ATTACK;
 
             }
         }
@@ -116,7 +116,7 @@ public class WorkerBehavior : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            currentActionState = state.IDLE;
+            currentUpperTorsoState = state.IDLE;
         }
     }
     public void ActivateWeaponCollider()
