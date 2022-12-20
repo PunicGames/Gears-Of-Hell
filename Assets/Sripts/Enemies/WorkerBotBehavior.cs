@@ -239,7 +239,7 @@ public class WorkerBotBehavior : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //si detecta al jugador activa el collider del arma y comienza a atacar
         if (enabled)
