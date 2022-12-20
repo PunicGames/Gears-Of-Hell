@@ -113,6 +113,7 @@ public class ScheneryBehaviour : MonoBehaviour
         bossPhasesMusic[i].Play();
         transitionTrigger = true;
         spiderBoss.SetPhase(i);
+        SetPhase(i);
     }
 
     private void SetPhase(int i)
