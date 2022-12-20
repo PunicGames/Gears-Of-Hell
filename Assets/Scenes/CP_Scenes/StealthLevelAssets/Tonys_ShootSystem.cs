@@ -285,7 +285,7 @@ public class Tonys_ShootSystem : MonoBehaviour
             GameObject currentBullet = Instantiate(bullet, origin, Quaternion.identity);
             currentBullet.transform.forward = dir;
             Tonys_Bullet bulletParams = currentBullet.GetComponent<Tonys_Bullet>();
-            bulletParams.SetForce(dir, 40);
+            bulletParams.SetForce(dir, 30);
             bulletParams.SetPlayerStats(playerStats);
             bulletParams.owner = Tonys_Bullet.BulletOwner.PLAYER;
             bulletParams.SetBulletColors(albedo, emissive);
