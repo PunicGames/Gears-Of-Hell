@@ -8,12 +8,12 @@ public class CP_JacobExtended : MonoBehaviour
     private PlayerInputActions playerInputActions;
     private SoundEmitter emitter;
 
-
+    private bool isPaused = false;
     [SerializeField] Tonys_ShootSystem shoot_sys;
     [SerializeField] AudioSource crouch_steps;
 
     public float shootSoundRadius = 4;
-    public float crouchSoundRadius =1.5f;
+    public float crouchSoundRadius = 1.5f;
     public float walkSoundRadius = 6;
     private bool isCrouching;
 
@@ -24,6 +24,7 @@ public class CP_JacobExtended : MonoBehaviour
         playerInputActions.Player.Shoot.canceled += ResetShoot;
         playerInputActions.Player.Crouch.performed += Crouch;
         playerInputActions.Player.Crouch.canceled += Crouch;
+        playerInputActions.Player.Pause.performed += PauseMenuCall;
 
 
         shoot_sys.onShootWeapon += ShootSound;
@@ -41,7 +42,16 @@ public class CP_JacobExtended : MonoBehaviour
             else
                 emitter.MakeSound(walkSoundRadius);
         }
-        
+
+    }
+    public void PauseMenuCall(InputAction.CallbackContext context)
+    {
+        // Solo se puede pausar el juego si el jugador no se encuantra disparando
+        if (!isPaused)
+            PauseMenu.TriggerPause = true;
+        else
+            PauseMenu.TriggerPause = false;
+
     }
 
     private void ShootSound(bool t)
@@ -49,7 +59,7 @@ public class CP_JacobExtended : MonoBehaviour
         emitter.MakeSound(shootSoundRadius);
 
     }
-   
+
 
     public void Shoot(InputAction.CallbackContext context)
     {

@@ -171,6 +171,11 @@ public class Health : MonoBehaviour
         if (!isTonyScene)
             // Tiempo de espera para el menú de resumen
             Invoke(nameof(LoadResume), 3);
+        else
+
+            Invoke(nameof(LoadMainMenu), 4);
+
+
     }
 
     public void LoadResume()
@@ -188,7 +193,10 @@ public class Health : MonoBehaviour
         GameObject.Find("InGameMusic").GetComponent<InGameMusicManager>().SetGameOverMusic();
         //Destroy(gameObject);
     }
-
+    private void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
 
     public void UpdateLifeUI()
     {
